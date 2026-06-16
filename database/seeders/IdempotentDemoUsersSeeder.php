@@ -31,11 +31,12 @@ class IdempotentDemoUsersSeeder extends Seeder
                 'id' => Str::uuid(),
                 'name' => 'User One',
                 'phone' => '081234567891',
-                'role' => 'user',
+                'role' => 'customer',
                 'is_verified' => true,
                 'password' => Hash::make('user123'),
             ]
         );
+
 
         User::updateOrCreate(
             ['email' => 'user2@asrgo.com'],
@@ -43,8 +44,9 @@ class IdempotentDemoUsersSeeder extends Seeder
                 'id' => Str::uuid(),
                 'name' => 'User Two',
                 'phone' => '081234567892',
-                'role' => 'user',
+                'role' => 'customer',
                 'is_verified' => true,
+
                 'password' => Hash::make('user123'),
             ]
         );
