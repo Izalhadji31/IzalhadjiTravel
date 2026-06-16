@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" class="h-10 w-auto">
+  <!-- Truck Icon -->
+  <g>
+    <!-- Truck body -->
+    <path d="M 20 45 L 20 30 Q 20 20 30 20 L 110 20 Q 120 20 120 30 L 120 60 Q 120 70 110 70 L 30 70 Q 20 70 20 60 Z" fill="none" stroke="#1e40af" stroke-width="2.5" stroke-linejoin="round"/>
+    
+    <!-- Truck cabin -->
+    <rect x="100" y="25" width="20" height="25" fill="#1e40af" rx="2"/>
+    
+    <!-- Front wheel -->
+    <circle cx="35" cy="70" r="8" fill="none" stroke="#1e40af" stroke-width="2"/>
+    <circle cx="35" cy="70" r="5" fill="none" stroke="#1e40af" stroke-width="1"/>
+    
+    <!-- Rear wheel -->
+    <circle cx="105" cy="70" r="8" fill="none" stroke="#1e40af" stroke-width="2"/>
+    <circle cx="105" cy="70" r="5" fill="none" stroke="#1e40af" stroke-width="1"/>
+    
+    <!-- Windshield accent -->
+    <line x1="100" y1="30" x2="115" y2="25" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- ASR Text -->
+  <g>
+    <text x="135" y="48" font-size="24" font-weight="bold" fill="#1e40af" font-family="Arial, sans-serif">ASR</text>
+    <text x="135" y="65" font-size="12" fill="#6b7280" font-family="Arial, sans-serif">GO</text>
+  </g>
+  
+  <!-- Accent line -->
+  <line x1="130" y1="72" x2="200" y2="72" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

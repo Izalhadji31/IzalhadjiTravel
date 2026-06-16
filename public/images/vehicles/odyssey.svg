@@ -1,0 +1,49 @@
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#f0f4f8"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="200" cy="230" rx="140" ry="15" fill="#00000015"/>
+  
+  <!-- Car Body -->
+  <path d="M 70 140 L 90 75 L 180 55 L 310 55 L 330 140 L 330 190 Q 330 210 310 210 L 90 210 Q 70 210 70 190 Z" 
+        fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+  
+  <!-- Glass Windows - Front -->
+  <path d="M 105 85 L 175 65 L 185 115 L 115 105 Z" fill="#87CEEB" opacity="0.7" stroke="#1e40af" stroke-width="1"/>
+  <path d="M 185 70 L 295 60 L 305 120 L 190 110 Z" fill="#87CEEB" opacity="0.7" stroke="#1e40af" stroke-width="1"/>
+  <path d="M 305 115 L 325 145 L 325 190 L 305 190 Z" fill="#87CEEB" opacity="0.6" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Front Lights -->
+  <circle cx="85" cy="140" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <circle cx="325" cy="140" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  
+  <!-- Grille -->
+  <rect x="80" y="155" width="25" height="30" fill="none" stroke="#333" stroke-width="1.5"/>
+  <line x1="92" y1="155" x2="92" y2="185" stroke="#333" stroke-width="1"/>
+  <line x1="80" y1="163" x2="105" y2="163" stroke="#333" stroke-width="0.8"/>
+  <line x1="80" y1="171" x2="105" y2="171" stroke="#333" stroke-width="0.8"/>
+  <line x1="80" y1="179" x2="105" y2="179" stroke="#333" stroke-width="0.8"/>
+  
+  <!-- Wheels -->
+  <circle cx="120" cy="210" r="24" fill="#2d3748" stroke="#1a202c" stroke-width="2"/>
+  <circle cx="120" cy="210" r="19" fill="#4a5568"/>
+  <circle cx="120" cy="210" r="13" fill="#2d3748"/>
+  <circle cx="120" cy="210" r="7" fill="#000"/>
+  
+  <circle cx="290" cy="210" r="24" fill="#2d3748" stroke="#1a202c" stroke-width="2"/>
+  <circle cx="290" cy="210" r="19" fill="#4a5568"/>
+  <circle cx="290" cy="210" r="13" fill="#2d3748"/>
+  <circle cx="290" cy="210" r="7" fill="#000"/>
+  
+  <!-- Door Line -->
+  <line x1="200" y1="70" x2="200" y2="210" stroke="#1e3a8a" stroke-width="1.5" opacity="0.7"/>
+  
+  <!-- Bumper -->
+  <rect x="70" y="198" width="260" height="10" fill="#333" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Brand Text -->
+  <text x="200" y="230" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">
+    HONDA ODYSSEY
+  </text>
+</svg>

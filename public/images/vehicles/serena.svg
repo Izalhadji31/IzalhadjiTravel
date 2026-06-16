@@ -1,0 +1,52 @@
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#f0f4f8"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="200" cy="230" rx="140" ry="15" fill="#00000015"/>
+  
+  <!-- Car Body -->
+  <path d="M 75 155 L 95 75 L 175 55 L 305 60 L 320 155 L 320 195 Q 320 215 300 215 L 100 215 Q 75 215 75 195 Z" 
+        fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+  
+  <!-- Glass Windows -->
+  <path d="M 110 90 L 170 65 L 180 130 L 120 115 Z" fill="#87CEEB" opacity="0.7" stroke="#1e40af" stroke-width="1"/>
+  <path d="M 185 65 L 290 65 L 305 135 L 185 130 Z" fill="#87CEEB" opacity="0.7" stroke="#1e40af" stroke-width="1"/>
+  <path d="M 305 130 L 320 155 L 320 195 L 305 195 Z" fill="#87CEEB" opacity="0.6" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Front Lights -->
+  <ellipse cx="90" cy="155" rx="9" ry="11" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <ellipse cx="310" cy="155" rx="9" ry="11" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  
+  <!-- Grille -->
+  <rect x="85" y="170" width="20" height="28" fill="none" stroke="#333" stroke-width="1.5"/>
+  <line x1="95" y1="170" x2="95" y2="198" stroke="#333" stroke-width="1"/>
+  <line x1="85" y1="178" x2="105" y2="178" stroke="#333" stroke-width="0.8"/>
+  <line x1="85" y1="186" x2="105" y2="186" stroke="#333" stroke-width="0.8"/>
+  
+  <!-- Door Line -->
+  <line x1="195" y1="75" x2="195" y2="215" stroke="#991b1b" stroke-width="1.5" opacity="0.7"/>
+  
+  <!-- Side Mirror -->
+  <rect x="75" y="130" width="12" height="18" rx="2" fill="#333" stroke="#1a202c" stroke-width="1"/>
+  <rect x="315" y="130" width="12" height="18" rx="2" fill="#333" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Wheels -->
+  <circle cx="130" cy="215" r="25" fill="#2d3748" stroke="#1a202c" stroke-width="2"/>
+  <circle cx="130" cy="215" r="19" fill="#4a5568"/>
+  <circle cx="130" cy="215" r="12" fill="#2d3748"/>
+  <circle cx="130" cy="215" r="6" fill="#000"/>
+  
+  <circle cx="290" cy="215" r="25" fill="#2d3748" stroke="#1a202c" stroke-width="2"/>
+  <circle cx="290" cy="215" r="19" fill="#4a5568"/>
+  <circle cx="290" cy="215" r="12" fill="#2d3748"/>
+  <circle cx="290" cy="215" r="6" fill="#000"/>
+  
+  <!-- Bumper -->
+  <rect x="75" y="203" width="245" height="10" fill="#333" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Brand Text -->
+  <text x="200" y="230" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">
+    NISSAN SERENA
+  </text>
+</svg>

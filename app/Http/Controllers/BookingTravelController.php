@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\TravelBooking;
+use App\Models\Route;
+use App\Models\TravelPrice;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
+class BookingTravelController extends Controller
+{
+    /**
+     * Display travel bookings
+     */
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $bookings = TravelBooking::query();
+
+        if ($user->role !== 'admin') {
+            $bookings->where('user_id', $user->id);
+        }
+
+        if ($request->has('status') && $request->status !== 'all') {
+            $bookings->where('status', $request->status);
+        }
+
+        $bookings = $bookings->with(['user', 'route', 'armada'])
+                             ->latest()
+                             ->paginate(10);
+
+        return view('bookings.travel', compact('bookings'));
+    }
+
+    /**
+     * Show create form
+     */
+    public function create()
+    {
+        $routes = Route::where('is_active', true)
+                       ->where(fn($query) => $query
+                           ->where('route_type', 'travel')
+                           ->orWhere('route_type', 'both'))
+                       ->get();
+
+        return view('bookings.travel-create', compact('routes'));
+    }
+
+    /**
+     * Store booking
+     */
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+
+        // Check identity verification
+        if (!$user->is_identity_verified) {
+            return redirect()->route('profile.edit')
+                           ->with('error', 'Please verify your identity before booking');
+        }
+
+        $validated = $request->validate([
+            'route_id' => 'required|exists:routes,id',
+            'travel_date' => 'nullable|date|after:today',
+            'scheduled_date' => 'nullable|date|after:today',
+            'number_of_seats' => 'required|integer|min:1|max:16',
+        ]);
+
+        $travelPrice = TravelPrice::where('route_id', $validated['route_id'])->first();
+        $route = Route::findOrFail($validated['route_id']);
+        $seatPrice = $travelPrice?->price_per_seat ?? $route->base_price ?? 0;
+        $total_price = $seatPrice * $validated['number_of_seats'];
+        $scheduledDate = $validated['travel_date'] ?? $validated['scheduled_date'];
+
+        $booking = TravelBooking::create([
+            'user_id' => $user->id,
+            'route_id' => $validated['route_id'],
+            'booking_code' => 'TRV-' . now()->format('Ymd') . '-' . Str::upper(Str::random(6)),
+            'passenger_count' => $validated['number_of_seats'],
+            'number_of_seats' => $validated['number_of_seats'],
+            'scheduled_date' => $scheduledDate,
+            'departure_time' => $scheduledDate,
+            'total_price' => $total_price,
+            'final_price' => $total_price,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('bookings.travel.show', $booking->id)
+                       ->with('success', 'Booking created. Please complete payment');
+    }
+
+    /**
+     * Show booking details
+     */
+    public function show(TravelBooking $booking)
+    {
+        $this->authorize('view', $booking);
+        $booking->load(['user', 'route', 'armada']);
+        return view('bookings.travel-show', compact('booking'));
+    }
+
+    /**
+     * Cancel booking
+     */
+    public function destroy(TravelBooking $booking)
+    {
+        $this->authorize('delete', $booking);
+
+        if ($booking->status === 'cancelled') {
+            return back()->with('error', 'Booking already cancelled');
+        }
+
+        $booking->update(['status' => 'cancelled']);
+        return back()->with('success', 'Booking cancelled successfully');
+    }
+}
