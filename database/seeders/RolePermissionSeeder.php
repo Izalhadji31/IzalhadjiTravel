@@ -103,43 +103,48 @@ class RolePermissionSeeder extends Seeder
         $driver = Role::firstOrCreate(['name' => 'driver', 'guard_name' => 'web']);
         $user = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
 
-        // Assign Permissions to Roles
-        
         // Super Admin - All Permissions
         $superAdmin->syncPermissions(Permission::all());
 
-        // Admin - Management Permissions
-        $admin->syncPermissions([
-            'view_users', 'create_user', 'edit_user', 'delete_user', 'verify_identity', 'suspend_user',
-            'view_travels', 'create_travel', 'edit_travel', 'delete_travel', 'manage_travel_bookings',
-            'assign_travel_vehicle', 'assign_travel_driver',
-            'view_rentals', 'create_rental', 'edit_rental', 'delete_rental', 'manage_rental_bookings',
-            'assign_rental_vehicle', 'assign_rental_driver',
-            'view_vehicles', 'create_vehicle', 'edit_vehicle', 'delete_vehicle', 'manage_maintenance',
-            'view_drivers', 'create_driver', 'edit_driver', 'delete_driver', 'manage_driver_tracking',
-            'view_partners', 'create_partner', 'edit_partner', 'delete_partner',
-            'view_payments', 'process_payment', 'process_refund', 'manage_vouchers',
-            'view_reports', 'export_reports', 'view_analytics',
-            'manage_settings', 'manage_cms', 'view_audit_logs',
-            'view_reviews', 'delete_review', 'moderate_reviews',
-            'view_all_bookings', 'manage_bookings', 'cancel_booking',
-        ]);
+        // Admin - Full access (all permissions)
+        $admin->syncPermissions(Permission::all());
 
-        // Partner - Own Fleet & Revenue Management
+        // Partner (Mitra) - revenue & reports + limited operational visibility
+        // NOTE: Requirement menyebut utilisasi/lokasi mobil dipakai dan laporan keuangan.
+        // Di seeder saat ini belum ada permission spesifik utilisasi, jadi menggunakan permission yang paling mendekati:
+        // - view_partner_revenue
+        // - view_reports/export_reports/view_analytics
+        // - view_vehicles/view_drivers
         $partner->syncPermissions([
-            'view_vehicles', 'view_drivers', 'view_partner_revenue',
-            'view_all_bookings', 'manage_bookings', 'view_payments',
-            'view_reviews', 'view_reports', 'export_reports',
+            'view_partner_revenue',
+            'view_reports',
+            'export_reports',
+            'view_analytics',
+            'view_vehicles',
+            'view_drivers',
+            'view_payments',
+            'view_reviews',
         ]);
 
-        // Driver - Own Trip Management
+        // Driver (Sopir) - accept/start/complete trip
+        // Endpoint driver di web routes memakai role:driver.
+        // Untuk permission detail (kalau diperlukan di layer authorize/gate), tetap beri:
         $driver->syncPermissions([
-            'view_analytics', 'manage_driver_tracking',
+            'view_analytics',
+            'manage_driver_tracking',
         ]);
 
-        // User - Booking Management
+        // User (Customer/Guest) - booking & view availability
+        // Requirement: user hanya memesan + melihat ketersediaan.
+        // Di sistem permission yang ada, paling dekat adalah:
+        // - view_travels/view_rentals (ketersediaan & info)
+        // - manage_bookings (buat booking)
         $user->syncPermissions([
-            'view_travels', 'view_rentals', 'manage_bookings',
+            'view_travels',
+            'view_rentals',
+            'manage_bookings',
+            'cancel_booking',
         ]);
     }
 }
+

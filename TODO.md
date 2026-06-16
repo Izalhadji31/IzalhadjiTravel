@@ -1,11 +1,10 @@
-# Task TODO - Fix missing `sessions` table
+# TODO
 
-## Plan steps
-- [ ] 1) Confirm session driver and table name from `config/session.php`.
-- [ ] 2) Verify whether a `create_sessions_table` migration exists in `database/migrations`.
-- [x] 3) If missing, create the Laravel sessions migration via `php artisan session:table`.
-- [x] 4) Run migrations: `php artisan migrate`.
-- [ ] 5) Re-test the request that triggers `SQLSTATE[42S02]` to confirm `sessions` exists.
-
-- [ ] 6) (Optional) If DB sessions are not desired, change `SESSION_DRIVER` to `file` and clear config/cache.
+- [ ] Update role & permission mapping to match requirements (admin full, user booking+availability, partner revenue+utilization+finance reports, driver accept/start/complete)
+- [ ] Fix role-name mismatch: demo users use `customer`, permission seeder uses `user`
+- [ ] Adjust RolePermissionSeeder: admin sync all permissions
+- [ ] Adjust partner permissions: remove global booking management; add utilization/location/finance-report permissions
+- [ ] Adjust driver permissions: add permissions for receiving available trips/orders (if endpoints exist)
+- [ ] Update Demo seeders if needed to align role names
+- [ ] Run `php artisan db:seed --class=RolePermissionSeeder` and confirm permissions
 
