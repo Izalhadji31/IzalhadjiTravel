@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mitra;
+use App\Models\RevenueSharing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PartnerController extends Controller
 {
@@ -99,5 +101,40 @@ class PartnerController extends Controller
         $partner->delete();
         return redirect()->route('partners.index')
                        ->with('success', 'Partner deleted successfully');
+    }
+
+    /**
+     * Show partner revenue / earnings dashboard
+     */
+    public function revenue()
+    {
+        $user = Auth::user();
+        $partner = Mitra::where('email', $user->email)->first();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $revenueSharings = RevenueSharing::where('mitra_id', $partner->id)
+            ->latest()
+            ->paginate(15);
+
+        $totalEarnings = RevenueSharing::where('mitra_id', $partner->id)
+            ->where('status', 'completed')
+            ->sum('mitra_amount');
+
+        $pendingPayouts = RevenueSharing::where('mitra_id', $partner->id)
+            ->where('status', 'pending')
+            ->sum('mitra_amount');
+
+        $completedPayouts = $revenueSharings->where('status', 'completed')->count();
+
+        return view('partners.revenue', compact(
+            'partner',
+            'revenueSharings',
+            'totalEarnings',
+            'pendingPayouts',
+            'completedPayouts'
+        ));
     }
 }
