@@ -349,6 +349,29 @@
     </div>
 </section>
 
+<!-- ==================== TAMPILAN APLIKASI ==================== -->
+<section class="trvl-section" id="tampilan" style="background:#fff;">
+    <div class="trvl-container">
+        <div class="trvl-section-header-center mb-8 trvl-reveal">
+            <span class="trvl-section-badge" style="background:#f0fdf4;color:#059669;border-color:#a7f3d0;">📱 Tampilan Aplikasi</span>
+            <h2 class="trvl-section-title" style="color:#0f172a;">Sistem Booking Online ASR GO</h2>
+            <p class="trvl-section-desc">Kelola perjalanan dan pembayaran dalam satu platform terintegrasi.</p>
+        </div>
+        <div class="trvl-reveal">
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center;">
+                <a href="{{ asset('images/screenshot-app.png') }}" target="_blank" style="display:block;">
+                    <img src="{{ asset('images/screenshot-app.png') }}" 
+                         alt="Tampilan Dashboard ASR GO" 
+                         style="width:100%;max-width:900px;max-height:420px;object-fit:contain;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.1);"
+                         loading="lazy"
+                    />
+                </a>
+                <p style="color:#64748b;font-size:0.85rem;margin-top:12px;margin-bottom:0;">Dashboard Pemilik Armada &mdash; Kelola driver, kendaraan, booking, dan bagi hasil.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ==================== CTA ==================== -->
 <section class="trvl-cta-section py-20">
     <div class="trvl-container relative z-10">
