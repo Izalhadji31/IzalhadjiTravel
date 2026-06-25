@@ -154,13 +154,26 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
         Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
         Route::put('/settings', [AdminController::class, 'updateSettings'])->name('admin.settings.update');
+        Route::get('/bookings', [AdminController::class, 'manageBookings'])->name('admin.bookings');
+        Route::get('/partners', [AdminController::class, 'managePartners'])->name('admin.partners');
+        Route::post('/partners/{mitra}/payout', [AdminController::class, 'payoutMitra'])->name('admin.partners.payout');
+        Route::get('/drivers', [AdminController::class, 'manageDrivers'])->name('admin.drivers');
+        Route::post('/drivers/{driver}/approve', [AdminController::class, 'approveDriver'])->name('admin.drivers.approve');
+        Route::post('/bookings/{type}/{id}/approve', [AdminController::class, 'approveBooking'])->name('admin.bookings.approve');
     });
 
     // Driver Routes - Require Driver Role
     Route::middleware('role:driver')->prefix('driver')->group(function () {
+        Route::get('/', [DriverDashboardController::class, 'index'])->name('driver.dashboard');
         Route::post('/status', [DriverDashboardController::class, 'toggleStatus'])->name('driver.status.toggle');
+        Route::get('/earnings', [DriverDashboardController::class, 'earnings'])->name('driver.earnings');
         Route::post('/trip/{booking}/{type}/start', [DriverDashboardController::class, 'startTrip'])->name('driver.trip.start');
         Route::post('/trip/{booking}/{type}/complete', [DriverDashboardController::class, 'completeTrip'])->name('driver.trip.complete');
+    });
+
+    // Partner/Mitra Routes
+    Route::middleware('role:partner')->prefix('partner')->group(function () {
+        Route::get('/revenue', [PartnerController::class, 'revenue'])->name('partner.revenue');
     });
 
     // Payment Routes
