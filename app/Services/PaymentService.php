@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Payment;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
@@ -196,6 +197,19 @@ class PaymentService
         if ($status === 'success') {
             $booking = $payment->booking;
             $booking->update(['status' => 'confirmed']);
+
+            // Auto-create revenue sharing
+            try {
+                $revenueService = app(RevenueShareService::class);
+                if ($payment->booking_type === 'App\\Models\\TravelBooking') {
+                    $revenueService->createTravelRevenueSharing($booking, $payment);
+                } elseif ($payment->booking_type === 'App\\Models\\RentalBooking') {
+                    $revenueService->createRentalRevenueSharing($booking, $payment);
+                }
+            } catch (\Exception $e) {
+                // Log error but don't fail payment
+                \Log::error('Revenue sharing creation failed: ' . $e->getMessage());
+            }
         }
 
         return ['success' => true, 'message' => 'Payment status updated'];
