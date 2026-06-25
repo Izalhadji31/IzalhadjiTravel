@@ -102,11 +102,23 @@
                         </div>
                     </div>
 
+                    <!-- Voucher Section -->
+                    <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Kode Voucher (Opsional)</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="voucher-code" placeholder="Masukkan kode voucher" style="flex: 1; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; text-transform: uppercase;">
+                            <button onclick="applyVoucher()" style="padding: 0.5rem 1rem; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 0.375rem; font-weight: 600; cursor: pointer; font-size: 0.875rem;">Terapkan</button>
+                        </div>
+                        <div id="voucher-message" style="font-size: 0.8rem; margin-top: 0.5rem; display: none;"></div>
+                        <input type="hidden" name="voucher_code" id="voucher-code-hidden" value="">
+                    </div>
+
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <span style="font-size: 1.125rem; font-weight: 700; color: #111827;">Total</span>
-                        <span style="font-size: 1.875rem; font-weight: 700; color: #2563eb;">
-                            Rp {{ number_format($booking->total_price, 0, ',', '.') }}
-                        </span>
+                        <div style="text-align: right;">
+                            <span id="original-price" style="font-size: 0.875rem; color: #9ca3af; text-decoration: line-through; display: none;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span>
+                            <span id="final-price" style="font-size: 1.875rem; font-weight: 700; color: #2563eb;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span>
+                        </div>
                     </div>
 
                     @if($payment->status === 'success')
@@ -143,6 +155,61 @@
         </div>
     </div>
 </div>
+
+<!-- Voucher Apply Script -->
+<script>
+    const bookingTotal = {{ $booking->total_price }};
+    let discountApplied = 0;
+
+    function applyVoucher() {
+        const code = document.getElementById('voucher-code').value.trim().toUpperCase();
+        const messageEl = document.getElementById('voucher-message');
+        
+        if (!code) {
+            messageEl.style.display = 'block';
+            messageEl.style.color = '#dc2626';
+            messageEl.textContent = 'Masukkan kode voucher';
+            return;
+        }
+
+        // Simple client-side voucher validation (in production, use AJAX to validate server-side)
+        fetch('/api/voucher/validate?code=' + encodeURIComponent(code) + '&amount=' + bookingTotal)
+            .then(res => res.json())
+            .then(data => {
+                messageEl.style.display = 'block';
+                if (data.valid) {
+                    messageEl.style.color = '#059669';
+                    messageEl.textContent = '✓ Voucher valid! Diskon: Rp ' + data.discount.toLocaleString('id-ID');
+                    discountApplied = data.discount;
+                    document.getElementById('voucher-code-hidden').value = code;
+                    updatePrice();
+                } else {
+                    messageEl.style.color = '#dc2626';
+                    messageEl.textContent = '✗ ' + (data.message || 'Kode voucher tidak valid');
+                    discountApplied = 0;
+                    document.getElementById('voucher-code-hidden').value = '';
+                    updatePrice();
+                }
+            })
+            .catch(() => {
+                // Fallback: accept voucher, server will validate on payment
+                messageEl.style.display = 'block';
+                messageEl.style.color = '#d97706';
+                messageEl.textContent = 'Memvalidasi voucher...';
+                document.getElementById('voucher-code-hidden').value = code;
+            });
+    }
+
+    function updatePrice() {
+        const finalTotal = Math.max(0, bookingTotal - discountApplied);
+        document.getElementById('final-price').textContent = 'Rp ' + finalTotal.toLocaleString('id-ID');
+        if (discountApplied > 0) {
+            document.getElementById('original-price').style.display = 'block';
+        } else {
+            document.getElementById('original-price').style.display = 'none';
+        }
+    }
+</script>
 
 <!-- Midtrans Snap Script -->
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ $clientKey }}"></script>

@@ -334,7 +334,11 @@
             @if($role === 'driver')
             <div class="sidebar-section">
                 <div class="sidebar-section-label">Tugas</div>
-                <a href="{{ route('driver.dashboard') }}" class="sidebar-link @if(request()->routeIs('driver.*')) active @endif">
+                <a href="{{ route('driver.orders') }}" class="sidebar-link @if(request()->routeIs('driver.orders')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    Order Aktif
+                </a>
+                <a href="{{ route('driver.dashboard') }}" class="sidebar-link @if(request()->routeIs('driver.dashboard')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                     Tugas Aktif
                 </a>
@@ -353,23 +357,25 @@
             @endif
 
             {{-- PARTNER / MITRA MENU --}}
+            {{-- PARTNER / MITRA MENU --}}
             @if($role === 'partner')
             <div class="sidebar-section">
-                <div class="sidebar-section-label">Armada</div>
-                <a href="{{ route('vehicles.index') }}" class="sidebar-link @if(request()->routeIs('vehicles.*')) active @endif">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                    Daftar Armada
+                <div class="sidebar-section-label">Partner</div>
+                <a href="{{ route('partner.dashboard') }}" class="sidebar-link @if(request()->routeIs('partner.dashboard')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h4v6h3a1 1 0 001-1v-10"/></svg>
+                    Dashboard
                 </a>
-                <a href="{{ route('drivers.index') }}" class="sidebar-link @if(request()->routeIs('drivers.*')) active @endif">
+                <a href="{{ route('partner.armadas') }}" class="sidebar-link @if(request()->routeIs('partner.armadas.*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+                    Armada
+                </a>
+                <a href="{{ route('partner.drivers') }}" class="sidebar-link @if(request()->routeIs('partner.drivers.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    Daftar Sopir
+                    Drivers
                 </a>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-section-label">Bagi Hasil</div>
-                <a href="{{ route('partner.revenue') }}" class="sidebar-link">
+                <a href="{{ route('partner.revenue') }}" class="sidebar-link @if(request()->routeIs('partner.revenue')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Pendapatan Mitra
+                    Revenue
                 </a>
             </div>
             @endif
@@ -416,6 +422,18 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
                     Fleet & Armada
                 </a>
+                <a href="{{ route('admin.payments') }}" class="sidebar-link @if(request()->routeIs('admin.payments')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    Payments
+                </a>
+                <a href="{{ route('admin.revenue-sharing') }}" class="sidebar-link @if(request()->routeIs('admin.revenue-sharing*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                    Revenue Sharing
+                </a>
+                <a href="{{ route('admin.vouchers') }}" class="sidebar-link @if(request()->routeIs('admin.vouchers*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                    Voucher
+                </a>
             </div>
             @endif
 
@@ -441,9 +459,13 @@
                 </div>
             </div>
             <div class="topbar-right">
-                <button class="topbar-btn" title="Notifikasi">
+                <a href="{{ route('notifications.index') }}" class="topbar-btn" style="position: relative; text-decoration: none;" title="Notifikasi">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                </button>
+                    @php $unreadNotifications = auth()->check() ? auth()->user()->notifications()->unread()->count() : 0; @endphp
+                    @if($unreadNotifications > 0)
+                        <span style="position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 9999px; display: flex; align-items: center; justify-content: center; padding: 0 5px; box-shadow: 0 0 0 2px white;">{{ $unreadNotifications > 99 ? '99+' : $unreadNotifications }}</span>
+                    @endif
+                </a>
                 
                 <div class="user-menu">
                     @auth

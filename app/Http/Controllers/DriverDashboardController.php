@@ -20,6 +20,44 @@ class DriverDashboardController extends Controller
     ) {}
 
     /**
+     * Show driver dashboard
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $driver = $user->driverProfile;
+        $armada = $user->armada;
+
+        if (!$armada && $user->phone) {
+            $armada = Armada::where('driver_phone', $user->phone)->first();
+        }
+
+        $balance = $driver ? $driver->balance : 0;
+        $totalTrips = $driver ? $driver->total_trips : 0;
+        $driverStatus = $driver ? $driver->status : 'offline';
+
+        // Count active orders
+        $activeOrderCount = 0;
+        if ($armada) {
+            $activeOrderCount = TravelBooking::where('assigned_armada_id', $armada->id)
+                ->whereIn('status', ['confirmed', 'departed'])
+                ->count()
+                + RentalBooking::where('assigned_armada_id', $armada->id)
+                ->whereIn('status', ['confirmed', 'departed', 'active'])
+                ->count();
+        }
+
+        return view('driver.dashboard', compact(
+            'armada',
+            'driver',
+            'balance',
+            'totalTrips',
+            'driverStatus',
+            'activeOrderCount'
+        ));
+    }
+
+    /**
      * Toggle driver availability status
      */
     public function toggleStatus(Request $request)
@@ -165,6 +203,48 @@ class DriverDashboardController extends Controller
         }
 
         return back()->with('success', 'Perjalanan telah selesai! Saldo Anda bertambah sebesar Rp ' . number_format($earnedAmount, 0, ',', '.'));
+    }
+
+
+    /**
+     * Show driver's active orders (confirmed/departed)
+     */
+    public function orders()
+    {
+        $user = Auth::user();
+        $armada = $user->armada;
+
+        if (!$armada && $user->phone) {
+            $armada = Armada::where('driver_phone', $user->phone)->first();
+        }
+
+        $orders = collect();
+
+        if ($armada) {
+            $travelOrders = TravelBooking::with(['user', 'route'])
+                ->where('assigned_armada_id', $armada->id)
+                ->whereIn('status', ['confirmed', 'departed'])
+                ->get()
+                ->map(function ($booking) {
+                    $booking->order_type = 'travel';
+                    return $booking;
+                });
+
+            $rentalOrders = RentalBooking::with(['user', 'route'])
+                ->where('assigned_armada_id', $armada->id)
+                ->whereIn('status', ['confirmed', 'departed', 'active'])
+                ->get()
+                ->map(function ($booking) {
+                    $booking->order_type = 'rental';
+                    return $booking;
+                });
+
+            $orders = $travelOrders->merge($rentalOrders)->sortByDesc(function ($order) {
+                return $order->scheduled_date ?? $order->start_date;
+            });
+        }
+
+        return view('driver.orders', compact('orders', 'armada'));
     }
 
     /**

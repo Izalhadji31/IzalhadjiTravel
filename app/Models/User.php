@@ -99,6 +99,11 @@ class User extends Authenticatable
         return $this->hasOne(Armada::class, 'driver_phone', 'phone');
     }
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     /**
      * Helper Methods
      */

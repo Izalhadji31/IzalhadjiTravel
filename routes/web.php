@@ -21,6 +21,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\IdentityVerificationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
 
 // Landing Page
@@ -160,6 +161,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/drivers', [AdminController::class, 'manageDrivers'])->name('admin.drivers');
         Route::post('/drivers/{driver}/approve', [AdminController::class, 'approveDriver'])->name('admin.drivers.approve');
         Route::post('/bookings/{type}/{id}/approve', [AdminController::class, 'approveBooking'])->name('admin.bookings.approve');
+        Route::post('/bookings/{type}/{id}/complete', [AdminController::class, 'completeBooking'])->name('admin.bookings.complete');
+        Route::post('/bookings/{type}/{id}/cancel', [AdminController::class, 'cancelBooking'])->name('admin.bookings.cancel');
+        Route::get('/bookings/{type}/{id}', [AdminController::class, 'showBooking'])->name('admin.bookings.show');
+        Route::get('/payments', [AdminController::class, 'payments'])->name('admin.payments');
+        Route::get('/revenue-sharing', [AdminController::class, 'revenueSharing'])->name('admin.revenue-sharing');
+        Route::get('/revenue-sharing/export', [AdminController::class, 'exportRevenueSharingCSV'])->name('admin.revenue-sharing.export');
+        Route::get('/revenue-sharing/{revenueSharing}', [AdminController::class, 'showRevenueSharing'])->name('admin.revenue-sharing.show');
+        Route::get('/vouchers', [AdminController::class, 'vouchers'])->name('admin.vouchers');
+        Route::post('/vouchers', [AdminController::class, 'storeVoucher'])->name('admin.vouchers.store');
+        Route::delete('/vouchers/{voucher}', [AdminController::class, 'destroyVoucher'])->name('admin.vouchers.destroy');
     });
 
     // Driver Routes - Require Driver Role
@@ -167,12 +178,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DriverDashboardController::class, 'index'])->name('driver.dashboard');
         Route::post('/status', [DriverDashboardController::class, 'toggleStatus'])->name('driver.status.toggle');
         Route::get('/earnings', [DriverDashboardController::class, 'earnings'])->name('driver.earnings');
+        Route::get('/orders', [DriverDashboardController::class, 'orders'])->name('driver.orders');
         Route::post('/trip/{booking}/{type}/start', [DriverDashboardController::class, 'startTrip'])->name('driver.trip.start');
         Route::post('/trip/{booking}/{type}/complete', [DriverDashboardController::class, 'completeTrip'])->name('driver.trip.complete');
     });
 
     // Partner/Mitra Routes
+    // Partner/Mitra Routes
     Route::middleware('role:partner')->prefix('partner')->group(function () {
+        Route::get('/dashboard', [PartnerController::class, 'dashboard'])->name('partner.dashboard');
+        Route::get('/armadas', [PartnerController::class, 'armadas'])->name('partner.armadas');
+        Route::post('/armadas', [PartnerController::class, 'storeArmada'])->name('partner.armadas.store');
+        Route::get('/armadas/{armada}/edit', [PartnerController::class, 'editArmada'])->name('partner.armadas.edit');
+        Route::put('/armadas/{armada}', [PartnerController::class, 'updateArmada'])->name('partner.armadas.update');
+        Route::get('/drivers', [PartnerController::class, 'drivers'])->name('partner.drivers');
+        Route::post('/drivers', [PartnerController::class, 'storeDriver'])->name('partner.drivers.store');
+        Route::get('/drivers/{armada}/edit', [PartnerController::class, 'editDriver'])->name('partner.drivers.edit');
+        Route::put('/drivers/{armada}', [PartnerController::class, 'updateDriver'])->name('partner.drivers.update');
         Route::get('/revenue', [PartnerController::class, 'revenue'])->name('partner.revenue');
     });
 
@@ -200,6 +222,34 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/manifest/{booking}', [ExportController::class, 'manifestPdf'])->name('exports.manifest');
     });
 
+    // Voucher Validation API (for checkout)
+    Route::get('/api/voucher/validate', function (Illuminate\Http\Request $request) {
+        $code = strtoupper($request->get('code'));
+        $amount = floatval($request->get('amount', 0));
+
+        $voucher = \App\Models\Voucher::where('code', $code)->first();
+
+        if (!$voucher) {
+            return response()->json(['valid' => false, 'message' => 'Kode voucher tidak ditemukan']);
+        }
+
+        if (!$voucher->isValid()) {
+            return response()->json(['valid' => false, 'message' => 'Voucher sudah tidak berlaku']);
+        }
+
+        $discount = 0;
+        if ($voucher->type === 'percentage') {
+            $discount = $amount * ($voucher->value / 100);
+            if ($voucher->max_discount) {
+                $discount = min($discount, $voucher->max_discount);
+            }
+        } else {
+            $discount = min($voucher->value, $amount);
+        }
+
+        return response()->json(['valid' => true, 'discount' => round($discount), 'voucher_id' => $voucher->id]);
+    })->middleware('auth');
+
     // Identity Verification Routes
     Route::prefix('identity')->group(function () {
         Route::get('/create', [IdentityVerificationController::class, 'create'])->name('identity.create');
@@ -222,6 +272,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verify/{token}', [TicketController::class, 'verify'])->name('ticket.verify');
         Route::post('/checkin/{booking}', [TicketController::class, 'checkin'])->name('tickets.checkin');
     });
+
+    // Notification Routes
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     // Super Admin Routes - Global SaaS Management
     // Uncomment when views are created

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mitra;
+use App\Models\Armada;
 use App\Models\RevenueSharing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class PartnerController extends Controller
 {
     /**
-     * Display partners
+     * Get the current authenticated partner
+     */
+    private function getPartner()
+    {
+        $user = Auth::user();
+        return Mitra::where('email', $user->email)->first();
+    }
+
+    /**
+     * Display partners (admin)
      */
     public function index(Request $request)
     {
@@ -27,7 +37,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Show create form
+     * Show create form (admin)
      */
     public function create()
     {
@@ -35,7 +45,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Store partner
+     * Store partner (admin)
      */
     public function store(Request $request)
     {
@@ -56,7 +66,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Show partner details
+     * Show partner details (admin)
      */
     public function show(Mitra $partner)
     {
@@ -65,7 +75,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Show edit form
+     * Show edit form (admin)
      */
     public function edit(Mitra $partner)
     {
@@ -73,7 +83,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Update partner
+     * Update partner (admin)
      */
     public function update(Request $request, Mitra $partner)
     {
@@ -94,7 +104,7 @@ class PartnerController extends Controller
     }
 
     /**
-     * Delete partner
+     * Delete partner (admin)
      */
     public function destroy(Mitra $partner)
     {
@@ -104,12 +114,236 @@ class PartnerController extends Controller
     }
 
     /**
+     * Show partner dashboard
+     */
+    public function dashboard()
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $totalArmadas = Armada::where('mitra_id', $partner->id)->count();
+
+        $totalDrivers = Armada::where('mitra_id', $partner->id)
+            ->whereNotNull('driver_name')
+            ->count();
+
+        $totalEarnings = RevenueSharing::where('mitra_id', $partner->id)
+            ->where('status', 'completed')
+            ->sum('mitra_amount');
+
+        $pendingPayouts = RevenueSharing::where('mitra_id', $partner->id)
+            ->where('status', 'pending')
+            ->sum('mitra_amount');
+
+        $recentTransactions = RevenueSharing::where('mitra_id', $partner->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('partner.dashboard', compact(
+            'partner',
+            'totalArmadas',
+            'totalDrivers',
+            'totalEarnings',
+            'pendingPayouts',
+            'recentTransactions'
+        ));
+    }
+
+    /**
+     * Show partner armada management
+     */
+    public function armadas()
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $armadas = Armada::where('mitra_id', $partner->id)
+            ->latest()
+            ->get();
+
+        return view('partner.armadas', compact('armadas'));
+    }
+
+    /**
+     * Store armada for partner
+     */
+    public function storeArmada(Request $request)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $validated = $request->validate([
+            'plate_number' => 'required|string|unique:armadas',
+            'driver_name' => 'required|string|max:255',
+            'driver_phone' => 'nullable|string',
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
+            'status' => 'nullable|in:tersedia,jalan,maintenance',
+        ]);
+
+        Armada::create([
+            'mitra_id' => $partner->id,
+            'plate_number' => $validated['plate_number'],
+            'driver_name' => $validated['driver_name'],
+            'driver_phone' => $validated['driver_phone'] ?? null,
+            'vehicle_type' => $validated['vehicle_type'],
+            'seat_capacity' => $validated['seat_capacity'],
+            'status' => $validated['status'] ?? 'tersedia',
+        ]);
+
+        return redirect()->route('partner.armadas')
+                       ->with('success', 'Armada added successfully');
+    }
+
+    /**
+     * Show edit armada form
+     */
+    public function editArmada(Armada $armada)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner || $armada->mitra_id !== $partner->id) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('partner.armada-edit', compact('armada'));
+    }
+
+    /**
+     * Update armada
+     */
+    public function updateArmada(Request $request, Armada $armada)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner || $armada->mitra_id !== $partner->id) {
+            abort(403, 'Unauthorized');
+        }
+
+        $validated = $request->validate([
+            'plate_number' => 'required|string|unique:armadas,plate_number,' . $armada->id,
+            'driver_name' => 'required|string|max:255',
+            'driver_phone' => 'nullable|string',
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
+            'status' => 'nullable|in:tersedia,jalan,maintenance',
+        ]);
+
+        $armada->update($validated);
+
+        return redirect()->route('partner.armadas')
+                       ->with('success', 'Armada updated successfully');
+    }
+
+    /**
+     * Show partner driver management
+     */
+    public function drivers()
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $drivers = Armada::where('mitra_id', $partner->id)
+            ->whereNotNull('driver_name')
+            ->latest()
+            ->get();
+
+        return view('partner.drivers', compact('drivers'));
+    }
+
+    /**
+     * Store driver (creates armada with driver info) for partner
+     */
+    public function storeDriver(Request $request)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner) {
+            abort(404, 'Partner profile not found');
+        }
+
+        $validated = $request->validate([
+            'driver_name' => 'required|string|max:255',
+            'driver_phone' => 'nullable|string',
+            'plate_number' => 'required|string|unique:armadas',
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
+            'status' => 'nullable|in:tersedia,jalan,maintenance',
+        ]);
+
+        Armada::create([
+            'mitra_id' => $partner->id,
+            'driver_name' => $validated['driver_name'],
+            'driver_phone' => $validated['driver_phone'] ?? null,
+            'plate_number' => $validated['plate_number'],
+            'vehicle_type' => $validated['vehicle_type'],
+            'seat_capacity' => $validated['seat_capacity'],
+            'status' => $validated['status'] ?? 'tersedia',
+        ]);
+
+        return redirect()->route('partner.drivers')
+                       ->with('success', 'Driver added successfully');
+    }
+
+    /**
+     * Show edit driver form
+     */
+    public function editDriver(Armada $armada)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner || $armada->mitra_id !== $partner->id) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('partner.driver-edit', compact('armada'));
+    }
+
+    /**
+     * Update driver
+     */
+    public function updateDriver(Request $request, Armada $armada)
+    {
+        $partner = $this->getPartner();
+
+        if (!$partner || $armada->mitra_id !== $partner->id) {
+            abort(403, 'Unauthorized');
+        }
+
+        $validated = $request->validate([
+            'driver_name' => 'required|string|max:255',
+            'driver_phone' => 'nullable|string',
+            'plate_number' => 'required|string|unique:armadas,plate_number,' . $armada->id,
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
+            'status' => 'nullable|in:tersedia,jalan,maintenance',
+        ]);
+
+        $armada->update($validated);
+
+        return redirect()->route('partner.drivers')
+                       ->with('success', 'Driver updated successfully');
+    }
+
+    /**
      * Show partner revenue / earnings dashboard
      */
     public function revenue()
     {
-        $user = Auth::user();
-        $partner = Mitra::where('email', $user->email)->first();
+        $partner = $this->getPartner();
 
         if (!$partner) {
             abort(404, 'Partner profile not found');
