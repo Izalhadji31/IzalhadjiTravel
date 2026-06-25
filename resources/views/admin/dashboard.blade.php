@@ -99,7 +99,7 @@
                 </div>
                 <div>
                     <p class="font-semibold text-gray-900">User Activity: New Registration</p>
-                    <p class="text-gray-600 text-sm">User ID #{{ rand(100, 9999) }} registered at 10:{{ rand(10, 59)} AM</p>
+                    <p class="text-gray-600 text-sm">User ID #{{ rand(100, 9999) }} registered at 10:{{ rand(10, 59) }} AM</p>
                     <p class="text-gray-500 text-xs mt-1">{{ $i }} hour{{ $i > 1 ? 's' : '' }} ago</p>
                 </div>
             </div>
