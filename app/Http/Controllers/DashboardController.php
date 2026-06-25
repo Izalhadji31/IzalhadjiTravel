@@ -30,7 +30,7 @@ class DashboardController extends Controller
         }
 
         // 2. Branching for Partner/Mitra
-        if ($user->isPartner()) {
+        if ($user->isPartner() || $user->role === 'partner') {
             $partner = $user->partnerProfile;
             
             // Fallback in case profile is not yet created
