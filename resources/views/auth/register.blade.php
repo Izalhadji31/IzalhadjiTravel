@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar - ASR GO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * { font-family: 'Inter', sans-serif; }
         html, body { margin: 0; padding: 0; background: #f8f9fa; }
@@ -168,6 +168,15 @@
             <!-- Register Form -->
             <form method="POST" action="{{ route('register.store') }}">
                 @csrf
+                
+                <div class="form-group">
+                    <label class="form-label" for="role">Daftar Sebagai</label>
+                    <select id="role" name="role" class="form-input">
+                        <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>Pelanggan (Customer)</option>
+                        <option value="driver" {{ old('role') == 'driver' ? 'selected' : '' }}>Sopir / Driver</option>
+                        <option value="partner" {{ old('role') == 'partner' ? 'selected' : '' }}>Mitra (Partner)</option>
+                    </select>
+                </div>
                 
                 <div class="form-row">
                     <div class="form-group">
