@@ -8,6 +8,7 @@ use App\Models\Armada;
 use App\Models\TravelBooking;
 use App\Models\RentalBooking;
 use App\Models\TripTracking;
+use App\Models\RevenueSharing;
 use App\Services\TripTrackingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -164,5 +165,69 @@ class DriverDashboardController extends Controller
         }
 
         return back()->with('success', 'Perjalanan telah selesai! Saldo Anda bertambah sebesar Rp ' . number_format($earnedAmount, 0, ',', '.'));
+    }
+
+    /**
+     * Show driver's earnings history, balance, and trip history
+     */
+    public function earnings()
+    {
+        $user = Auth::user();
+        $driver = $user->driverProfile;
+        $armada = $user->armada;
+
+        if (!$armada && $user->phone) {
+            $armada = Armada::where('driver_phone', $user->phone)->first();
+        }
+
+        $balance = $driver ? $driver->balance : 0;
+        $totalTrips = $driver ? $driver->total_trips : 0;
+
+        // Get earnings history from RevenueSharing records linked to this driver's armada bookings
+        $earningsHistory = collect();
+        $totalEarnings = 0;
+        $pendingEarnings = 0;
+
+        if ($armada) {
+            // Get all booking IDs assigned to this armada (both travel and rental)
+            $travelBookingIds = TravelBooking::where('assigned_armada_id', $armada->id)->pluck('id');
+            $rentalBookingIds = RentalBooking::where('assigned_armada_id', $armada->id)->pluck('id');
+
+            // RevenueSharing records for travel bookings
+            $travelEarnings = RevenueSharing::where('booking_type', TravelBooking::class)
+                ->whereIn('booking_id', $travelBookingIds)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // RevenueSharing records for rental bookings
+            $rentalEarnings = RevenueSharing::where('booking_type', RentalBooking::class)
+                ->whereIn('booking_id', $rentalBookingIds)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Merge and sort by created_at descending
+            $earningsHistory = $travelEarnings->merge($rentalEarnings)->sortByDesc('created_at');
+
+            // Calculate totals
+            $totalEarnings = $earningsHistory->where('status', 'completed')->sum('driver_amount');
+            $pendingEarnings = $earningsHistory->where('status', 'pending')->sum('driver_amount');
+        }
+
+        // Get trip history for this driver
+        $tripHistory = TripTracking::when($armada, function ($query) use ($armada) {
+                return $query->where('armada_id', $armada->id);
+            })
+            ->orderBy('start_time', 'desc')
+            ->paginate(10);
+
+        return view('driver.earnings', compact(
+            'driver',
+            'balance',
+            'totalTrips',
+            'earningsHistory',
+            'totalEarnings',
+            'pendingEarnings',
+            'tripHistory'
+        ));
     }
 }
