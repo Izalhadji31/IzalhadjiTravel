@@ -1,401 +1,334 @@
-# ✅ ASR GO - FINAL SETUP & EXECUTION CHECKLIST
+# ASR GO - Travel & Rental Management System
 
-## Status: 🟢 READY TO RUN
-
----
-
-## 📋 WHAT HAS BEEN CREATED
-
-### ✅ Database Layer (10 Migrations)
-```
-✓ Users table with authentication
-✓ Locations table for route management
-✓ Routes table for services
-✓ Vehicles table with fleet management
-✓ Travel bookings table
-✓ Rental bookings table
-✓ Payments table (Midtrans integration)
-✓ Reviews/Ratings table
-✓ Audit logs table
-✓ Settings table
-```
-
-### ✅ Model Layer (10 Models with Relationships)
-```
-✓ User model with authentication
-✓ Location model
-✓ Route model with relationships
-✓ Vehicle model with fleet tracking
-✓ TravelBooking model
-✓ RentalBooking model
-✓ Payment model with Midtrans
-✓ Review model
-✓ AuditLog model
-✓ Setting model
-```
-
-### ✅ Controller Layer
-```
-✓ PublicController (Homepage, Travel, Rental, Contact)
-✓ DashboardController (Role-based routing)
-✓ LoginController (Authentication)
-✓ RegisterController (User registration)
-✓ And more pre-existing controllers
-```
-
-### ✅ Middleware Layer (7 New Middleware)
-```
-✓ Authenticate - Check if user is logged in
-✓ RedirectIfAuthenticated - Redirect to dashboard
-✓ VerifyCsrfToken - CSRF protection
-✓ EncryptCookies - Cookie encryption
-✓ TrustProxies - Proxy handling
-✓ PreventRequestsDuringMaintenance - Maintenance mode
-✓ TrimStrings - Input trimming
-✓ ValidateSignature - Signed URL validation
-✓ CheckUserRole - Role-based access control
-```
-
-### ✅ View Layer (Blade Templates)
-```
-✓ layouts/public.blade.php - Public layout
-✓ auth/login.blade.php - Login page
-✓ auth/register.blade.php - Register page
-✓ customer/dashboard.blade.php - Customer dashboard
-✓ errors/404.blade.php - Error page
-✓ errors/500.blade.php - Error page
-```
-
-### ✅ Configuration Files
-```
-✓ app/Http/Kernel.php - Middleware registration
-✓ config/auth.php - Authentication config
-✓ .env - Environment variables (already exists)
-```
-
-### ✅ Setup Scripts
-```
-✓ setup.sh - Auto-setup for Mac/Linux
-✓ setup.bat - Auto-setup for Windows
-✓ test-db.php - Database connection test
-```
-
-### ✅ Documentation
-```
-✓ SETUP_GUIDE.md - Complete setup guide (comprehensive)
-✓ QUICK_START.md - Quick start guide (simple)
-✓ IMPLEMENTATION_STATUS.md - Status report
-✓ IMPLEMENTATION_SUMMARY.md - Design summary (from previous)
-✓ DESIGN_SYSTEM.md - UI/UX specifications (from previous)
-✓ DATABASE_STRUCTURE.md - Schema documentation (from previous)
-```
+Aplikasi pemesanan travel dan rental mobil berbasis web dengan Laravel 13, sistem pembayaran Midtrans, dan revenue sharing otomatis.
 
 ---
 
-## 🚀 HOW TO RUN THE APPLICATION
+## Tech Stack
 
-### Option 1: Automatic Setup (RECOMMENDED) ⭐
+- **Framework:** Laravel 13 (PHP 8.3)
+- **Database:** MySQL 8.0
+- **Frontend:** Tailwind CSS CDN (no Vite/build)
+- **Payment:** Midtrans Snap
+- **Auth:** Spatie Laravel Permission (roles)
+- **Server:** Apache via Laragon (Windows)
 
-#### For Windows Users:
-1. Open Command Prompt or PowerShell
-2. Navigate to project folder:
-   ```
-   cd c:\laragon\www\asr-go
-   ```
-3. Run the setup script:
-   ```
-   setup.bat
-   ```
-4. Wait for completion (2-3 minutes)
-5. Server will start automatically
+---
 
-#### For Mac/Linux Users:
-1. Open Terminal
-2. Navigate to project:
-   ```bash
-   cd /path/to/asr-go
-   ```
-3. Run setup script:
-   ```bash
-   bash setup.sh
-   ```
-4. Wait for completion
-5. Server will start
+## Fitur Lengkap
 
-### Option 2: Manual Setup Step-by-Step
+### 1. Halaman Publik (Guest)
+
+| Halaman | Fitur |
+|---------|-------|
+| Home | Hero section, info travel & rental, tombol booking, testimoni, footer |
+| Travel | Daftar rute dengan filter asal/tujuan/harga, pagination |
+| Rental | Daftar harga rental dengan opsi sopir/tanpa sopir |
+| Cek Harga | Kalkulator harga otomatis (pilih tujuan, layanan, sopir) |
+| Tentang Kami | Profil perusahaan, visi misi |
+| Kontak | WhatsApp, alamat, email, Google Maps embed |
+
+### 2. Authentication
+
+| Fitur | Keterangan |
+|-------|------------|
+| Login | Dengan role selection (admin/customer/driver/partner) |
+| Register | Pilih role saat registrasi |
+| Verifikasi Identitas | Upload KTP/SIM, status verified/unverified |
+| Role-based Redirect | Auto redirect ke dashboard sesuai role |
+
+### 3. Dashboard User (Customer)
+
+| Fitur | Keterangan |
+|-------|------------|
+| Dashboard | Ringkasan booking, status pembayaran, riwayat |
+| Booking Travel | Pilih rute, jumlah kursi, tanggal |
+| Booking Rental | Dengan/tanpa sopir, tanggal, durasi |
+| Pembayaran | Midtrans Snap integration |
+| Riwayat Transaksi | Semua booking dengan status |
+| Profil | Edit data, ganti password, verifikasi identitas |
+| Notifikasi | Badge notifikasi, mark as read |
+| Ticket & QR | Lihat tiket + QR code untuk checkin |
+
+### 4. Dashboard Admin
+
+| Fitur | Keterangan |
+|-------|------------|
+| Dashboard | Total transaksi, user, pendapatan, grafik |
+| Manajemen User | Daftar user, verifikasi, nonaktifkan |
+| Manajemen Mitra | CRUD mitra, payout, lihat earnings |
+| Manajemen Driver | CRUD driver, approve, status tracking |
+| Manajemen Armada | CRUD armada (plat, driver, kendaraan, status) |
+| Manajemen Rute Travel | CRUD rute (asal, tujuan, jarak, harga) |
+| Manajemen Harga Rental | CRUD harga rental (dengan/tanpa sopir) |
+| Booking Travel | Detail, assign armada, update status (approve/complete/cancel) |
+| Booking Rental | Detail, assign armada, update status |
+| Manajemen Pembayaran | List, filter status, detail Midtrans ID |
+| Revenue Sharing | Breakdown admin/mitra/sopir, filter, export CSV |
+| Laporan | Travel, rental, pendapatan, revenue sharing |
+| Export | PDF (invoice, ticket, manifest), Excel |
+| Voucher | CRUD promo/diskon, customer apply saat checkout |
+| Pengaturan Sistem | Persentase bagi hasil, konfigurasi Midtrans |
+
+### 5. Dashboard Driver
+
+| Fitur | Keterangan |
+|-------|------------|
+| Dashboard | Order aktif, total trips, saldo, status toggle |
+| Order Masuk | List booking assigned, terima/tolak |
+| Mulai Perjalanan | Update status departed, create trip tracking |
+| Selesaikan Perjalanan | Update status completed, tambah saldo |
+| Navigasi | Google Maps link ke tujuan |
+| Earnings | Riwayat pendapatan, saldo, pending earnings |
+| Trip History | Riwayat perjalanan yang diselesaikan |
+
+### 6. Dashboard Partner (Mitra)
+
+| Fitur | Keterangan |
+|-------|------------|
+| Dashboard | Total armada, driver, earnings, pending payout |
+| Armada Saya | CRUD armada milik partner (plat, driver, status) |
+| Driver Saya | CRUD driver milik partner |
+| Revenue | Detail revenue sharing partner |
+| Recent Transactions | List transaksi terbaru |
+
+### 7. Sistem
+
+| Fitur | Keterangan |
+|-------|------------|
+| Roles & Permissions | admin, customer, driver, partner (spatie) |
+| Revenue Sharing | Auto split 30/50/20 (admin/mitra/driver) |
+| Midtrans Payment | Snap token, callback handler, status check |
+| Export PDF | Invoice, ticket, manifest (DomPDF) |
+| Export Excel | Bookings, revenue, drivers (Laravel Excel) |
+| Error Pages | 403, 404, 500, Maintenance |
+| Notification | Per-user notification with unread badge |
+
+---
+
+## Struktur Role & Revenue Sharing
+
+```
+Booking → Payment Success → Revenue Sharing Auto Split:
+  - Admin  : 30% (platform)
+  - Mitra  : 50% (partner)
+  - Driver : 20% (sopir)
+```
+
+---
+
+## Database Tables
+
+| Tabel | Keterangan |
+|-------|------------|
+| users | Semua user dengan role |
+| companies | Multi-tenant (SaaS ready) |
+| locations | Lokasi untuk rute |
+| routes | Rute travel & rental |
+| armadas | Kendaraan + driver |
+| travel_bookings | Pemesanan travel |
+| rental_bookings | Pemesanan rental |
+| airport_transfer_bookings | Transfer bandara |
+| payments | Record pembayaran Midtrans |
+| revenue_sharings | Bagi hasil per booking |
+| vouchers | Kode promo/diskon |
+| notifications | Notifikasi per user |
+| identity_verifications | Verifikasi KTP/SIM |
+| reviews | Rating & review |
+| audit_logs | Log aktivitas |
+| settings | Pengaturan sistem |
+| invoices | Invoice PDF |
+| tickets | Tiket dengan QR |
+| trip_trackings | Tracking perjalanan |
+| vehicle_locations | GPS lokasi kendaraan |
+| vehicle_maintenance_logs | Log maintenance armada |
+| mitras | Data partner/mitra |
+| drivers | Profil driver terpisah |
+| travel_prices | Harga per rute |
+| rental_prices | Harga rental per rute |
+| travel_seats | Kursi per travel |
+| booking_passengers | Data penumpang |
+| cms_pages | Halaman statis (FAQ, dll) |
+
+---
+
+## Cara Menjalankan
+
+### Prasyarat
+- Laragon (Apache + MySQL) aktif
+- PHP 8.3
+- Composer
+- Node 18 (opsional, CDN only)
+
+### Setup
 
 ```bash
-# Step 1: Navigate to project
-cd c:\laragon\www\asr-go
+cd C:\laragon\www\asr-go
 
-# Step 2: Install PHP dependencies
+# Install dependencies
 composer install
-
-# Step 3: Install JavaScript dependencies
 npm install
 
-# Step 4: Generate application key
-php artisan key:generate --force
-
-# Step 5: Create database (run in MySQL terminal)
-mysql -u root -e "CREATE DATABASE asr_go CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Step 6: Run database migrations
-php artisan migrate:fresh
-
-# Step 7: Seed database with demo data
-php artisan db:seed
-
-# Step 8: Build frontend assets
-npm run build
-
-# Step 9: Start development server
-php artisan serve
-
-# Step 10: Open in browser
-# http://localhost:8000
-```
-
----
-
-## 🧪 VERIFY INSTALLATION
-
-### Test 1: Check Database Connection
-```bash
-php test-db.php
-```
-Expected output: ✅ Database Connection Successful
-
-### Test 2: Check Laravel Key
-```bash
-php artisan key:generate --show
-```
-Expected: APP_KEY value displayed
-
-### Test 3: Open Browser
-Go to: `http://localhost:8000`
-Expected: ASR GO Homepage appears
-
-### Test 4: Try Login
-- Navigate to: `http://localhost:8000/login`
-- Email: `admin@asrgo.com`
-- Password: `password`
-- Expected: Redirects to dashboard
-
----
-
-## 👤 LOGIN CREDENTIALS
-
-After setup, use these accounts to test:
-
-| Account | Email | Password | Access |
-|---------|-------|----------|--------|
-| **Admin** | admin@asrgo.com | password | Admin dashboard, user management |
-| **Customer** | customer@asrgo.com | password | Booking travel, rental, dashboard |
-| **Driver** | driver@asrgo.com | password | Driver dashboard, trips |
-| **Partner** | partner@asrgo.com | password | Fleet management, routes |
-
----
-
-## 🌐 IMPORTANT URLs
-
-After running `php artisan serve`:
-
-```
-Home Page:           http://localhost:8000
-Login:              http://localhost:8000/login
-Register:           http://localhost:8000/register
-Dashboard:          http://localhost:8000/dashboard (after login)
-Admin Panel:        http://localhost:8000/admin (admin login)
-Public Travel:      http://localhost:8000/public/travel
-Public Rental:      http://localhost:8000/public/rental
-Public Contact:     http://localhost:8000/public/contact
-```
-
----
-
-## ⚙️ TROUBLESHOOTING
-
-### Problem 1: Composer Not Found
-**Solution**: Install Composer from https://getcomposer.org/
-
-### Problem 2: MySQL Not Running
-**Solution**: 
-- Windows: Start MySQL from Services
-- Mac: Run `brew services start mysql`
-- Linux: Run `sudo service mysql start`
-
-### Problem 3: Database Already Exists Error
-**Solution**:
-```bash
+# Database (MySQL harus aktif dari Laragon CP)
 php artisan migrate:fresh --seed
-```
 
-### Problem 4: Port 8000 Already in Use
-**Solution**:
-```bash
-php artisan serve --port=8001
-```
-
-### Problem 5: Assets Not Loading (CSS/JS)
-**Solution**:
-```bash
-npm run build
-```
-
-### Problem 6: Permission Denied (Linux/Mac)
-**Solution**:
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-See [SETUP_GUIDE.md](./SETUP_GUIDE.md) for more troubleshooting.
-
----
-
-## 📊 PROJECT STATISTICS
-
-| Category | Count |
-|----------|-------|
-| Database Migrations | 10 |
-| Eloquent Models | 10 |
-| Controllers | 4 main + others |
-| Routes | 60+ |
-| Views/Blade Files | 6 new + existing |
-| Middleware | 9 |
-| Configuration Files | 3 |
-| Documentation Files | 9 |
-| **TOTAL FILES CREATED** | **40+** |
-
----
-
-## ✨ FEATURES READY TO USE
-
-### Authentication ✅
-- User login with role selection
-- User registration with validation
-- Password hashing with bcrypt
-- Session management
-- CSRF protection
-
-### Public Pages ✅
-- Homepage with hero section
-- Travel service browsing
-- Rental service browsing
-- Taxi service
-- Contact form
-- About page
-
-### User Dashboard ✅
-- Customer dashboard with stats
-- Recent bookings display
-- Payment history
-- Profile management
-- Logout functionality
-
-### Payment System ✅
-- Midtrans integration (configured in .env)
-- Payment status tracking
-- Invoice management
-- Multiple payment methods
-
-### Admin Features ✅
-- User management
-- Analytics & reports
-- Settings management
-- Dashboard overview
-
----
-
-## 📝 NEXT STEPS
-
-### Immediately After Setup:
-1. ✅ Run setup.bat or setup.sh
-2. ✅ Verify database connection
-3. ✅ Open http://localhost:8000 in browser
-4. ✅ Test login with demo credentials
-5. ✅ Explore dashboard
-
-### For Development:
-1. Read [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) for UI guidelines
-2. Read [DATABASE_STRUCTURE.md](./DATABASE_STRUCTURE.md) for schema
-3. Read [BLADE_STRUCTURE.md](./BLADE_STRUCTURE.md) for view organization
-
-### For Production Deployment:
-1. Review [SETUP_GUIDE.md](./SETUP_GUIDE.md) - Production section
-2. Setup SSL certificate
-3. Configure production database
-4. Configure production email
-5. Setup backups
-
----
-
-## 🎯 SUCCESS CHECKLIST
-
-After running the setup, verify:
-
-- [ ] Database created successfully
-- [ ] Migrations ran without errors
-- [ ] Seeds populated sample data
-- [ ] Server starts with `php artisan serve`
-- [ ] Homepage loads at http://localhost:8000
-- [ ] Login page accessible at http://localhost:8000/login
-- [ ] Can login with demo credentials
-- [ ] Dashboard loads after login
-- [ ] No console errors in browser
-- [ ] Database connection test passes
-
----
-
-## 📞 SUPPORT
-
-If you encounter any issues:
-
-1. Check [SETUP_GUIDE.md](./SETUP_GUIDE.md) troubleshooting section
-2. Check server logs: `storage/logs/laravel.log`
-3. Run: `php test-db.php` to check database
-4. Clear cache: `php artisan cache:clear`
-
----
-
-## ✅ YOU'RE ALL SET!
-
-The application is now **FULLY FUNCTIONAL** and ready to use.
-
-**To start using:**
-```bash
-# Run setup (automatic)
-setup.bat          # Windows
-bash setup.sh      # Mac/Linux
-
-# Or manual
+# Jalankan server
 php artisan serve
+```
 
-# Then open: http://localhost:8000
+### Akses
+```
+URL: http://asr-go.test
+```
+
+### Demo Accounts
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@asrgo.test | password |
+| Customer | customer@asrgo.test | password |
+| Driver | driver@asrgo.test | password |
+| Partner | partner@asrgo.test | password |
+
+---
+
+## Routes Utama
+
+```
+/                           → Homepage
+/public/travel              → Daftar travel
+/public/rental              → Daftar rental
+/public/price-calculator    → Cek harga
+/public/about               → Tentang kami
+/public/contact             → Kontak
+/login                      → Login
+/register                   → Register
+
+/dashboard                  → Role-based dashboard
+/bookings/travel            → Booking travel
+/bookings/rental            → Booking rental
+/payments/travel/{id}       → Bayar travel
+/payments/rental/{id}       → Bayar rental
+/tracking                   → Tracking map
+/profile                    → Profil user
+/notifications              → Notifikasi
+/tickets/{booking}          → Tiket + QR
+
+/admin                      → Admin dashboard
+/admin/users                → Manajemen user
+/admin/bookings             → Semua booking
+/admin/bookings/{type}/{id} → Detail booking
+/admin/payments             → Manajemen pembayaran
+/admin/revenue-sharing      → Revenue sharing
+/admin/vouchers             → Manajemen voucher
+/admin/settings             → Pengaturan
+
+/driver                     → Driver dashboard
+/driver/orders              → Order aktif
+/driver/earnings            → Pendapatan
+
+/partner/dashboard          → Partner dashboard
+/partner/armadas            → Armada saya
+/partner/drivers            → Driver saya
+/partner/revenue            → Revenue partner
+
+/exports/bookings-pdf       → Export PDF bookings
+/exports/revenue-excel      → Export Excel revenue
+/exports/invoice/{id}       → Export invoice
+/exports/ticket/{id}        → Export tiket
 ```
 
 ---
 
-## 📊 IMPLEMENTATION COMPLETE ✅
+## API Endpoints
 
-✅ Database layer - DONE  
-✅ Model layer - DONE  
-✅ Controller layer - DONE  
-✅ View layer - DONE  
-✅ Middleware layer - DONE  
-✅ Authentication - DONE  
-✅ Authorization - DONE  
-✅ Routing - DONE  
-✅ Database seeding - DONE  
-✅ Documentation - DONE  
-
-**STATUS: 🟢 READY FOR PRODUCTION USE**
+```
+GET /api/voucher/validate?code=XXX&amount=100000
+  → Validasi voucher saat checkout (auth required)
+POST /payments/callback
+  → Midtrans notification callback
+GET /tickets/verify/{token}
+  → Verifikasi tiket via QR
+POST /tickets/checkin/{booking}
+  → Checkin tiket
+```
 
 ---
 
-*Last Updated: 2024-06-12*  
-*Version: 1.0.0*  
-*Status: Production Ready* ✅
+## File Structure
 
-#   I z a l h a d j i T r a v e l  
- 
+```
+app/
+├── Http/Controllers/
+│   ├── Admin/AdminController.php
+│   ├── Auth/ (Login, Register)
+│   ├── BookingTravelController.php
+│   ├── BookingRentalController.php
+│   ├── DriverDashboardController.php
+│   ├── PartnerController.php
+│   ├── PaymentController.php
+│   ├── NotificationController.php
+│   ├── AnalyticsController.php
+│   ├── ExportController.php
+│   ├── FleetDashboardController.php
+│   ├── TrackingDashboardController.php
+│   └── ...
+├── Models/
+│   ├── User.php (HasRoles)
+│   ├── TravelBooking.php
+│   ├── RentalBooking.php
+│   ├── Payment.php
+│   ├── RevenueSharing.php
+│   ├── Armada.php
+│   ├── Mitra.php
+│   ├── Voucher.php
+│   ├── Notification.php
+│   └── ...
+
+resources/views/
+├── layouts/app.blade.php (admin/driver/partner sidebar)
+├── layouts/public.blade.php (guest)
+├── admin/ (dashboard, bookings, booking-detail, payments, revenue-sharing, vouchers, users, drivers, partners, settings)
+├── driver/ (dashboard, orders, earnings)
+├── partner/ (dashboard, armadas, drivers, revenue)
+├── customer/ (dashboard)
+├── bookings/ (travel, rental, airport-transfer)
+├── payments/ (travel-checkout, rental-checkout, success, error, pending)
+├── notifications/ (index)
+├── public/ (home, travel, rental, price-calculator, about, contact)
+├── tracking/ (dashboard, map, vehicle-details, trip-tracking)
+├── fleet/ (dashboard, vehicles, maintenance)
+├── analytics/ (revenue, bookings, drivers)
+├── errors/ (403, 404, 500, maintenance)
+└── ...
+
+routes/web.php (80+ routes)
+```
+
+---
+
+## Customization
+
+### Warna Brand
+```css
+--trvl-blue: #0064d2
+--trvl-navy: #0d2147
+--trvl-orange: #ff5e1c
+```
+
+### Revenue Sharing
+Edit persentase di `app/Http/Controllers/PaymentService.php` atau di Settings admin.
+
+### Midtrans
+Konfigurasi di `.env`:
+```
+MIDTRANS_SERVER_KEY=your_server_key
+MIDTRANS_CLIENT_KEY=your_client_key
+MIDTRANS_IS_PRODUCTION=false
+```
+
+---
+
+## License
+
+ASR GO - CV. Izalhadji Travel
+Built for skripsi & business use.
