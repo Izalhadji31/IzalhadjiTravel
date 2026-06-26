@@ -87,50 +87,58 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    // Routes Management
-    Route::resource('routes', RouteController::class);
+    // Routes Management (Admin Only)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('routes', RouteController::class);
+    });
 
-    // Travel Bookings
+    // Travel Bookings (Admin manages, customers create)
     Route::prefix('bookings/travel')->group(function () {
-        Route::get('/', [BookingTravelController::class, 'index'])->name('bookings.travel');
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/', [BookingTravelController::class, 'index'])->name('bookings.travel');
+            Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
+            Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
+        });
         Route::get('/create', [BookingTravelController::class, 'create'])->name('bookings.travel.create');
         Route::post('/', [BookingTravelController::class, 'store'])->name('bookings.travel.store');
-        Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
-        Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
     });
 
-    // Rental Bookings
+    // Rental Bookings (Admin manages, customers create)
     Route::prefix('bookings/rental')->group(function () {
-        Route::get('/', [BookingRentalController::class, 'index'])->name('bookings.rental');
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/', [BookingRentalController::class, 'index'])->name('bookings.rental');
+            Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
+            Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
+        });
         Route::get('/create', [BookingRentalController::class, 'create'])->name('bookings.rental.create');
         Route::post('/', [BookingRentalController::class, 'store'])->name('bookings.rental.store');
-        Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
-        Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
     });
 
-    // Airport Transfer Bookings
+    // Airport Transfer Bookings (Admin manages, customers create)
     Route::prefix('bookings/airport-transfer')->group(function () {
-        Route::get('/', [AirportTransferController::class, 'index'])->name('bookings.airport-transfer');
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/', [AirportTransferController::class, 'index'])->name('bookings.airport-transfer');
+            Route::get('/{airportTransferBooking}', [AirportTransferController::class, 'show'])->name('bookings.airport-transfer.show');
+            Route::get('/{airportTransferBooking}/edit', [AirportTransferController::class, 'edit'])->name('bookings.airport-transfer.edit');
+            Route::put('/{airportTransferBooking}', [AirportTransferController::class, 'update'])->name('bookings.airport-transfer.update');
+            Route::post('/{airportTransferBooking}/cancel', [AirportTransferController::class, 'cancel'])->name('bookings.airport-transfer.cancel');
+            Route::delete('/{airportTransferBooking}', [AirportTransferController::class, 'destroy'])->name('bookings.airport-transfer.destroy');
+        });
         Route::get('/create', [AirportTransferController::class, 'create'])->name('bookings.airport-transfer.create');
         Route::post('/', [AirportTransferController::class, 'store'])->name('bookings.airport-transfer.store');
-        Route::get('/{airportTransferBooking}', [AirportTransferController::class, 'show'])->name('bookings.airport-transfer.show');
-        Route::get('/{airportTransferBooking}/edit', [AirportTransferController::class, 'edit'])->name('bookings.airport-transfer.edit');
-        Route::put('/{airportTransferBooking}', [AirportTransferController::class, 'update'])->name('bookings.airport-transfer.update');
-        Route::post('/{airportTransferBooking}/cancel', [AirportTransferController::class, 'cancel'])->name('bookings.airport-transfer.cancel');
-        Route::delete('/{airportTransferBooking}', [AirportTransferController::class, 'destroy'])->name('bookings.airport-transfer.destroy');
     });
 
-    // Vehicles Management
-    Route::resource('vehicles', VehicleController::class);
+    // Vehicles Management (Admin & Partner)
+    Route::middleware('role:admin')->resource('vehicles', VehicleController::class);
 
-    // Drivers Management
-    Route::resource('drivers', DriverController::class);
+    // Drivers Management (Admin only)
+    Route::middleware('role:admin')->resource('drivers', DriverController::class);
 
-    // Partners Management
-    Route::resource('partners', PartnerController::class);
+    // Partners Management (Admin only)
+    Route::middleware('role:admin')->resource('partners', PartnerController::class);
 
-    // Analytics
-    Route::prefix('analytics')->group(function () {
+    // Analytics (Admin only)
+    Route::middleware('role:admin')->prefix('analytics')->group(function () {
         Route::get('/revenue', [AnalyticsController::class, 'revenue'])->name('analytics.revenue');
         Route::get('/revenue/export-csv', [AnalyticsController::class, 'exportRevenueCSV'])->name('analytics.revenue.export-csv');
         Route::get('/bookings', [AnalyticsController::class, 'bookings'])->name('analytics.bookings');
@@ -184,7 +192,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Partner/Mitra Routes
-    // Partner/Mitra Routes
     Route::middleware('role:partner')->prefix('partner')->group(function () {
         Route::get('/dashboard', [PartnerController::class, 'dashboard'])->name('partner.dashboard');
         Route::get('/armadas', [PartnerController::class, 'armadas'])->name('partner.armadas');
@@ -209,8 +216,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pending', [PaymentController::class, 'paymentPending'])->name('payments.pending');
     });
 
-    // Export Routes
-    Route::prefix('exports')->group(function () {
+    // Export Routes (Admin only)
+    Route::middleware('role:admin')->prefix('exports')->group(function () {
         Route::get('/bookings-excel', [ExportController::class, 'bookingsExcel'])->name('exports.bookings.excel');
         Route::get('/bookings-pdf', [ExportController::class, 'bookingsPdf'])->name('exports.bookings.pdf');
         Route::get('/revenue-excel', [ExportController::class, 'revenueExcel'])->name('exports.revenue.excel');

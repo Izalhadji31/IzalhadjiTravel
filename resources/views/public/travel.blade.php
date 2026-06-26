@@ -1,130 +1,257 @@
-@extends('layouts.app')
+
+@extends('layouts.public')
 
 @section('title', 'Travel - ASR GO')
 
 @section('content')
-    <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-4xl font-bold text-gray-900 mb-2">Daftar Rute Travel</h1>
-                <p class="text-gray-600">Pilih rute perjalanan Anda dan pesan sekarang</p>
+<!-- TRAVEL SEARCH BAR -->
+<div style="background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%); padding: 2.5rem 0 2rem;">
+    <div class="trvl-container">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
+                <span style="display:inline-flex; align-items:center; gap:0.4rem;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l4-4 4 4 4-4 4 4 4-4"/><path d="M2 12h20"/><line x1="6" y1="14" x2="6" y2="20"/><line x1="18" y1="14" x2="18" y2="20"/></svg>
+                    Travel Antar Kota
+                </span>
+            </h1>
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Harga terjangkau, nyaman, aman & tepat waktu</p>
+        </div>
+        <form method="GET" action="{{ route('public.travel') }}" style="background: white; border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 140px 100px 1fr; gap: 0.75rem; align-items: end;">
+                <div>
+                    <label class="trvl-field-label">Dari</label>
+                    <select name="origin" class="trvl-form-field">
+                        <option value="">Kota Asal</option>
+                        @foreach ($origins as $origin)
+                            <option value="{{ $origin }}" {{ request('origin') == $origin ? 'selected' : '' }}>{{ $origin }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="trvl-field-label">Ke</label>
+                    <select name="destination" class="trvl-form-field">
+                        <option value="">Kota Tujuan</option>
+                        @foreach ($destinations as $destination)
+                            <option value="{{ $destination }}" {{ request('destination') == $destination ? 'selected' : '' }}>{{ $destination }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="trvl-field-label">Tanggal</label>
+                    <input type="date" name="date" value="{{ request('date') }}" class="trvl-form-field">
+                </div>
+                <div>
+                    <label class="trvl-field-label">Penumpang</label>
+                    <select name="passengers" class="trvl-form-field">
+                        <option value="1" {{ request('passengers') == '1' ? 'selected' : '' }}>1 orang</option>
+                        <option value="2" {{ request('passengers') == '2' ? 'selected' : '' }}>2 orang</option>
+                        <option value="3" {{ request('passengers') == '3' ? 'selected' : '' }}>3 orang</option>
+                        <option value="4" {{ request('passengers') == '4' ? 'selected' : '' }}>4 orang</option>
+                        <option value="5" {{ request('passengers') == '5' ? 'selected' : '' }}>+5 orang</option>
+                    </select>
+                <div>
+                    <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(0,100,210,0.35); width: 100%;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><mipath d="m21 21-4.35-4.35"/></svg>
+                        Cari Tiket
+                    </button>
+                </div>
             </div>
+        </form>
+    </div>
+</div>
 
-            <!-- Filters -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <form method="GET" action="{{ route('public.travel') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <!-- Origin Filter -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Asal</label>
-                        <select name="origin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
-                            <option value="">Semua Asal</option>
-                            @foreach ($origins as $origin)
-                                <option value="{{ $origin }}" {{ request('origin') == $origin ? 'selected' : '' }}>
-                                    {{ $origin }}
-                                </option>
-                            @endforeach
-                        </select>
+<!-- MAIN CONTENT -->
+<div style="background: #f8f9fa; padding: 1.5rem 0 3rem;">
+    <div class="trvl-container">
+        <div style="display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem;">
+
+            <!-- FILTER SIDEBAR -->
+            <aside>
+                <div style="background: white; border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e9ecef; position: sticky; top: 80px;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f6ff;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                        <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">Filter</h3>
                     </div>
+                    <form method="GET" action="{{ route('public.travel') }}">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Asal</label>
+                            <select name="origin" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
+                                <option value="">Semua Asal</option>
+                                @foreach ($origins as $origin)
+                                    <option value="{{ $origin }}" {{ request('origin') == $origin ? 'selected' : '' }}>{{ $origin }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tujuan</label>
+                            <select name="destination" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
+                                <option value="">Semua Tujuan</option>
+                                @foreach ($destinations as $destination)
+                                    <option value="{{ $destination }}" {{ request('destination') == $destination ? 'selected' : '' }}>{{ $destination }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tanggal Berangkat</label>
+                            <input type="date" name="date" value="{{ request('date') }}" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Penumpang</label>
+                            <select name="passengers" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
+                                <option value="">Jumlah</option>
+                                @for ($i = 1; $i <= 6; $i++)
+                                    <option value="{{ $i }}" {{ request('passengers') == $i ? 'selected' : '' }}>{{ $i }} {{ $i == 6 ? '+' : '' }} penumpang</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div style="margin-top: 1.25rem; display: flex; gap: 0.5rem;">
+                            <button type="submit" style="flex: 1; background: #0064d2; color: white; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; transition: all 0.2s;">Filter</button>
+                            <a href="{{ route('public.travel') }}" style="background: #e9ecef; color: #6c757d; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s;">Reset</a>
+                        </div>
+                    </form>
 
-                    <!-- Destination Filter -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Tujuan</label>
-                        <select name="destination" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
-                            <option value="">Semua Tujuan</option>
-                            @foreach ($destinations as $destination)
-                                <option value="{{ $destination }}" {{ request('destination') == $destination ? 'selected' : '' }}>
-                                    {{ $destination }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Price Min -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Harga Min (Rp)</label>
-                        <input type="number" name="price_min" value="{{ request('price_min') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="0">
-                    </div>
-
-                    <!-- Price Max -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Harga Max (Rp)</label>
-                        <input type="number" name="price_max" value="{{ request('price_max') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="999999999">
-                    </div>
-
-                    <!-- Filter Button -->
-                    <div class="flex items-end">
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                            Filter
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Routes Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                @forelse ($routes as $route)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                        <div class="p-6">
-                            <!-- Route Header -->
-                            <div class="mb-4">
-                                <h3 class="text-lg font-bold text-gray-900">{{ $route->origin_city }} → {{ $route->destination_city }}</h3>
-                                <p class="text-sm text-gray-600 mt-1">Jarak: {{ $route->distance_km }} km</p>
-                            </div>
-
-                            <!-- Route Info -->
-                            <div class="space-y-3 mb-6 pb-6 border-b">
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Durasi</span>
-                                    <span class="font-semibold">{{ $route->estimated_hours }} jam</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Tipe</span>
-                                    <span class="font-semibold">{{ ucfirst($route->route_type) }}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Status</span>
-                                    <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Aktif</span>
-                                </div>
-                            </div>
-
-                            <!-- Price -->
-                            @if ($route->travelPrices->count() > 0)
-                                <div class="mb-6">
-                                    @foreach ($route->travelPrices as $price)
-                                        <p class="text-2xl font-bold text-blue-600">
-                                            Rp {{ number_format($price->price_per_seat, 0, ',', '.') }}
-                                        </p>
-                                        <p class="text-xs text-gray-600">per kursi</p>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            <!-- Action Button -->
-                            @auth
-                                <a href="{{ route('bookings.travel.create', ['route_id' => $route->id]) }}" 
-                                   class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                                    Pesan Sekarang
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}" 
-                                   class="block w-full text-center bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                                    Login untuk Pesan
-                                </a>
-                            @endauth
+                    <!-- Price filter -->
+                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Harga</label>
+                        <div style="display: flex; gap: 0.4rem; align-items: center;">
+                            <input type="number" value="{{ request('price_min') }}" placeholder="Min" class="trvl-form-field" style="font-size: 0.8rem; padding: 0.5rem; flex: 1;" readonly>
+                            <span style="color: #6c757d;">–</span>
+                            <input type="number" value="{{ request('price_max') }}" placeholder="Max" class="trvl-form-field" style="font-size: 0.8rem; padding: 0.5rem; flex: 1;" readonly>
                         </div>
                     </div>
-                @empty
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-gray-600 text-lg">Tidak ada rute travel yang tersedia</p>
-                    </div>
-                @endforelse
-            </div>
+                </div>
+            </aside>
 
-            <!-- Pagination -->
-            <div class="flex justify-center">
-                {{ $routes->links() }}
+            <!-- ROUTE LISTING -->
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.25rem;">
+                    <p style="font-size: 0.875rem; color: #6c757d; font-weight: 500;">
+                        <span style="font-weight: 700; color: #0d2147;">{{ $routes->total() }}</span> rute ditemukan
+                    </p>
+                    <div style="font-size: 0.82rem; color: #6c757d; display: flex; align-items: center; gap: 0.4rem;">
+                        <span>Urutkan:</span>
+                        <select style="border: none; background: transparent; font-weight: 600; color: #0064d2; font-size: 0.82rem; cursor: pointer;">
+                            <option>Harga Terendah</option>
+                            <option>Keberangkatan Terlama</option>
+                            <option>Durasi Terpendek</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    @forelse ($routes as $route)
+                        <div style="background: white; border-radius: 14px; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s ease;"
+                             onmouseover="this.style.boxShadow='0 4px 20px rgba(0,100,210,0.12)'; this.style.borderColor='#dbeafe';"
+                             onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='#e9ecef';">
+                            <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 1.25rem;">
+                                <div style="display: flex; gap: 1.25rem; align-items: center;">
+                                    <!-- Route Icon -->
+                                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #e8f4fd 0%, #f0f6ff 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                    </div>
+                                    <!-- Route Info -->
+                                    <div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                            <span style="font-weight: 800; font-size: 0.95rem; color: #0d2147;">{{ $route->origin_city }}</span>
+                                            <svg width="20" height="16" viewBox="0 0 24 16" fill="none" stroke="#0064d2" stroke-width="2"><path d="M5 8h14M13 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            <span style="font-weight: 800; font-size: 0.95rem; color: #0d2147;">{{ $route->destination_city }}</span>
+                                        </div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 0.5rem;">
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                                {{ $route->estimated_hours ?? '-' }} jam
+                                            </div>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                                {{ $route->total_seats ?? '28' }} kursi
+                                            </div>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                                {{ ucfirst($route->route_type ?? 'Executive') }}
+                                            </div>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem;">
+                                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00a651;"></span>
+                                                <span style="font-size: 0.75rem; color: #00a651; font-weight: 600;">Tersedia</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+                                    @php
+                                        $cheapestPrice = $route->travelPrices->first();
+                                    @endphp
+                                    @if ($cheapestPrice)
+                                        <div>
+                                            <span style="font-size: 0.7rem; color: #6c757d; font-weight: 500;">mulai dari</span>
+                                            <p style="font-size: 1.35rem; font-weight: 800; color: #0064d2; line-height: 1.1;">Rp {{ number_format($cheapestPrice->price_per_seat, 0, ',', '.') }}</p>
+                                            <span style="font-size: 0.7rem; color: #6c757d; font-weight: 400;">/ penumpang</span>
+                                        </div>
+                                    @else
+                                        <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500;">Hubungi CS</span>
+                                    @endif
+                                    @auth
+                                        <a href="{{ route('bookings.travel.create', ['route_id' => $route->id]) }}" 
+                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
+                                            Pesan
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('login') }}" 
+                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: white; color: #0064d2; border: 2px solid #0064d2; padding: 0.65rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s;">
+                                            Pesan
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                                        </a>
+                                    @endauth
+                                </div>
+                            </div>
+
+                            <!-- Schedule Strip -->
+                            <div style="background: #f8f9fa; padding: 0.6rem 1.25rem; border-top: 1px solid #f0f6ff; display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.04em;">Jadwal Keberangkatan:</span>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    @if(!empty($route->departure_times))
+                                        @foreach($route->departure_times as $time)
+                                            <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">{{ is_string($time) ? $time : ($time->format('H:i') ?? '08:00') }}</span>
+                                        @endforeach
+                                    @else
+                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">08:00</span>
+                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">14:00</span>
+                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">19:30</span>
+                                    @endif
+                                </div>
+                                <span style="margin-left: auto; font-size: 0.72rem; color: #6c757d; white-space: nowrap;">Jarak {{ $route->distance_km ?? '250' }} km</span>
+                        </div>
+                    @empty
+                        <div style="background: white; border-radius: 14px; border: 1px solid #e9ecef; padding: 3rem 2rem; text-align: center;">
+                            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚐</div>
+                            <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">Oops, belum ada rute tersedia</p>
+                            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">Coba ubah atau reset filter pencarian kamu untuk menemukan rute lainnya.</p>
+                            <a href="{{ route('public.travel') }}" 
+                               style="display: inline-block; margin-top: 1rem; background: #0064d2; color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
+                        </div>
+                    @endforelse
+                </div>
+
+                <!-- Pagination -->
+                <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+                    {{ $routes->links() }}
+                </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
+<style>
+@media (max-width: 900px) {
+    #travel-grid { grid-template-columns: 1fr !important; }
+    #travel-grid > aside { order: -1; }
+    #travel-grid > aside > div { position: static !important; margin-bottom: 1rem; }
+}
+</style>
+<script>
+(function(){
+    const parent = document.querySelector('div > .trvl-container > div[style*="grid-template-columns: 260px"]');
+    if(parent) parent.id = 'travel-grid';
+})();
+</script>
+ @endsection

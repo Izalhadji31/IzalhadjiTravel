@@ -3,181 +3,560 @@
 @section('title', 'Dashboard Driver')
 
 @section('content')
-<div class="min-h-screen bg-gray-100">
-    <!-- Page Header -->
-    <div class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Dashboard Driver</h1>
-                    <p class="mt-1 text-sm text-gray-500">Selamat datang, {{ auth()->user()->name }}! Kelola tugas perjalanan Anda.</p>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <div class="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm">
-                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                    </div>
-                </div>
+<style>
+    .tracgo-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+    .tracgo-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+    .tracgo-greeting {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+    /* Status Toggle */
+    .status-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #e5e7eb;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .status-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .status-indicator {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .status-online { background-color: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.4); }
+    .status-offline { background-color: #ef4444; }
+    .status-busy { background-color: #f59e0b; }
+    .status-label {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #1a1a1a;
+    }
+    .status-desc {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+    .status-form {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .status-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.875rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.02em;
+    }
+    .status-toggle-btn.online {
+        background-color: #22c55e;
+        color: white;
+    }
+    .status-toggle-btn.online:hover { background-color: #16a34a; }
+    .status-toggle-btn.offline {
+        background-color: #ef4444;
+        color: white;
+    }
+    .status-toggle-btn.offline:hover { background-color: #dc2626; }
+    .status-toggle-btn.busy {
+        background-color: #f59e0b;
+        color: white;
+    }
+    .status-toggle-btn.busy:hover { background-color: #d97706; }
+
+    /* Stats Row */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .stat-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .stat-label {
+        font-size: 0.85rem;
+        color: #6b7280;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+    }
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .stat-icon svg { width: 28px; height: 28px; }
+    .stat-blue .stat-value { color: #0064d2; }
+    .stat-blue .stat-icon { background-color: rgba(0,100,210,0.1); color: #0064d2; }
+    .stat-green .stat-value { color: #22c55e; }
+    .stat-green .stat-icon { background-color: rgba(34,197,94,0.1); color: #22c55e; }
+    .stat-orange .stat-value { color: #f59e0b; }
+    .stat-orange .stat-icon { background-color: rgba(245,158,11,0.1); color: #f59e0b; }
+
+    /* Orders Section */
+    .orders-section {
+        margin-top: 0.5rem;
+    }
+    .orders-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    .orders-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+    .orders-count {
+        font-size: 0.85rem;
+        color: #6b7280;
+        background: #f3f4f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+    }
+
+    /* Order Card */
+    .order-card {
+        background: white;
+        border-radius: 1rem;
+        border: 1px solid #e5e7eb;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: box-shadow 0.2s;
+    }
+    .order-card:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .order-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .order-booking-code {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #1a1a1a;
+        font-family: 'SF Mono', 'Consolas', monospace;
+        letter-spacing: 0.02em;
+    }
+    .order-badges {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+    .badge-travel { background-color: rgba(0,100,210,0.1); color: #0064d2; }
+    .badge-rental { background-color: rgba(168,85,247,0.1); color: #7c3aed; }
+    .badge-airport { background-color: rgba(14,165,233,0.1); color: #0284c7; }
+    .badge-confirmed { background-color: rgba(34,197,94,0.1); color: #16a34a; }
+    .badge-departed { background-color: rgba(245,158,11,0.1); color: #d97706; }
+    .badge-active { background-color: rgba(0,100,210,0.1); color: #0064d2; }
+    .badge-completed { background-color: #f3f4f6; color: #6b7280; }
+
+    .order-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+    .order-detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+    .order-detail-label {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+    .order-detail-value {
+        font-size: 0.95rem;
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+    .order-detail-value.price {
+        color: #0064d2;
+        font-size: 1.1rem;
+    }
+    .order-route {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+    .route-arrow {
+        color: #9ca3af;
+        font-size: 0.85rem;
+    }
+
+    /* Action Buttons */
+    .order-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        padding-top: 1rem;
+        border-top: 1px solid #f3f4f6;
+    }
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.625rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+    .action-btn svg { width: 18px; height: 18px; }
+    .btn-start {
+        background-color: #0064d2;
+        color: white;
+    }
+    .btn-start:hover { background-color: #0050a8; }
+    .btn-complete {
+        background-color: #22c55e;
+        color: white;
+    }
+    .btn-complete:hover { background-color: #16a34a; }
+    .btn-navigate {
+        background-color: #f3f4f6;
+        color: #1a1a1a;
+        border: 1px solid #e5e7eb;
+    }
+    .btn-navigate:hover { background-color: #e5e7eb; }
+
+    /* Empty State */
+    .empty-state {
+        background: white;
+        border-radius: 1rem;
+        border: 1px solid #e5e7eb;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        background: #f3f4f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+    .empty-icon svg { width: 40px; height: 40px; color: #9ca3af; }
+    .empty-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+    }
+    .empty-desc {
+        font-size: 0.9rem;
+        color: #6b7280;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .stats-row { grid-template-columns: 1fr; }
+        .status-card { flex-direction: column; align-items: flex-start; }
+        .order-actions { flex-direction: column; }
+        .action-btn { justify-content: center; }
+    }
+</style>
+
+<!-- Header -->
+<div class="tracgo-header">
+    <div>
+        <h1 class="tracgo-title">Dashboard Driver</h1>
+        <p class="tracgo-greeting">Selamat datang, {{ auth()->user()->name }}</p>
+    </div>
+</div>
+
+<!-- Status Toggle Card -->
+<div class="status-card">
+    <div class="status-left">
+        <span class="status-indicator 
+            {{ ($driverStatus ?? '') === 'available' ? 'status-online' : '' }}
+            {{ ($driverStatus ?? '') === 'offline' ? 'status-offline' : '' }}
+            {{ ($driverStatus ?? '') === 'busy' ? 'status-busy' : '' }}"></span>
+        <div>
+            <div class="status-label">
+                Status: 
+                @if(($driverStatus ?? '') === 'available')
+                    Online
+                @elseif(($driverStatus ?? '') === 'busy')
+                    Sibuk
+                @else
+                    Offline
+                @endif
             </div>
+            <div class="status-desc">Ubah status kesiapan Anda menerima order</div>
         </div>
     </div>
+    <form method="POST" action="{{ route('driver.status.toggle') }}" class="status-form">
+        @csrf
+        <input type="hidden" name="status" value="
+            @if(($driverStatus ?? '') === 'available')
+                offline
+            @elseif(($driverStatus ?? '') === 'busy')
+                available
+            @else
+                available
+            @endif
+        ">
+        <button type="submit" class="status-toggle-btn 
+            @if(($driverStatus ?? '') === 'available')
+                online
+            @elseif(($driverStatus ?? '') === 'busy')
+                busy
+            @else
+                offline
+            @endif">
+            @if(($driverStatus ?? '') === 'available')
+                ONLINE
+            @elseif(($driverStatus ?? '') === 'busy')
+                SIBUK
+            @else
+                OFFLINE
+            @endif
+        </button>
+    </form>
+</div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- Active Orders -->
-            <a href="{{ route('driver.orders') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                <div class="p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 mb-1">Order Aktif</p>
-                            <p class="text-3xl font-bold text-blue-600">{{ $activeOrderCount ?? 0 }}</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center">
-                            <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center text-sm">
-                        <span class="text-blue-500 font-medium">Lihat detail →</span>
-                    </div>
-                </div>
-                <div class="h-1 bg-blue-400"></div>
-            </a>
-
-            <!-- Total Trips -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 mb-1">Total Trip</p>
-                            <p class="text-3xl font-bold text-green-600">{{ $totalTrips ?? 0 }}</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center">
-                            <svg class="h-7 w-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center text-sm">
-                        <span class="text-green-500 font-medium">Trip yang telah selesai</span>
-                    </div>
-                </div>
-                <div class="h-1 bg-green-400"></div>
-            </div>
-
-            <!-- Balance -->
-            <a href="{{ route('driver.earnings') }}" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                <div class="p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500 mb-1">Saldo</p>
-                            <p class="text-3xl font-bold text-orange-600">Rp {{ number_format($balance ?? 0, 0, ',', '.') }}</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full bg-orange-100 flex items-center justify-center">
-                            <svg class="h-7 w-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center text-sm">
-                        <span class="text-orange-500 font-medium">Lihat riwayat →</span>
-                    </div>
-                </div>
-                <div class="h-1 bg-orange-400"></div>
-            </a>
+<!-- Stats Row -->
+<div class="stats-row">
+    <div class="stat-card stat-blue">
+        <div>
+            <div class="stat-label">Order Aktif</div>
+            <div class="stat-value">{{ $activeOrderCount ?? 0 }}</div>
         </div>
+        <div class="stat-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+        </div>
+    </div>
+    <div class="stat-card stat-green">
+        <div>
+            <div class="stat-label">Total Trip</div>
+            <div class="stat-value">{{ $totalTrips ?? 0 }}</div>
+        </div>
+        <div class="stat-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+    </div>
+    <div class="stat-card stat-orange">
+        <div>
+            <div class="stat-label">Saldo</div>
+            <div class="stat-value" style="font-size: 1.5rem;">Rp {{ number_format($balance ?? 0, 0, ',', '.') }}</div>
+        </div>
+        <div class="stat-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+    </div>
+</div>
 
-        <!-- Driver Status Card -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Status Driver</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Current Status -->
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">Status Saat Ini</p>
-                    <form method="POST" action="{{ route('driver.status.toggle') }}" class="flex items-center space-x-4">
-                        @csrf
-                        <select name="status" class="block w-full md:w-auto rounded-lg border-gray-300 border px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="available" {{ ($driverStatus ?? '') === 'available' ? 'selected' : '' }}>Tersedia</option>
-                            <option value="offline" {{ ($driverStatus ?? '') === 'offline' ? 'selected' : '' }}>Offline</option>
-                            <option value="busy" {{ ($driverStatus ?? '') === 'busy' ? 'selected' : '' }}>Sibuk</option>
-                            <option value="on_leave" {{ ($driverStatus ?? '') === 'on_leave' ? 'selected' : '' }}>Cuti</option>
-                        </select>
-                        <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
-                            Ubah Status
-                        </button>
-                    </form>
+<!-- Active Orders Section -->
+<div class="orders-section">
+    <div class="orders-header">
+        <h2 class="orders-title">Order Aktif</h2>
+        <span class="orders-count">{{ $activeOrderCount ?? 0 }} order</span>
+    </div>
+
+    @php
+        $hasOrders = isset($activeOrders) && count($activeOrders) > 0;
+    @endphp
+
+    @if(!$hasOrders)
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                </svg>
+            </div>
+            <div class="empty-title">Tidak Ada Order Aktif</div>
+            <div class="empty-desc">Saat ini Anda tidak memiliki order yang sedang berjalan. Aktifkan status Online untuk menerima order baru.</div>
+        </div>
+    @else
+        @foreach($activeOrders as $order)
+            @php
+                $isTravel = ($order->order_type ?? '') === 'travel';
+                $isRental = ($order->order_type ?? '') === 'rental';
+                $isAirport = ($order->order_type ?? '') === 'airport';
+                $status = $order->status ?? 'pending';
+                $bookingCode = $order->booking_code ?? ('#' . str_pad($order->id, 5, '0', STR_PAD_LEFT));
+                $customerName = $order->user->name ?? 'Pelanggan';
+                
+                // Route info
+                $origin = $isTravel ? ($order->route->origin_city ?? 'Kota Asal') : ($order->origin ?? 'Kota Asal');
+                $destination = $isTravel ? ($order->route->destination_city ?? 'Kota Tujuan') : ($order->destination ?? 'Kota Tujuan');
+                
+                // Date
+                $orderDate = $order->scheduled_date ?? $order->start_date ?? $order->created_at ?? now();
+                $formattedDate = \Carbon\Carbon::parse($orderDate)->locale('id')->isoFormat('DD MMM YYYY, HH:mm');
+                
+                // Price
+                $price = $order->total_price ?? $order->price ?? $order->driver_fee ?? 0;
+                
+                // Navigation URL
+                $navUrl = 'https://www.google.com/maps/dir/?api=1&destination=' . urlencode($destination);
+            @endphp
+
+            <div class="order-card">
+                <div class="order-top">
+                    <span class="order-booking-code">{{ $bookingCode }}</span>
+                    <div class="order-badges">
+                        @if($isTravel)
+                            <span class="badge badge-travel">Travel</span>
+                        @elseif($isRental)
+                            <span class="badge badge-rental">Rental</span>
+                        @elseif($isAirport)
+                            <span class="badge badge-airport">Airport</span>
+                        @endif
+
+                        @if($status === 'confirmed')
+                            <span class="badge badge-confirmed">Dikonfirmasi</span>
+                        @elseif($status === 'departed')
+                            <span class="badge badge-departed">Dalam Perjalanan</span>
+                        @elseif($status === 'active')
+                            <span class="badge badge-active">Aktif</span>
+                        @elseif($status === 'completed')
+                            <span class="badge badge-completed">Selesai</span>
+                        @endif
+                    </div>
                 </div>
 
-                <!-- Armada Info -->
-                <div>
-                    <p class="text-sm text-gray-500 mb-2">Informasi Armada</p>
-                    @if($armada)
-                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-900">{{ $armada->vehicle_type }} - {{ $armada->plate_number }}</p>
-                            <p class="text-xs text-gray-500">Supir: {{ $armada->driver_name }}</p>
+                <div class="order-details">
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">Pelanggan</span>
+                        <span class="order-detail-value">{{ $customerName }}</span>
+                    </div>
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">Rute</span>
+                        <div class="order-route">
+                            <span>{{ $origin }}</span>
+                            <span class="route-arrow">&rarr;</span>
+                            <span>{{ $destination }}</span>
                         </div>
                     </div>
-                    @else
-                    <div class="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                        <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
-                        </svg>
-                        <p class="text-sm text-yellow-800">Belum ada armada yang ditugaskan. Hubungi admin.</p>
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">Tanggal</span>
+                        <span class="order-detail-value">{{ $formattedDate }}</span>
                     </div>
+                    <div class="order-detail-item">
+                        <span class="order-detail-label">Harga</span>
+                        <span class="order-detail-value price">Rp {{ number_format($price, 0, ',', '.') }}</span>
+                    </div>
+                </div>
+
+                <div class="order-actions">
+                    @if($status === 'confirmed')
+                        <form method="POST" action="{{ route('driver.trip.start', ['booking' => $order->id, 'type' => $isTravel ? 'travel' : 'rental']) }}" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="action-btn btn-start">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Mulai Perjalanan
+                            </button>
+                        </form>
                     @endif
-                </div>
-            </div>
-        </div>
 
-        <!-- Quick Actions -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Aksi Cepat</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a href="{{ route('driver.orders') }}" class="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
-                    <div class="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-semibold text-blue-900">Order Aktif</p>
-                        <p class="text-xs text-blue-700">Lihat perjalanan yang sedang berjalan</p>
-                    </div>
-                </a>
+                    @if($status === 'departed' || $status === 'active')
+                        <form method="POST" action="{{ route('driver.trip.complete', ['booking' => $order->id, 'type' => $isTravel ? 'travel' : 'rental']) }}" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="action-btn btn-complete">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Selesaikan
+                            </button>
+                        </form>
+                    @endif
 
-                <a href="{{ route('driver.earnings') }}" class="flex items-center space-x-4 p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-colors">
-                    <div class="h-12 w-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-semibold text-green-900">Pendapatan</p>
-                        <p class="text-xs text-green-700">Cek saldo dan riwayat trip</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('tracking.dashboard') }}" class="flex items-center space-x-4 p-4 bg-purple-50 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors">
-                    <div class="h-12 w-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0">
-                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ $navUrl }}" target="_blank" rel="noopener" class="action-btn btn-navigate">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm font-semibold text-purple-900">Peta Tracking</p>
-                        <p class="text-xs text-purple-700">Pantau lokasi armada</p>
-                    </div>
-                </a>
+                        Navigasi
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
+        @endforeach
+    @endif
 </div>
 @endsection

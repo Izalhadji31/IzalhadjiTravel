@@ -23,12 +23,12 @@ class LoginController extends Controller
      */
     public function create($role = null): View
     {
-        $validRoles = ['admin', 'user', 'driver', 'partner'];
+        $validRoles = ['admin', 'customer', 'driver', 'partner'];
         
         if ($role && in_array($role, $validRoles)) {
             $view = match($role) {
                 'admin' => 'auth.login',
-                'user' => 'auth.login',
+                'customer' => 'auth.login',
                 'driver' => 'auth.login',
                 'partner' => 'auth.login',
                 default => 'auth.login',

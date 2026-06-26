@@ -143,13 +143,44 @@ class PartnerController extends Controller
             ->take(10)
             ->get();
 
+        // Service breakdown - query through armadas belonging to this partner
+        $partnerArmadaIds = Armada::where('mitra_id', $partner->id)->pluck('id');
+
+        $travelBookings = \App\Models\TravelBooking::whereIn('assigned_armada_id', $partnerArmadaIds)->count();
+        $rentalBookings = \App\Models\RentalBooking::whereIn('assigned_armada_id', $partnerArmadaIds)->count();
+        $airportBookings = \App\Models\AirportTransferBooking::whereIn('assigned_armada_id', $partnerArmadaIds)->count();
+
+        // Armada status summary
+        $armadaTersedia = Armada::where('mitra_id', $partner->id)
+            ->where('status', 'tersedia')->count();
+        $armadaJalan = Armada::where('mitra_id', $partner->id)
+            ->where('status', 'jalan')->count();
+        $armadaMaintenance = Armada::where('mitra_id', $partner->id)
+            ->where('status', 'maintenance')->count();
+
+        // Revenue trend (last 7 days)
+        $revenueTrend = RevenueSharing::where('mitra_id', $partner->id)
+            ->where('status', 'completed')
+            ->where('created_at', '>=', now()->subDays(7))
+            ->selectRaw('DATE(created_at) as date, SUM(mitra_amount) as total')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
         return view('partner.dashboard', compact(
             'partner',
             'totalArmadas',
             'totalDrivers',
             'totalEarnings',
             'pendingPayouts',
-            'recentTransactions'
+            'recentTransactions',
+            'travelBookings',
+            'rentalBookings',
+            'airportBookings',
+            'armadaTersedia',
+            'armadaJalan',
+            'armadaMaintenance',
+            'revenueTrend'
         ));
     }
 

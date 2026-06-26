@@ -36,15 +36,33 @@ class DriverDashboardController extends Controller
         $totalTrips = $driver ? $driver->total_trips : 0;
         $driverStatus = $driver ? $driver->status : 'offline';
 
-        // Count active orders
+        // Count active orders and fetch active orders list
         $activeOrderCount = 0;
+        $activeOrders = collect();
         if ($armada) {
-            $activeOrderCount = TravelBooking::where('assigned_armada_id', $armada->id)
+            $travelOrders = TravelBooking::with(['user', 'route'])
+                ->where('assigned_armada_id', $armada->id)
                 ->whereIn('status', ['confirmed', 'departed'])
-                ->count()
-                + RentalBooking::where('assigned_armada_id', $armada->id)
+                ->get()
+                ->map(function ($booking) {
+                    $booking->order_type = 'travel';
+                    return $booking;
+                });
+
+            $rentalOrders = RentalBooking::with(['user', 'route'])
+                ->where('assigned_armada_id', $armada->id)
                 ->whereIn('status', ['confirmed', 'departed', 'active'])
-                ->count();
+                ->get()
+                ->map(function ($booking) {
+                    $booking->order_type = 'rental';
+                    return $booking;
+                });
+
+            $activeOrders = $travelOrders->merge($rentalOrders)->sortByDesc(function ($order) {
+                return $order->scheduled_date ?? $order->start_date ?? $order->created_at;
+            });
+
+            $activeOrderCount = $activeOrders->count();
         }
 
         return view('driver.dashboard', compact(
@@ -53,7 +71,8 @@ class DriverDashboardController extends Controller
             'balance',
             'totalTrips',
             'driverStatus',
-            'activeOrderCount'
+            'activeOrderCount',
+            'activeOrders'
         ));
     }
 

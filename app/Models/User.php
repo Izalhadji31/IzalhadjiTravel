@@ -108,6 +108,11 @@ class User extends Authenticatable
      * Helper Methods
      */
 
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
