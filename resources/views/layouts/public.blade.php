@@ -49,9 +49,25 @@
             --trvl-radius-full: 9999px;
         }
 
+        .dark {
+            --trvl-bg: #1a1a2e;
+            --trvl-text: #e0e0e0;
+            --trvl-card: #16213e;
+            --trvl-border: #2a2a4a;
+            --trvl-gray-100: #1a1a2e;
+            --trvl-gray-200: #2a2a4a;
+            --trvl-gray-300: #3a3a5a;
+            --trvl-gray-400: #5a5a7a;
+            --trvl-gray-500: #8a8aaa;
+            --trvl-gray-600: #aaaacc;
+            --trvl-gray-700: #ccccee;
+            --trvl-gray-800: #e0e0e0;
+            --trvl-gray-900: #f0f0f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background: var(--trvl-gray-100); color: var(--trvl-gray-800); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { background: var(--trvl-bg); color: var(--trvl-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transition: background 0.3s ease, color 0.3s ease; }
 
         /* ===== TRAVELOKA NAVBAR ===== */
         .trvl-navbar {
@@ -242,7 +258,7 @@
         /* ===== TRAVELOKA BOOKING CARD ===== */
         .trvl-booking-wrapper { animation: trvlFadeInUp 0.7s ease-out 0.4s both; }
         .trvl-booking-card {
-            background: white;
+            background: var(--trvl-card);
             border-radius: var(--trvl-radius-xl);
             box-shadow: 0 30px 80px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.12);
             overflow: hidden;
@@ -251,7 +267,7 @@
         .trvl-booking-card:hover { transform: translateY(-2px); }
         .trvl-booking-header {
             padding: 1.5rem 2rem 1rem;
-            border-bottom: 1px solid var(--trvl-gray-200);
+            border-bottom: 1px solid var(--trvl-border);
         }
         .trvl-booking-body { padding: 1.5rem 2rem 2rem; }
         .trvl-booking-panel { display: none; animation: trvlFadeSlideIn 0.35s ease-out; }
@@ -262,16 +278,16 @@
         }
         .trvl-form-field {
             width: 100%; padding: 0.75rem 1rem;
-            border: 1.5px solid var(--trvl-gray-300);
+            border: 1.5px solid var(--trvl-border);
             border-radius: var(--trvl-radius-md);
             outline: none; transition: all 0.2s;
-            font-size: 0.9rem; color: var(--trvl-gray-800);
-            background: var(--trvl-gray-100);
+            font-size: 0.9rem; color: var(--trvl-text);
+            background: var(--trvl-bg);
         }
         .trvl-form-field:focus {
             border-color: var(--trvl-blue);
             box-shadow: 0 0 0 3px rgba(0,100,210,0.1);
-            background: white;
+            background: var(--trvl-card);
         }
         .trvl-field-label {
             display: block; font-size: 0.7rem; font-weight: 700;
@@ -302,15 +318,15 @@
 
         /* ===== TRAVELOKA TRUST BADGES ===== */
         .trvl-trust-section {
-            background: var(--trvl-gray-100);
+            background: var(--trvl-bg);
             padding: 2rem 0;
-            border-bottom: 1px solid var(--trvl-gray-200);
+            border-bottom: 1px solid var(--trvl-border);
         }
         .trvl-trust-badge {
             display: flex; align-items: center; justify-content: center;
             height: 3.5rem; padding: 0 1.5rem;
-            background: white; border-radius: var(--trvl-radius-md);
-            border: 1px solid var(--trvl-gray-200);
+            background: var(--trvl-card); border-radius: var(--trvl-radius-md);
+            border: 1px solid var(--trvl-border);
             transition: all 0.3s ease;
             font-size: 0.8rem; font-weight: 700; color: var(--trvl-gray-600);
         }
@@ -323,7 +339,7 @@
 
         /* ===== TRAVELOKA SECTION ===== */
         .trvl-section { padding: 4rem 0; }
-        .trvl-section-bg { background: var(--trvl-gray-100); }
+        .trvl-section-bg { background: var(--trvl-bg); }
         .trvl-section-badge {
             display: inline-flex; align-items: center; gap: 0.4rem;
             background: var(--trvl-blue-light); color: var(--trvl-blue);
@@ -345,10 +361,10 @@
 
         /* ===== TRAVELOKA FEATURE CARDS ===== */
         .trvl-feature-card {
-            background: white;
+            background: var(--trvl-card);
             border-radius: var(--trvl-radius-lg);
             padding: 1.75rem 1.5rem;
-            border: 1px solid var(--trvl-gray-200);
+            border: 1px solid var(--trvl-border);
             box-shadow: var(--trvl-shadow-sm);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
@@ -364,7 +380,7 @@
         .trvl-feature-card:hover {
             transform: translateY(-6px);
             box-shadow: var(--trvl-shadow-lg);
-            border-color: #dbeafe;
+            border-color: var(--trvl-border);
         }
         .trvl-feature-card:hover::before { transform: scaleX(1); }
         .trvl-feature-icon {
@@ -385,9 +401,9 @@
 
         /* ===== TRAVELOKA ROUTE CARDS ===== */
         .trvl-route-card {
-            background: white;
+            background: var(--trvl-card);
             border-radius: var(--trvl-radius-lg);
-            border: 1px solid var(--trvl-gray-200);
+            border: 1px solid var(--trvl-border);
             box-shadow: var(--trvl-shadow-sm);
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -446,9 +462,9 @@
 
         /* ===== TRAVELOKA VEHICLE CARDS ===== */
         .trvl-vehicle-card {
-            background: white;
+            background: var(--trvl-card);
             border-radius: var(--trvl-radius-lg);
-            border: 1px solid var(--trvl-gray-200);
+            border: 1px solid var(--trvl-border);
             box-shadow: var(--trvl-shadow-sm);
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -570,6 +586,12 @@
         @media (min-width: 640px) { .trvl-hero-subtitle { font-size: 1.125rem; } }
         @media (min-width: 1024px) { .trvl-section-title { font-size: 2.25rem; } }
         @media (min-width: 1024px) { .trvl-section { padding: 5rem 0; } }
+
+        /* Toast Animation */
+        @keyframes trvlToastSlideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -589,6 +611,10 @@
                 <a href="#armada" class="trvl-nav-link">Armada</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
+                <button id="darkModeToggle" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; justify-content:center; padding:0.5rem; border-radius:var(--trvl-radius-sm); background:transparent; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5);" type="button" title="Toggle Dark Mode">
+                    <svg id="sunIcon" class="hidden" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </button>
                 <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">Masuk</a>
                 <a href="https://wa.me/621500009" class="trvl-nav-btn trvl-nav-btn-white">📱 1500 009</a>
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
@@ -610,6 +636,20 @@
     </div>
 
     @yield('content')
+
+    {{-- Toast Notifications --}}
+    @if(session('success'))
+        @include('components.toast', ['type' => 'success', 'message' => session('success')])
+    @endif
+    @if(session('error'))
+        @include('components.toast', ['type' => 'error', 'message' => session('error')])
+    @endif
+    @if(session('warning'))
+        @include('components.toast', ['type' => 'warning', 'message' => session('warning')])
+    @endif
+    @if(session('info'))
+        @include('components.toast', ['type' => 'info', 'message' => session('info')])
+    @endif
 
     <script>
     function toggleMobileMenu() {
@@ -633,6 +673,33 @@
         if (window.scrollY > 50) { nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)'; }
         else { nav.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'; }
     });
+
+    // Dark mode toggle
+    (function () {
+        const body = document.body;
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        function applyDarkMode(enabled) {
+            if (enabled) {
+                body.classList.add('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                body.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+            localStorage.setItem('darkMode', enabled ? '1' : '0');
+        }
+
+        const stored = localStorage.getItem('darkMode');
+        applyDarkMode(stored === '1');
+
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            applyDarkMode(!body.classList.contains('dark'));
+        });
+    })();
     </script>
 </body>
 </html>

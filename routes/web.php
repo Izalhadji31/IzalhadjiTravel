@@ -28,9 +28,12 @@ use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\Admin\SuperAdminController;
 use App\Http\Controllers\AdminRefundController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SearchController;
 
 // Landing Page
 Route::get('/', [PublicController::class, 'home'])->name('home');
@@ -173,6 +176,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/drivers/export-csv', [AnalyticsController::class, 'exportDriversCSV'])->name('analytics.drivers.export-csv');
     });
 
+    // My Bookings (Unified)
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+
     // Profile Management
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
@@ -180,7 +187,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/verify-identity', [ProfileController::class, 'verifyIdentity'])->name('profile.verify-identity');
         Route::post('/upload-identity', [ProfileController::class, 'uploadIdentity'])->name('profile.upload-identity');
+        Route::post('/upload-photo', [ProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
+        Route::delete('/remove-photo', [ProfileController::class, 'removePhoto'])->name('profile.remove-photo');
     });
+
+    // Search Routes
+    Route::get('/api/search', [SearchController::class, 'index'])->name('api.search');
+    Route::get('/search', [SearchController::class, 'show'])->name('search');
 
     // Admin Routes - Require Admin Role
     Route::middleware('role:admin')->prefix('admin')->group(function () {
@@ -333,21 +346,20 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     // Super Admin Routes - Global SaaS Management
-    // Uncomment when views are created
-    // Route::middleware('role:admin')->prefix('super-admin')->group(function () {
-    //     Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
-    //     Route::get('/companies', [SuperAdminController::class, 'companies'])->name('super-admin.companies');
-    //     Route::get('/companies/create', [SuperAdminController::class, 'createCompany'])->name('super-admin.companies.create');
-    //     Route::post('/companies', [SuperAdminController::class, 'storeCompany'])->name('super-admin.companies.store');
-    //     Route::get('/companies/{company}', [SuperAdminController::class, 'showCompany'])->name('super-admin.companies.show');
-    //     Route::put('/companies/{company}', [SuperAdminController::class, 'updateCompany'])->name('super-admin.companies.update');
-    //     Route::post('/companies/{company}/suspend', [SuperAdminController::class, 'suspendCompany'])->name('super-admin.companies.suspend');
-    //     Route::post('/companies/{company}/activate', [SuperAdminController::class, 'activateCompany'])->name('super-admin.companies.activate');
-    //     Route::get('/users', [SuperAdminController::class, 'users'])->name('super-admin.users');
-    //     Route::get('/analytics', [SuperAdminController::class, 'analytics'])->name('super-admin.analytics');
-    //     Route::get('/settings', [SuperAdminController::class, 'settings'])->name('super-admin.settings');
-    //     Route::put('/settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
-    // });
+    Route::middleware('role:admin')->prefix('super-admin')->group(function () {
+        Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
+        Route::get('/companies', [SuperAdminController::class, 'companies'])->name('super-admin.companies');
+        Route::get('/companies/create', [SuperAdminController::class, 'createCompany'])->name('super-admin.companies.create');
+        Route::post('/companies', [SuperAdminController::class, 'storeCompany'])->name('super-admin.companies.store');
+        Route::get('/companies/{company}', [SuperAdminController::class, 'showCompany'])->name('super-admin.companies.show');
+        Route::put('/companies/{company}', [SuperAdminController::class, 'updateCompany'])->name('super-admin.companies.update');
+        Route::post('/companies/{company}/suspend', [SuperAdminController::class, 'suspendCompany'])->name('super-admin.companies.suspend');
+        Route::post('/companies/{company}/activate', [SuperAdminController::class, 'activateCompany'])->name('super-admin.companies.activate');
+        Route::get('/users', [SuperAdminController::class, 'users'])->name('super-admin.users');
+        Route::get('/analytics', [SuperAdminController::class, 'analytics'])->name('super-admin.analytics');
+        Route::get('/settings', [SuperAdminController::class, 'settings'])->name('super-admin.settings');
+        Route::put('/settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
+    });
 });
 
 // Google OAuth Routes

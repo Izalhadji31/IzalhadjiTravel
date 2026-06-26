@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -75,5 +76,46 @@ class ProfileController extends Controller
         );
 
         return back()->with('success', 'Identity document uploaded. Please wait for verification');
+    }
+
+    /**
+     * Upload profile photo
+     */
+    public function uploadPhoto(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        // Delete old photo if exists
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        // Store new photo
+        $path = $request->file('photo')->store('avatars', 'public');
+
+        // Update user
+        $user->update(['photo' => $path]);
+
+        return back()->with('success', 'Profile photo updated successfully');
+    }
+
+    /**
+     * Remove profile photo
+     */
+    public function removePhoto()
+    {
+        $user = Auth::user();
+
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->update(['photo' => null]);
+
+        return back()->with('success', 'Profile photo removed');
     }
 }

@@ -46,7 +46,7 @@ class SuperAdminController extends Controller
             ->orderBy('month')
             ->get();
 
-        return view('admin.super-admin.dashboard', [
+        return view('super-admin.dashboard', [
             'totalCompanies' => $totalCompanies,
             'activeCompanies' => $activeCompanies,
             'totalUsers' => $totalUsers,
@@ -65,7 +65,7 @@ class SuperAdminController extends Controller
         $companies = Company::with('adminUser')
             ->paginate(15);
 
-        return view('admin.super-admin.companies.index', [
+        return view('super-admin.companies', [
             'companies' => $companies,
         ]);
     }
@@ -90,7 +90,7 @@ class SuperAdminController extends Controller
             )->sum('amount'),
         ];
 
-        return view('admin.super-admin.companies.show', [
+        return view('super-admin.company-show', [
             'company' => $company,
             'stats' => $stats,
         ]);
@@ -101,7 +101,7 @@ class SuperAdminController extends Controller
      */
     public function createCompany()
     {
-        return view('admin.super-admin.companies.create');
+        return view('super-admin.company-create');
     }
 
     /**
@@ -176,7 +176,7 @@ class SuperAdminController extends Controller
         $users = User::with('company')
             ->paginate(20);
 
-        return view('admin.super-admin.users.index', [
+        return view('super-admin.users', [
             'users' => $users,
         ]);
     }
@@ -216,7 +216,7 @@ class SuperAdminController extends Controller
             ->groupBy('payment_method')
             ->get();
 
-        return view('admin.super-admin.analytics.index', [
+        return view('super-admin.analytics', [
             'revenueByCompany' => $revenueByCompany,
             'topMitras' => $topMitras,
             'paymentMethods' => $paymentMethods,
@@ -228,7 +228,7 @@ class SuperAdminController extends Controller
      */
     public function settings()
     {
-        return view('admin.super-admin.settings.index');
+        return view('super-admin.settings');
     }
 
     /**

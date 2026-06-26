@@ -13,9 +13,13 @@
         <!-- Profile Card -->
         <div class="lg:col-span-1">
             <div class="card text-center">
+                @if(auth()->user()->photo)
+                    <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-blue-100">
+                @else
                 <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span class="text-white font-bold text-4xl">{{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}{{ strtoupper(substr(explode(' ', auth()->user()->name ?? 'User')[1] ?? '', 0, 1)) }}</span>
                 </div>
+                @endif
                 <h3 class="text-2xl font-bold text-gray-900">{{ auth()->user()->name ?? 'User' }}</h3>
                 <p class="text-gray-600 mt-1">{{ auth()->user()->role ?? 'Customer' }}</p>
                 <p class="text-blue-600 font-medium mt-2">{{ auth()->user()->email ?? 'N/A' }}</p>
