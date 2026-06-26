@@ -31,6 +31,11 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function booking(): BelongsTo
+    {
+        return $this->belongsTo(TravelBooking::class, 'booking_id');
+    }
+
     public function reviewable(): MorphTo
     {
         return $this->morphTo();

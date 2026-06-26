@@ -90,6 +90,14 @@ class BookingRentalController extends Controller
             'status' => 'pending',
         ]);
 
+        // Send WhatsApp notification
+        try {
+            $notificationService = app(\App\Services\BookingNotificationService::class);
+            $notificationService->notifyBookingCreated($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
+
         return redirect()->route('bookings.rental.show', $booking->id)
                        ->with('success', 'Rental booking created. Please complete payment');
     }

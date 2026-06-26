@@ -56,6 +56,16 @@ class TravelBooking extends Model
         return $this->morphMany(Payment::class, 'booking');
     }
 
+    public function passengers(): HasMany
+    {
+        return $this->hasMany(BookingPassenger::class, 'travel_booking_id');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'booking_id');
+    }
+
     public function revenueSharings(): MorphMany
     {
         return $this->morphMany(RevenueSharing::class, 'booking');

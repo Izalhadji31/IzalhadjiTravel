@@ -53,6 +53,36 @@
                         <p class="text-gray-600 text-sm">Number of Seats</p>
                         <p class="text-2xl font-bold text-blue-600">{{ $booking->number_of_seats }} @if($booking->number_of_seats == 1) Seat @else Seats @endif</p>
                     </div>
+                    @php
+                        $passengers = \App\Models\BookingPassenger::where('travel_booking_id', $booking->id)->get();
+                    @endphp
+                    @if($passengers->count() > 0)
+                    <div>
+                        <p class="text-gray-600 text-sm mb-2">Passenger List</p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-3 py-2 text-left font-semibold text-gray-700">#</th>
+                                        <th class="px-3 py-2 text-left font-semibold text-gray-700">Name</th>
+                                        <th class="px-3 py-2 text-left font-semibold text-gray-700">NIK</th>
+                                        <th class="px-3 py-2 text-left font-semibold text-gray-700">Seat</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    @foreach($passengers as $idx => $p)
+                                    <tr>
+                                        <td class="px-3 py-2 text-gray-600">{{ $idx + 1 }}</td>
+                                        <td class="px-3 py-2 font-medium text-gray-900">{{ $p->name }}</td>
+                                        <td class="px-3 py-2 text-gray-600 font-mono">{{ $p->nik }}</td>
+                                        <td class="px-3 py-2 text-gray-600">{{ $p->seat_number }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @endif
                     <div>
                         <p class="text-gray-600 text-sm">Price per Seat</p>
                         <p class="text-lg font-semibold text-gray-900">Rp {{ number_format($booking->route->travelPrices->first()->price_per_seat, 0, ',', '.') }}</p>
@@ -96,6 +126,15 @@
                         @method('DELETE')
                         <button type="submit" class="btn-danger w-full">Cancel Booking</button>
                     </form>
+                @endif
+                @if($booking->status === 'completed')
+                    @php
+                        $hasReviewed = \App\Models\Review::where('booking_id', $booking->id)->where('user_id', auth()->id())->exists();
+                    @endphp
+                    @if(!$hasReviewed)
+                        <a href="{{ route('bookings.review.create', $booking) }}" class="btn-primary w-full text-center block">Write a Review</a>
+                    @endif
+                    <a href="{{ route('bookings.refund.create', $booking) }}" class="bg-red-600 text-white w-full text-center block py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">Request Refund</a>
                 @endif
                 <a href="{{ route('bookings.travel') }}" class="btn-secondary w-full text-center">Back to Bookings</a>
             </div>

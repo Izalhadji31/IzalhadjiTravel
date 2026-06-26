@@ -117,6 +117,16 @@ class PaymentController extends Controller
         // Verify payment status with Midtrans
         $statusCheck = $this->paymentService->checkPaymentStatus($orderId);
 
+        // Send WhatsApp notification on payment success
+        if ($payment->status === 'success') {
+            try {
+                $notificationService = app(\App\Services\BookingNotificationService::class);
+                $notificationService->notifyPaymentSuccess($payment);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Payment notification failed: ' . $e->getMessage());
+            }
+        }
+
         return view('payments.success', [
             'payment' => $payment,
             'booking' => $payment->booking,

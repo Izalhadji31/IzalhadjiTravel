@@ -23,6 +23,14 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Admin\CmsPageController;
+use App\Http\Controllers\Admin\AuditLogController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RefundController;
+use App\Http\Controllers\AdminRefundController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 
 // Landing Page
 Route::get('/', [PublicController::class, 'home'])->name('home');
@@ -44,6 +52,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings/{booking}', [BookingTravelController::class, 'show'])->name('bookings.show');
 });
 
+// Booking & Payment Routes - Require Verified Email
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/bookings/verified-store', [BookingTravelController::class, 'store'])->name('bookings.verified-store');
+});
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -51,9 +64,22 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+    // Forgot Password Routes
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
+
+// Email Verification Routes (must be authenticated but NOT verified)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/email/verify', [EmailVerificationController::class, 'showVerificationNotice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+    Route::post('/email/resend', [EmailVerificationController::class, 'resend'])->name('verification.send');
+});
 
 // Protected Routes - Require Authentication
 Route::middleware(['auth'])->group(function () {
@@ -99,8 +125,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
             Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
         });
-        Route::get('/create', [BookingTravelController::class, 'create'])->name('bookings.travel.create');
-        Route::post('/', [BookingTravelController::class, 'store'])->name('bookings.travel.store');
+        Route::get('/create', [BookingTravelController::class, 'create'])->middleware('verified')->name('bookings.travel.create');
+        Route::post('/', [BookingTravelController::class, 'store'])->middleware('verified')->name('bookings.travel.store');
     });
 
     // Rental Bookings (Admin manages, customers create)
@@ -110,8 +136,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
             Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
         });
-        Route::get('/create', [BookingRentalController::class, 'create'])->name('bookings.rental.create');
-        Route::post('/', [BookingRentalController::class, 'store'])->name('bookings.rental.store');
+        Route::get('/create', [BookingRentalController::class, 'create'])->middleware('verified')->name('bookings.rental.create');
+        Route::post('/', [BookingRentalController::class, 'store'])->middleware('verified')->name('bookings.rental.store');
     });
 
     // Airport Transfer Bookings (Admin manages, customers create)
@@ -124,8 +150,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/{airportTransferBooking}/cancel', [AirportTransferController::class, 'cancel'])->name('bookings.airport-transfer.cancel');
             Route::delete('/{airportTransferBooking}', [AirportTransferController::class, 'destroy'])->name('bookings.airport-transfer.destroy');
         });
-        Route::get('/create', [AirportTransferController::class, 'create'])->name('bookings.airport-transfer.create');
-        Route::post('/', [AirportTransferController::class, 'store'])->name('bookings.airport-transfer.store');
+        Route::get('/create', [AirportTransferController::class, 'create'])->middleware('verified')->name('bookings.airport-transfer.create');
+        Route::post('/', [AirportTransferController::class, 'store'])->middleware('verified')->name('bookings.airport-transfer.store');
     });
 
     // Vehicles Management (Admin & Partner)
@@ -205,8 +231,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/revenue', [PartnerController::class, 'revenue'])->name('partner.revenue');
     });
 
-    // Payment Routes
-    Route::prefix('payments')->group(function () {
+    // Payment Routes (require verified email)
+    Route::middleware('verified')->prefix('payments')->group(function () {
         Route::get('/travel/{travelBooking}', [PaymentController::class, 'showTravelPayment'])->name('payments.travel');
         Route::get('/rental/{rentalBooking}', [PaymentController::class, 'showRentalPayment'])->name('payments.rental');
         Route::post('/check-status/{payment}', [PaymentController::class, 'checkStatus'])->name('payments.check-status');
@@ -280,6 +306,26 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/checkin/{booking}', [TicketController::class, 'checkin'])->name('tickets.checkin');
     });
 
+    // Review Routes
+    Route::middleware('auth')->group(function () {
+        Route::get('/bookings/{booking}/review', [ReviewController::class, 'create'])->name('bookings.review.create');
+        Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('bookings.review.store');
+    });
+
+    // Refund Routes
+    Route::middleware('auth')->group(function () {
+        Route::get('/bookings/{booking}/refund', [RefundController::class, 'create'])->name('bookings.refund.create');
+        Route::post('/bookings/{booking}/refund', [RefundController::class, 'store'])->name('bookings.refund.store');
+        Route::get('/refunds', [RefundController::class, 'index'])->name('refunds.index');
+    });
+
+    // Admin Refund Routes
+    Route::middleware('role:admin')->prefix('admin/refunds')->group(function () {
+        Route::get('/', [AdminRefundController::class, 'index'])->name('admin.refunds');
+        Route::post('/{refund}/approve', [AdminRefundController::class, 'approve'])->name('admin.refunds.approve');
+        Route::post('/{refund}/reject', [AdminRefundController::class, 'reject'])->name('admin.refunds.reject');
+    });
+
     // Notification Routes
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
@@ -303,3 +349,18 @@ Route::middleware(['auth'])->group(function () {
     //     Route::put('/settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
     // });
 });
+
+// Google OAuth Routes
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
+    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
+});
+
+// CMS Pages Admin Routes
+Route::middleware('role:admin')->prefix('admin')->group(function () {
+    Route::resource('cms', CmsPageController::class);
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('admin.audit-logs');
+});
+
+// Public CMS Page
+Route::get('/pages/{slug}', [PublicController::class, 'showPage'])->name('public.page');

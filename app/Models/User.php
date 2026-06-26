@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -15,9 +15,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password', 'phone', 'role', 'is_verified', 'is_identity_verified'])]
+#[Fillable(['name', 'email', 'password', 'phone', 'role', 'is_verified', 'is_identity_verified', 'google_id', 'profile_photo_path', 'address'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUuids, Notifiable, HasRoles;
@@ -131,5 +131,31 @@ class User extends Authenticatable
     public function canBook(): bool
     {
         return $this->is_identity_verified && in_array($this->role, ['customer', 'partner']);
+    }
+
+    /**
+     * Send the password reset notification.
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $resetUrl = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ]));
+
+        $this->notify(new \App\Notifications\ResetPasswordNotification($resetUrl));
+    }
+
+    /**
+     * Send the email verification notification.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $verificationUrl = url(route('verification.verify', [
+            'id' => $this->getKey(),
+            'hash' => sha1($this->getEmailForVerification()),
+        ]));
+
+        $this->notify(new \App\Notifications\VerifyEmailNotification($verificationUrl, $this->name));
     }
 }

@@ -162,6 +162,14 @@ class AdminController extends Controller
         $booking->status = 'confirmed';
         $booking->save();
 
+        // Send WhatsApp notification to customer
+        try {
+            $notificationService = app(\App\Services\BookingNotificationService::class);
+            $notificationService->notifyBookingConfirmed($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
+
         return back()->with('success', ucfirst($type) . ' booking approved and armada assigned successfully');
     }
 
@@ -185,6 +193,14 @@ class AdminController extends Controller
         $booking->status = 'completed';
         $booking->save();
 
+        // Send WhatsApp notification to customer
+        try {
+            $notificationService = app(\App\Services\BookingNotificationService::class);
+            $notificationService->notifyBookingCompleted($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
+
         return back()->with('success', ucfirst($type) . ' booking marked as completed');
     }
 
@@ -207,6 +223,14 @@ class AdminController extends Controller
 
         $booking->status = 'cancelled';
         $booking->save();
+
+        // Send WhatsApp notification to customer
+        try {
+            $notificationService = app(\App\Services\BookingNotificationService::class);
+            $notificationService->notifyBookingCancelled($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
 
         return back()->with('success', ucfirst($type) . ' booking cancelled');
     }

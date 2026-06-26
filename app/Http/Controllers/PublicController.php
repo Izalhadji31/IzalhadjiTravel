@@ -210,4 +210,13 @@ class PublicController extends Controller
 
         return view('public.vehicles', compact('vehicles', 'vehicleTypes'));
     }
+
+    /**
+     * Show a public CMS page by slug
+     */
+    public function showPage($slug)
+    {
+        $page = \App\Models\CmsPage::where('slug', $slug)->where('is_published', true)->firstOrFail();
+        return view('public.page', compact('page'));
+    }
 }

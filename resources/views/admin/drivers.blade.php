@@ -141,7 +141,13 @@
                     <td style="padding: 14px 16px; text-align: center;">
                         <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: #1f2937;">
                             <span style="color: #f59e0b;">&#9733;</span>
-                            {{ number_format($driver->rating ?? 0, 1) }}
+                            @php
+                                $avgRating = \App\Models\Review::where('rated_user_id', $driver->id)->avg('rating');
+                            @endphp
+                            {{ number_format($avgRating ?? $driver->rating ?? 0, 1) }}
+                        </div>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
+                            {{ \App\Models\Review::where('rated_user_id', $driver->id)->count() }} reviews
                         </div>
                     </td>
                     

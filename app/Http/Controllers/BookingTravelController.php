@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TravelBooking;
 use App\Models\Route;
 use App\Models\TravelPrice;
+use App\Services\BookingNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -66,6 +67,10 @@ class BookingTravelController extends Controller
             'travel_date' => 'nullable|date|after:today',
             'scheduled_date' => 'nullable|date|after:today',
             'number_of_seats' => 'required|integer|min:1|max:16',
+            'passengers' => 'nullable|array',
+            'passengers.*.name' => 'required_with:passengers|string|max:255',
+            'passengers.*.nik' => 'required_with:passengers|string|max:50',
+            'passengers.*.seat_number' => 'required_with:passengers|string|max:10',
         ]);
 
         $travelPrice = TravelPrice::where('route_id', $validated['route_id'])->first();
@@ -86,6 +91,26 @@ class BookingTravelController extends Controller
             'final_price' => $total_price,
             'status' => 'pending',
         ]);
+
+        // Store passengers if provided
+        if (!empty($validated['passengers'])) {
+            foreach ($validated['passengers'] as $passengerData) {
+                \App\Models\BookingPassenger::create([
+                    'travel_booking_id' => $booking->id,
+                    'name' => $passengerData['name'],
+                    'nik' => $passengerData['nik'],
+                    'seat_number' => $passengerData['seat_number'],
+                ]);
+            }
+        }
+
+        // Send WhatsApp notification
+        try {
+            $notificationService = app(BookingNotificationService::class);
+            $notificationService->notifyBookingCreated($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('bookings.travel.show', $booking->id)
                        ->with('success', 'Booking created. Please complete payment');

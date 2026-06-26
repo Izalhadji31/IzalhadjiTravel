@@ -18,15 +18,27 @@
         }
     </script>
     <style>
+        :root {
+            --trvl-bg: #ffffff;
+            --trvl-text: #1a1a1a;
+            --trvl-card: #ffffff;
+            --trvl-border: #e5e7eb;
+        }
+        .dark {
+            --trvl-bg: #1a1a2e;
+            --trvl-text: #e0e0e0;
+            --trvl-card: #16213e;
+            --trvl-border: #2a2a4a;
+        }
         * { font-family: 'Inter', sans-serif; }
-        html, body { background: #f8f9fa; color: #333; }
+        html, body { background: var(--trvl-bg); color: var(--trvl-text); }
         
         /* Sidebar */
         .sidebar {
             width: 260px;
             height: 100vh;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: var(--trvl-card);
+            border-right: 1px solid var(--trvl-border);
             position: fixed;
             left: 0;
             top: 0;
@@ -40,7 +52,7 @@
         
         .sidebar-logo {
             padding: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--trvl-border);
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -104,8 +116,8 @@
         }
         
         .topbar {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
+            background: var(--trvl-card);
+            border-bottom: 1px solid var(--trvl-border);
             height: 4rem;
             display: flex;
             align-items: center;
@@ -123,8 +135,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
+            background: var(--trvl-bg);
+            border: 1px solid var(--trvl-border);
             border-radius: 0.5rem;
             padding: 0.5rem 1rem;
             width: 300px;
@@ -145,8 +157,8 @@
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 0.5rem;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
+            background: var(--trvl-bg);
+            border: 1px solid var(--trvl-border);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -187,8 +199,8 @@
             right: 0;
             top: 100%;
             width: 200px;
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: var(--trvl-card);
+            border: 1px solid var(--trvl-border);
             border-radius: 0.5rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             z-index: 100;
@@ -244,8 +256,8 @@
         
         /* Card */
         .card {
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: var(--trvl-card);
+            border: 1px solid var(--trvl-border);
             border-radius: 0.625rem;
             padding: 1.5rem;
             transition: all 0.2s;
@@ -450,11 +462,16 @@
                 </div>
             </div>
             <div class="topbar-right">
+                <button id="darkModeToggle" class="topbar-btn" type="button" title="Toggle Dark Mode">
+                    <svg id="sunIcon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    <svg id="moonIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </button>
+
                 <a href="{{ route('notifications.index') }}" class="topbar-btn" style="position: relative; text-decoration: none;" title="Notifikasi">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                     @php $unreadNotifications = auth()->check() ? auth()->user()->notifications()->unread()->count() : 0; @endphp
                     @if($unreadNotifications > 0)
-                        <span style="position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 9999px; display: flex; align-items: center; justify-content: center; padding: 0 5px; box-shadow: 0 0 0 2px white;">{{ $unreadNotifications > 99 ? '99+' : $unreadNotifications }}</span>
+                        <span style="position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 700; border-radius: 9999px; display: flex; align-items: center; justify-content: center; padding: 0 5px; box-shadow: 0 0 0 2px var(--trvl-card);">{{ $unreadNotifications > 99 ? '99+' : $unreadNotifications }}</span>
                     @endif
                 </a>
                 
@@ -482,5 +499,33 @@
             @yield('content')
         </div>
     </div>
+
+    <script>
+        (function () {
+            const body = document.body;
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+
+            function applyDarkMode(enabled) {
+                if (enabled) {
+                    body.classList.add('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    body.classList.remove('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+                localStorage.setItem('darkMode', enabled ? '1' : '0');
+            }
+
+            const stored = localStorage.getItem('darkMode');
+            applyDarkMode(stored === '1');
+
+            document.getElementById('darkModeToggle').addEventListener('click', function () {
+                applyDarkMode(!body.classList.contains('dark'));
+            });
+        })();
+    </script>
 </body>
 </html>

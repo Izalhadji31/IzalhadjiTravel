@@ -3,6 +3,20 @@
 @section('title', 'Dashboard Customer')
 
 @section('content')
+    @unless(auth()->user()->hasVerifiedEmail())
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.5rem; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+            <svg style="width: 1.25rem; height: 1.25rem; color: #f59e0b; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+            </svg>
+            <div style="flex: 1;">
+                <p style="margin: 0; font-size: 0.9rem; color: #92400e; font-weight: 500;">
+                    Email Anda belum terverifikasi. Silakan verifikasi email untuk dapat melakukan pemesanan.
+                    <a href="{{ route('verification.notice') }}" style="color: #0064d2; font-weight: 600; text-decoration: underline;">Verifikasi Sekarang</a>
+                </p>
+            </div>
+        </div>
+    @endunless
+
     <div class="page-header">
         <h1 class="page-title">Dashboard Pelanggan</h1>
         <p class="page-subtitle">Selamat datang kembali, {{ auth()->user()->name }}! Cari travel atau rental mobil Anda.</p>

@@ -60,6 +60,41 @@
                     @error('number_of_seats') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
+                <!-- Passengers Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label class="block text-gray-700 font-medium">Passengers</label>
+                        <button type="button" id="addPassengerBtn" class="px-3 py-1.5 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors">
+                            + Add Passenger
+                        </button>
+                    </div>
+                    <div id="passengersContainer" class="space-y-3">
+                        <!-- Passenger rows will be dynamically added here -->
+                        <div class="passenger-row bg-gray-50 border border-gray-200 rounded-lg p-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Name</label>
+                                    <input type="text" name="passengers[0][name]" required
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0064d2] text-sm"
+                                           placeholder="Passenger name">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">NIK / ID Number</label>
+                                    <input type="text" name="passengers[0][nik]" required
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0064d2] text-sm"
+                                           placeholder="NIK / ID number">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Seat Number</label>
+                                    <input type="text" name="passengers[0][seat_number]" required
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0064d2] text-sm"
+                                           placeholder="e.g., 1A">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Terms -->
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p class="text-sm text-gray-700">
@@ -76,3 +111,41 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let passengerIndex = 1;
+    const container = document.getElementById('passengersContainer');
+    const addBtn = document.getElementById('addPassengerBtn');
+
+    addBtn.addEventListener('click', function() {
+        const rows = container.querySelectorAll('.passenger-row');
+        const clone = rows[0].cloneNode(true);
+        
+        // Update indices
+        clone.querySelectorAll('input').forEach(function(input) {
+            const name = input.getAttribute('name');
+            if (name) {
+                input.setAttribute('name', name.replace(/passengers\[\d+\]/, 'passengers[' + passengerIndex + ']'));
+                input.value = '';
+            }
+        });
+        
+        // Add remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'remove-passenger absolute top-2 right-2 text-red-500 hover:text-red-700 text-lg font-bold';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = function() {
+            this.parentElement.remove();
+        };
+        
+        clone.style.position = 'relative';
+        clone.appendChild(removeBtn);
+        container.appendChild(clone);
+        passengerIndex++;
+    });
+});
+</script>
+@endpush

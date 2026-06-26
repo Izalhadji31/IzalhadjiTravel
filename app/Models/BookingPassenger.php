@@ -13,16 +13,24 @@ class BookingPassenger extends Model
     protected $table = 'booking_passengers';
     
     protected $fillable = [
+        'travel_booking_id',
         'rental_booking_id',
         'name',
         'phone',
         'email',
         'id_type',
         'id_number',
+        'nik',
+        'seat_number',
     ];
 
     public function rentalBooking(): BelongsTo
     {
         return $this->belongsTo(RentalBooking::class);
+    }
+
+    public function travelBooking(): BelongsTo
+    {
+        return $this->belongsTo(TravelBooking::class);
     }
 }

@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
+
+    'whatsapp' => [
+        'gateway' => env('WHATSAPP_GATEWAY', 'fonnte'),
+        'api_key' => env('WHATSAPP_API_KEY'),
+        'api_url' => env('WHATSAPP_API_URL'),
+    ],
+
 ];
