@@ -349,24 +349,46 @@
     </div>
 </section>
 
-<!-- ==================== TAMPILAN APLIKASI ==================== -->
+<!-- ==================== FITUR APLIKASI ==================== -->
 <section class="trvl-section" id="tampilan" style="background:#fff;">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-8 trvl-reveal">
-            <span class="trvl-section-badge" style="background:#f0fdf4;color:#059669;border-color:#a7f3d0;">📱 Tampilan Aplikasi</span>
+            <span class="trvl-section-badge" style="background:#f0fdf4;color:#059669;border-color:#a7f3d0;">📱 Fitur Aplikasi</span>
             <h2 class="trvl-section-title" style="color:#0f172a;">Sistem Booking Online ASR GO</h2>
             <p class="trvl-section-desc">Kelola perjalanan dan pembayaran dalam satu platform terintegrasi.</p>
         </div>
         <div class="trvl-reveal">
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;text-align:center;">
-                <a href="{{ asset('images/screenshot-app.png') }}" target="_blank" style="display:block;">
-                    <img src="{{ asset('images/screenshot-app.png') }}" 
-                         alt="Tampilan Dashboard ASR GO" 
-                         style="width:100%;max-width:900px;max-height:420px;object-fit:contain;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.1);"
-                         loading="lazy"
-                    />
-                </a>
-                <p style="color:#64748b;font-size:0.85rem;margin-top:12px;margin-bottom:0;">Dashboard Pemilik Armada &mdash; Kelola driver, kendaraan, booking, dan bagi hasil.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">🚗</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Travel & Rental</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Pesan tiket travel antar kota atau rental mobil dengan/tanpa sopir secara online.</p>
+                </div>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">💳</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Pembayaran Mudah</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Midtransfer dengan berbagai metode pembayaran. Status pembayaran real-time.</p>
+                </div>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">📊</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Dashboard & Laporan</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Dashboard statistik untuk admin, driver, dan partner. Export PDF & Excel.</p>
+                </div>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">💰</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Revenue Sharing</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Bagi hasil otomatis 30/50/20 untuk admin, mitra, dan sopir.</p>
+                </div>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">🗺️</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Tracking Real-time</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Pantau lokasi armada dan status perjalanan secara real-time.</p>
+                </div>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
+                    <div style="font-size:28px;margin-bottom:8px;">🎫</div>
+                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Tiket & QR Code</h4>
+                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Dapatkan tiket digital dengan QR code untuk checkin.</p>
+                </div>
             </div>
         </div>
     </div>
