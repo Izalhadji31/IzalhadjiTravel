@@ -34,6 +34,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ChatController;
 
 // Landing Page
 Route::get('/', [PublicController::class, 'home'])->name('home');
@@ -345,6 +346,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
+    // Chat Routes
+    Route::prefix('chat')->group(function () {
+        Route::get('/', [ChatController::class, 'index'])->name('chat.index');
+        Route::get('/{user}/{booking?}', [ChatController::class, 'show'])->name('chat.show');
+        Route::post('/', [ChatController::class, 'store'])->name('chat.store');
+    });
+
     // Super Admin Routes - Global SaaS Management
     Route::middleware('role:admin')->prefix('super-admin')->group(function () {
         Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
@@ -372,6 +380,11 @@ Route::middleware('guest')->group(function () {
 Route::middleware('role:admin')->prefix('admin')->group(function () {
     Route::resource('cms', CmsPageController::class);
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('admin.audit-logs');
+});
+
+// GPS Devices Admin Routes
+Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('gps-devices', \App\Http\Controllers\Admin\GpsDeviceController::class)->except('show');
 });
 
 // Public CMS Page

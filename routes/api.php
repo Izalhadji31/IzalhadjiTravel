@@ -162,6 +162,14 @@ Route::middleware('api')->group(function () {
 });
 
 /**
+ * GPS Device API Routes - Device Key Authentication
+ */
+Route::prefix('gps')->group(function () {
+    Route::post('/location', [\App\Http\Controllers\Api\GpsDeviceApiController::class, 'receiveLocation']);
+    Route::get('/vehicle/{deviceId}', [\App\Http\Controllers\Api\GpsDeviceApiController::class, 'getVehicleStatus']);
+});
+
+/**
  * Midtrans Notification (Webhook) - No Auth Required
  */
 Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
