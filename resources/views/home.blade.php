@@ -794,45 +794,281 @@
                 <p class="text-gray-500 mt-3 max-w-xl mx-auto text-sm">Dari danau tiga warna hingga naga purba — Flores menyimpan keajaiban alam yang menakjubkan</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                @php
-                $destinasi = [
-                    ['emoji'=>'🌋','bg'=>'from-orange-400 to-orange-600','name'=>'Danau Kelimutu','region'=>'Ende','desc'=>'Tiga danau dengan warna berbeda yang berubah secara misterius. Fenomena alam paling ikonik di Flores.','dist'=>'51 km dari Ende'],
-                    ['emoji'=>'🐉','bg'=>'from-green-500 to-green-800','name'=>'Taman Nasional Komodo','region'=>'Labuan Bajo','desc'=>'Habitat asli Komodo (Varanus komodoensis), kadal terbesar di dunia. Warisan Alam UNESCO.','dist'=>'247 km dari Ende'],
-                    ['emoji'=>'🏖️','bg'=>'from-pink-400 to-rose-600','name'=>'Pink Beach','region'=>'Labuan Bajo','desc'=>'Salah satu dari 7 pantai berpasir merah muda di dunia. Keindahan bawah lautnya luar biasa.','dist'=>'247 km dari Ende'],
-                    ['emoji'=>'🏔️','bg'=>'from-slate-500 to-slate-700','name'=>'Pulau Padar','region'=>'Labuan Bajo','desc'=>'Bukit berundak dengan panorama tiga teluk berbeda. Spot foto paling ikonik di Flores.','dist'=>'247 km dari Ende'],
-                    ['emoji'=>'🌿','bg'=>'from-emerald-500 to-teal-700','name'=>'Desa Wae Rebo','region'=>'Ruteng','desc'=>'Desa tradisional Manggarai di atas awan 1.200 mdpl. Menang penghargaan UNESCO Asia-Pasifik.','dist'=>'198 km dari Ende'],
-                    ['emoji'=>'🕸️','bg'=>'from-lime-500 to-green-600','name'=>'Sawah Lingko','region'=>'Ruteng','desc'=>'Sawah berbentuk jaring laba-laba unik khas Manggarai, dipandang dari atas bukit membentuk pola menakjubkan.','dist'=>'198 km dari Ende'],
-                    ['emoji'=>'🏘️','bg'=>'from-amber-500 to-orange-600','name'=>'Kampung Bena','region'=>'Bajawa','desc'=>'Desa adat Ngada dengan megalit kuno dan rumah tradisional yang masih dilestarikan hingga kini.','dist'=>'85 km dari Ende'],
-                    ['emoji'=>'🌊','bg'=>'from-cyan-400 to-blue-600','name'=>'Taman Laut 17 Pulau','region'=>'Riung','desc'=>'17 pulau kecil dengan ekosistem terumbu karang yang terjaga, populasi kelelawar raksasa & komodo kerdil.','dist'=>'125 km dari Ende'],
-                    ['emoji'=>'🤿','bg'=>'from-blue-500 to-indigo-700','name'=>'Teluk Maumere','region'=>'Maumere','desc'=>'Surga diving dan snorkeling dengan keanekaragaman biota laut tertinggi di Indonesia timur.','dist'=>'148 km dari Ende'],
-                    ['emoji'=>'💧','bg'=>'from-sky-400 to-blue-600','name'=>'Air Terjun Cunca Rami','region'=>'Labuan Bajo','desc'=>'Air terjun tersembunyi yang dikelilingi hutan tropis lebat, cocok untuk petualangan alam bebas.','dist'=>'247 km dari Ende'],
-                    ['emoji'=>'🏞️','bg'=>'from-teal-400 to-emerald-600','name'=>'Pantai Paga','region'=>'Ende','desc'=>'Pantai eksotis dengan pasir hitam dan batu karang unik, hanya 56 km dari kota Ende.','dist'=>'56 km dari Ende'],
-                    ['emoji'=>'⛰️','bg'=>'from-purple-400 to-indigo-600','name'=>'Gunung Iya & Kelimutu','region'=>'Ende','desc'=>'Jalur pendakian aktif dengan pemandangan sunrise spektakuler di kawah Kelimutu yang memesona.','dist'=>'51 km dari Ende'],
-                ];
-                @endphp
-                @foreach($destinasi as $d)
-                <div class="dest-card group">
-                    <div class="dest-img bg-gradient-to-br {{ $d['bg'] }}">
-                        <span class="text-6xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300">{{ $d['emoji'] }}</span>
-                        <span class="dest-region-tag">📍 {{ $d['region'] }}</span>
+            <!-- Featured Destination with Video -->
+            <div class="mb-12 rounded-2xl overflow-hidden shadow-2xl relative group">
+                <div class="aspect-video relative">
+                    <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1400&q=80" 
+                         alt="Danau Kelimutu" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">UNGGULAN</span>
+                            <span class="text-white/80 text-sm">📍 Ende, NTT</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-2">Danau Kelimutu</h3>
+                        <p class="text-white/80 max-w-2xl">Tiga danau kawah dengan warna berbeda yang berubah secara misterius selama bertahun-tahun. Sunrise di puncak Kelimutu adalah momen yang tak terlupakan.</p>
                     </div>
-                    <div class="dest-body">
-                        <h3 class="dest-title">{{ $d['name'] }}</h3>
-                        <p class="dest-desc">{{ $d['desc'] }}</p>
-                        <div class="dest-distance">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                            {{ $d['dist'] }}
+                </div>
+            </div>
+
+            <!-- Destinasi Grid dengan Foto -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Ende - Rumah Bung Karno -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80" 
+                             alt="Rumah Bung Karno Ende" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Ende</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Rumah Bung Karno</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Rumah tempat Bung Karno diasingkan tahun 1934-1938. Kini menjadi museum bersejarah dengan koleksi peninggalan sang proklamator.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Sejarah & Budaya</span>
+                            <span class="text-xs text-gray-400">51 km dari pusat kota</span>
                         </div>
                     </div>
                 </div>
-                @endforeach
+
+                <!-- Ende - Danau Kelimutu -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=600&q=80" 
+                             alt="Danau Kelimutu" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Ende</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Danau Kelimutu</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Tiga danau kawah berwarna: Tiwu Ata Mbupu (biru), Tiwu Nuwa Muri Koo Fai (hijau), dan Tiwu Ata Polo (merah).</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Alam & Geologi</span>
+                            <span class="text-xs text-gray-400">51 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ende - Air Terjun Ogi -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1432405972618-c6b0cfba8b03?w=600&q=80" 
+                             alt="Air Terjun Ogi" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Ende</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Air Terjun Ogi</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Air terjun setinggi 30 meter dengan air yang jernih dan suasana hutan tropis yang sejuk. Cocok untuk refreshing.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Alam & Petualangan</span>
+                            <span class="text-xs text-gray-400">25 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Labuan Bajo - Komodo -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=600&q=80" 
+                             alt="Taman Nasional Komodo" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Labuan Bajo</span>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">UNESCO</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Taman Nasional Komodo</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Habitat asli Komodo (Varanus komodoensis), kadal terbesar di dunia. Warisan Alam Dunia UNESCO.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Satwa Langka</span>
+                            <span class="text-xs text-gray-400">247 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Labuan Bajo - Pink Beach -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=600&q=80" 
+                             alt="Pink Beach" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Labuan Bajo</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Pink Beach (Pantai Merah)</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Salah satu dari 7 pantai berpasir merah muda di dunia. Hasil campuran pasir putih dan fragmen karang merah.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Pantai & Snorkeling</span>
+                            <span class="text-xs text-gray-400">247 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Labuan Bajo - Pulau Padar -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80" 
+                             alt="Pulau Padar" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Labuan Bajo</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Pulau Padar</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Bukit berundak dengan panorama tiga teluk berbeda warna. Spot foto paling ikonik di Indonesia Timur.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Panorama & Hiking</span>
+                            <span class="text-xs text-gray-400">247 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ruteng - Wae Rebo -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=600&q=80" 
+                             alt="Desa Wae Rebo" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Ruteng</span>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">UNESCO</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Desa Wae Rebo</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Desa tradisional Manggarai dengan rumah kerucut (Mbaru Niang) di atas awan 1.200 mdpl. Penghargaan UNESCO Asia-Pasifik.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Budaya & Arsitektur</span>
+                            <span class="text-xs text-gray-400">198 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ruteng - Sawah Lingko -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" 
+                             alt="Sawah Lingko" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Ruteng</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Sawah Lingko</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Sawah berbentuk jaring laba-laba unik khas Manggarai. Sistem pembagian tanah adat yang menakjubkan dari udara.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Pemandangan & Adat</span>
+                            <span class="text-xs text-gray-400">198 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bajawa - Kampung Bena -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&q=80" 
+                             alt="Kampung Bena" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Bajawa</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Kampung Bena</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Desa adat Ngada dengan megalit kuno dan rumah tradisional. Warisan budaya yang dilestarikan selama berabad-abad.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Budaya & Megalit</span>
+                            <span class="text-xs text-gray-400">85 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maumere - Teluk Maumere -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" 
+                             alt="Teluk Maumere" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Maumere</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Teluk Maumere</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Surga diving dengan keanekaragaman biota laut tertinggi di Indonesia Timur. Terumbu karang terbaik di dunia versi Conservation International.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Diving & Snorkeling</span>
+                            <span class="text-xs text-gray-400">148 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Riung - Taman Laut 17 Pulau -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&q=80" 
+                             alt="Taman Laut 17 Pulau" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Riung</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Taman Laut 17 Pulau</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">17 pulau kecil dengan ekosistem terumbu karang terjaga. Kelelawar raksasa dan komodo kerdil di pulau Ontoloe.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Snorkeling & Wildlife</span>
+                            <span class="text-xs text-gray-400">125 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Larantuka - Semana Santa -->
+                <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80" 
+                             alt="Kota Larantuka" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-2.5 py-1 rounded-full text-gray-700">📍 Larantuka</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Kota Larantuka</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">Kota dengan tradisi Semana Santa (Minggu Suci) yang terkenal hingga Eropa. Perpaduan budaya Katolik dan lokal yang unik.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-blue-600 font-medium">Budaya & Religi</span>
+                            <span class="text-xs text-gray-400">180 km dari Ende</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="text-center mt-10">
-                <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-md hover:-translate-y-0.5">
-                    Pesan Perjalanan ke Destinasi Ini
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <!-- CTA -->
+            <div class="text-center mt-12">
+                <p class="text-gray-500 mb-4">Ingin mengunjungi destinasi-destinasi di atas? Kami melayani travel ke seluruh kota di Flores.</p>
+                <a href="#booking" class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg hover:-translate-y-0.5">
+                    Pesan Perjalanan Sekarang
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
             </div>
         </div>

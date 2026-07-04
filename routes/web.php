@@ -49,6 +49,13 @@ Route::prefix('public')->group(function () {
     Route::get('/about', [PublicController::class, 'about'])->name('public.about');
     Route::get('/contact', [PublicController::class, 'contact'])->name('public.contact');
     Route::post('/contact', [PublicController::class, 'submitContact'])->name('public.contact.submit');
+    Route::get('/destinasi', [PublicController::class, 'destinasi'])->name('public.destinasi');
+    Route::get('/testimoni', [PublicController::class, 'testimoni'])->name('public.testimoni');
+    Route::get('/faq', [PublicController::class, 'faq'])->name('public.faq');
+    Route::get('/syarat-ketentuan', [PublicController::class, 'syaratKetentuan'])->name('public.syarat-ketentuan');
+    Route::get('/kebijakan-privasi', [PublicController::class, 'kebijakanPrivasi'])->name('public.kebijakan-privasi');
+    Route::get('/cek-booking', [PublicController::class, 'cekBooking'])->name('public.cek-booking');
+    Route::get('/destinasi/{slug}', [PublicController::class, 'destinasiDetail'])->name('public.destinasi.detail');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -389,3 +396,5 @@ Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function
 
 // Public CMS Page
 Route::get('/pages/{slug}', [PublicController::class, 'showPage'])->name('public.page');
+
+

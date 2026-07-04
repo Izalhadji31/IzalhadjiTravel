@@ -1,46 +1,33 @@
-@extends('layouts.app')
-
-@section('title', '404 - Halaman Tidak Ditemukan')
-
-@section('content')
-    <div class="min-h-screen bg-gradient-to-b from-blue-600 to-blue-800 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <!-- 404 Icon -->
-            <div class="mb-8">
-                <div class="text-9xl font-bold text-white opacity-20 mb-4">404</div>
-            </div>
-
-            <!-- Message -->
-            <h1 class="text-5xl font-bold text-white mb-4">Oops! Halaman Tidak Ditemukan</h1>
-            <p class="text-xl text-blue-100 mb-8">Maaf, halaman yang Anda cari tidak ada atau telah dipindahkan.</p>
-
-            <!-- Illustration -->
-            <div class="mb-12">
-                <svg class="w-64 h-64 mx-auto text-blue-200 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                </svg>
-            </div>
-
-            <!-- Suggestions -->
-            <div class="mb-12 bg-blue-700 bg-opacity-50 rounded-lg p-6 max-w-md mx-auto">
-                <h2 class="text-white font-bold mb-4">Berikut yang bisa Anda lakukan:</h2>
-                <ul class="text-blue-100 space-y-2 text-left">
-                    <li>✓ Periksa kembali URL Anda</li>
-                    <li>✓ Gunakan menu navigasi untuk menemukan halaman</li>
-                    <li>✓ Kembali ke halaman sebelumnya</li>
-                    <li>✓ Hubungi kami jika perlu bantuan</li>
-                </ul>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('home') }}" class="inline-block bg-white hover:bg-gray-100 text-blue-600 font-bold py-3 px-6 rounded-lg transition-colors">
-                    ← Kembali ke Home
-                </a>
-                <a href="{{ route('public.contact') }}" class="inline-block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                    💬 Hubungi Kami
-                </a>
-            </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Halaman Tidak Ditemukan | ASR GO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>*{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
+    <div class="text-center max-w-lg">
+        <div class="text-8xl font-extrabold text-blue-100 mb-4">404</div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-3">Halaman Tidak Ditemukan</h1>
+        <p class="text-gray-500 mb-8">Sepertinya Anda tersesat di Flores! Halaman yang Anda cari tidak ada atau sudah dipindahkan.</p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="/" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Kembali ke Beranda
+            </a>
+            <a href="/public/destinasi" class="px-6 py-3 bg-white text-blue-600 border border-blue-200 rounded-xl font-medium hover:bg-blue-50 transition">
+                Jelajahi Destinasi
+            </a>
+        </div>
+        
+        <div class="mt-12 p-4 bg-white rounded-xl shadow-sm inline-block">
+            <p class="text-sm text-gray-400">Butuh bantuan?</p>
+            <a href="https://wa.me/6281234567890" class="text-blue-600 font-medium text-sm">Chat WhatsApp →</a>
         </div>
     </div>
-@endsection
+</body>
+</html>

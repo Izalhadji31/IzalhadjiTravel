@@ -59,7 +59,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <div>
                                 <label class="trvl-field-label">Lokasi Penjemputan</label>
-                                <input type="text" placeholder="Ende, Flores" value="Ende" class="trvl-form-field">
+                                <input type="text" value="Ende" readonly class="trvl-form-field" aria-label="Lokasi Penjemputan Rental">
                             </div>
                             <div>
                                 <label class="trvl-field-label">Tanggal Mulai</label>
@@ -72,8 +72,11 @@
                             <div>
                                 <label class="trvl-field-label">Durasi Sewa</label>
                                 <select class="trvl-form-field">
-                                    <option>4 Jam</option><option>8 Jam</option><option>12 Jam</option>
-                                    <option>24 Jam (Full Day)</option><option>2 Hari</option><option>3 Hari</option><option>1 Minggu</option>
+                                    <option>12 Jam</option>
+                                    <option>1 Hari</option>
+                                    <option>2 Hari</option>
+                                    <option>3 Hari</option>
+                                    <option>1 Minggu</option>
                                 </select>
                             </div>
                         </div>
@@ -140,7 +143,7 @@
                             </div>
                         </div>
                         <div class="flex justify-center">
-                            <a href="https://wa.me/621500009" class="trvl-btn-search text-decoration-none">
+                            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="trvl-btn-search text-decoration-none">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 Pesan Airport Transfer
                             </a>
@@ -245,25 +248,31 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse(($travelRoutes ?? []) as $route)
+            @php
+                $travelPrice = $route->travelPrices->first();
+                $price = $travelPrice?->price_per_seat ?? $travelPrice?->price ?? 0;
+                $duration = $route->estimated_hours ? number_format((float) $route->estimated_hours, 0) . ' jam' : 'Khusus';
+                $distance = $route->distance_km ? number_format((float) $route->distance_km, 0) . ' km' : 'Tersedia';
+            @endphp
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img">🏔️</div>
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%);">🛣️</div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest">
-                        <span class="trvl-route-city">{{ $route->origin ?? 'Ende' }}</span>
+                        <span class="trvl-route-city">{{ $route->origin_city ?? 'Ende' }}</span>
                         <span class="trvl-route-arrow">→</span>
-                        <span class="trvl-route-city">{{ $route->destination ?? 'Labuan Bajo' }}</span>
+                        <span class="trvl-route-city">{{ $route->destination_city ?? 'Labuan Bajo' }}</span>
                     </div>
                     <div class="trvl-route-meta">
-                        <span class="trvl-route-meta-item">⏱️ {{ $route->duration ?? '8 jam' }}</span>
-                        <span class="trvl-route-meta-item">📍 {{ $route->distance ?? '350 km' }}</span>
+                        <span class="trvl-route-meta-item">⏱️ {{ $duration }}</span>
+                        <span class="trvl-route-meta-item">📍 {{ $distance }}</span>
                     </div>
-                    <div class="trvl-route-price">Rp {{ number_format($route->travelPrices->first()->price ?? 350000, 0, ',', '.') }} <span>/ orang</span></div>
+                    <div class="trvl-route-price">Rp {{ number_format($price, 0, ',', '.') }} <span>/ orang</span></div>
                     <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">Pesan Sekarang</a>
                 </div>
             </div>
             @empty
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img">🏔️</div>
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%);">🛣️</div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 8 jam</span><span class="trvl-route-meta-item">📍 350 km</span></div>
@@ -294,7 +303,129 @@
     </div>
 </section>
 
-<!-- ==================== ARMADA ==================== -->
+
+    <!-- ==================== DESTINASI WISATA FLORES ==================== -->
+    <section class="trvl-section" id="destinasi" style="background: white;">
+        <div class="trvl-container">
+            <div class="trvl-section-header-center mb-12 trvl-reveal">
+                <span class="trvl-section-badge">🏝️ Jelajahi Flores</span>
+                <h2 class="trvl-section-title">Destinasi Wisata Populer</h2>
+                <p class="trvl-section-desc">Dari danau tiga warna hingga naga purba — Flores menyimpan keajaiban alam yang menakjubkan</p>
+            </div>
+
+            <!-- Featured: Danau Kelimutu -->
+            <div class="trvl-reveal mb-8">
+                <div class="rounded-2xl overflow-hidden shadow-xl relative group cursor-pointer">
+                    <div class="aspect-video relative" style="max-height: 380px;">
+                        <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=1400&q=80" alt="Danau Kelimutu" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">⭐ UNGGULAN</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <span class="text-white/70 text-sm">📍 Ende, NTT</span>
+                            <h3 class="text-2xl font-bold text-white mt-1 mb-2">Danau Kelimutu</h3>
+                            <p class="text-white/80 max-w-2xl">Tiga danau kawah dengan warna berbeda yang berubah secara misterius. Sunrise di puncak Kelimutu adalah momen yang tak terlupakan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destinasi Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="trvl-reveal">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=80" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Ende</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Rumah Bung Karno</h4>
+                            <p class="text-gray-500 text-sm mt-1">Rumah tempat Bung Karno diasingkan 1934-1938. Kini menjadi museum bersejarah.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-1">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&q=80" alt="Pulau Komodo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Labuan Bajo</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Pulau Komodo</h4>
+                            <p class="text-gray-500 text-sm mt-1">Habitat asli komodo, kadal terbesar di dunia. Warisan Alam UNESCO.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-2">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80" alt="Pink Beach" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Labuan Bajo</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Pink Beach</h4>
+                            <p class="text-gray-500 text-sm mt-1">Salah satu dari 7 pantai berpasir merah muda di dunia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=500&q=80" alt="Wae Rebo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Ruteng</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Desa Wae Rebo</h4>
+                            <p class="text-gray-500 text-sm mt-1">Desa tradisional di atas awan 1.200 mdpl. Penghargaan UNESCO.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-1">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&q=80" alt="Kampung Bena" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Bajawa</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Kampung Bena</h4>
+                            <p class="text-gray-500 text-sm mt-1">Desa adat Ngada dengan megalit kuno dan rumah tradisional.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-2">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Teluk Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-blue-600 font-medium">📍 Maumere</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Teluk Maumere</h4>
+                            <p class="text-gray-500 text-sm mt-1">Surga diving dengan biodiversitas laut tertinggi di Indonesia Timur.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center mt-10 trvl-reveal">
+                <a href="{{ route('public.destinasi') }}" class="trvl-btn-primary inline-flex items-center gap-2">
+                    Lihat Semua Destinasi
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==================== ARMADA ==================== -->
 <section class="trvl-section trvl-section-bg" id="armada">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-12 trvl-reveal">
@@ -304,21 +435,28 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse(($rentalServices ?? []) as $service)
+            @php
+                $vehicleName = $service->route?->name ?: ($service->vehicle_type ?? 'Armada Premium');
+                $seatCapacity = $service->route?->total_seats ?? 6;
+                $price = $service->price_without_driver ?? $service->price_with_driver ?? 350000;
+            @endphp
             <div class="trvl-vehicle-card trvl-reveal">
-                <div class="trvl-vehicle-card-img">🚐</div>
+                <div class="trvl-vehicle-card-img">
+                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80" alt="Mobil ASR GO" loading="lazy">
+                </div>
                 <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">{{ $service->vehicle_type ?? 'Toyota Avanza' }}</h3>
+                    <h3 class="trvl-vehicle-name">{{ $vehicleName }}</h3>
                     <div class="trvl-vehicle-specs">
-                        <span class="trvl-vehicle-spec">👥 {{ $service->capacity ?? '6' }} Kursi</span>
+                        <span class="trvl-vehicle-spec">👥 {{ $seatCapacity }} Kursi</span>
                         <span class="trvl-vehicle-spec">❄️ AC</span>
                     </div>
-                    <div class="trvl-vehicle-price">Rp {{ number_format($service->price_per_day ?? 350000, 0, ',', '.') }} <span>/ hari</span></div>
+                    <div class="trvl-vehicle-price">Rp {{ number_format($price, 0, ',', '.') }} <span>/ hari</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
                 </div>
             </div>
             @empty
             <div class="trvl-vehicle-card trvl-reveal">
-                <div class="trvl-vehicle-card-img">🚐</div>
+                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 50%,#60a5fa 100%);">🚐</div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Avanza</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 6 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
@@ -327,7 +465,9 @@
                 </div>
             </div>
             <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-1">
-                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%);">🚌</div>
+                <div class="trvl-vehicle-card-img">
+                    <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80" alt="Toyota Innova ASR GO" loading="lazy">
+                </div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Innova</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 7 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
@@ -336,7 +476,9 @@
                 </div>
             </div>
             <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-2">
-                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 50%,#60a5fa 100%);">🚐</div>
+                <div class="trvl-vehicle-card-img">
+                    <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80" alt="Toyota Hiace ASR GO" loading="lazy">
+                </div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Hiace</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 12 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
@@ -394,6 +536,50 @@
     </div>
 </section>
 
+<!-- ==================== PERBANDINGAN ==================== -->
+<section class="trvl-section" style="background:#f8fafc;">
+    <div class="trvl-container">
+        <div class="trvl-section-header-center mb-8 trvl-reveal">
+            <span class="trvl-section-badge" style="background:#eff6ff;color:#2563eb;border-color:#bfdbfe;">📊 Perbandingan ASR GO</span>
+            <h2 class="trvl-section-title">ASR GO vs Trac GO</h2>
+            <p class="trvl-section-desc">Kami hadir dengan layanan yang lebih lokal, fleksibel, dan dekat dengan kebutuhan perjalanan di Flores.</p>
+        </div>
+        <div class="trvl-reveal overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <table class="w-full text-sm text-left">
+                <thead class="bg-slate-900 text-white">
+                    <tr>
+                        <th class="px-4 py-3">Fitur</th>
+                        <th class="px-4 py-3">ASR GO</th>
+                        <th class="px-4 py-3">Trac GO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-gray-100">
+                        <td class="px-4 py-3 font-semibold">Layanan lokal</td>
+                        <td class="px-4 py-3">Fokus ke Pulau Flores, sangat memahami rute dan kebutuhan pelanggan setempat.</td>
+                        <td class="px-4 py-3">Lebih umum dan tidak selalu menyesuaikan kebutuhan wilayah lokal.</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                        <td class="px-4 py-3 font-semibold">Ketersediaan armada</td>
+                        <td class="px-4 py-3">Tersedia pilihan Avanza, Innova, Hiace, dan kendaraan rental yang siap dipakai.</td>
+                        <td class="px-4 py-3">Biasanya lebih banyak opsi besar, namun kurang personal.</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                        <td class="px-4 py-3 font-semibold">Kemudahan booking</td>
+                        <td class="px-4 py-3">Booking cepat via WhatsApp, website, dan layanan customer support yang responsif.</td>
+                        <td class="px-4 py-3">Mudah, tetapi sering lebih terstruktur dan kurang fleksibel untuk kebutuhan khusus.</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-3 font-semibold">Kelebihan utama</td>
+                        <td class="px-4 py-3">Lebih dekat dengan pelanggan, harga transparan, dan pelayanan yang fleksibel untuk perjalanan daerah.</td>
+                        <td class="px-4 py-3">Sudah terkenal secara luas, namun tidak selalu unggul dalam layanan personal.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
 <!-- ==================== CTA ==================== -->
 <section class="trvl-cta-section py-20">
     <div class="trvl-container relative z-10">
@@ -405,7 +591,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     Pesan Sekarang
                 </a>
-                <a href="https://wa.me/621500009" class="trvl-btn-cta-outline text-decoration-none">
+                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-btn-cta-outline text-decoration-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     Hubungi WhatsApp
                 </a>
@@ -441,8 +627,8 @@
             <div>
                 <p class="trvl-footer-heading">Kontak</p>
                 <div class="flex flex-col gap-2">
-                    <a href="https://wa.me/621500009" class="trvl-footer-link">📱 WhatsApp: 1500 009</a>
-                    <a href="#" class="trvl-footer-link">📍 Jl. Soekarno-Hatta, Ende</a>
+                    <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-footer-link">📱 WhatsApp: +62 831-5640-8078</a>
+                    <a href="#" class="trvl-footer-link">📍 IzalhadjiTravel</a>
                     <a href="#" class="trvl-footer-link">📧 info@asrgo.id</a>
                 </div>
             </div>

@@ -3,82 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>500 - ASR GO</title>
-    <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .error-container {
-            text-align: center;
-            max-width: 500px;
-            padding: 2rem;
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .error-icon {
-            font-size: 6rem;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .error-message {
-            font-size: 1.1rem;
-            color: #dc2626;
-            margin-bottom: 1rem;
-        }
-
-        .error-description {
-            font-size: 0.95rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background: #1d4ed8;
-        }
-    </style>
+    <title>500 - Server Error | ASR GO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>*{font-family:'Inter',sans-serif}</style>
 </head>
-<body>
-    <div class="error-container">
-        <div class="error-icon">⚠️</div>
-        <h1>500</h1>
-        <p class="error-message">Server Error</p>
-        <p class="error-description">
-            Maaf, terjadi kesalahan pada server. Tim kami sudah diberitahu dan sedang bekerja untuk memperbaikinya.
-            Silahkan coba lagi nanti.
-        </p>
-        <a href="/" class="btn">Kembali ke Beranda</a>
+<body class="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 flex items-center justify-center p-4">
+    <div class="text-center max-w-lg">
+        <div class="text-8xl font-extrabold text-red-100 mb-4">500</div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-3">Terjadi Kesalahan</h1>
+        <p class="text-gray-500 mb-8">Maaf, sedang terjadi masalah teknis. Tim kami sudah notifikasi dan sedang memperbaiki. Silakan coba lagi nanti.</p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button onclick="location.reload()" class="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                Coba Lagi
+            </button>
+            <a href="/" class="px-6 py-3 bg-white text-blue-600 border border-blue-200 rounded-xl font-medium hover:bg-blue-50 transition">
+                Kembali ke Beranda
+            </a>
+        </div>
     </div>
 </body>
 </html>

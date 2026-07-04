@@ -258,7 +258,8 @@
         /* ===== TRAVELOKA BOOKING CARD ===== */
         .trvl-booking-wrapper { animation: trvlFadeInUp 0.7s ease-out 0.4s both; }
         .trvl-booking-card {
-            background: var(--trvl-card);
+            background: linear-gradient(145deg, var(--trvl-card) 0%, rgba(255,255,255,0.98) 100%);
+            border: 1px solid rgba(255,255,255,0.45);
             border-radius: var(--trvl-radius-xl);
             box-shadow: 0 30px 80px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.12);
             overflow: hidden;
@@ -314,6 +315,18 @@
             border-radius: var(--trvl-radius-md);
             padding: 0.875rem 1.125rem;
             font-size: 0.82rem;
+        }
+        .dark .trvl-info-panel {
+            background: rgba(59, 130, 246, 0.16);
+            border-color: rgba(96, 165, 250, 0.28);
+            color: #dbeafe;
+        }
+        .dark .trvl-booking-card {
+            background: linear-gradient(145deg, var(--trvl-card) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+        .dark .trvl-vehicle-card-img img,
+        .dark .trvl-route-card-img img {
+            filter: brightness(0.95);
         }
 
         /* ===== TRAVELOKA TRUST BADGES ===== */
@@ -479,7 +492,10 @@
             height: 11rem;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             display: flex; align-items: center; justify-content: center;
-            font-size: 4rem; position: relative;
+            position: relative; overflow: hidden;
+        }
+        .trvl-vehicle-card-img img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
         }
         .trvl-vehicle-card-img::after {
             content: '';
@@ -593,6 +609,7 @@
             to { transform: translateX(0); opacity: 1; }
         }
     </style>
+    @yield('meta')
 </head>
 <body>
     <!-- NAVBAR -->
@@ -605,10 +622,10 @@
                 ASR GO
             </a>
             <div class="trvl-nav-links trvl-nav-links-desktop">
-                <a href="#layanan" class="trvl-nav-link">Layanan</a>
-                <a href="#keunggulan" class="trvl-nav-link">Keunggulan</a>
-                <a href="#rute" class="trvl-nav-link">Rute Populer</a>
-                <a href="#armada" class="trvl-nav-link">Armada</a>
+                <a href="{{ route('home') }}#layanan" class="trvl-nav-link">Layanan</a>
+                <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">Keunggulan</a>
+                <a href="{{ route('home') }}#rute" class="trvl-nav-link">Rute Populer</a>
+                <a href="{{ route('home') }}#armada" class="trvl-nav-link">Armada</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
                 <button id="darkModeToggle" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; justify-content:center; padding:0.5rem; border-radius:var(--trvl-radius-sm); background:transparent; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5);" type="button" title="Toggle Dark Mode">
@@ -616,7 +633,7 @@
                     <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </button>
                 <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">Masuk</a>
-                <a href="https://wa.me/621500009" class="trvl-nav-btn trvl-nav-btn-white">📱 1500 009</a>
+                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-nav-btn trvl-nav-btn-white">📱 +62 831-5640-8078</a>
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -628,10 +645,10 @@
 
     <!-- Mobile Menu -->
     <div class="trvl-mobile-menu" id="mobileMenu">
-        <a href="#layanan" onclick="toggleMobileMenu()">Layanan</a>
-        <a href="#keunggulan" onclick="toggleMobileMenu()">Keunggulan</a>
-        <a href="#rute" onclick="toggleMobileMenu()">Rute Populer</a>
-        <a href="#armada" onclick="toggleMobileMenu()">Armada</a>
+        <a href="{{ route('home') }}#layanan" onclick="toggleMobileMenu()">Layanan</a>
+        <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">Keunggulan</a>
+        <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">Rute Populer</a>
+        <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">Armada</a>
         <a href="{{ route('login') }}" onclick="toggleMobileMenu()">Masuk</a>
     </div>
 
@@ -701,5 +718,75 @@
         });
     })();
     </script>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20tanya%20tentang%20layanan%20travel" 
+   id="wa-float" target="_blank"
+   class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all hover:scale-110 group">
+    <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full mr-3 bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
+        Chat WhatsApp
+    </span>
+    <!-- Pulse animation -->
+    <span class="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-20"></span>
+</a>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast-container" class="fixed top-20 right-4 z-50 space-y-2"></div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" 
+        class="fixed bottom-6 left-6 z-50 w-10 h-10 bg-blue-600 text-white rounded-full shadow-lg items-center justify-center hover:bg-blue-700 transition-all hidden">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+</button>
+
+<script>
+// Back to top visibility
+window.addEventListener('scroll', () => {
+    document.getElementById('backToTop').classList.toggle('hidden', window.scrollY < 500);
+    document.getElementById('backToTop').classList.toggle('flex', window.scrollY >= 500);
+});
+
+// Toast notification system
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500',
+        warning: 'bg-yellow-500'
+    };
+    toast.className = `${colors[type]} text-white px-5 py-3 rounded-xl shadow-lg transform translate-x-full transition-all duration-300 flex items-center gap-2 max-w-sm`;
+    toast.innerHTML = `<span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.classList.remove('translate-x-full'), 100);
+    setTimeout(() => {
+        toast.classList.add('translate-x-full');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// Lazy loading images
+if ('IntersectionObserver' in window) {
+    const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                }
+                imgObserver.unobserve(img);
+            }
+        });
+    });
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => imgObserver.observe(img));
+}
+</script>
+
 </body>
 </html>
