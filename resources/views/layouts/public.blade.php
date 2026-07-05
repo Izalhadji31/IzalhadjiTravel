@@ -753,18 +753,25 @@
                 ASR GO
             </a>
             <div class="trvl-nav-links trvl-nav-links-desktop">
-                <a href="{{ route('home') }}#layanan" class="trvl-nav-link">Layanan</a>
-                <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">Keunggulan</a>
-                <a href="{{ route('home') }}#rute" class="trvl-nav-link">Rute Populer</a>
-                <a href="{{ route('home') }}#armada" class="trvl-nav-link">Armada</a>
-                <a href="{{ route('public.blog') }}" class="trvl-nav-link">Blog/Artikel</a>
+                <a href="{{ route('home') }}#layanan" class="trvl-nav-link">{{ __('nav.services') }}</a>
+                <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">{{ __('nav.advantages') }}</a>
+                <a href="{{ route('home') }}#rute" class="trvl-nav-link">{{ __('nav.popular_routes') }}</a>
+                <a href="{{ route('home') }}#armada" class="trvl-nav-link">{{ __('nav.fleet') }}</a>
+                <a href="{{ route('public.blog') }}" class="trvl-nav-link">{{ __('nav.blog') }}</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
+                <!-- Language Switcher -->
+                <a href="{{ route('lang.switch', ['locale' => app()->getLocale() === 'id' ? 'en' : 'id']) }}" 
+                   class="trvl-nav-btn trvl-nav-btn-outline" 
+                   style="display:flex; align-items:center; gap:4px; padding:0.5rem 0.75rem; font-size:0.85rem; font-weight:600; border-radius:var(--trvl-radius-sm); text-decoration:none; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5); color:white;"
+                   title="{{ app()->getLocale() === 'id' ? 'English' : 'Indonesia' }}">
+                    {{ app()->getLocale() === 'id' ? 'EN' : 'ID' }}
+                </a>
                 <button id="darkModeToggle" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; justify-content:center; padding:0.5rem; border-radius:var(--trvl-radius-sm); background:transparent; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5);" type="button" title="Toggle Dark Mode">
                     <svg id="sunIcon" class="hidden" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                     <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </button>
-                <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">Masuk</a>
+                <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
                 <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-nav-btn trvl-nav-btn-white">📱 +62 831-5640-8078</a>
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -777,12 +784,13 @@
 
     <!-- Mobile Menu -->
     <div class="trvl-mobile-menu" id="mobileMenu">
-            <a href="{{ route('home') }}#layanan" onclick="toggleMobileMenu()">Layanan</a>
-            <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">Keunggulan</a>
-            <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">Rute Populer</a>
-            <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">Armada</a>
-            <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">Blog/Artikel</a>
-            <a href="{{ route('login') }}" onclick="toggleMobileMenu()">Masuk</a>
+            <a href="{{ route('home') }}#layanan" onclick="toggleMobileMenu()">{{ __('nav.services') }}</a>
+            <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">{{ __('nav.advantages') }}</a>
+            <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">{{ __('nav.popular_routes') }}</a>
+            <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">{{ __('nav.fleet') }}</a>
+            <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">{{ __('nav.blog') }}</a>
+            <a href="{{ route('login') }}" onclick="toggleMobileMenu()">{{ __('nav.login') }}</a>
+            <a href="{{ route('lang.switch', ['locale' => app()->getLocale() === 'id' ? 'en' : 'id']) }}" onclick="toggleMobileMenu()">{{ app()->getLocale() === 'id' ? 'English' : 'Indonesia' }}</a>
         </div>
 
     @yield('content')
@@ -793,38 +801,38 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
                 <div>
                     <p class="trvl-footer-brand mb-4">ASR <span>GO</span></p>
-                    <p class="text-sm" style="color:#64748b;">Layanan travel dan rental kendaraan terpercaya di Pulau Flores, NTT.</p>
+                    <p class="text-sm" style="color:#64748b;">{{ __('footer.description') }}</p>
                 </div>
                 <div>
-                    <p class="trvl-footer-heading">Layanan</p>
+                    <p class="trvl-footer-heading">{{ __('footer.services') }}</p>
                     <div class="flex flex-col gap-2">
-                        <a href="{{ route('public.travel') }}" class="trvl-footer-link">Travel Antar Kota</a>
-                        <a href="{{ route('public.rental') }}" class="trvl-footer-link">Rental Mobil</a>
-                        <a href="#" class="trvl-footer-link">Airport Transfer</a>
+                        <a href="{{ route('public.travel') }}" class="trvl-footer-link">{{ __('footer.travel') }}</a>
+                        <a href="{{ route('public.rental') }}" class="trvl-footer-link">{{ __('footer.rental') }}</a>
+                        <a href="#" class="trvl-footer-link">{{ __('footer.airport') }}</a>
                     </div>
                 </div>
                 <div>
-                    <p class="trvl-footer-heading">Informasi</p>
+                    <p class="trvl-footer-heading">{{ __('footer.information') }}</p>
                     <div class="flex flex-col gap-2">
-                        <a href="{{ route('public.blog') }}" class="trvl-footer-link">Blog & Artikel</a>
-                        <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">Destinasi Wisata</a>
-                        <a href="{{ route('public.faq') }}" class="trvl-footer-link">FAQ</a>
-                        <a href="{{ route('public.syarat-ketentuan') }}" class="trvl-footer-link">Syarat & Ketentuan</a>
-                        <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">Kebijakan Privasi</a>
+                        <a href="{{ route('public.blog') }}" class="trvl-footer-link">{{ __('footer.blog') }}</a>
+                        <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">{{ __('footer.destinations') }}</a>
+                        <a href="{{ route('public.faq') }}" class="trvl-footer-link">{{ __('footer.faq') }}</a>
+                        <a href="{{ route('public.syarat-ketentuan') }}" class="trvl-footer-link">{{ __('footer.terms') }}</a>
+                        <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
                     </div>
                 </div>
                 <div>
-                    <p class="trvl-footer-heading">Newsletter</p>
-                    <p class="text-sm mb-3" style="color:#64748b;">Dapatkan info promo dan tips traveling terbaru.</p>
+                    <p class="trvl-footer-heading">{{ __('footer.newsletter') }}</p>
+                    <p class="text-sm mb-3" style="color:#64748b;">{{ __('footer.newsletter_desc') }}</p>
                     <form method="POST" action="{{ route('public.subscribe') }}" class="flex flex-col gap-2">
                         @csrf
-                        <input type="email" name="email" placeholder="Email Anda" required
+                        <input type="email" name="email" placeholder="{{ __('footer.email_placeholder') }}" required
                                class="w-full px-3 py-2.5 rounded-lg text-sm border"
                                style="background:#1a1a3e; border-color:#2a2a4a; color:white; outline:none;">
                         <button type="submit"
                                 class="w-full px-4 py-2.5 rounded-lg text-sm font-semibold transition-all"
                                 style="background:var(--trvl-blue); color:white; border:none; cursor:pointer;">
-                            Berlangganan
+                                {{ __('footer.subscribe') }}
                         </button>
                     </form>
                 </div>

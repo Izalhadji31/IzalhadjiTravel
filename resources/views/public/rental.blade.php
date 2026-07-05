@@ -1,7 +1,7 @@
 
 @extends('layouts.public')
 
-@section('title', 'Rental Kendaraan - ASR GO')
+@section('title', __('rental.title') . ' - ASR GO')
 
 @section('content')
 <!-- RENTAL HERO -->
@@ -11,37 +11,37 @@
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
                 <span style="display:inline-flex; align-items:center; gap:0.4rem;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-                    Sewa Kendaraan
+                    {{ __('rental.title') }}
                 </span>
             </h1>
-            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Pilih kendaraan terbaik untuk perjalanan Anda</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">{{ __('rental.subtitle') }}</p>
         </div>
         <form method="GET" action="{{ route('public.rental') }}" style="background: var(--trvl-card); border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.75rem; align-items: end;">
                 <div>
-                    <label class="trvl-field-label">Tujuan</label>
+                    <label class="trvl-field-label">{{ __('rental.destination') }}</label>
                     <select name="destination" class="trvl-form-field">
-                        <option value="">Semua Tujuan</option>
+                        <option value="">{{ __('rental.destination_all') }}</option>
                         @foreach ($destinations as $destination)
                             <option value="{{ $destination }}" {{ request('destination') == $destination ? 'selected' : '' }}>{{ $destination }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label class="trvl-field-label">Tipe Kendaraan</label>
+                    <label class="trvl-field-label">{{ __('rental.vehicle_type') }}</label>
                     <select name="vehicle_type" class="trvl-form-field">
-                        <option value="">Semua Tipe</option>
+                        <option value="">{{ __('rental.vehicle_type_all') }}</option>
                         @foreach ($vehicleTypes as $type)
                             <option value="{{ $type }}" {{ request('vehicle_type') == $type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label class="trvl-field-label">Opsi Sopir</label>
+                    <label class="trvl-field-label">{{ __('rental.driver_option') }}</label>
                     <select name="driver_option" class="trvl-form-field">
-                        <option value="">Semua Opsi</option>
-                        <option value="with" {{ request('driver_option') == 'with' ? 'selected' : '' }}>Dengan Sopir</option>
-                        <option value="without" {{ request('driver_option') == 'without' ? 'selected' : '' }}>Tanpa Sopir</option>
+                        <option value="">{{ __('rental.driver_option_all') }}</option>
+                        <option value="with" {{ request('driver_option') == 'with' ? 'selected' : '' }}>{{ __('rental.with_driver') }}</option>
+                        <option value="without" {{ request('driver_option') == 'without' ? 'selected' : '' }}>{{ __('rental.without_driver') }}</option>
                     </select>
                 </div>
                 <div>
@@ -65,11 +65,11 @@
                 <div style="background: var(--trvl-card); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid var(--trvl-border); position: sticky; top: 80px;">
                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f6ff;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-                        <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">Filter</h3>
+                        <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">{{ __('rental.filter_title') }}</h3>
                     </div>
                     <form method="GET" action="{{ route('public.rental') }}">
                         <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Tipe Kendaraan</label>
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">{{ __('rental.vehicle_type') }}</label>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 @foreach ($vehicleTypes as $type)
                                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; transition: all 0.15s; {{ request('vehicle_type') == $type ? 'background: #e8f4fd;' : '' }}" onmouseover="this.style.background='#f0f6ff';" onmouseout="this.style.background='{{ request('vehicle_type') == $type ? '#e8f4fd' : 'transparent' }}';">
@@ -79,29 +79,29 @@
                                 @endforeach
                                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; {{ !request('vehicle_type') ? 'background: #e8f4fd;' : '' }}">
                                     <input type="radio" name="vehicle_type" value="" {{ !request('vehicle_type') ? 'checked' : '' }} style="accent-color: #0064d2;">
-                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">Semua Tipe</span>
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">{{ __('rental.vehicle_type_all') }}</span>
                                 </label>
                             </div>
                         </div>
                         <div style="margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--trvl-border);">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Opsi Sopir</label>
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">{{ __('rental.driver_option') }}</label>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; {{ request('driver_option') == 'with' ? 'background: #e8f4fd;' : '' }}">
                                     <input type="radio" name="driver_option" value="with" {{ request('driver_option') == 'with' ? 'checked' : '' }} style="accent-color: #0064d2;">
-                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">�‍�️ Dengan Sopir</span>
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">👨‍✈️ {{ __('rental.with_driver') }}</span>
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; {{ request('driver_option') == 'without' ? 'background: #e8f4fd;' : '' }}">
                                     <input type="radio" name="driver_option" value="without" {{ request('driver_option') == 'without' ? 'checked' : '' }} style="accent-color: #0064d2;">
-                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">🔑 Tanpa Sopir</span>
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">🔑 {{ __('rental.without_driver') }}</span>
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; {{ !request('driver_option') ? 'background: #e8f4fd;' : '' }}">
                                     <input type="radio" name="driver_option" value="" {{ !request('driver_option') ? 'checked' : '' }} style="accent-color: #0064d2;">
-                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">Semua Opsi</span>
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: #0d2147;">{{ __('rental.driver_option_all') }}</span>
                                 </label>
                             </div>
                         </div>
                         <div style="margin-top: 1.25rem; display: flex; gap: 0.5rem;">
-                            <button type="submit" style="flex: 1; background: #0064d2; color: white; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer;">Filter</button>
+                            <button type="submit" style="flex: 1; background: #0064d2; color: white; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer;">{{ __('rental.filter_title') }}</button>
                             <a href="{{ route('public.rental') }}" style="background: #e9ecef; color: #6c757d; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none;">Reset</a>
                         </div>
                     </form>
@@ -164,14 +164,14 @@
                                 <!-- Price Options -->
                                 <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
                                     <div style="flex: 1; background: var(--trvl-gray-100); border-radius: 8px; padding: 0.5rem 0.65rem; border: 1px solid var(--trvl-border);">
-                                        <p style="font-size: 0.65rem; color: #6c757d; font-weight: 500; margin-bottom: 0.15rem;">Tanpa Sopir</p>
+                                        <p style="font-size: 0.65rem; color: #6c757d; font-weight: 500; margin-bottom: 0.15rem;">{{ __('rental.without_driver') }}</p>
                                         <p style="font-size: 0.95rem; font-weight: 800; color: #0064d2;">Rp {{ number_format($rental->price_without_driver, 0, ',', '.') }}</p>
-                                        <p style="font-size: 0.6rem; color: #6c757d;">/hari</p>
+                                        <p style="font-size: 0.6rem; color: #6c757d;">{{ __('rental.per_day') }}</p>
                                     </div>
                                     <div style="flex: 1; background: #f0fdf4; border-radius: 8px; padding: 0.5rem 0.65rem; border: 1px solid #bbf7d0;">
-                                        <p style="font-size: 0.65rem; color: #6c757d; font-weight: 500; margin-bottom: 0.15rem;">Dengan Sopir</p>
+                                        <p style="font-size: 0.65rem; color: #6c757d; font-weight: 500; margin-bottom: 0.15rem;">{{ __('rental.with_driver') }}</p>
                                         <p style="font-size: 0.95rem; font-weight: 800; color: #00a651;">Rp {{ number_format($rental->price_with_driver, 0, ',', '.') }}</p>
-                                        <p style="font-size: 0.6rem; color: #6c757d;">/hari</p>
+                                        <p style="font-size: 0.6rem; color: #6c757d;">{{ __('rental.per_day') }}</p>
                                     </div>
                                 </div>
 
@@ -184,13 +184,13 @@
                                 @auth
                                     <a href="{{ route('bookings.rental.create', ['route_id' => $rental->route_id]) }}" 
                                        style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.75rem; border-radius: 10px; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
-                                        Sewa Sekarang
+                                        {{ __('rental.book') }}
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                     </a>
                                 @else
                                     <a href="{{ route('login') }}" 
                                        style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: white; color: #0064d2; border: 2px solid #0064d2; padding: 0.7rem; border-radius: 10px; font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: all 0.25s;">
-                                        Sewa Sekarang
+                                        {{ __('rental.book') }}
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                     </a>
                                 @endauth
@@ -199,8 +199,8 @@
                     @empty
                         <div style="grid-column: span 2; background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚗</div>
-                            <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">Belum ada kendaraan tersedia</p>
-                            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">Coba ubah filter atau reset pencarian untuk menemukan kendaraan lainnya.</p>
+                            <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">{{ __('rental.empty') }}</p>
+                            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">{{ __('rental.empty_desc') }}</p>
                             <a href="{{ route('public.rental') }}" 
                                style="display: inline-block; margin-top: 1rem; background: #0064d2; color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
                         </div>

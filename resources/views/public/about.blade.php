@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Tentang Kami - ASR GO')
+@section('title', __('about.title') . ' - ASR GO')
 
 @section('content')
 <style>
@@ -18,10 +18,10 @@
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
                 <span style="display:inline-flex; align-items:center; gap:0.4rem;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                    Tentang Kami
+                    {{ __('about.title') }}
                 </span>
             </h1>
-            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Layanan Transportasi Terpercaya di Pulau Flores</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">{{ __('about.subtitle') }}</p>
         </div>
     </div>
 </div>
@@ -31,24 +31,19 @@
         <div style="max-width: 1000px; margin: 0 auto;">
             <!-- Company Profile -->
             <div style="margin-bottom: 2.5rem;">
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1.25rem;">Profil Perusahaan</h2>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1.25rem;">{{ __('about.profile_title') }}</h2>
                 <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); border: 1px solid var(--trvl-border); box-shadow: var(--trvl-shadow-sm); padding: 1.75rem;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                         <div>
-                            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1rem;">CV. Izalhadji Travel</h3>
+                            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1rem;">{{ __('about.company_name') }}</h3>
                             <p style="color: var(--trvl-gray-700); line-height: 1.7; margin-bottom: 1rem; font-size: 0.9rem;">
-                                Kami adalah perusahaan transportasi yang berpusat di Ende, Pulau Flores, Indonesia. 
-                                Sejak didirikan, kami berkomitmen untuk memberikan layanan transportasi terbaik dengan 
-                                harga yang terjangkau dan profesional.
+                                {{ __('about.profile_desc_1') }}
                             </p>
                             <p style="color: var(--trvl-gray-700); line-height: 1.7; margin-bottom: 1rem; font-size: 0.9rem;">
-                                ASR GO menawarkan dua layanan utama: Travel Antar Kota dan Sewa Kendaraan. 
-                                Dengan armada modern dan driver berpengalaman, kami siap mengantarkan Anda ke destinasi 
-                                dengan aman dan nyaman.
+                                {{ __('about.profile_desc_2') }}
                             </p>
                             <p style="color: var(--trvl-gray-700); line-height: 1.7; font-size: 0.9rem;">
-                                Kepercayaan pelanggan adalah prioritas utama kami. Oleh karena itu, kami terus berinovasi 
-                                dan meningkatkan kualitas layanan untuk memenuhi harapan Anda.
+                                {{ __('about.profile_desc_3') }}
                             </p>
                         </div>
                         <div>
@@ -56,7 +51,7 @@
                                 <div style="text-align: center;">
                                     <div style="font-size: 3rem; font-weight: 900; color: var(--trvl-blue); margin-bottom: 0.5rem;">ASR</div>
                                     <p style="color: var(--trvl-gray-600); font-weight: 700;">GO</p>
-                                    <p style="font-size: 0.85rem; color: var(--trvl-gray-500); margin-top: 1rem;">Transportasi Terpercaya</p>
+                                    <p style="font-size: 0.85rem; color: var(--trvl-gray-500); margin-top: 1rem;">{{ __('about.transport_tagline') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -72,11 +67,10 @@
                         <div style="width: 48px; height: 48px; border-radius: var(--trvl-radius-md); background: linear-gradient(135deg, #e8f4fd 0%, #f0f6ff 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--trvl-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                         </div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">Visi Kami</h3>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">{{ __('about.vision_title') }}</h3>
                     </div>
                     <p style="color: var(--trvl-gray-700); line-height: 1.7; font-size: 0.9rem;">
-                        Menjadi layanan transportasi terdepan di Pulau Flores yang dipercaya oleh jutaan pelanggan 
-                        dengan memberikan pengalaman perjalanan yang nyaman, aman, dan terjangkau.
+                        {{ __('about.vision_desc') }}
                     </p>
                 </div>
 
@@ -86,24 +80,24 @@
                         <div style="width: 48px; height: 48px; border-radius: var(--trvl-radius-md); background: linear-gradient(135deg, #e8f4fd 0%, #f0f6ff 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--trvl-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                         </div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">Misi Kami</h3>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">{{ __('about.mission_title') }}</h3>
                     </div>
                     <ul style="display: flex; flex-direction: column; gap: 0.65rem;">
                         <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
                             <span style="color: #00a651; font-weight: 700; flex-shrink: 0;">✓</span>
-                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">Menyediakan layanan transportasi berkualitas tinggi</span>
+                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">{{ __('about.mission_1') }}</span>
                         </li>
                         <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
                             <span style="color: #00a651; font-weight: 700; flex-shrink: 0;">✓</span>
-                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">Menjaga kepuasan dan keselamatan pelanggan</span>
+                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">{{ __('about.mission_2') }}</span>
                         </li>
                         <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
                             <span style="color: #00a651; font-weight: 700; flex-shrink: 0;">✓</span>
-                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">Memberikan harga yang kompetitif dan transparan</span>
+                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">{{ __('about.mission_3') }}</span>
                         </li>
                         <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
                             <span style="color: #00a651; font-weight: 700; flex-shrink: 0;">✓</span>
-                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">Terus berinovasi dan berkembang</span>
+                            <span style="color: var(--trvl-gray-700); font-size: 0.9rem;">{{ __('about.mission_4') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -111,27 +105,27 @@
 
             <!-- Values -->
             <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); border: 1px solid var(--trvl-border); box-shadow: var(--trvl-shadow-sm); padding: 1.75rem; margin-bottom: 2.5rem;">
-                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1.5rem;">Nilai-Nilai Kami</h2>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--trvl-gray-900); margin-bottom: 1.5rem;">{{ __('about.values_title') }}</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem;">
                     <div style="text-align: center; padding: 1rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🤝</div>
-                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">Integritas</h3>
-                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">Jujur dan terpercaya dalam setiap transaksi</p>
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">{{ __('about.value_integrity') }}</h3>
+                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">{{ __('about.value_integrity_desc') }}</p>
                     </div>
                     <div style="text-align: center; padding: 1rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⭐</div>
-                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">Kualitas</h3>
-                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">Memberikan yang terbaik untuk pelanggan</p>
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">{{ __('about.value_quality') }}</h3>
+                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">{{ __('about.value_quality_desc') }}</p>
                     </div>
                     <div style="text-align: center; padding: 1rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🚀</div>
-                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">Inovasi</h3>
-                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">Selalu mencari cara baru untuk berkembang</p>
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">{{ __('about.value_innovation') }}</h3>
+                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">{{ __('about.value_innovation_desc') }}</p>
                     </div>
                     <div style="text-align: center; padding: 1rem;">
                         <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">❤️</div>
-                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">Kepedulian</h3>
-                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">Peduli terhadap pelanggan dan masyarakat</p>
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">{{ __('about.value_care') }}</h3>
+                        <p style="font-size: 0.85rem; color: var(--trvl-gray-600);">{{ __('about.value_care_desc') }}</p>
                     </div>
                 </div>
             </div>
@@ -141,19 +135,19 @@
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr);">
                     <div style="text-align: center; padding: 2rem 1rem; border-right: 1px solid var(--trvl-border);">
                         <p style="font-size: 2.4rem; font-weight: 900; color: var(--trvl-blue); line-height: 1; margin-bottom: 0.4rem;">2010</p>
-                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">Tahun Berdiri</p>
+                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('about.stat_founded') }}</p>
                     </div>
                     <div style="text-align: center; padding: 2rem 1rem; border-right: 1px solid var(--trvl-border);">
                         <p style="font-size: 2.4rem; font-weight: 900; color: var(--trvl-blue); line-height: 1; margin-bottom: 0.4rem;">50+</p>
-                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">Kendaraan Armada</p>
+                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('about.stat_fleet') }}</p>
                     </div>
                     <div style="text-align: center; padding: 2rem 1rem; border-right: 1px solid var(--trvl-border);">
                         <p style="font-size: 2.4rem; font-weight: 900; color: var(--trvl-blue); line-height: 1; margin-bottom: 0.4rem;">100K+</p>
-                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">Pelanggan Puas</p>
+                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('about.stat_customers') }}</p>
                     </div>
                     <div style="text-align: center; padding: 2rem 1rem;">
                         <p style="font-size: 2.4rem; font-weight: 900; color: var(--trvl-blue); line-height: 1; margin-bottom: 0.4rem;">24/7</p>
-                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">Layanan Pelanggan</p>
+                        <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('about.stat_support') }}</p>
                     </div>
                 </div>
             </div>

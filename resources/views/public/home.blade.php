@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Home')
+@section('title', __('nav.home'))
 
 @section('content')
 <!-- ==================== HERO ==================== -->
@@ -12,14 +12,13 @@
         <div class="text-center">
             <div class="trvl-hero-badge">
                 <span class="pulse-dot"></span>
-                Melayani seluruh rute di Pulau Flores
+                {{ __('hero.badge') }}
             </div>
             <h1 class="trvl-hero-title">
-                Jelajahi Flores<br>
-                <span class="highlight">Bersama ASR GO</span>
+                {!! __('hero.title') !!}
             </h1>
             <p class="trvl-hero-subtitle mx-auto">
-                Travel antar kota, airport transfer, dan rental kendaraan terpercaya di Pulau Flores. Nyaman, aman, tepat waktu.
+                {{ __('hero.subtitle') }}
             </p>
         </div>
 
@@ -27,15 +26,15 @@
         <div class="trvl-service-tabs" id="service-tabs">
             <button class="trvl-service-tab active" onclick="switchTab('rental', this)" id="tab-rental">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                Rental Mobil
+                {{ __('services.tab_rental') }}
             </button>
             <button class="trvl-service-tab inactive" onclick="switchTab('travel', this)" id="tab-travel">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                Travel
+                {{ __('services.tab_travel') }}
             </button>
             <button class="trvl-service-tab inactive" onclick="switchTab('airport', this)" id="tab-airport">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
-                Airport Transfer
+                {{ __('services.tab_airport') }}
             </button>
         </div>
 
@@ -50,44 +49,44 @@
                                 <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">Sewa Kendaraan</p>
-                                <h2 class="text-base font-bold text-gray-900">Berpergian Lebih Bebas #AmanBarengASR</h2>
+                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.rental_title') }}</p>
+                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.rental_subtitle') }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="trvl-booking-body">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <div>
-                                <label class="trvl-field-label">Lokasi Penjemputan</label>
-                                <input type="text" value="Ende" readonly class="trvl-form-field" aria-label="Lokasi Penjemputan Rental">
+                                <label class="trvl-field-label">{{ __('booking.pickup_location') }}</label>
+                                <input type="text" value="Ende" readonly class="trvl-form-field" aria-label="{{ __('booking.pickup_location') }}">
                             </div>
                             <div>
-                                <label class="trvl-field-label">Tanggal Mulai</label>
+                                <label class="trvl-field-label">{{ __('booking.start_date') }}</label>
                                 <input type="date" value="{{ date('Y-m-d') }}" class="trvl-form-field">
                             </div>
                             <div>
-                                <label class="trvl-field-label">Jam Jemput</label>
+                                <label class="trvl-field-label">{{ __('booking.pickup_time') }}</label>
                                 <input type="time" value="08:00" class="trvl-form-field">
                             </div>
                             <div>
-                                <label class="trvl-field-label">Durasi Sewa</label>
+                                <label class="trvl-field-label">{{ __('booking.duration') }}</label>
                                 <select class="trvl-form-field">
-                                    <option>12 Jam</option>
-                                    <option>1 Hari</option>
-                                    <option>2 Hari</option>
-                                    <option>3 Hari</option>
-                                    <option>1 Minggu</option>
+                                    <option>{{ __('rental.duration_12h') }}</option>
+                                    <option>{{ __('rental.duration_1d') }}</option>
+                                    <option>{{ __('rental.duration_2d') }}</option>
+                                    <option>{{ __('rental.duration_3d') }}</option>
+                                    <option>{{ __('rental.duration_1w') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <div class="trvl-info-panel flex items-center gap-2 flex-1">
                                 <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span style="color:#1e40af; font-weight:500;">Tersedia: Avanza, Innova, Hiace, Elf — armada terawat & ber-AC</span>
+                                <span style="color:#1e40af; font-weight:500;">{{ __('booking.rental_info') }}</span>
                             </div>
                             <a href="{{ route('public.vehicles') }}" class="trvl-btn-search flex-shrink-0 text-decoration-none">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                Cari Kendaraan
+                                {{ __('booking.search_vehicle') }}
                             </a>
                         </div>
                     </div>
@@ -101,20 +100,20 @@
                                 <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">Travel Antar Kota · Pulau Flores</p>
-                                <h2 class="text-base font-bold text-gray-900">Berpusat di Ende — Melayani Seluruh Kota di Flores</h2>
+                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.travel_title') }}</p>
+                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.travel_subtitle') }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="trvl-booking-body">
                         <div class="trvl-info-panel flex items-center gap-2">
                             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span style="color:#1e40af; font-weight:500; font-size:0.875rem;">✅ Pengemudi berpengalaman · ✅ AC · ✅ Asuransi Perjalanan · ✅ Door-to-door</span>
+                            <span style="color:#1e40af; font-weight:500; font-size:0.875rem;">{{ __('booking.travel_info') }}</span>
                         </div>
                         <div class="mt-6 flex justify-center">
                             <a href="{{ route('public.travel') }}" class="trvl-btn-search text-decoration-none">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                Lihat Rute Travel
+                                {{ __('booking.view_routes') }}
                             </a>
                         </div>
                     </div>
@@ -128,24 +127,24 @@
                                 <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">Airport Transfer · Pulau Flores</p>
-                                <h2 class="text-base font-bold text-gray-900">Antar-Jemput Bandara — 6 Bandara di Flores</h2>
+                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.airport_title') }}</p>
+                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.airport_subtitle') }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="trvl-booking-body">
                         <div class="trvl-info-panel mb-4">
                             <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs font-medium" style="color:#1e40af;">
-                                <span>✅ Sudah termasuk tol & parkir</span>
-                                <span>✅ Driver standby 30 menit lebih awal</span>
-                                <span>✅ Free 1 bagasi besar</span>
-                                <span>✅ Konfirmasi instan via WhatsApp</span>
+                                <span>✅ {{ __('booking.airport_info_1') }}</span>
+                                <span>✅ {{ __('booking.airport_info_2') }}</span>
+                                <span>✅ {{ __('booking.airport_info_3') }}</span>
+                                <span>✅ {{ __('booking.airport_info_4') }}</span>
                             </div>
                         </div>
                         <div class="flex justify-center">
                             <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="trvl-btn-search text-decoration-none">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                Pesan Airport Transfer
+                                {{ __('booking.book_airport') }}
                             </a>
                         </div>
                     </div>
@@ -159,14 +158,14 @@
 <section class="trvl-trust-section">
     <div class="trvl-container">
         <div class="text-center mb-6">
-            <p style="font-size:0.75rem; font-weight:600; color:#6c757d; text-transform:uppercase; letter-spacing:0.08em;">Dipercaya oleh ribuan pelanggan di Flores</p>
+            <p style="font-size:0.75rem; font-weight:600; color:#6c757d; text-transform:uppercase; letter-spacing:0.08em;">{{ __('home.trust_title') }}</p>
         </div>
         <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-            <div class="trvl-trust-badge">🏛️ Kemenparekraf</div>
-            <div class="trvl-trust-badge">🛡️ Aman & Terjamin</div>
-            <div class="trvl-trust-badge">⭐ 4.9 Rating</div>
-            <div class="trvl-trust-badge">👥 10K+ Pelanggan</div>
-            <div class="trvl-trust-badge">🕐 Layanan 24 Jam</div>
+            <div class="trvl-trust-badge">{{ __('home.trust_kemenparekraf') }}</div>
+            <div class="trvl-trust-badge">{{ __('home.trust_aman') }}</div>
+            <div class="trvl-trust-badge">{{ __('home.trust_rating') }}</div>
+            <div class="trvl-trust-badge">{{ __('home.trust_pelanggan') }}</div>
+            <div class="trvl-trust-badge">{{ __('home.trust_24jam') }}</div>
         </div>
     </div>
 </section>
@@ -177,19 +176,19 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 trvl-stats-grid rounded-2xl shadow-sm overflow-hidden">
             <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">10K+</p>
-                <p class="trvl-stat-label">Penumpang Terlayani</p>
+                <p class="trvl-stat-label">{{ __('home.stats_passengers') }}</p>
             </div>
             <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">{{ count($travelRoutes ?? []) }}</p>
-                <p class="trvl-stat-label">Rute Antar Kota</p>
+                <p class="trvl-stat-label">{{ __('home.stats_routes') }}</p>
             </div>
             <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">6</p>
-                <p class="trvl-stat-label">Bandara Dilayani</p>
+                <p class="trvl-stat-label">{{ __('home.stats_airports') }}</p>
             </div>
             <div class="trvl-stat-card">
                 <p class="trvl-stat-number">98%</p>
-                <p class="trvl-stat-label">Tepat Waktu</p>
+                <p class="trvl-stat-label">{{ __('home.stats_ontime') }}</p>
             </div>
         </div>
     </div>
@@ -199,40 +198,40 @@
 <section class="trvl-section trvl-section-bg" id="keunggulan">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-12 trvl-reveal">
-            <span class="trvl-section-badge">✨ Keunggulan Kami</span>
-            <h2 class="trvl-section-title">Mengapa Pilih ASR GO?</h2>
-            <p class="trvl-section-desc">Kami berkomitmen memberikan pengalaman perjalanan terbaik di Pulau Flores.</p>
+            <span class="trvl-section-badge">{{ __('home.features_badge') }}</span>
+            <h2 class="trvl-section-title">{{ __('home.features_title') }}</h2>
+            <p class="trvl-section-desc">{{ __('home.features_desc') }}</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-1">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
-                <h3 class="trvl-feature-title">Aman & Terpercaya</h3>
-                <p class="trvl-feature-desc">Semua kendaraan dilengkapi asuransi perjalanan. Pengemudi berpengalaman dan tersertifikasi.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_safe_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_safe_desc') }}</p>
             </div>
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-2">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <h3 class="trvl-feature-title">Harga Transparan</h3>
-                <p class="trvl-feature-desc">Tidak ada biaya tersembunyi. Harga sudah termasuk pajak, tol, dan parkir.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_price_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_price_desc') }}</p>
             </div>
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-3">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <h3 class="trvl-feature-title">Seluruh Pulau Flores</h3>
-                <p class="trvl-feature-desc">Jangkauan layanan mencakup seluruh rute di Pulau Flores.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_coverage_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_coverage_desc') }}</p>
             </div>
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-1">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <h3 class="trvl-feature-title">Tepat Waktu</h3>
-                <p class="trvl-feature-desc">98% perjalanan kami berangkat tepat waktu sesuai jadwal.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_ontime_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_ontime_desc') }}</p>
             </div>
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-2">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg></div>
-                <h3 class="trvl-feature-title">Armada Premium</h3>
-                <p class="trvl-feature-desc">Avanza, Innova, Hiace, Elf — semuanya terawat dan nyaman dengan AC.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_fleet_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_fleet_desc') }}</p>
             </div>
             <div class="trvl-feature-card trvl-reveal trvl-reveal-delay-3">
                 <div class="trvl-feature-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
-                <h3 class="trvl-feature-title">Layanan 24 Jam</h3>
-                <p class="trvl-feature-desc">Tim customer service siap membantu 24/7 via telepon atau WhatsApp.</p>
+                <h3 class="trvl-feature-title">{{ __('home.feature_24h_title') }}</h3>
+                <p class="trvl-feature-desc">{{ __('home.feature_24h_desc') }}</p>
             </div>
         </div>
     </div>
@@ -242,9 +241,9 @@
 <section class="trvl-section" id="rute">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-12 trvl-reveal">
-            <span class="trvl-section-badge">🗺️ Rute Populer</span>
-            <h2 class="trvl-section-title">Destinasi Favorit di Flores</h2>
-            <p class="trvl-section-desc">Jelajahi keindahan Pulau Flores melalui rute-rute terpopuler.</p>
+            <span class="trvl-section-badge">{{ __('home.routes_badge') }}</span>
+            <h2 class="trvl-section-title">{{ __('home.routes_title') }}</h2>
+            <p class="trvl-section-desc">{{ __('home.routes_desc') }}</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse(($travelRoutes ?? []) as $route)
@@ -266,8 +265,8 @@
                         <span class="trvl-route-meta-item">⏱️ {{ $duration }}</span>
                         <span class="trvl-route-meta-item">📍 {{ $distance }}</span>
                     </div>
-                    <div class="trvl-route-price">Rp {{ number_format($price, 0, ',', '.') }} <span>/ orang</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">Pesan Sekarang</a>
+                    <div class="trvl-route-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.routes_per_person') }}</span></div>
+                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             @empty
@@ -276,8 +275,8 @@
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 8 jam</span><span class="trvl-route-meta-item">📍 350 km</span></div>
-                    <div class="trvl-route-price">Rp 350.000 <span>/ orang</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">Pesan Sekarang</a>
+                    <div class="trvl-route-price">Rp 350.000 <span>{{ __('home.routes_per_person') }}</span></div>
+                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-1">
@@ -285,8 +284,8 @@
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Maumere</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 5 jam</span><span class="trvl-route-meta-item">📍 200 km</span></div>
-                    <div class="trvl-route-price">Rp 250.000 <span>/ orang</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">Pesan Sekarang</a>
+                    <div class="trvl-route-price">Rp 250.000 <span>{{ __('home.routes_per_person') }}</span></div>
+                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-2">
@@ -294,8 +293,8 @@
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Kelimutu</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 3 jam</span><span class="trvl-route-meta-item">📍 100 km</span></div>
-                    <div class="trvl-route-price">Rp 200.000 <span>/ orang</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">Pesan Sekarang</a>
+                    <div class="trvl-route-price">Rp 200.000 <span>{{ __('home.routes_per_person') }}</span></div>
+                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             @endforelse
@@ -308,9 +307,9 @@
     <section class="trvl-section trvl-section-white-bg" id="destinasi">
         <div class="trvl-container">
             <div class="trvl-section-header-center mb-12 trvl-reveal">
-                <span class="trvl-section-badge">🏝️ Jelajahi Flores</span>
-                <h2 class="trvl-section-title">Destinasi Wisata Populer</h2>
-                <p class="trvl-section-desc">Dari danau tiga warna hingga naga purba — Flores menyimpan keajaiban alam yang menakjubkan</p>
+                <span class="trvl-section-badge">{{ __('home.destinations_badge') }}</span>
+                <h2 class="trvl-section-title">{{ __('home.destinations_title') }}</h2>
+                <p class="trvl-section-desc">{{ __('home.destinations_desc') }}</p>
             </div>
 
             <!-- Featured: Danau Kelimutu -->
@@ -320,12 +319,12 @@
                         <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=1400&q=80" alt="Danau Kelimutu" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute top-4 left-4">
-                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">⭐ UNGGULAN</span>
+                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">{{ __('home.destinations_featured_badge') }}</span>
                         </div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
                             <span class="text-white/70 text-sm">📍 Ende, NTT</span>
                             <h3 class="text-2xl font-bold text-white mt-1 mb-2">Danau Kelimutu</h3>
-                            <p class="text-white/80 max-w-2xl">Tiga danau kawah dengan warna berbeda yang berubah secara misterius. Sunrise di puncak Kelimutu adalah momen yang tak terlupakan.</p>
+                            <p class="text-white/80 max-w-2xl">{{ __('home.destinations_kelimutu_desc') }}</p>
                         </div>
                     </div>
                 </div>
@@ -423,9 +422,9 @@
 <!-- Kota-kota di Flores -->
 <div class="mt-16">
     <div class="trvl-section-header-center mb-8 trvl-reveal">
-        <span class="trvl-section-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">🏙️ Kota di Flores</span>
-        <h2 class="trvl-section-title">Jelajahi Kota-Kota di Flores</h2>
-        <p class="trvl-section-desc">Setiap kota di Flores punya karakter dan keindahan tersendiri</p>
+        <span class="trvl-section-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">{{ __('home.cities_badge') }}</span>
+        <h2 class="trvl-section-title">{{ __('home.cities_title') }}</h2>
+        <p class="trvl-section-desc">{{ __('home.cities_desc') }}</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Ende -->
@@ -435,11 +434,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Ende</h4>
-                    <p class="text-white/80 text-sm">Ibu Kota Flores</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_ende_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Pusat pemerintahan dan ekonomi Flores. Kota bersejarah tempat Bung Karno diasingkan. Gerbang menuju Danau Kelimutu yang legendaris.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_ende_desc') }}</p>
             </div>
         </div>
         <!-- Labuan Bajo -->
@@ -449,11 +448,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
-                    <p class="text-white/80 text-sm">Gerbang Komodo</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_labuanbajo_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota wisata paling populer di Flores. Pintu masuk menuju Taman Nasional Komodo, Pink Beach, dan Pulau Padar. Sunset terbaik dari Bukit Cinta.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_labuanbajo_desc') }}</p>
             </div>
         </div>
         <!-- Maumere -->
@@ -463,11 +462,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Maumere</h4>
-                    <p class="text-white/80 text-sm">Surga Diving</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_maumere_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota di pesisir utara Flores dengan biodiversitas laut tertinggi di Indonesia Timur. Teluk Maumere adalah surga bagi penyelam dari seluruh dunia.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_maumere_desc') }}</p>
             </div>
         </div>
         <!-- Ruteng -->
@@ -477,11 +476,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Ruteng</h4>
-                    <p class="text-white/80 text-sm">Kota Dingin</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_ruteng_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota pegunungan dengan udara sejuk dan pemandangan perbukitan hijau. Gerbang menuju Desa Wae Rebo yang berada di atas awan ketinggian 1.200 mdpl.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_ruteng_desc') }}</p>
             </div>
         </div>
         <!-- Bajawa -->
@@ -491,11 +490,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Bajawa</h4>
-                    <p class="text-white/80 text-sm">Tanah Adat</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_bajawa_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota adat dengan warisan megalit kuno. Kampung Bena dan Wogo menawarkan pengalaman budaya Ngada yang autentik dengan rumah tradisionalnya.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_bajawa_desc') }}</p>
             </div>
         </div>
         <!-- Larantuka -->
@@ -505,11 +504,11 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Larantuka</h4>
-                    <p class="text-white/80 text-sm">Kota Tradisi</p>
+                    <p class="text-white/80 text-sm">{{ __('home.cities_larantuka_sub') }}</p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota di ujung timur Flores dengan tradisi Paskah Semana Santa yang mendunia. Pesona pantai dan budaya yang kental dengan pengaruh Portugis.</p>
+                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_larantuka_desc') }}</p>
             </div>
         </div>
     </div>
@@ -518,7 +517,7 @@
             <!-- CTA -->
             <div class="text-center mt-10 trvl-reveal">
                 <a href="{{ route('public.destinasi') }}" class="trvl-btn-primary inline-flex items-center gap-2">
-                    Lihat Semua Destinasi
+                    {{ __('home.destinations_see_all') }}
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
             </div>
@@ -627,9 +626,9 @@
 <section class="trvl-section trvl-section-bg" id="armada">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-12 trvl-reveal">
-            <span class="trvl-section-badge">🚐 Armada Kami</span>
-            <h2 class="trvl-section-title">Kendaraan Terawat & Nyaman</h2>
-            <p class="trvl-section-desc">Pilihan armada berkualitas dengan perawatan rutin.</p>
+            <span class="trvl-section-badge">{{ __('home.fleet_badge') }}</span>
+            <h2 class="trvl-section-title">{{ __('home.fleet_title') }}</h2>
+            <p class="trvl-section-desc">{{ __('home.fleet_desc') }}</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse(($rentalServices ?? []) as $service)
@@ -648,8 +647,8 @@
                         <span class="trvl-vehicle-spec">👥 {{ $seatCapacity }} Kursi</span>
                         <span class="trvl-vehicle-spec">❄️ AC</span>
                     </div>
-                    <div class="trvl-vehicle-price">Rp {{ number_format($price, 0, ',', '.') }} <span>/ hari</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
+                    <div class="trvl-vehicle-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
             @empty
@@ -658,8 +657,8 @@
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Avanza</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 6 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 350.000 <span>/ hari</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
+                    <div class="trvl-vehicle-price">Rp 350.000 <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
             <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-1">
@@ -669,8 +668,8 @@
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Innova</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 7 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 500.000 <span>/ hari</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
+                    <div class="trvl-vehicle-price">Rp 500.000 <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
             <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-2">
@@ -680,8 +679,8 @@
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Hiace</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 12 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 750.000 <span>/ hari</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
+                    <div class="trvl-vehicle-price">Rp 750.000 <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
             @endforelse
@@ -693,77 +692,77 @@
 <section class="trvl-section" id="perbandingan" style="background:var(--trvl-bg);">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-10 trvl-reveal">
-            <span class="trvl-section-badge" style="background:#dbeafe;color:#0064d2;">📊 Perbandingan</span>
-            <h2 class="trvl-section-title">ASR GO vs TRAC Go</h2>
-            <p class="trvl-section-desc">Lihat perbandingan fitur dan keunggulan aplikasi kami dibandingkan kompetitor.</p>
+            <span class="trvl-section-badge" style="background:#dbeafe;color:#0064d2;">{{ __('home.comparison_badge') }}</span>
+            <h2 class="trvl-section-title">{{ __('home.comparison_title') }}</h2>
+            <p class="trvl-section-desc">{{ __('home.comparison_desc') }}</p>
         </div>
         <div class="trvl-reveal" style="overflow-x:auto;">
             <table style="width:100%; border-collapse:collapse; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
                 <thead>
                     <tr style="background:#0064d2; color:white;">
-                        <th style="padding:16px 20px; text-align:left; font-size:0.9rem;">Fitur</th>
-                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem; background:#004ba0;">ASR GO</th>
-                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem;">TRAC Go</th>
+                        <th style="padding:16px 20px; text-align:left; font-size:0.9rem;">{{ __('home.comparison_col_feature') }}</th>
+                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem; background:#004ba0;">{{ __('home.comparison_col_asr') }}</th>
+                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem;">{{ __('home.comparison_col_trac') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🏝️ Cakupan Layanan</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.coverage') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Pulau Flores (lokal)</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Nasional (kota besar)</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🚐 Jenis Layanan</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.service_types') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Travel + Rental + Airport</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Rental Mobil saja</td>
                     </tr>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💻 Booking Online</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.book_online') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya, website full-stack</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💳 Pembayaran Digital</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.digital_payment') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Midtrans (BCA, GoPay, dll)</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                     </tr>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">📍 Tracking Real-time</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.tracking') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ GPS tracking armada</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💰 Revenue Sharing Mitra</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.revenue_sharing') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ 30/50/20 otomatis</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
                     </tr>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🔑 Tanpa Sopir</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.without_driver') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">👨‍✈️ Dengan Sopir</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.with_driver') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Driver lokal Flores</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                     </tr>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💰 Harga Sewa</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.price') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Mulai Rp 200rb/hari</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Mulai Rp 400rb/hari</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🏞️ Destinasi Wisata</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.destinations') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Kelimutu, Komodo, dll</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Fokus perkotaan</td>
                     </tr>
                     <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">📱 WhatsApp Booking</td>
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.whatsapp') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ CS 24 jam</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
                     </tr>
                     <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:0; font-weight:600; color:var(--trvl-gray-900);">🛡️ Asuransi Perjalanan</td>
+                        <td style="padding:14px 20px; border-bottom:0; font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.insurance') }}</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
                         <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
                     </tr>
@@ -771,7 +770,7 @@
             </table>
         </div>
         <div class="text-center mt-6 trvl-reveal">
-            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">* Data perbandingan berdasarkan fitur yang tersedia di masing-masing platform per Juni 2026</p>
+            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">{{ __('home.comparison_footnote') }}</p>
         </div>
     </div>
 </section>
@@ -780,88 +779,88 @@
 <section class="trvl-section trvl-section-bg" id="perbandingan">
     <div class="trvl-container">
         <div class="trvl-section-header-center mb-12 trvl-reveal">
-            <span class="trvl-section-badge">⚖️ Perbandingan</span>
-            <h2 class="trvl-section-title">ASR GO vs TRAC Go</h2>
-            <p class="trvl-section-desc">Lihat sendiri keunggulan ASR GO — layanan lokal Flores dengan fitur lebih lengkap dan harga lebih terjangkau.</p>
+            <span class="trvl-section-badge">⚖️ {{ __('comparison.title') }}</span>
+            <h2 class="trvl-section-title">{{ __('comparison.title') }}</h2>
+            <p class="trvl-section-desc">{{ __('comparison.desc') }}</p>
         </div>
         <div class="trvl-reveal" style="overflow-x:auto;">
             <table class="trvl-comparison-table">
                 <thead>
                     <tr>
-                        <th>Fitur</th>
+                        <th>{{ __('comparison.col_feature') }}</th>
                         <th class="th-asr">
-                            <span class="table-brand">ASR GO</span>
-                            <span class="table-brand-sub">Lokal Flores</span>
+                            <span class="table-brand">{{ __('comparison.col_asr') }}</span>
+                            <span class="table-brand-sub">{{ __('comparison.asr_sub') }}</span>
                         </th>
                         <th class="th-trac">
-                            <span class="table-brand">TRAC Go</span>
-                            <span class="table-brand-sub">Nasional</span>
+                            <span class="table-brand">{{ __('comparison.col_trac') }}</span>
+                            <span class="table-brand-sub">{{ __('comparison.trac_sub') }}</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="tr-highlight">
-                        <td class="td-label">Cakupan Layanan</td>
+                        <td class="td-label">{{ __('comparison.coverage') }}</td>
                         <td class="td-asr">📍 Pulau Flores (lokal)</td>
                         <td class="td-trac">🏙️ Nasional (kota besar)</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Jenis Layanan</td>
+                        <td class="td-label">{{ __('comparison.service_types') }}</td>
                         <td class="td-asr">✅ Travel + Rental + Airport</td>
                         <td class="td-trac">❌ Rental Mobil saja</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">Booking Online</td>
+                        <td class="td-label">{{ __('comparison.book_online') }}</td>
                         <td class="td-asr">✅ Ya, website full-stack</td>
                         <td class="td-trac">✅ Ya</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Pembayaran Digital</td>
+                        <td class="td-label">{{ __('comparison.digital_payment') }}</td>
                         <td class="td-asr">✅ Midtrans (BCA, GoPay, dll)</td>
                         <td class="td-trac">✅ Ya</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">Tracking Real-time</td>
+                        <td class="td-label">{{ __('comparison.tracking') }}</td>
                         <td class="td-asr">✅ GPS tracking armada</td>
                         <td class="td-trac">❌ Tidak</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Revenue Sharing Mitra</td>
+                        <td class="td-label">{{ __('comparison.revenue_sharing') }}</td>
                         <td class="td-asr">✅ 30/50/20 otomatis</td>
                         <td class="td-trac">❌ Tidak (sewa langsung)</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">Tanpa Sopir</td>
+                        <td class="td-label">{{ __('comparison.without_driver') }}</td>
                         <td class="td-asr">✅ Ya</td>
                         <td class="td-trac">✅ Ya</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Dengan Sopir</td>
+                        <td class="td-label">{{ __('comparison.with_driver') }}</td>
                         <td class="td-asr">✅ Ya, driver lokal Flores</td>
                         <td class="td-trac">✅ Ya</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">Harga</td>
+                        <td class="td-label">{{ __('comparison.price') }}</td>
                         <td class="td-asr">✅ Lebih terjangkau (mulai Rp200rb)</td>
                         <td class="td-trac">❌ Lebih mahal (mulai Rp400rb)</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Destinasi Wisata</td>
+                        <td class="td-label">{{ __('comparison.destinations') }}</td>
                         <td class="td-asr">✅ Danau Kelimutu, Komodo, Pink Beach, dll</td>
                         <td class="td-trac">❌ Fokus perkotaan</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">WhatsApp Booking</td>
+                        <td class="td-label">{{ __('comparison.whatsapp') }}</td>
                         <td class="td-asr">✅ CS 24 jam via WhatsApp</td>
                         <td class="td-trac">✅ Ya</td>
                     </tr>
                     <tr>
-                        <td class="td-label">Asuransi Perjalanan</td>
+                        <td class="td-label">{{ __('comparison.insurance') }}</td>
                         <td class="td-asr">✅ Termasuk</td>
                         <td class="td-trac">✅ Termasuk</td>
                     </tr>
                     <tr class="tr-highlight">
-                        <td class="td-label">Layanan Bandara</td>
+                        <td class="td-label">{{ __('comparison.airport_service') }}</td>
                         <td class="td-asr">✅ 6 Bandara di Flores</td>
                         <td class="td-trac">❌ Terbatas</td>
                     </tr>
@@ -870,7 +869,7 @@
         </div>
         <div class="text-center mt-8 trvl-reveal">
             <p style="color:#64748b; font-size:0.9rem;">
-                💡 <strong>Kesimpulan:</strong> ASR GO unggul dalam <strong>10 dari 13</strong> fitur — termasuk tracking real-time, revenue sharing, jangkauan wisata, dan harga lebih terjangkau.
+                {!! __('home.comparison_conclusion') !!}
             </p>
         </div>
     </div>
@@ -880,16 +879,16 @@
 <section class="trvl-cta-section py-20">
     <div class="trvl-container relative z-10">
         <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Siap Jelajahi Flores?</h2>
-            <p style="color:rgba(191,219,254,0.9); margin-bottom:2rem; max-width:32rem; margin-left:auto; margin-right:auto;">Pesan sekarang dan nikmati perjalanan nyaman bersama ASR GO.</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">{{ __('cta.section_title') }}</h2>
+            <p style="color:rgba(191,219,254,0.9); margin-bottom:2rem; max-width:32rem; margin-left:auto; margin-right:auto;">{{ __('cta.section_desc') }}</p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#layanan" class="trvl-btn-cta-white text-decoration-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    Pesan Sekarang
+                    {{ __('cta.book') }}
                 </a>
                 <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-btn-cta-outline text-decoration-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                    Hubungi WhatsApp
+                    {{ __('cta.contact') }}
                 </a>
             </div>
         </div>
@@ -902,35 +901,35 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <p class="trvl-footer-brand mb-4">ASR <span>GO</span></p>
-                <p class="text-sm" style="color:#64748b;">Layanan travel dan rental kendaraan terpercaya di Pulau Flores, NTT.</p>
+                <p class="text-sm" style="color:#64748b;">{{ __('footer.company_desc') }}</p>
             </div>
             <div>
-                <p class="trvl-footer-heading">Layanan</p>
+                <p class="trvl-footer-heading">{{ __('footer.information_heading') }}</p>
                 <div class="flex flex-col gap-2">
-                    <a href="{{ route('public.blog') }}" class="trvl-footer-link">Blog & Artikel</a>
-                    <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">Destinasi Wisata</a>
-                    <a href="{{ route('public.travel') }}" class="trvl-footer-link">Travel Antar Kota</a>
+                    <a href="{{ route('public.blog') }}" class="trvl-footer-link">{{ __('footer.blog') }}</a>
+                    <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">{{ __('footer.destinations') }}</a>
+                    <a href="{{ route('public.travel') }}" class="trvl-footer-link">{{ __('footer.travel') }}</a>
                 </div>
             </div>
             <div>
-                <p class="trvl-footer-heading">Perusahaan</p>
+                <p class="trvl-footer-heading">{{ __('footer.company_heading') }}</p>
                 <div class="flex flex-col gap-2">
-                    <a href="#" class="trvl-footer-link">Tentang Kami</a>
-                    <a href="#" class="trvl-footer-link">Syarat & Ketentuan</a>
-                    <a href="#" class="trvl-footer-link">Kebijakan Privasi</a>
+                    <a href="#" class="trvl-footer-link">{{ __('footer.about') }}</a>
+                    <a href="#" class="trvl-footer-link">{{ __('footer.terms') }}</a>
+                    <a href="#" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
                 </div>
             </div>
             <div>
-                <p class="trvl-footer-heading">Kontak</p>
+                <p class="trvl-footer-heading">{{ __('footer.contact_heading') }}</p>
                 <div class="flex flex-col gap-2">
-                    <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-footer-link">📱 WhatsApp: +62 831-5640-8078</a>
-                    <a href="#" class="trvl-footer-link">📍 IzalhadjiTravel</a>
-                    <a href="#" class="trvl-footer-link">📧 info@asrgo.id</a>
+                    <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-footer-link">{{ __('footer.whatsapp') }}</a>
+                    <a href="#" class="trvl-footer-link">{{ __('footer.location') }}</a>
+                    <a href="#" class="trvl-footer-link">{{ __('footer.email') }}</a>
                 </div>
             </div>
         </div>
         <div style="border-top:1px solid #1e293b; margin-top:2rem; padding-top:2rem; text-align:center;">
-            <p class="text-sm" style="color:#64748b;">&copy; {{ date('Y') }} ASR GO. All rights reserved.</p>
+            <p class="text-sm" style="color:#64748b;">{{ __('footer.copyright') }}</p>
         </div>
     </div>
 </footer>

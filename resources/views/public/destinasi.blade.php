@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Destinasi Wisata Flores - ASR GO')
+@section('title', __('destinasi.title') . ' - ASR GO')
 
 @section('content')
 <!-- HERO DESTINASI -->
@@ -10,13 +10,13 @@
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center">
-            <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4">Jelajahi Keindahan Flores</h1>
-            <p class="text-blue-100 text-lg max-w-2xl mx-auto">Temukan destinasi wisata menakjubkan di seluruh Pulau Flores, Nusa Tenggara Timur</p>
+            <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4">{{ __('destinasi.title') }}</h1>
+            <p class="text-blue-100 text-lg max-w-2xl mx-auto">{{ __('destinasi.subtitle') }}</p>
             
             <!-- Search -->
             <div class="mt-8 max-w-xl mx-auto">
                 <div class="relative">
-                    <input type="text" id="searchDest" placeholder="Cari destinasi atau kota..." 
+                    <input type="text" id="searchDest" placeholder="{{ __('destinasi.search_placeholder') }}" 
                            class="w-full px-5 py-4 pr-12 rounded-xl bg-white/95 backdrop-blur text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-lg">
                     <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -31,7 +31,7 @@
 <div class="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-1 py-3 overflow-x-auto scrollbar-hide">
-            <button onclick="filterKota('all')" class="kota-btn active px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white transition-all" data-kota="all">Semua</button>
+            <button onclick="filterKota('all')" class="kota-btn active px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white transition-all" data-kota="all">{{ __('destinasi.all') }}</button>
             <button onclick="filterKota('ende')" class="kota-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all" data-kota="ende">Ende</button>
             <button onclick="filterKota('labuan-bajo')" class="kota-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all" data-kota="labuan-bajo">Labuan Bajo</button>
             <button onclick="filterKota('ruteng')" class="kota-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all" data-kota="ruteng">Ruteng</button>
@@ -63,7 +63,7 @@
                     <div class="relative h-64 md:h-auto">
                         <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800&q=80" alt="Danau Kelimutu" class="w-full h-full object-cover">
                         <div class="absolute top-4 left-4">
-                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">⭐ PALING POPULER</span>
+                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">{{ __('destinasi.most_popular') }}</span>
                         </div>
                     </div>
                     <div class="p-8 flex flex-col justify-center">
@@ -376,11 +376,11 @@
 
         <!-- CTA BOTTOM -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 md:p-12 text-center">
-            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">Siap Jelajahi Flores?</h3>
-            <p class="text-blue-100 mb-6 max-w-xl mx-auto">Kami melayani travel antar kota di seluruh Flores. Pesan sekarang dan nikmati perjalanan nyaman bersama ASR GO.</p>
+            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">{{ __('home.cta_title') }}</h3>
+            <p class="text-blue-100 mb-6 max-w-xl mx-auto">{{ __('home.cta_desc') }}</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="{{ route('login') }}" class="px-8 py-3.5 bg-white text-blue-700 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg">
-                    Pesan Travel Sekarang
+                    {{ __('home.cta_book') }}
                 </a>
                 <a href="{{ route('public.travel') }}" class="px-8 py-3.5 bg-blue-500/30 text-white border border-blue-300/30 rounded-xl font-bold hover:bg-blue-500/50 transition">
                     Lihat Jadwal Travel

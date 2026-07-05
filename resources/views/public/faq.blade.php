@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'FAQ - Pertanyaan Umum - ASR GO')
+@section('title', __('faq.title') . ' - ASR GO')
 
 @section('meta')
 <meta name="description" content="Pertanyaan yang sering diajukan tentang layanan ASR GO Travel di Flores">
@@ -10,12 +10,12 @@
 <!-- HERO -->
 <div style="background: linear-gradient(135deg, #0d2147 0%, #1e3a8a 100%); padding: 4rem 0;">
     <div class="max-w-4xl mx-auto px-4 text-center">
-        <h1 class="text-4xl font-extrabold text-white mb-4">Pertanyaan Umum (FAQ)</h1>
-        <p class="text-blue-200 text-lg">Temukan jawaban untuk pertanyaan yang sering diajukan</p>
+        <h1 class="text-4xl font-extrabold text-white mb-4">{{ __('faq.title') }}</h1>
+        <p class="text-blue-200 text-lg">{{ __('faq.subtitle') }}</p>
         
         <!-- Search -->
         <div class="mt-8 max-w-md mx-auto">
-            <input type="text" id="faqSearch" oninput="searchFAQ()" placeholder="Cari pertanyaan..." 
+            <input type="text" id="faqSearch" oninput="searchFAQ()" placeholder="{{ __('faq.search_placeholder') }}" 
                    class="w-full px-5 py-3.5 rounded-xl bg-white/95 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
         </div>
     </div>
@@ -48,7 +48,7 @@
         ];
         @endphp
 
-        @php $categories = ['booking' => 'Pemesanan', 'pembayaran' => 'Pembayaran', 'pembatalan' => 'Pembatalan & Refund', 'perjalanan' => 'Perjalanan', 'rental' => 'Rental Mobil', 'tracking' => 'Tracking', 'kontak' => 'Kontak & Bantuan']; @endphp
+        @php $categories = ['booking' => __('faq.category_booking'), 'pembayaran' => __('faq.category_payment'), 'pembatalan' => __('faq.category_cancellation'), 'perjalanan' => __('faq.category_travel'), 'rental' => __('faq.category_rental'), 'tracking' => __('faq.category_tracking'), 'kontak' => __('faq.category_contact')]; @endphp
 
         @foreach($categories as $cat_key => $cat_name)
         @php $cat_faqs = array_filter($faqs, fn($f) => $f['cat'] === $cat_key); @endphp
@@ -77,15 +77,15 @@
 
         <!-- Still have questions? -->
         <div class="bg-blue-50 rounded-2xl p-8 text-center mt-10">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Masih punya pertanyaan?</h3>
-            <p class="text-gray-600 mb-4">Tim kami siap membantu Anda</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ __('faq.still_question') }}</h3>
+            <p class="text-gray-600 mb-4">{{ __('faq.still_question_desc') }}</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a href="https://wa.me/6281234567890?text=Halo ASR GO, saya ada pertanyaan" class="px-6 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition flex items-center gap-2">
+                <a href="https://wa.me/6283156408078?text=Halo ASR GO, saya ada pertanyaan" class="px-6 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition flex items-center gap-2">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
-                    Chat WhatsApp
+                    {{ __('faq.chat_wa') }}
                 </a>
                 <a href="/public/contact" class="px-6 py-3 bg-white text-blue-600 border border-blue-200 rounded-xl font-medium hover:bg-blue-50 transition">
-                    Kirim Pesan
+                    {{ __('faq.send_message') }}
                 </a>
             </div>
         </div>

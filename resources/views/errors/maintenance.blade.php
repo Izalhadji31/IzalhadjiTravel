@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance - ASR GO</title>
+    <title>{{ __('errors.maintenance_title') }} - ASR GO</title>
     <style>
         * {
             margin: 0;
@@ -178,50 +178,48 @@
         <div class="maintenance-icon">🔧</div>
 
         <div class="status-badge">
-            Status: Maintenance
+            {{ __('errors.maintenance_status') }}
         </div>
 
-        <h1>Sedang Dalam Perbaikan</h1>
+        <h1>{{ __('errors.maintenance_heading') }}</h1>
         <p class="subtitle">
-            Kami sedang melakukan pemeliharaan sistem untuk memberikan layanan terbaik kepada Anda. 
-            Harap kembali lagi dalam beberapa saat.
+            {{ __('errors.maintenance_message') }}
         </p>
 
         <div class="maintenance-info">
-            <h3>Informasi Penting</h3>
+            <h3>{{ __('errors.maintenance_info_title') }}</h3>
             <p>
-                Kami melakukan upgrade dan perbaikan sistem untuk meningkatkan performa dan keamanan aplikasi ASR GO. 
-                Proses ini biasanya memakan waktu beberapa jam. Terima kasih atas kesabaran Anda!
+                {{ __('errors.maintenance_info') }}
             </p>
         </div>
 
         <div class="maintenance-details">
             <div class="detail-box">
-                <div class="label">Status Sistem</div>
-                <div class="value">🔄 Proses</div>
+                <div class="label">{{ __('errors.maintenance_system_status') }}</div>
+                <div class="value">{{ __('errors.maintenance_in_progress') }}</div>
             </div>
             <div class="detail-box">
-                <div class="label">Estimasi Waktu</div>
-                <div class="value">2-4 Jam</div>
+                <div class="label">{{ __('errors.maintenance_est_time') }}</div>
+                <div class="value">{{ __('errors.maintenance_est_value') }}</div>
             </div>
             <div class="detail-box">
-                <div class="label">Update Terakhir</div>
-                <div class="value">Hari Ini</div>
+                <div class="label">{{ __('errors.maintenance_last_update') }}</div>
+                <div class="value">{{ __('errors.maintenance_today') }}</div>
             </div>
         </div>
 
         <div class="contact-section">
-            <h3>Butuh Bantuan?</h3>
-            <a href="https://wa.me/62821234567890?text=Halo%20ASR%20GO" target="_blank" class="contact-link">
-                📱 WhatsApp
+            <h3>{{ __('errors.maintenance_help') }}</h3>
+            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO" target="_blank" class="contact-link">
+                {{ __('errors.maintenance_wa') }}
             </a>
-            <a href="mailto:info@asrgo.com" class="contact-link">
-                ✉️ Email
+            <a href="mailto:info@asrgo.id" class="contact-link">
+                {{ __('errors.maintenance_email') }}
             </a>
         </div>
 
         <p class="footer-text">
-            ASR GO - Layanan Transportasi Terpercaya
+            {{ __('errors.maintenance_footer') }}
         </p>
     </div>
 </body>

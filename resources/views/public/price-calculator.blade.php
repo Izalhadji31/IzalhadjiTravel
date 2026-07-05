@@ -1,7 +1,7 @@
 
 @extends('layouts.public')
 
-@section('title', 'Cek Harga - ASR GO')
+@section('title', __('price_calc.title') . ' - ASR GO')
 
 @section('content')
 <!-- PRICE CALCULATOR HERO -->
@@ -11,10 +11,10 @@
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
                 <span style="display:inline-flex; align-items:center; gap:0.4rem;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    Kalkulator Harga
+                    {{ __('price_calc.title') }}
                 </span>
             </h1>
-            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Hitung harga perjalanan Anda dengan mudah dan cepat</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">{{ __('price_calc.subtitle') }}</p>
         </div>
     </div>
 </div>
@@ -27,18 +27,18 @@
             <!-- Service Type Card -->
             <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem;">
                 <div style="margin-bottom: 1rem;">
-                    <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem;">Pilih Layanan</label>
+                    <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem;">{{ __('price_calc.select_service') }}</label>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                     <button type="button" onclick="setService('travel')" id="btn-service-travel"
                             style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; border-radius: 12px; border: 2px solid #0064d2; background: #e8f4fd; color: #0064d2; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.25s;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                        Travel
+                        {{ __('price_calc.travel') }}
                     </button>
                     <button type="button" onclick="setService('rental')" id="btn-service-rental"
                             style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; border-radius: 12px; border: 2px solid #dee2e6; background: var(--trvl-card); color: var(--trvl-gray-600); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.25s;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-                        Rental Kendaraan
+                        {{ __('price_calc.rental') }}
                     </button>
                 </div>
             </div>
@@ -47,13 +47,13 @@
             <div id="travel-section" style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem;">
                 <h2 style="font-size: 1.1rem; font-weight: 800; color: #0d2147; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
-                    Travel
+                    {{ __('price_calc.travel') }}
                 </h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Rute</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.route') }}</label>
                         <select id="travel-route" onchange="calculateTravelPrice()" class="trvl-form-field">
-                            <option value="" data-price="0">-- Pilih Rute --</option>
+                            <option value="" data-price="0">{{ __('price_calc.select_route') }}</option>
                             @foreach ($routes->whereIn('route_type', ['travel', 'both']) as $route)
                                 <option value="{{ $route->id }}" data-price="{{ $route->travelPrices->first()->price ?? 0 }}" data-origin="{{ $route->origin_city }}" data-destination="{{ $route->destination_city }}">
                                     {{ $route->origin_city }} → {{ $route->destination_city }}
@@ -62,7 +62,7 @@
                         </select>
                     </div>
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Jumlah Penumpang</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.passengers') }}</label>
                         <select id="travel-passengers" onchange="calculateTravelPrice()" class="trvl-form-field">
                             <option value="1">1 orang</option>
                             <option value="2">2 orang</option>
@@ -72,7 +72,7 @@
                         </select>
                     </div>
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tanggal Berangkat</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.date') }}</label>
                         <input type="date" id="travel-date" value="{{ date('Y-m-d') }}" class="trvl-form-field">
                     </div>
                 </div>
@@ -82,13 +82,13 @@
             <div id="rental-section" style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem; display: none;">
                 <h2 style="font-size: 1.1rem; font-weight: 800; color: #0d2147; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-                    Rental Kendaraan
+                    {{ __('price_calc.rental') }}
                 </h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tujuan</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.destination') }}</label>
                         <select id="rental-destination" class="trvl-form-field">
-                            <option value="">-- Pilih Tujuan --</option>
+                            <option value="">{{ __('price_calc.select_destination') }}</option>
                             @php
                                 $rentalDestinations = collect();
                                 foreach ($routes->whereIn('route_type', ['rental', 'both']) as $route) {
@@ -129,7 +129,7 @@
                             <input type="date" id="rental-start-date" value="{{ date('Y-m-d') }}" class="trvl-form-field">
                         </div>
                         <div>
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Durasi (hari)</label>
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.duration') }} (hari)</label>
                             <input type="number" id="rental-days" value="1" min="1" max="30" onchange="calculateRentalPrice()" class="trvl-form-field">
                         </div>
                     </div>
@@ -141,9 +141,9 @@
                 <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 70%); pointer-events: none;"></div>
                 <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">
                     <div>
-                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); font-weight: 500; margin-bottom: 0.25rem;">Total Harga</p>
+                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); font-weight: 500; margin-bottom: 0.25rem;">{{ __('price_calc.total') }}</p>
                         <p id="result-price" style="font-size: 2.5rem; font-weight: 900; color: white; line-height: 1.1;">Rp 0</p>
-                        <p id="result-detail" style="font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem;">Pilih rute untuk melihat harga</p>
+                        <p id="result-detail" style="font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem;">{{ __('price_calc.na') }}</p>
                     </div>
                     <div>
                         @auth

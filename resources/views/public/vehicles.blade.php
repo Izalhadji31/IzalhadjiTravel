@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Daftar Kendaraan - ASR GO')
+@section('title', __('rental.title') . ' - ASR GO')
 
 @section('content')
 <!-- HERO SECTION -->
@@ -25,9 +25,9 @@
         <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); border: 1px solid var(--trvl-border); box-shadow: var(--trvl-shadow-sm); padding: 1.25rem; margin-bottom: 1.5rem;">
             <form method="GET" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; align-items: end;">
                 <div>
-                    <label class="trvl-field-label">Tipe Kendaraan</label>
+                    <label class="trvl-field-label">{{ __('rental.vehicle_type') }}</label>
                     <select name="vehicle_type" class="trvl-form-field" style="appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22><path stroke=%22%236b7280%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221.5%22 d=%22M6 8l4 4 4-4%22/></svg>'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25rem; padding-right: 2.5rem;">
-                        <option value="">-- Semua Tipe --</option>
+                        <option value="">-- {{ __('rental.vehicle_type_all') }} --</option>
                         @foreach($vehicleTypes as $type)
                             <option value="{{ $type }}" {{ request('vehicle_type') === $type ? 'selected' : '' }}>
                                 {{ $type }}
@@ -36,23 +36,23 @@
                     </select>
                 </div>
                 <div>
-                    <label class="trvl-field-label">Min. Kapasitas</label>
-                    <input type="number" name="min_capacity" placeholder="Jumlah kursi minimal" 
+                    <label class="trvl-field-label">Min. {{ __('rental.seats') }}</label>
+                    <input type="number" name="min_capacity" placeholder="{{ __('general.no_results') }}" 
                            value="{{ request('min_capacity') }}"
                            class="trvl-form-field">
                 </div>
                 <div>
-                    <label class="trvl-field-label">Urutkan</label>
+                    <label class="trvl-field-label">{{ __('general.sort') }}</label>
                     <select name="sort" class="trvl-form-field" style="appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22><path stroke=%22%236b7280%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221.5%22 d=%22M6 8l4 4 4-4%22/></svg>'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25rem; padding-right: 2.5rem;">
-                        <option value="vehicle_type" {{ request('sort') === 'vehicle_type' ? 'selected' : '' }}>Tipe Kendaraan</option>
-                        <option value="seat_capacity" {{ request('sort') === 'seat_capacity' ? 'selected' : '' }}>Kapasitas</option>
-                        <option value="created_at" {{ request('sort') === 'created_at' ? 'selected' : '' }}>Terbaru</option>
+                        <option value="vehicle_type" {{ request('sort') === 'vehicle_type' ? 'selected' : '' }}>{{ __('rental.vehicle_type') }}</option>
+                        <option value="seat_capacity" {{ request('sort') === 'seat_capacity' ? 'selected' : '' }}>{{ __('rental.seats') }}</option>
+                        <option value="created_at" {{ request('sort') === 'created_at' ? 'selected' : '' }}>{{ __('general.latest') }}</option>
                     </select>
                 </div>
                 <div>
                     <button type="submit" class="trvl-btn-search" style="width: 100%; justify-content: center; padding: 0.7rem 1rem; font-size: 0.85rem;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                        Cari
+                        {{ __('general.search') }}
                     </button>
                 </div>
             </form>
@@ -119,14 +119,14 @@
 
                             <!-- Features -->
                             <div style="font-size: 0.78rem; color: var(--trvl-gray-600); display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem;">
-                                <p>✓ AC & Power Steering</p>
+                                ✓ {{ __('rental.ac') }} & Power Steering
                                 <p>✓ Asuransi Lengkap</p>
                                 <p>✓ Pengemudi Profesional</p>
                             </div>
 
                             <!-- Action Button -->
                             <a href="{{ route('login') }}" class="trvl-btn-pesan" style="width: 100%; text-align: center;">
-                                Pesan Sekarang
+                                {{ __('rental.book') }}
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </a>
                         </div>
@@ -142,8 +142,8 @@
             <!-- Empty State -->
             <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                 <div style="font-size: 4rem; margin-bottom: 1rem;">🚗</div>
-                <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">Tidak ada kendaraan ditemukan</h3>
-                <p style="color: var(--trvl-gray-600); margin-bottom: 1.5rem; font-size: 0.9rem;">Coba ubah filter pencarian Anda</p>
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--trvl-gray-900); margin-bottom: 0.5rem;">{{ __('rental.empty') }}</h3>
+                <p style="color: var(--trvl-gray-600); margin-bottom: 1.5rem; font-size: 0.9rem;">{{ __('rental.empty_desc') }}</p>
                 <a href="{{ route('public.vehicles') }}" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--trvl-blue); color: white; padding: 0.75rem 1.5rem; border-radius: var(--trvl-radius-md); font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 18 0 9 9 0 0 1-18 0z"/><polyline points="9 12 12 15 15 12"/></svg>
                     Kembalikan ke Semua Kendaraan

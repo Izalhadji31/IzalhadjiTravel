@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Blog & Artikel - ASR GO')
+@section('title', __('blog.title') . ' - ASR GO')
 
 @section('content')
 <!-- HERO SECTION -->
@@ -11,13 +11,13 @@
         <div class="text-center">
             <div class="trvl-hero-badge">
                 <span class="pulse-dot"></span>
-                Informasi & Berita Terbaru
+                {{ __('blog.badge') }}
             </div>
             <h1 class="trvl-hero-title">
-                Blog & <span class="highlight">Artikel</span>
+                {{ __('blog.title') }}
             </h1>
             <p class="trvl-hero-subtitle mx-auto">
-                Temukan informasi menarik seputar perjalanan, wisata Flores, tips traveling, dan berita terbaru dari ASR GO.
+                {{ __('blog.subtitle') }}
             </p>
         </div>
     </div>
@@ -36,15 +36,15 @@
                 ->pluck('type');
         @endphp
         <div class="flex flex-wrap items-center gap-3 mb-10 trvl-reveal">
-            <span class="text-sm font-semibold" style="color:var(--trvl-gray-600);">Kategori:</span>
+            <span class="text-sm font-semibold" style="color:var(--trvl-gray-600);">{{ __('blog.category_label') }}</span>
             <a href="{{ route('public.blog') }}" 
                class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !$currentCategory ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600' }}">
-                Semua
+                {{ __('blog.category_all') }}
             </a>
             @foreach($categories as $cat)
                 <a href="{{ route('public.blog', ['category' => $cat]) }}" 
                    class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ $currentCategory === $cat ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600' }}">
-                    {{ $cat === 'blog' ? 'Blog' : 'Halaman' }}
+                    {{ $cat === 'blog' ? __('blog.category_blog') : __('blog.category_page') }}
                 </a>
             @endforeach
         </div>
@@ -84,7 +84,7 @@
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-xs font-medium px-2.5 py-1 rounded-full" 
                                       style="background:var(--trvl-blue-light); color:var(--trvl-blue);">
-                                    {{ $article->type === 'blog' ? 'Blog' : 'Artikel' }}
+                                    {{ $article->type === 'blog' ? __('blog.category_blog') : __('blog.category_article') }}
                                 </span>
                                 <span class="text-xs" style="color:var(--trvl-gray-500);">
                                     {{ $publishDate instanceof \Carbon\Carbon ? $publishDate->isoFormat('D MMM YYYY') : date('d M Y', strtotime($publishDate)) }}
@@ -98,7 +98,7 @@
                             </p>
                             <div class="mt-auto pt-3">
                                 <span class="inline-flex items-center gap-1 text-sm font-semibold" style="color:var(--trvl-blue);">
-                                    Baca Selengkapnya
+                                    {{ __('blog.read_more') }}
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                     </svg>
@@ -118,8 +118,8 @@
                 <svg class="w-20 h-20 mx-auto mb-6" style="color:var(--trvl-gray-400);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                 </svg>
-                <h3 class="text-xl font-bold mb-2" style="color:var(--trvl-gray-700);">Belum Ada Artikel</h3>
-                <p style="color:var(--trvl-gray-500);">Belum ada artikel yang dipublikasikan. Silakan kunjungi kembali nanti.</p>
+                <h3 class="text-xl font-bold mb-2" style="color:var(--trvl-gray-700);">{{ __('blog.empty') }}</h3>
+                <p style="color:var(--trvl-gray-500);">{{ __('blog.empty_desc') }}</p>
             </div>
         @endif
     </div>

@@ -39,7 +39,7 @@
                     </div>
                     <div>
                         <label class="text-gray-700 font-medium">Support Email</label>
-                        <input type="email" value="support@asrgo.com" class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
+                        <input type="email" value="support@asrgo.id" class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                     </div>
                     <div>
                         <label class="text-gray-700 font-medium">Timezone</label>

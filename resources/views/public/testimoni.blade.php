@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Testimoni Traveler - ASR GO')
+@section('title', __('testimoni.title') . ' - ASR GO')
 
 @section('meta')
 <meta name="description" content="Testimoni dari traveler yang sudah menggunakan layanan ASR GO Travel di Flores, NTT">
@@ -12,22 +12,22 @@
 <!-- HERO -->
 <div style="background: linear-gradient(135deg, #0a1a40 0%, #1e3a8a 50%, #3b82f6 100%); padding: 5rem 0;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Kata Mereka Tentang ASR GO</h1>
-        <p class="text-blue-100 text-lg max-w-2xl mx-auto">Pengalaman nyata dari traveler yang sudah menggunakan layanan kami</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">{{ __('testimoni.title') }}</h1>
+        <p class="text-blue-100 text-lg max-w-2xl mx-auto">{{ __('testimoni.subtitle') }}</p>
         
         <!-- Stats -->
         <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-10">
             <div>
                 <p class="text-3xl font-extrabold text-white">500+</p>
-                <p class="text-blue-200 text-sm">Traveler</p>
+                <p class="text-blue-200 text-sm">{{ __('testimoni.stats_travelers') }}</p>
             </div>
             <div>
                 <p class="text-3xl font-extrabold text-white">4.9</p>
-                <p class="text-blue-200 text-sm">Rating</p>
+                <p class="text-blue-200 text-sm">{{ __('testimoni.stats_rating') }}</p>
             </div>
             <div>
                 <p class="text-3xl font-extrabold text-white">98%</p>
-                <p class="text-blue-200 text-sm">Puas</p>
+                <p class="text-blue-200 text-sm">{{ __('testimoni.stats_satisfied') }}</p>
             </div>
         </div>
     </div>
@@ -37,10 +37,10 @@
 <div class="bg-white border-b sticky top-0 z-30 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div class="flex items-center gap-2 overflow-x-auto">
-            <button onclick="filterTesti('all')" class="testi-filter active px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white" data-filter="all">Semua</button>
-            <button onclick="filterTesti('travel')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="travel">Travel</button>
-            <button onclick="filterTesti('rental')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="rental">Rental</button>
-            <button onclick="filterTesti('airport')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="airport">Airport Transfer</button>
+            <button onclick="filterTesti('all')" class="testi-filter active px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white" data-filter="all">{{ __('testimoni.all') }}</button>
+            <button onclick="filterTesti('travel')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="travel">{{ __('testimoni.travel') }}</button>
+            <button onclick="filterTesti('rental')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="rental">{{ __('testimoni.rental') }}</button>
+            <button onclick="filterTesti('airport')" class="testi-filter px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-blue-50" data-filter="airport">{{ __('testimoni.airport') }}</button>
         </div>
     </div>
 </div>
@@ -97,9 +97,9 @@
 
         <!-- CTA -->
         <div class="text-center mt-12">
-            <p class="text-gray-500 mb-4">Bergabab dengan 500+ traveler puas</p>
+            <p class="text-gray-500 mb-4">{{ __('testimoni.cta_text') }}</p>
             <a href="/public/travel" class="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
-                Pesan Perjalanan Anda
+                {{ __('testimoni.cta_button') }}
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
         </div>

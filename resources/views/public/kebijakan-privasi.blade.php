@@ -1,21 +1,21 @@
 @extends('layouts.public')
 
-@section('title', 'Kebijakan Privasi - ASR GO')
+@section('title', __('privasi.title') . ' - ASR GO')
 
 @section('content')
 <div class="bg-white py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Kebijakan Privasi</h1>
-        <p class="text-gray-500 mb-8">Terakhir diperbarui: 29 Juni 2026</p>
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-2">{{ __('privasi.title') }}</h1>
+        <p class="text-gray-500 mb-8">{{ __('privasi.last_updated') }}</p>
         
         <div class="prose prose-gray max-w-none space-y-6 text-gray-700">
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">1. Pendahuluan</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_1') }}</h2>
                 <p>ASR GO ("kami") menghargai privasi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda saat menggunakan layanan kami.</p>
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">2. Informasi yang Kami Kumpulkan</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_2') }}</h2>
                 <ul class="list-disc pl-5 space-y-2">
                     <li><strong>Data Pribadi:</strong> Nama, email, nomor telepon, alamat, foto KTP/SIM (untuk rental)</li>
                     <li><strong>Data Pembayaran:</strong> Informasi diproses oleh payment gateway Midtrans (kami tidak menyimpan data kartu kredit)</li>
@@ -26,7 +26,7 @@
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">3. Penggunaan Informasi</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_3') }}</h2>
                 <p>Kami menggunakan informasi untuk:</p>
                 <ul class="list-disc pl-5 space-y-2">
                     <li>Memproses dan mengelola pemesanan Anda</li>
@@ -39,7 +39,7 @@
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">4. Keamanan Data</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_4') }}</h2>
                 <p>Kami menerapkan langkah-langkah keamanan untuk melindungi data Anda:</p>
                 <ul class="list-disc pl-5 space-y-2">
                     <li>Enkripsi SSL/TLS untuk semua transmisi data</li>
@@ -51,7 +51,7 @@
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">5. Berbagi Data</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_5') }}</h2>
                 <p>Kami TIDAK akan menjual data pribadi Anda. Data hanya dibagikan kepada:</p>
                 <ul class="list-disc pl-5 space-y-2">
                     <li>Payment gateway (Midtrans) untuk proses pembayaran</li>
@@ -61,7 +61,7 @@
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">6. Hak Anda</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_6') }}</h2>
                 <p>Anda berhak untuk:</p>
                 <ul class="list-disc pl-5 space-y-2">
                     <li>Mengakses data pribadi Anda</li>
@@ -73,12 +73,12 @@
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">7. Cookies</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_7') }}</h2>
                 <p>Kami menggunakan cookies untuk meningkatkan pengalaman Anda. Anda bisa mengatur preferensi cookies melalui browser Anda.</p>
             </section>
             
             <section>
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">8. Kontak</h2>
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-2">{{ __('privasi.section_8') }}</h2>
                 <p>Untuk pertanyaan tentang privasi data, hubungi Data Protection Officer kami:</p>
                 <ul class="list-none space-y-1 mt-2">
                     <li>📧 Email: privacy@asr-go.com</li>

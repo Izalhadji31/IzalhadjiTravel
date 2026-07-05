@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Cek Status Booking - ASR GO')
+@section('title', __('cek_booking.title') . ' - ASR GO')
 
 @section('content')
 <div class="bg-gradient-to-br from-blue-50 to-white min-h-[80vh] py-16">
@@ -9,25 +9,25 @@
             <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             </div>
-            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Cek Status Booking</h1>
-            <p class="text-gray-500">Masukkan kode booking dan email untuk melihat status perjalanan Anda</p>
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">{{ __('cek_booking.title') }}</h1>
+            <p class="text-gray-500">{{ __('cek_booking.subtitle') }}</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <form onsubmit="checkBooking(event)" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kode Booking</label>
-                    <input type="text" id="bookingCode" placeholder="Contoh: ASR-20260629-ABC" required
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('cek_booking.code_label') }}</label>
+                    <input type="text" id="bookingCode" placeholder="{{ __('cek_booking.code_placeholder') }}" required
                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-mono uppercase">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="bookingEmail" placeholder="email@anda.com" required
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('cek_booking.email_label') }}</label>
+                    <input type="email" id="bookingEmail" placeholder="{{ __('cek_booking.email_placeholder') }}" required
                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
                 <button type="submit" class="w-full py-3.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    Cek Status
+                    {{ __('cek_booking.submit') }}
                 </button>
             </form>
 
@@ -39,7 +39,7 @@
 
         <!-- Help -->
         <div class="mt-6 text-center text-sm text-gray-500">
-            <p>Tidak menemukan kode booking? Cek email konfirmasi atau hubungi kami di <a href="https://wa.me/6281234567890" class="text-blue-600 font-medium">WhatsApp</a></p>
+            <p>{{ __('cek_booking.help') }} <a href="https://wa.me/6283156408078" class="text-blue-600 font-medium">{{ __('cek_booking.help_wa') }}</a></p>
         </div>
     </div>
 </div>

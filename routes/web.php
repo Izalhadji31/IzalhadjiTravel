@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
@@ -35,6 +37,17 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ChatController;
+
+
+// Language Switch
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        Session::put('locale', $locale);
+        App::setLocale($locale);
+        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 // Landing Page
 Route::get('/', [PublicController::class, 'home'])->name('home');
