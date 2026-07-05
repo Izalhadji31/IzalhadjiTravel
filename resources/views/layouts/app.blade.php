@@ -494,6 +494,29 @@
                     Voucher
                 </a>
             </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">Lainnya</div>
+                <a href="{{ route('admin.refunds') }}" class="sidebar-link @if(request()->routeIs('admin.refunds*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+                    Refunds
+                </a>
+                <a href="{{ route('identity.admin.pending') }}" class="sidebar-link @if(request()->routeIs('identity.*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.472 10.226 8.618 11.944a2.09 2.09 0 00.764.056 2.09 2.09 0 00.764-.056A12.02 12.02 0 0021 9a12.02 12.02 0 00-.916-4.016z"/></svg>
+                    Verifikasi Identitas
+                </a>
+                <a href="{{ route('admin.audit-logs') }}" class="sidebar-link @if(request()->routeIs('admin.audit-logs')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Audit Logs
+                </a>
+                <a href="{{ route('cms.index') }}" class="sidebar-link @if(request()->routeIs('cms.*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    CMS Pages
+                </a>
+                <a href="{{ route('admin.gps-devices.index') }}" class="sidebar-link @if(request()->routeIs('admin.gps-devices.*')) active @endif">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    GPS Devices
+                </a>
+            </div>
             @endif
 
             {{-- COMMON FOR ALL AUTHENTICATED USERS --}}

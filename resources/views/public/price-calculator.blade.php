@@ -20,12 +20,12 @@
 </div>
 
 <!-- CALCULATOR BODY -->
-<div style="background: #f8f9fa; padding: 0 0 4rem;">
+<div style="background: var(--trvl-bg); padding: 0 0 4rem;">
     <div class="trvl-container">
         <div style="max-width: 800px; margin: -1rem auto 0; position: relative; z-index: 2;">
 
             <!-- Service Type Card -->
-            <div style="background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #e9ecef; padding: 1.5rem; margin-bottom: 1.25rem;">
+            <div style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem;">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem;">Pilih Layanan</label>
                 </div>
@@ -36,7 +36,7 @@
                         Travel
                     </button>
                     <button type="button" onclick="setService('rental')" id="btn-service-rental"
-                            style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; border-radius: 12px; border: 2px solid #dee2e6; background: white; color: #6c757d; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.25s;">
+                            style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; border-radius: 12px; border: 2px solid #dee2e6; background: var(--trvl-card); color: var(--trvl-gray-600); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.25s;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
                         Rental Kendaraan
                     </button>
@@ -44,7 +44,7 @@
             </div>
 
             <!-- Travel Calculator Form -->
-            <div id="travel-section" style="background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #e9ecef; padding: 1.5rem; margin-bottom: 1.25rem;">
+            <div id="travel-section" style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem;">
                 <h2 style="font-size: 1.1rem; font-weight: 800; color: #0d2147; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
                     Travel
@@ -54,9 +54,9 @@
                         <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Rute</label>
                         <select id="travel-route" onchange="calculateTravelPrice()" class="trvl-form-field">
                             <option value="" data-price="0">-- Pilih Rute --</option>
-                            @foreach ($routes->where('type', 'travel') as $route)
-                                <option value="{{ $route->id }}" data-price="{{ $route->travelPrices->first()->price ?? 0 }}" data-origin="{{ $route->origin }}" data-destination="{{ $route->destination }}">
-                                    {{ $route->origin }} → {{ $route->destination }}
+                            @foreach ($routes->whereIn('route_type', ['travel', 'both']) as $route)
+                                <option value="{{ $route->id }}" data-price="{{ $route->travelPrices->first()->price ?? 0 }}" data-origin="{{ $route->origin_city }}" data-destination="{{ $route->destination_city }}">
+                                    {{ $route->origin_city }} → {{ $route->destination_city }}
                                 </option>
                             @endforeach
                         </select>
@@ -79,7 +79,7 @@
             </div>
 
             <!-- Rental Calculator Form -->
-            <div id="rental-section" style="background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #e9ecef; padding: 1.5rem; margin-bottom: 1.25rem; display: none;">
+            <div id="rental-section" style="background: var(--trvl-card); border-radius: var(--trvl-radius-lg); box-shadow: var(--trvl-shadow-md); border: 1px solid var(--trvl-border); padding: 1.5rem; margin-bottom: 1.25rem; display: none;">
                 <h2 style="font-size: 1.1rem; font-weight: 800; color: #0d2147; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
                     Rental Kendaraan
@@ -91,9 +91,9 @@
                             <option value="">-- Pilih Tujuan --</option>
                             @php
                                 $rentalDestinations = collect();
-                                foreach ($routes->where('type', 'rental') as $route) {
-                                    if (!$rentalDestinations->contains($route->destination)) {
-                                        $rentalDestinations->push($route->destination);
+                                foreach ($routes->whereIn('route_type', ['rental', 'both']) as $route) {
+                                    if (!$rentalDestinations->contains($route->destination_city)) {
+                                        $rentalDestinations->push($route->destination_city);
                                     }
                                 }
                             @endphp
@@ -164,10 +164,10 @@
             </div>
 
             <!-- Info Note -->
-            <div style="margin-top: 1.25rem; background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); border: 1px solid #dbeafe; border-radius: 12px; padding: 1rem 1.25rem;">
+            <div class="trvl-info-panel" style="margin-top: 1.25rem;">
                 <div style="display: flex; gap: 0.65rem; align-items: flex-start;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    <p style="font-size: 0.8rem; color: #495057; line-height: 1.6;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px; color: var(--trvl-blue);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <p style="font-size: 0.8rem; color: var(--trvl-gray-700); line-height: 1.6;">
                         <strong>Catatan:</strong> Harga yang ditampilkan adalah estimasi harga dasar. Harga final dapat berubah sesuai dengan kondisi perjalanan, ketersediaan armada, dan kebijakan yang berlaku saat pemesanan.
                     </p>
                 </div>
@@ -195,7 +195,7 @@
             travelBtn.querySelector('svg').setAttribute('stroke', '#0064d2');
             
             rentalBtn.style.borderColor = '#dee2e6';
-            rentalBtn.style.background = 'white';
+            rentalBtn.style.background = 'var(--trvl-card)';
             rentalBtn.style.color = '#6c757d';
             rentalBtn.querySelector('svg').setAttribute('stroke', '#6c757d');
             
@@ -208,7 +208,7 @@
             rentalBtn.querySelector('svg').setAttribute('stroke', '#0064d2');
             
             travelBtn.style.borderColor = '#dee2e6';
-            travelBtn.style.background = 'white';
+            travelBtn.style.background = 'var(--trvl-card)';
             travelBtn.style.color = '#6c757d';
             travelBtn.querySelector('svg').setAttribute('stroke', '#6c757d');
             
