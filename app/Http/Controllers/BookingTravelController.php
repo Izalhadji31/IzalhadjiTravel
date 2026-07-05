@@ -74,8 +74,7 @@ class BookingTravelController extends Controller
         ]);
 
         $travelPrice = TravelPrice::where('route_id', $validated['route_id'])->first();
-        $route = Route::findOrFail($validated['route_id']);
-        $seatPrice = $travelPrice?->price_per_seat ?? $route->base_price ?? 0;
+        $seatPrice = $travelPrice?->price_per_seat ?? 0;
         $total_price = $seatPrice * $validated['number_of_seats'];
         $scheduledDate = $validated['travel_date'] ?? $validated['scheduled_date'];
 

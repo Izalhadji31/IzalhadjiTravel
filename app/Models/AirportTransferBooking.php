@@ -81,7 +81,7 @@ class AirportTransferBooking extends Model
 
     public function payments(): MorphMany
     {
-        return $this->morphMany(Payment::class, 'payable');
+        return $this->morphMany(Payment::class, 'booking');
     }
 
     public function reviews(): MorphMany

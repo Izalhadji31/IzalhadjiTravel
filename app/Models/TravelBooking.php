@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['user_id', 'route_id', 'number_of_seats', 'total_price', 'booking_code', 'status', 'scheduled_date', 'departure_time', 'assigned_armada_id'])]
+#[Fillable(['user_id', 'route_id', 'number_of_seats', 'passenger_count', 'total_price', 'final_price', 'booking_code', 'status', 'scheduled_date', 'departure_time', 'assigned_armada_id'])]
 class TravelBooking extends Model
 {
     use HasFactory, HasUuids;

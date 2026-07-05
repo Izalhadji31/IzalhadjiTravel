@@ -30,9 +30,9 @@ class BookingNotificationService
         $message .= "Kode Booking: {$bookingCode}\n";
         
         if ($booking instanceof TravelBooking && $booking->route) {
-            $message .= "Rute: {$booking->route->from_location->city} → {$booking->route->to_location->city}\n";
+            $message .= "Rute: {$booking->route->origin_city} → {$booking->route->destination_city}\n";
         } elseif ($booking instanceof RentalBooking && $booking->route) {
-            $message .= "Destinasi: {$booking->route->to_location->city}\n";
+            $message .= "Destinasi: {$booking->route->destination_city}\n";
         }
         
         if ($booking->scheduled_date) {
@@ -63,7 +63,7 @@ class BookingNotificationService
         $message .= "Jenis: {$bookingType}\n";
         
         if ($booking->armada) {
-            $message .= "Kendaraan: {$booking->armada->vehicle_name} ({$booking->armada->plate_number})\n";
+            $message .= "Kendaraan: {$booking->armada->vehicle_type} ({$booking->armada->plate_number})\n";
         }
         
         if ($booking->driver) {
@@ -155,7 +155,7 @@ class BookingNotificationService
         $message .= "Kode Booking: {$bookingCode}\n";
         
         if ($booking instanceof TravelBooking && $booking->route) {
-            $message .= "Rute: {$booking->route->from_location->city} → {$booking->route->to_location->city}\n";
+            $message .= "Rute: {$booking->route->origin_city} → {$booking->route->destination_city}\n";
         }
         
         if ($booking->scheduled_date) {

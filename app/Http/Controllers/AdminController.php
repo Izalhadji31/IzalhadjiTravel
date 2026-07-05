@@ -279,7 +279,7 @@ class AdminController extends Controller
      */
     public function payoutMitra(Request $request, $mitraId)
     {
-        $revenueSharings = RevenueSharing::where('partner_id', $mitraId)
+        $revenueSharings = RevenueSharing::where('mitra_id', $mitraId)
             ->where('status', 'pending')
             ->get();
 
@@ -289,7 +289,7 @@ class AdminController extends Controller
 
         $totalPayout = $revenueSharings->sum('partner_amount');
 
-        RevenueSharing::where('partner_id', $mitraId)
+        RevenueSharing::where('mitra_id', $mitraId)
             ->where('status', 'pending')
             ->update([
                 'status' => 'completed',
@@ -306,12 +306,35 @@ class AdminController extends Controller
     public function manageDrivers()
     {
         $drivers = User::where('role', 'driver')
-            ->withCount(['bookings as total_trips' => function ($query) {
-                $query->select(DB::raw('COUNT(*)'));
+            ->addSelect(['total_trips' => function ($query) {
+                $query->selectRaw('COALESCE((SELECT COUNT(*) FROM travel_bookings WHERE travel_bookings.assigned_armada_id IN (SELECT id FROM armadas WHERE armadas.driver_phone = users.phone)), 0) + COALESCE((SELECT COUNT(*) FROM rental_bookings WHERE rental_bookings.assigned_armada_id IN (SELECT id FROM armadas WHERE armadas.driver_phone = users.phone)), 0)');
             }])
-            ->withCount(['payments as total_earnings' => function ($query) {
-                $query->where('status', 'success')->select(DB::raw('COALESCE(SUM(driver_amount), 0)'));
-            }])
+            ->addSelect(['total_earnings' => RevenueSharing::query()
+                ->selectRaw('COALESCE(SUM(driver_amount), 0)')
+                ->where(function ($q) {
+                    $q->where(function ($q2) {
+                        $q2->where('booking_type', TravelBooking::class)
+                            ->whereIn('booking_id', function ($q3) {
+                                $q3->select('id')->from('travel_bookings')
+                                    ->whereIn('assigned_armada_id', function ($q4) {
+                                        $q4->select('a.id')->from('armadas as a')
+                                            ->join('drivers as d', 'd.phone', '=', 'a.driver_phone')
+                                            ->whereColumn('d.user_id', 'users.id');
+                                    });
+                            });
+                    })->orWhere(function ($q2) {
+                        $q2->where('booking_type', RentalBooking::class)
+                            ->whereIn('booking_id', function ($q3) {
+                                $q3->select('id')->from('rental_bookings')
+                                    ->whereIn('assigned_armada_id', function ($q4) {
+                                        $q4->select('a.id')->from('armadas as a')
+                                            ->join('drivers as d', 'd.phone', '=', 'a.driver_phone')
+                                            ->whereColumn('d.user_id', 'users.id');
+                                    });
+                            });
+                    });
+                })
+            ])
             ->latest()
             ->paginate(15);
 

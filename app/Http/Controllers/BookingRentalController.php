@@ -85,7 +85,7 @@ class BookingRentalController extends Controller
             'route_id' => $validated['route_id'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'with_driver' => $validated['with_driver'],
+            'rental_type' => $validated['with_driver'] ? 'with_driver' : 'without_driver',
             'total_price' => $total_price,
             'status' => 'pending',
         ]);

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Payment;
+use App\Models\RentalBooking;
+use App\Models\TravelBooking;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Midtrans\Config;
@@ -87,7 +89,7 @@ class PaymentService
                 'id' => "rental-{$booking->id}",
                 'price' => (int) $booking->total_price,
                 'quantity' => 1,
-                'name' => "Rental Booking - {$booking->armada->vehicle_name}",
+                'name' => "Rental Booking - {$booking->armada->vehicle_type}",
                 'brand' => 'ASR GO',
                 'category' => 'rental',
                 'merchant_name' => 'ASR GO',
@@ -153,9 +155,16 @@ class PaymentService
      */
     public function recordPayment($booking, string $bookingType, string $orderId, string $snapToken): Payment
     {
+        // Map short booking type to FQCN for polymorphic relationship
+        $bookingTypeFQCN = match ($bookingType) {
+            'travel' => TravelBooking::class,
+            'rental' => RentalBooking::class,
+            default => $bookingType,
+        };
+
         $payment = Payment::create([
             'booking_id' => $booking->id,
-            'booking_type' => $bookingType,
+            'booking_type' => $bookingTypeFQCN,
             'amount' => $booking->total_price,
             'payment_method' => 'midtrans',
             'midtrans_reference' => $orderId,
