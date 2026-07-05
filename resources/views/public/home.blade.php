@@ -252,9 +252,20 @@
                 $price = $travelPrice?->price_per_seat ?? $travelPrice?->price ?? 0;
                 $duration = $route->estimated_hours ? number_format((float) $route->estimated_hours, 0) . ' jam' : 'Khusus';
                 $distance = $route->distance_km ? number_format((float) $route->distance_km, 0) . ' km' : 'Tersedia';
+                $routeImages = [
+                    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1530789253388-582c4f0b2f1c?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
+                ];
+                $routeImg = $routeImages[$loop->index % count($routeImages)];
             @endphp
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%);">🛣️</div>
+                <div class="trvl-route-card-img" style="overflow:hidden;">
+                    <img src="{{ $routeImg }}" alt="{{ $route->origin_city }} - {{ $route->destination_city }}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" class="group-hover:scale-110">
+                </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest">
                         <span class="trvl-route-city">{{ $route->origin_city ?? 'Ende' }}</span>
@@ -271,7 +282,9 @@
             </div>
             @empty
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%);">🛣️</div>
+                <div class="trvl-route-card-img" style="overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Ende - Labuan Bajo" style="width:100%;height:100%;object-fit:cover;">
+                </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 8 jam</span><span class="trvl-route-meta-item">📍 350 km</span></div>
@@ -280,7 +293,9 @@
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-1">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%);">🌊</div>
+                <div class="trvl-route-card-img" style="overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Ende - Maumere" style="width:100%;height:100%;object-fit:cover;">
+                </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Maumere</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 5 jam</span><span class="trvl-route-meta-item">📍 200 km</span></div>
@@ -289,7 +304,9 @@
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-2">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#92400e 0%,#d97706 50%,#fbbf24 100%);">🌋</div>
+                <div class="trvl-route-card-img" style="overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80" alt="Ende - Kelimutu" style="width:100%;height:100%;object-fit:cover;">
+                </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Kelimutu</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 3 jam</span><span class="trvl-route-meta-item">📍 100 km</span></div>
@@ -636,10 +653,21 @@
                 $vehicleName = $service->route?->name ?: ($service->vehicle_type ?? 'Armada Premium');
                 $seatCapacity = $service->route?->total_seats ?? 6;
                 $price = $service->price_without_driver ?? $service->price_with_driver ?? 350000;
+                $carImages = [
+                    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80',
+                ];
+                $carImage = $carImages[$loop->index % count($carImages)];
             @endphp
             <div class="trvl-vehicle-card trvl-reveal">
                 <div class="trvl-vehicle-card-img">
-                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80" alt="Mobil ASR GO" loading="lazy">
+                    <img src="{{ $carImage }}" alt="{{ $vehicleName }} - ASR GO" loading="lazy">
                 </div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">{{ $vehicleName }}</h3>
