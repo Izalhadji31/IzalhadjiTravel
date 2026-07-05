@@ -22,134 +22,33 @@
             </p>
         </div>
 
-        <!-- Service Tabs -->
-        <div class="trvl-service-tabs" id="service-tabs">
-            <button class="trvl-service-tab active" onclick="switchTab('rental', this)" id="tab-rental">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                {{ __('services.tab_rental') }}
-            </button>
-            <button class="trvl-service-tab inactive" onclick="switchTab('travel', this)" id="tab-travel">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                {{ __('services.tab_travel') }}
-            </button>
-            <button class="trvl-service-tab inactive" onclick="switchTab('airport', this)" id="tab-airport">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
-                {{ __('services.tab_airport') }}
-            </button>
-        </div>
-
-        <!-- Booking Card -->
-        <div class="trvl-booking-wrapper max-w-5xl mx-auto">
-            <div class="trvl-booking-card" style="background:var(--trvl-card); border:1px solid var(--trvl-border); border-radius:1.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.08); overflow:hidden;">
-                <!-- PANEL: RENTAL -->
-                <div id="panel-rental" class="trvl-booking-panel active" style="border-left:3px solid #0064d2;">
-                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#e8f4fd;">
-                                <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                            </div>
-                            <div>
-                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.rental_title') }}</p>
-                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.rental_subtitle') }}</h2>
-                            </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#0064d2; color:white;">RENTAL</span>
-                        </div>
+        <!-- Service Cards -->
+        <div class="max-w-5xl mx-auto mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Rental Card -->
+                <a href="{{ route('public.vehicles') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
-                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <div>
-                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.pickup_location') }}</label>
-                                <input type="text" value="Ende" readonly class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;" aria-label="{{ __('booking.pickup_location') }}">
-                            </div>
-                            <div>
-                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.start_date') }}</label>
-                                <input type="date" value="{{ date('Y-m-d') }}" class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
-                            </div>
-                            <div>
-                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.pickup_time') }}</label>
-                                <input type="time" value="08:00" class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
-                            </div>
-                            <div>
-                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.duration') }}</label>
-                                <select class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
-                                    <option>{{ __('rental.duration_12h') }}</option>
-                                    <option>{{ __('rental.duration_1d') }}</option>
-                                    <option>{{ __('rental.duration_2d') }}</option>
-                                    <option>{{ __('rental.duration_3d') }}</option>
-                                    <option>{{ __('rental.duration_1w') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                            <div class="flex items-center gap-2 flex-1">
-                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.rental_info') }}</span>
-                            </div>
-                            <a href="{{ route('public.vehicles') }}" class="trvl-btn-search flex-shrink-0 text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                {{ __('booking.search_vehicle') }}
-                            </a>
-                        </div>
+                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_rental') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Mobil Avanza, Innova, Hiace — lepas kunci atau dengan sopir</p>
+                </a>
+                <!-- Travel Card -->
+                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </div>
-                </div>
-
-                <!-- PANEL: TRAVEL -->
-                <div id="panel-travel" class="trvl-booking-panel" style="border-left:3px solid #0e7490;">
-                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#cffafe;">
-                                <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                            </div>
-                            <div>
-                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.travel_title') }}</p>
-                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.travel_subtitle') }}</h2>
-                            </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#0e7490; color:white;">TRAVEL</span>
-                        </div>
+                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_travel') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
+                </a>
+                <!-- Airport Card -->
+                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
-                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
-                        <div class="flex items-center gap-2 mb-3">
-                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.travel_info') }}</span>
-                        </div>
-                        <div class="flex justify-center">
-                            <a href="{{ route('public.travel') }}" class="trvl-btn-search text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                {{ __('booking.view_routes') }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PANEL: AIRPORT TRANSFER -->
-                <div id="panel-airport" class="trvl-booking-panel" style="border-left:3px solid #d97706;">
-                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#fed7aa;">
-                                <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
-                            </div>
-                            <div>
-                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.airport_title') }}</p>
-                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.airport_subtitle') }}</h2>
-                            </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#d97706; color:white;">AIRPORT</span>
-                        </div>
-                    </div>
-                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
-                        <div class="flex flex-wrap gap-x-5 gap-y-1 mb-3">
-                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_1') }}</span>
-                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_2') }}</span>
-                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_3') }}</span>
-                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_4') }}</span>
-                        </div>
-                        <div class="flex justify-center">
-                            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="trvl-btn-search text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                {{ __('booking.book_airport') }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_airport') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Jemput & antar bandara — nyaman, tepat waktu</p>
+                </a>
             </div>
         </div>
     </div>
