@@ -5,7 +5,7 @@
 
 @section('content')
 <!-- RENTAL HERO -->
-<div style="background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%); padding: 2.5rem 0 2rem;">
+<div class="rental-hero-section" style="padding: 2.5rem 0 2rem;" id="layanan">
     <div class="trvl-container">
         <div style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
@@ -16,7 +16,7 @@
             </h1>
             <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Pilih kendaraan terbaik untuk perjalanan Anda</p>
         </div>
-        <form method="GET" action="{{ route('public.rental') }}" style="background: white; border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+        <form method="GET" action="{{ route('public.rental') }}" style="background: var(--trvl-card); border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.75rem; align-items: end;">
                 <div>
                     <label class="trvl-field-label">Tujuan</label>
@@ -56,13 +56,13 @@
 </div>
 
 <!-- MAIN CONTENT -->
-<div style="background: #f8f9fa; padding: 1.5rem 0 3rem;">
+<div style="background: var(--trvl-bg); padding: 1.5rem 0 3rem;" id="armada">
     <div class="trvl-container">
         <div style="display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem;" id="rental-grid">
 
             <!-- FILTER SIDEBAR -->
             <aside>
-                <div style="background: white; border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e9ecef; position: sticky; top: 80px;">
+                <div style="background: var(--trvl-card); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid var(--trvl-border); position: sticky; top: 80px;">
                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f6ff;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
                         <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">Filter</h3>
@@ -83,7 +83,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div style="margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                        <div style="margin-bottom: 1rem; padding-top: 1rem; border-top: 1px solid var(--trvl-border);">
                             <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Opsi Sopir</label>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 8px; {{ request('driver_option') == 'with' ? 'background: #e8f4fd;' : '' }}">
@@ -126,14 +126,14 @@
 
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
                     @forelse ($rentals as $rental)
-                        <div style="background: white; border-radius: 14px; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
+                        <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
                              onmouseover="this.style.boxShadow='0 8px 30px rgba(0,100,210,0.15)'; this.style.borderColor='#dbeafe'; this.style.transform='translateY(-4px)';"
-                             onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='#e9ecef'; this.style.transform='translateY(0)';">
+                             onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='var(--trvl-border)'; this.style.transform='translateY(0)';">
 
                             <!-- Vehicle Image Placeholder -->
-                            <div style="height: 140px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                            <div style="height: 140px; position: relative; overflow: hidden;">
+                                <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80" alt="{{ $rental->route->name ?? 'Kendaraan' }}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
                                 <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.3) 100%);"></div>
-                                <span style="font-size: 4rem; position: relative; z-index: 1;">🚐</span>
                                 <!-- Badge -->
                                 @if($rental->vehicle_type)
                                     <span style="position: absolute; top: 12px; left: 12px; background: rgba(0,100,210,0.9); color: white; padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; backdrop-filter: 4px;">{{ ucfirst($rental->vehicle_type) }}</span>
@@ -163,7 +163,7 @@
 
                                 <!-- Price Options -->
                                 <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                                    <div style="flex: 1; background: #f0f6ff; border-radius: 8px; padding: 0.5rem 0.65rem; border: 1px solid #dbeafe;">
+                                    <div style="flex: 1; background: var(--trvl-gray-100); border-radius: 8px; padding: 0.5rem 0.65rem; border: 1px solid var(--trvl-border);">
                                         <p style="font-size: 0.65rem; color: #6c757d; font-weight: 500; margin-bottom: 0.15rem;">Tanpa Sopir</p>
                                         <p style="font-size: 0.95rem; font-weight: 800; color: #0064d2;">Rp {{ number_format($rental->price_without_driver, 0, ',', '.') }}</p>
                                         <p style="font-size: 0.6rem; color: #6c757d;">/hari</p>
@@ -197,7 +197,7 @@
                             </div>
                         </div>
                     @empty
-                        <div style="grid-column: span 2; background: white; border-radius: 14px; border: 1px solid #e9ecef; padding: 3rem 2rem; text-align: center;">
+                        <div style="grid-column: span 2; background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚗</div>
                             <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">Belum ada kendaraan tersedia</p>
                             <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">Coba ubah filter atau reset pencarian untuk menemukan kendaraan lainnya.</p>
@@ -217,6 +217,18 @@
 </div>
 
 <style>
+/* Hero section */
+.rental-hero-section {
+    background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%);
+}
+.dark .rental-hero-section {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1a3a 30%, #003d80 70%, #0d5ca0 100%);
+}
+.dark .bg-card { background: var(--trvl-card); }
+.dark .bg-section { background: var(--trvl-bg); }
+.dark #rental-grid .trvl-form-field { background: var(--trvl-bg); color: var(--trvl-text); }
+.dark .dark-stat { background: var(--trvl-card); }
+.dark [style*="background: #f8f9fa"] { background: var(--trvl-bg) !important; }
 @media (max-width: 900px) {
     #rental-grid { grid-template-columns: 1fr !important; }
     #rental-grid > aside { order: -1; }

@@ -258,8 +258,8 @@
         /* ===== TRAVELOKA BOOKING CARD ===== */
         .trvl-booking-wrapper { animation: trvlFadeInUp 0.7s ease-out 0.4s both; }
         .trvl-booking-card {
-            background: linear-gradient(145deg, var(--trvl-card) 0%, rgba(255,255,255,0.98) 100%);
-            border: 1px solid rgba(255,255,255,0.45);
+            background: var(--trvl-card);
+            border: 1px solid var(--trvl-border);
             border-radius: var(--trvl-radius-xl);
             box-shadow: 0 30px 80px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.12);
             overflow: hidden;
@@ -322,11 +322,24 @@
             color: #dbeafe;
         }
         .dark .trvl-booking-card {
-            background: linear-gradient(145deg, var(--trvl-card) 0%, rgba(15, 23, 42, 0.95) 100%);
+            background: var(--trvl-card);
         }
         .dark .trvl-vehicle-card-img img,
         .dark .trvl-route-card-img img {
             filter: brightness(0.95);
+        }
+        .dark .trvl-route-card-body h4,
+        .dark .trvl-route-card-body .font-bold.text-gray-900,
+        .dark .trvl-route-card-body h3,
+        .dark .trvl-route-card-body h2 {
+            color: var(--trvl-gray-100);
+        }
+        .dark .trvl-route-card-body p,
+        .dark .trvl-route-card-body .text-gray-500 {
+            color: var(--trvl-gray-400);
+        }
+        .dark .trvl-route-card-body .text-amber-600 {
+            color: #fbbf24;
         }
 
         /* ===== TRAVELOKA TRUST BADGES ===== */
@@ -353,12 +366,13 @@
         /* ===== TRAVELOKA SECTION ===== */
         .trvl-section { padding: 4rem 0; }
         .trvl-section-bg { background: var(--trvl-bg); }
+        .trvl-section-white-bg { background: var(--trvl-card); }
         .trvl-section-badge {
             display: inline-flex; align-items: center; gap: 0.4rem;
-            background: var(--trvl-blue-light); color: var(--trvl-blue);
+            background: var(--trvl-orange); color: white;
             padding: 0.35rem 1rem; border-radius: var(--trvl-radius-full);
             font-size: 0.78rem; font-weight: 700;
-            border: 1px solid #dbeafe; margin-bottom: 0.875rem;
+            border: 1px solid rgba(0,0,0,0.04); margin-bottom: 0.875rem;
         }
         .trvl-section-title {
             font-size: 1.75rem; font-weight: 800;
@@ -515,9 +529,20 @@
         .trvl-vehicle-price span { font-size: 0.72rem; font-weight: 500; color: var(--trvl-gray-500); }
 
         /* ===== TRAVELOKA STATS ===== */
+        .trvl-stats-section {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--trvl-border);
+            background: var(--trvl-card);
+        }
+        .trvl-stats-grid {
+            background: var(--trvl-card);
+            border: 1px solid var(--trvl-border);
+        }
         .trvl-stat-card { text-align: center; padding: 2rem 1rem; }
-        .trvl-stat-number { font-size: 2.4rem; font-weight: 900; color: var(--trvl-navy); line-height: 1; }
+        .trvl-stat-card-border { border-right: 1px solid var(--trvl-border); }
+        .trvl-stat-number { font-size: 2.4rem; font-weight: 900; color: var(--trvl-blue); line-height: 1; }
         .trvl-stat-label { font-size: 0.875rem; color: var(--trvl-gray-600); margin-top: 0.4rem; font-weight: 500; }
+        .dark .trvl-stat-number { color: #60a5fa; }
 
         /* ===== TRAVELOKA CTA ===== */
         .trvl-cta-section {
@@ -607,6 +632,112 @@
         @keyframes trvlToastSlideIn {
             from { transform: translateX(120%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== COMPARISON TABLE ===== */
+        .trvl-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: var(--trvl-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--trvl-shadow-md);
+            font-size: 0.9rem;
+        }
+        .trvl-comparison-table thead {
+            background: linear-gradient(135deg, var(--trvl-navy) 0%, var(--trvl-blue) 100%);
+        }
+        .trvl-comparison-table th {
+            color: white;
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .th-asr, .th-trac {
+            text-align: center;
+            min-width: 180px;
+        }
+        .table-brand {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .table-brand-sub {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 500;
+            opacity: 0.75;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-top: 0.15rem;
+        }
+        .trvl-comparison-table tbody tr {
+            transition: background 0.2s ease;
+        }
+        .trvl-comparison-table tbody tr:hover {
+            background: rgba(0,100,210,0.05);
+        }
+        .dark .trvl-comparison-table tbody tr:hover {
+            background: rgba(96,165,250,0.1);
+        }
+        .trvl-comparison-table tbody tr.tr-highlight {
+            background: rgba(0,100,210,0.03);
+        }
+        .dark .trvl-comparison-table tbody tr.tr-highlight {
+            background: rgba(96,165,250,0.05);
+        }
+        .trvl-comparison-table td {
+            padding: 0.85rem 1.25rem;
+            border-bottom: 1px solid var(--trvl-border);
+            color: var(--trvl-gray-700);
+        }
+        .trvl-comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .td-label {
+            font-weight: 600;
+            color: var(--trvl-gray-800);
+            white-space: nowrap;
+        }
+        .td-asr, .td-trac {
+            text-align: center;
+            font-weight: 500;
+        }
+        .td-asr { color: #059669; }
+        .td-trac { color: var(--trvl-gray-600); }
+        .dark .td-label { color: var(--trvl-gray-200); }
+        .dark .td-asr { color: #34d399; }
+        .dark .td-trac { color: var(--trvl-gray-400); }
+        .dark .trvl-comparison-table td {
+            color: var(--trvl-gray-300);
+        }
+        .dark .trvl-comparison-table tbody {
+            background: var(--trvl-card);
+        }
+        .trvl-comparison-table thead th:first-child {
+            border-radius: 0;
+        }
+        @media (max-width: 767px) {
+            .trvl-comparison-table {
+                font-size: 0.75rem;
+            }
+            .trvl-comparison-table th,
+            .trvl-comparison-table td {
+                padding: 0.65rem 0.65rem;
+            }
+            .th-asr, .th-trac {
+                min-width: 110px;
+            }
+            .table-brand {
+                font-size: 0.85rem;
+            }
+            .table-brand-sub {
+                font-size: 0.6rem;
+            }
         }
     </style>
     @yield('meta')
@@ -786,6 +917,27 @@ if ('IntersectionObserver' in window) {
     });
     document.querySelectorAll('img[loading="lazy"]').forEach(img => imgObserver.observe(img));
 }
+
+// Cross-page anchor handling
+document.querySelectorAll('a[href*="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+        const targetPath = href.substring(0, hashIndex);
+        const hash = href.substring(hashIndex);
+        
+        // If link points to current page but with hash, smooth scroll
+        if (!targetPath || targetPath === window.location.pathname || targetPath === window.location.pathname.replace(/\/$/, '')) {
+            e.preventDefault();
+            const el = document.querySelector(hash);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        // Otherwise let browser navigate normally (route to home#section)
+    });
+});
 </script>
 
 </body>

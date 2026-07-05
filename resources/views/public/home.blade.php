@@ -172,18 +172,18 @@
 </section>
 
 <!-- ==================== STATS ==================== -->
-<section style="background:white; padding:2.5rem 0; border-bottom:1px solid #e9ecef;">
+<section class="trvl-stats-section" id="stats-section">
     <div class="trvl-container">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div class="trvl-stat-card" style="border-right:1px solid #e9ecef; border-bottom:1px solid #e9ecef;">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 trvl-stats-grid rounded-2xl shadow-sm overflow-hidden">
+            <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">10K+</p>
                 <p class="trvl-stat-label">Penumpang Terlayani</p>
             </div>
-            <div class="trvl-stat-card" style="border-bottom:1px solid #e9ecef; border-right:1px solid #e9ecef;">
+            <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">{{ count($travelRoutes ?? []) }}</p>
                 <p class="trvl-stat-label">Rute Antar Kota</p>
             </div>
-            <div class="trvl-stat-card" style="border-right:1px solid #e9ecef;">
+            <div class="trvl-stat-card trvl-stat-card-border">
                 <p class="trvl-stat-number">6</p>
                 <p class="trvl-stat-label">Bandara Dilayani</p>
             </div>
@@ -305,7 +305,7 @@
 
 
     <!-- ==================== DESTINASI WISATA FLORES ==================== -->
-    <section class="trvl-section" id="destinasi" style="background: white;">
+    <section class="trvl-section trvl-section-white-bg" id="destinasi">
         <div class="trvl-container">
             <div class="trvl-section-header-center mb-12 trvl-reveal">
                 <span class="trvl-section-badge">🏝️ Jelajahi Flores</span>
@@ -336,11 +336,12 @@
 
                 <div class="trvl-reveal">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=80" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Ende</span>
+                            <div class="h-48 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=80" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                            </div>
+                            <div class="trvl-route-card-body">
+                                <span class="text-xs text-amber-600 font-medium">📍 Ende</span>
                             <h4 class="font-bold text-gray-900 mt-1">Rumah Bung Karno</h4>
                             <p class="text-gray-500 text-sm mt-1">Rumah tempat Bung Karno diasingkan 1934-1938. Kini menjadi museum bersejarah.</p>
                         </div>
@@ -349,11 +350,12 @@
 
                 <div class="trvl-reveal trvl-reveal-delay-1">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
+                        <div class="h-48 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&q=80" alt="Pulau Komodo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                         </div>
                         <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Labuan Bajo</span>
+                            <span class="text-xs text-amber-600 font-medium">📍 Labuan Bajo</span>
                             <h4 class="font-bold text-gray-900 mt-1">Pulau Komodo</h4>
                             <p class="text-gray-500 text-sm mt-1">Habitat asli komodo, kadal terbesar di dunia. Warisan Alam UNESCO.</p>
                         </div>
@@ -362,11 +364,12 @@
 
                 <div class="trvl-reveal trvl-reveal-delay-2">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
+                        <div class="h-48 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80" alt="Pink Beach" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                         </div>
                         <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Labuan Bajo</span>
+                            <span class="text-xs text-amber-600 font-medium">📍 Labuan Bajo</span>
                             <h4 class="font-bold text-gray-900 mt-1">Pink Beach</h4>
                             <p class="text-gray-500 text-sm mt-1">Salah satu dari 7 pantai berpasir merah muda di dunia.</p>
                         </div>
@@ -375,11 +378,12 @@
 
                 <div class="trvl-reveal">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
+                        <div class="h-48 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=500&q=80" alt="Wae Rebo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                         </div>
                         <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Ruteng</span>
+                            <span class="text-xs text-amber-600 font-medium">📍 Ruteng</span>
                             <h4 class="font-bold text-gray-900 mt-1">Desa Wae Rebo</h4>
                             <p class="text-gray-500 text-sm mt-1">Desa tradisional di atas awan 1.200 mdpl. Penghargaan UNESCO.</p>
                         </div>
@@ -388,11 +392,12 @@
 
                 <div class="trvl-reveal trvl-reveal-delay-1">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
+                        <div class="h-48 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&q=80" alt="Kampung Bena" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                         </div>
                         <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Bajawa</span>
+                            <span class="text-xs text-amber-600 font-medium">📍 Bajawa</span>
                             <h4 class="font-bold text-gray-900 mt-1">Kampung Bena</h4>
                             <p class="text-gray-500 text-sm mt-1">Desa adat Ngada dengan megalit kuno dan rumah tradisional.</p>
                         </div>
@@ -401,11 +406,12 @@
 
                 <div class="trvl-reveal trvl-reveal-delay-2">
                     <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden">
+                        <div class="h-48 overflow-hidden relative">
                             <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Teluk Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                         </div>
                         <div class="trvl-route-card-body">
-                            <span class="text-xs text-blue-600 font-medium">📍 Maumere</span>
+                            <span class="text-xs text-amber-600 font-medium">📍 Maumere</span>
                             <h4 class="font-bold text-gray-900 mt-1">Teluk Maumere</h4>
                             <p class="text-gray-500 text-sm mt-1">Surga diving dengan biodiversitas laut tertinggi di Indonesia Timur.</p>
                         </div>
@@ -413,6 +419,101 @@
                 </div>
 
             </div>
+
+<!-- Kota-kota di Flores -->
+<div class="mt-16">
+    <div class="trvl-section-header-center mb-8 trvl-reveal">
+        <span class="trvl-section-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">🏙️ Kota di Flores</span>
+        <h2 class="trvl-section-title">Jelajahi Kota-Kota di Flores</h2>
+        <p class="trvl-section-desc">Setiap kota di Flores punya karakter dan keindahan tersendiri</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Ende -->
+        <div class="trvl-route-card group trvl-reveal">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Ende</h4>
+                    <p class="text-white/80 text-sm">Ibu Kota Flores</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Pusat pemerintahan dan ekonomi Flores. Kota bersejarah tempat Bung Karno diasingkan. Gerbang menuju Danau Kelimutu yang legendaris.</p>
+            </div>
+        </div>
+        <!-- Labuan Bajo -->
+        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
+                    <p class="text-white/80 text-sm">Gerbang Komodo</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota wisata paling populer di Flores. Pintu masuk menuju Taman Nasional Komodo, Pink Beach, dan Pulau Padar. Sunset terbaik dari Bukit Cinta.</p>
+            </div>
+        </div>
+        <!-- Maumere -->
+        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Maumere</h4>
+                    <p class="text-white/80 text-sm">Surga Diving</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota di pesisir utara Flores dengan biodiversitas laut tertinggi di Indonesia Timur. Teluk Maumere adalah surga bagi penyelam dari seluruh dunia.</p>
+            </div>
+        </div>
+        <!-- Ruteng -->
+        <div class="trvl-route-card group trvl-reveal">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Ruteng</h4>
+                    <p class="text-white/80 text-sm">Kota Dingin</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota pegunungan dengan udara sejuk dan pemandangan perbukitan hijau. Gerbang menuju Desa Wae Rebo yang berada di atas awan ketinggian 1.200 mdpl.</p>
+            </div>
+        </div>
+        <!-- Bajawa -->
+        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Bajawa</h4>
+                    <p class="text-white/80 text-sm">Tanah Adat</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota adat dengan warisan megalit kuno. Kampung Bena dan Wogo menawarkan pengalaman budaya Ngada yang autentik dengan rumah tradisionalnya.</p>
+            </div>
+        </div>
+        <!-- Larantuka -->
+        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
+            <div class="h-48 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=500&q=80" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 class="font-bold text-white text-lg">Larantuka</h4>
+                    <p class="text-white/80 text-sm">Kota Tradisi</p>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="text-sm" style="color:var(--trvl-gray-600);">Kota di ujung timur Flores dengan tradisi Paskah Semana Santa yang mendunia. Pesona pantai dan budaya yang kental dengan pengaruh Portugis.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- CTA -->
             <div class="text-center mt-10 trvl-reveal">
@@ -424,6 +525,103 @@
         </div>
     </section>
 
+    <!-- ==================== KOTA DI FLORES ==================== -->
+    <section class="trvl-section trvl-section-bg" id="kota">
+        <div class="trvl-container">
+            <div class="trvl-section-header-center mb-12 trvl-reveal">
+                <span class="trvl-section-badge">🏙️ Kota di Flores</span>
+                <h2 class="trvl-section-title">Jelajahi Kota-Kota Flores</h2>
+                <p class="trvl-section-desc">Setiap kota di Flores memiliki cerita dan pesona tersendiri — dari pesisir hingga pegunungan.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="trvl-reveal">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1563794146998-7245e6e5e9fb?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Ende</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Ibu Kota Flores</h4>
+                            <p class="text-gray-500 text-sm mt-1">Ibu kota Flores, pusat pemerintahan dan sejarah proklamasi — tempat Bung Karno diasingkan 1934-1938.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-1">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1519722407087-d0f2c891224a?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Labuan Bajo</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Gerbang Komodo</h4>
+                            <p class="text-gray-500 text-sm mt-1">Gerbang menuju Taman Nasional Komodo, destinasi wisata super prioritas dengan pemandangan sunset ikonik.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-2">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Maumere</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Surga Diving</h4>
+                            <p class="text-gray-500 text-sm mt-1">Surga diving dengan biodiversitas laut tertinggi di Indonesia Timur, spot snorkeling dan penyelaman kelas dunia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Ruteng</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Kota Dingin Pegunungan</h4>
+                            <p class="text-gray-500 text-sm mt-1">Kota dingin dengan pemandangan perbukitan hijau dan gerbang menuju Desa Wae Rebo di atas awan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-1">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Bajawa</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Kota Adat Megalit</h4>
+                            <p class="text-gray-500 text-sm mt-1">Kota adat dengan megalit kuno dan rumah tradisional Ngada, kaya akan budaya dan pemandian air panas alami.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trvl-reveal trvl-reveal-delay-2">
+                    <div class="trvl-route-card group" style="overflow: hidden;">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1559827291-baf8aa67db71?w=500&q=80" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                        </div>
+                        <div class="trvl-route-card-body">
+                            <span class="text-xs text-amber-600 font-medium">📍 Larantuka</span>
+                            <h4 class="font-bold text-gray-900 mt-1">Kota Tradisi Paskah</h4>
+                            <p class="text-gray-500 text-sm mt-1">Kota dengan tradisi Paskah unik — Semana Santa — yang telah berlangsung selama ratusan tahun dan mendunia.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <!-- ==================== ARMADA ==================== -->
 <section class="trvl-section trvl-section-bg" id="armada">
@@ -491,91 +689,189 @@
     </div>
 </section>
 
-<!-- ==================== FITUR APLIKASI ==================== -->
-<section class="trvl-section" id="tampilan" style="background:#fff;">
+<!-- ==================== PERBANDINGAN DENGAN TRAC GO ==================== -->
+<section class="trvl-section" id="perbandingan" style="background:var(--trvl-bg);">
     <div class="trvl-container">
-        <div class="trvl-section-header-center mb-8 trvl-reveal">
-            <span class="trvl-section-badge" style="background:#f0fdf4;color:#059669;border-color:#a7f3d0;">📱 Fitur Aplikasi</span>
-            <h2 class="trvl-section-title" style="color:#0f172a;">Sistem Booking Online ASR GO</h2>
-            <p class="trvl-section-desc">Kelola perjalanan dan pembayaran dalam satu platform terintegrasi.</p>
+        <div class="trvl-section-header-center mb-10 trvl-reveal">
+            <span class="trvl-section-badge" style="background:#dbeafe;color:#0064d2;">📊 Perbandingan</span>
+            <h2 class="trvl-section-title">ASR GO vs TRAC Go</h2>
+            <p class="trvl-section-desc">Lihat perbandingan fitur dan keunggulan aplikasi kami dibandingkan kompetitor.</p>
         </div>
-        <div class="trvl-reveal">
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">🚗</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Travel & Rental</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Pesan tiket travel antar kota atau rental mobil dengan/tanpa sopir secara online.</p>
-                </div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">💳</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Pembayaran Mudah</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Midtransfer dengan berbagai metode pembayaran. Status pembayaran real-time.</p>
-                </div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">📊</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Dashboard & Laporan</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Dashboard statistik untuk admin, driver, dan partner. Export PDF & Excel.</p>
-                </div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">💰</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Revenue Sharing</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Bagi hasil otomatis 30/50/20 untuk admin, mitra, dan sopir.</p>
-                </div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">🗺️</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Tracking Real-time</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Pantau lokasi armada dan status perjalanan secara real-time.</p>
-                </div>
-                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:left;">
-                    <div style="font-size:28px;margin-bottom:8px;">🎫</div>
-                    <h4 style="font-weight:700;color:#0f172a;margin:0 0 6px 0;">Tiket & QR Code</h4>
-                    <p style="color:#64748b;font-size:0.9rem;margin:0;">Dapatkan tiket digital dengan QR code untuk checkin.</p>
-                </div>
-            </div>
+        <div class="trvl-reveal" style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+                <thead>
+                    <tr style="background:#0064d2; color:white;">
+                        <th style="padding:16px 20px; text-align:left; font-size:0.9rem;">Fitur</th>
+                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem; background:#004ba0;">ASR GO</th>
+                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem;">TRAC Go</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🏝️ Cakupan Layanan</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Pulau Flores (lokal)</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Nasional (kota besar)</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🚐 Jenis Layanan</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Travel + Rental + Airport</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Rental Mobil saja</td>
+                    </tr>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💻 Booking Online</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya, website full-stack</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💳 Pembayaran Digital</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Midtrans (BCA, GoPay, dll)</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                    </tr>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">📍 Tracking Real-time</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ GPS tracking armada</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💰 Revenue Sharing Mitra</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ 30/50/20 otomatis</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
+                    </tr>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🔑 Tanpa Sopir</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">👨‍✈️ Dengan Sopir</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Driver lokal Flores</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                    </tr>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">💰 Harga Sewa</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Mulai Rp 200rb/hari</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Mulai Rp 400rb/hari</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">🏞️ Destinasi Wisata</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Kelimutu, Komodo, dll</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Fokus perkotaan</td>
+                    </tr>
+                    <tr style="background:var(--trvl-card);">
+                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">📱 WhatsApp Booking</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ CS 24 jam</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
+                    </tr>
+                    <tr style="background:var(--trvl-gray-100);">
+                        <td style="padding:14px 20px; border-bottom:0; font-weight:600; color:var(--trvl-gray-900);">🛡️ Asuransi Perjalanan</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
+                        <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-6 trvl-reveal">
+            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">* Data perbandingan berdasarkan fitur yang tersedia di masing-masing platform per Juni 2026</p>
         </div>
     </div>
 </section>
 
 <!-- ==================== PERBANDINGAN ==================== -->
-<section class="trvl-section" style="background:#f8fafc;">
+<section class="trvl-section trvl-section-bg" id="perbandingan">
     <div class="trvl-container">
-        <div class="trvl-section-header-center mb-8 trvl-reveal">
-            <span class="trvl-section-badge" style="background:#eff6ff;color:#2563eb;border-color:#bfdbfe;">📊 Perbandingan ASR GO</span>
-            <h2 class="trvl-section-title">ASR GO vs Trac GO</h2>
-            <p class="trvl-section-desc">Kami hadir dengan layanan yang lebih lokal, fleksibel, dan dekat dengan kebutuhan perjalanan di Flores.</p>
+        <div class="trvl-section-header-center mb-12 trvl-reveal">
+            <span class="trvl-section-badge">⚖️ Perbandingan</span>
+            <h2 class="trvl-section-title">ASR GO vs TRAC Go</h2>
+            <p class="trvl-section-desc">Lihat sendiri keunggulan ASR GO — layanan lokal Flores dengan fitur lebih lengkap dan harga lebih terjangkau.</p>
         </div>
-        <div class="trvl-reveal overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-            <table class="w-full text-sm text-left">
-                <thead class="bg-slate-900 text-white">
+        <div class="trvl-reveal" style="overflow-x:auto;">
+            <table class="trvl-comparison-table">
+                <thead>
                     <tr>
-                        <th class="px-4 py-3">Fitur</th>
-                        <th class="px-4 py-3">ASR GO</th>
-                        <th class="px-4 py-3">Trac GO</th>
+                        <th>Fitur</th>
+                        <th class="th-asr">
+                            <span class="table-brand">ASR GO</span>
+                            <span class="table-brand-sub">Lokal Flores</span>
+                        </th>
+                        <th class="th-trac">
+                            <span class="table-brand">TRAC Go</span>
+                            <span class="table-brand-sub">Nasional</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b border-gray-100">
-                        <td class="px-4 py-3 font-semibold">Layanan lokal</td>
-                        <td class="px-4 py-3">Fokus ke Pulau Flores, sangat memahami rute dan kebutuhan pelanggan setempat.</td>
-                        <td class="px-4 py-3">Lebih umum dan tidak selalu menyesuaikan kebutuhan wilayah lokal.</td>
-                    </tr>
-                    <tr class="border-b border-gray-100">
-                        <td class="px-4 py-3 font-semibold">Ketersediaan armada</td>
-                        <td class="px-4 py-3">Tersedia pilihan Avanza, Innova, Hiace, dan kendaraan rental yang siap dipakai.</td>
-                        <td class="px-4 py-3">Biasanya lebih banyak opsi besar, namun kurang personal.</td>
-                    </tr>
-                    <tr class="border-b border-gray-100">
-                        <td class="px-4 py-3 font-semibold">Kemudahan booking</td>
-                        <td class="px-4 py-3">Booking cepat via WhatsApp, website, dan layanan customer support yang responsif.</td>
-                        <td class="px-4 py-3">Mudah, tetapi sering lebih terstruktur dan kurang fleksibel untuk kebutuhan khusus.</td>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Cakupan Layanan</td>
+                        <td class="td-asr">📍 Pulau Flores (lokal)</td>
+                        <td class="td-trac">🏙️ Nasional (kota besar)</td>
                     </tr>
                     <tr>
-                        <td class="px-4 py-3 font-semibold">Kelebihan utama</td>
-                        <td class="px-4 py-3">Lebih dekat dengan pelanggan, harga transparan, dan pelayanan yang fleksibel untuk perjalanan daerah.</td>
-                        <td class="px-4 py-3">Sudah terkenal secara luas, namun tidak selalu unggul dalam layanan personal.</td>
+                        <td class="td-label">Jenis Layanan</td>
+                        <td class="td-asr">✅ Travel + Rental + Airport</td>
+                        <td class="td-trac">❌ Rental Mobil saja</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Booking Online</td>
+                        <td class="td-asr">✅ Ya, website full-stack</td>
+                        <td class="td-trac">✅ Ya</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Pembayaran Digital</td>
+                        <td class="td-asr">✅ Midtrans (BCA, GoPay, dll)</td>
+                        <td class="td-trac">✅ Ya</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Tracking Real-time</td>
+                        <td class="td-asr">✅ GPS tracking armada</td>
+                        <td class="td-trac">❌ Tidak</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Revenue Sharing Mitra</td>
+                        <td class="td-asr">✅ 30/50/20 otomatis</td>
+                        <td class="td-trac">❌ Tidak (sewa langsung)</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Tanpa Sopir</td>
+                        <td class="td-asr">✅ Ya</td>
+                        <td class="td-trac">✅ Ya</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Dengan Sopir</td>
+                        <td class="td-asr">✅ Ya, driver lokal Flores</td>
+                        <td class="td-trac">✅ Ya</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Harga</td>
+                        <td class="td-asr">✅ Lebih terjangkau (mulai Rp200rb)</td>
+                        <td class="td-trac">❌ Lebih mahal (mulai Rp400rb)</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Destinasi Wisata</td>
+                        <td class="td-asr">✅ Danau Kelimutu, Komodo, Pink Beach, dll</td>
+                        <td class="td-trac">❌ Fokus perkotaan</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">WhatsApp Booking</td>
+                        <td class="td-asr">✅ CS 24 jam via WhatsApp</td>
+                        <td class="td-trac">✅ Ya</td>
+                    </tr>
+                    <tr>
+                        <td class="td-label">Asuransi Perjalanan</td>
+                        <td class="td-asr">✅ Termasuk</td>
+                        <td class="td-trac">✅ Termasuk</td>
+                    </tr>
+                    <tr class="tr-highlight">
+                        <td class="td-label">Layanan Bandara</td>
+                        <td class="td-asr">✅ 6 Bandara di Flores</td>
+                        <td class="td-trac">❌ Terbatas</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="text-center mt-8 trvl-reveal">
+            <p style="color:#64748b; font-size:0.9rem;">
+                💡 <strong>Kesimpulan:</strong> ASR GO unggul dalam <strong>10 dari 13</strong> fitur — termasuk tracking real-time, revenue sharing, jangkauan wisata, dan harga lebih terjangkau.
+            </p>
         </div>
     </div>
 </section>
@@ -638,4 +934,15 @@
         </div>
     </div>
 </footer>
+<style>
+.dark .trvl-stats-section { background: var(--trvl-bg) !important; }
+.dark .trvl-stats-section .trvl-stat-card { background: var(--trvl-card) !important; }
+.dark .trvl-stats-section .trvl-stat-number { color: var(--trvl-gray-800); }
+.dark .trvl-stats-section .trvl-stat-label { color: var(--trvl-gray-600); }
+.dark .trvl-stats-section [style*="background:white"] { background: var(--trvl-card) !important; }
+.dark .trvl-stats-section [style*="background-color:white"] { background-color: var(--trvl-card) !important; }
+.dark .trvl-stats-section [style*="border-color:#e9ecef"] { border-color: var(--trvl-border) !important; }
+.dark .trvl-stats-section [style*="border-color: #e9ecef"] { border-color: var(--trvl-border) !important; }
+.dark .trvl-stats-section [style*="border-right:1px solid #e9ecef"] { border-right-color: var(--trvl-border) !important; }
+</style>
 @endsection

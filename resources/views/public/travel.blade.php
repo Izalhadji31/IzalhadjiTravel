@@ -5,7 +5,7 @@
 
 @section('content')
 <!-- TRAVEL SEARCH BAR -->
-<div style="background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%); padding: 2.5rem 0 2rem;">
+<div class="travel-hero-section" style="padding: 2.5rem 0 2rem;" id="layanan">
     <div class="trvl-container">
         <div style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
@@ -16,7 +16,7 @@
             </h1>
             <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Harga terjangkau, nyaman, aman & tepat waktu</p>
         </div>
-        <form method="GET" action="{{ route('public.travel') }}" style="background: white; border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+        <form method="GET" action="{{ route('public.travel') }}" style="background: var(--trvl-card); border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
             <div style="display: grid; grid-template-columns: 1fr 1fr 140px 100px 1fr; gap: 0.75rem; align-items: end;">
                 <div>
                     <label class="trvl-field-label">Dari</label>
@@ -61,13 +61,13 @@
 </div>
 
 <!-- MAIN CONTENT -->
-<div style="background: #f8f9fa; padding: 1.5rem 0 3rem;">
+<div style="background: var(--trvl-bg); padding: 1.5rem 0 3rem;" id="armada">
     <div class="trvl-container">
         <div style="display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem;">
 
             <!-- FILTER SIDEBAR -->
             <aside>
-                <div style="background: white; border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e9ecef; position: sticky; top: 80px;">
+                <div style="background: var(--trvl-card); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid var(--trvl-border); position: sticky; top: 80px;">
                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f6ff;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
                         <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">Filter</h3>
@@ -111,7 +111,7 @@
                     </form>
 
                     <!-- Price filter -->
-                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--trvl-border);">
                         <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Harga</label>
                         <div style="display: flex; gap: 0.4rem; align-items: center;">
                             <input type="number" value="{{ request('price_min') }}" placeholder="Min" class="trvl-form-field" style="font-size: 0.8rem; padding: 0.5rem; flex: 1;" readonly>
@@ -140,9 +140,9 @@
 
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                     @forelse ($routes as $route)
-                        <div style="background: white; border-radius: 14px; border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s ease;"
+                        <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s ease;"
                              onmouseover="this.style.boxShadow='0 4px 20px rgba(0,100,210,0.12)'; this.style.borderColor='#dbeafe';"
-                             onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='#e9ecef';">
+                             onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='var(--trvl-border)';">
                             <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 1.25rem;">
                                 <div style="display: flex; gap: 1.25rem; align-items: center;">
                                     <!-- Route Icon -->
@@ -207,23 +207,23 @@
                             </div>
 
                             <!-- Schedule Strip -->
-                            <div style="background: #f8f9fa; padding: 0.6rem 1.25rem; border-top: 1px solid #f0f6ff; display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: var(--trvl-gray-100); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem;">
                                 <span style="font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.04em;">Jadwal Keberangkatan:</span>
                                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     @if(!empty($route->departure_times))
                                         @foreach($route->departure_times as $time)
-                                            <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">{{ is_string($time) ? $time : ($time->format('H:i') ?? '08:00') }}</span>
+                                            <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">{{ is_string($time) ? $time : ($time->format('H:i') ?? '08:00') }}</span>
                                         @endforeach
                                     @else
-                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">08:00</span>
-                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">14:00</span>
-                                        <span style="display: inline-block; background: white; border: 1px solid #e9ecef; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: #0d2147;">19:30</span>
+                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">08:00</span>
+                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">14:00</span>
+                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">19:30</span>
                                     @endif
                                 </div>
                                 <span style="margin-left: auto; font-size: 0.72rem; color: #6c757d; white-space: nowrap;">Jarak {{ $route->distance_km ?? '250' }} km</span>
                         </div>
                     @empty
-                        <div style="background: white; border-radius: 14px; border: 1px solid #e9ecef; padding: 3rem 2rem; text-align: center;">
+                        <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚐</div>
                             <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">Oops, belum ada rute tersedia</p>
                             <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">Coba ubah atau reset filter pencarian kamu untuk menemukan rute lainnya.</p>
@@ -242,6 +242,16 @@
     </div>
 </div>
 <style>
+/* Hero section */
+.travel-hero-section {
+    background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%);
+}
+.dark .travel-hero-section {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1a3a 30%, #003d80 70%, #0d5ca0 100%);
+}
+.dark .bg-card { background: var(--trvl-card); }
+.dark .bg-section { background: var(--trvl-bg); }
+.dark #travel-grid .trvl-form-field { background: var(--trvl-bg); color: var(--trvl-text); }
 @media (max-width: 900px) {
     #travel-grid { grid-template-columns: 1fr !important; }
     #travel-grid > aside { order: -1; }
