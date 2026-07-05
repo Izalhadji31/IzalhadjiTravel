@@ -757,6 +757,7 @@
                 <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">Keunggulan</a>
                 <a href="{{ route('home') }}#rute" class="trvl-nav-link">Rute Populer</a>
                 <a href="{{ route('home') }}#armada" class="trvl-nav-link">Armada</a>
+                <a href="{{ route('public.blog') }}" class="trvl-nav-link">Blog/Artikel</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
                 <button id="darkModeToggle" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; justify-content:center; padding:0.5rem; border-radius:var(--trvl-radius-sm); background:transparent; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5);" type="button" title="Toggle Dark Mode">
@@ -776,14 +777,63 @@
 
     <!-- Mobile Menu -->
     <div class="trvl-mobile-menu" id="mobileMenu">
-        <a href="{{ route('home') }}#layanan" onclick="toggleMobileMenu()">Layanan</a>
-        <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">Keunggulan</a>
-        <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">Rute Populer</a>
-        <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">Armada</a>
-        <a href="{{ route('login') }}" onclick="toggleMobileMenu()">Masuk</a>
-    </div>
+            <a href="{{ route('home') }}#layanan" onclick="toggleMobileMenu()">Layanan</a>
+            <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">Keunggulan</a>
+            <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">Rute Populer</a>
+            <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">Armada</a>
+            <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">Blog/Artikel</a>
+            <a href="{{ route('login') }}" onclick="toggleMobileMenu()">Masuk</a>
+        </div>
 
     @yield('content')
+
+    {{-- FOOTER WITH NEWSLETTER --}}
+    <footer class="trvl-footer py-12" style="background:#080f24;">
+        <div class="trvl-container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                <div>
+                    <p class="trvl-footer-brand mb-4">ASR <span>GO</span></p>
+                    <p class="text-sm" style="color:#64748b;">Layanan travel dan rental kendaraan terpercaya di Pulau Flores, NTT.</p>
+                </div>
+                <div>
+                    <p class="trvl-footer-heading">Layanan</p>
+                    <div class="flex flex-col gap-2">
+                        <a href="{{ route('public.travel') }}" class="trvl-footer-link">Travel Antar Kota</a>
+                        <a href="{{ route('public.rental') }}" class="trvl-footer-link">Rental Mobil</a>
+                        <a href="#" class="trvl-footer-link">Airport Transfer</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="trvl-footer-heading">Informasi</p>
+                    <div class="flex flex-col gap-2">
+                        <a href="{{ route('public.blog') }}" class="trvl-footer-link">Blog & Artikel</a>
+                        <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">Destinasi Wisata</a>
+                        <a href="{{ route('public.faq') }}" class="trvl-footer-link">FAQ</a>
+                        <a href="{{ route('public.syarat-ketentuan') }}" class="trvl-footer-link">Syarat & Ketentuan</a>
+                        <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">Kebijakan Privasi</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="trvl-footer-heading">Newsletter</p>
+                    <p class="text-sm mb-3" style="color:#64748b;">Dapatkan info promo dan tips traveling terbaru.</p>
+                    <form method="POST" action="{{ route('public.subscribe') }}" class="flex flex-col gap-2">
+                        @csrf
+                        <input type="email" name="email" placeholder="Email Anda" required
+                               class="w-full px-3 py-2.5 rounded-lg text-sm border"
+                               style="background:#1a1a3e; border-color:#2a2a4a; color:white; outline:none;">
+                        <button type="submit"
+                                class="w-full px-4 py-2.5 rounded-lg text-sm font-semibold transition-all"
+                                style="background:var(--trvl-blue); color:white; border:none; cursor:pointer;">
+                            Berlangganan
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div style="border-top:1px solid #1e293b; padding-top:2rem; text-align:center;">
+                <p class="text-sm" style="color:#64748b;">&copy; {{ date('Y') }} ASR GO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     {{-- Toast Notifications --}}
     @if(session('success'))

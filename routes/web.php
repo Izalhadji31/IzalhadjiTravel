@@ -56,6 +56,9 @@ Route::prefix('public')->group(function () {
     Route::get('/kebijakan-privasi', [PublicController::class, 'kebijakanPrivasi'])->name('public.kebijakan-privasi');
     Route::get('/cek-booking', [PublicController::class, 'cekBooking'])->name('public.cek-booking');
     Route::get('/destinasi/{slug}', [PublicController::class, 'destinasiDetail'])->name('public.destinasi.detail');
+    Route::get('/blog', [PublicController::class, 'blog'])->name('public.blog');
+    Route::get('/blog/{slug}', [PublicController::class, 'blogDetail'])->name('public.blog.detail');
+    Route::post('/subscribe', [PublicController::class, 'subscribe'])->name('public.subscribe');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -220,12 +223,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/bookings/{type}/{id}/cancel', [AdminController::class, 'cancelBooking'])->name('admin.bookings.cancel');
         Route::get('/bookings/{type}/{id}', [AdminController::class, 'showBooking'])->name('admin.bookings.show');
         Route::get('/payments', [AdminController::class, 'payments'])->name('admin.payments');
+        Route::get('/newsletters', [AdminController::class, 'newsletters'])->name('admin.newsletters');
         Route::get('/revenue-sharing', [AdminController::class, 'revenueSharing'])->name('admin.revenue-sharing');
         Route::get('/revenue-sharing/export', [AdminController::class, 'exportRevenueSharingCSV'])->name('admin.revenue-sharing.export');
         Route::get('/revenue-sharing/{revenueSharing}', [AdminController::class, 'showRevenueSharing'])->name('admin.revenue-sharing.show');
         Route::get('/vouchers', [AdminController::class, 'vouchers'])->name('admin.vouchers');
         Route::post('/vouchers', [AdminController::class, 'storeVoucher'])->name('admin.vouchers.store');
         Route::delete('/vouchers/{voucher}', [AdminController::class, 'destroyVoucher'])->name('admin.vouchers.destroy');
+
+        // Review Moderation Routes
+        Route::get('/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
+        Route::post('/reviews/{review}/approve', [AdminController::class, 'approveReview'])->name('admin.reviews.approve');
+        Route::post('/reviews/{review}/reject', [AdminController::class, 'rejectReview'])->name('admin.reviews.reject');
     });
 
     // Driver Routes - Require Driver Role

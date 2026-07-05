@@ -6,6 +6,7 @@ use App\Models\Route;
 use App\Models\RentalPrice;
 use App\Models\TravelPrice;
 use App\Models\Setting;
+use App\Models\Newsletter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -212,12 +213,53 @@ class PublicController extends Controller
     }
 
     /**
+     * Show all blog/articles
+     */
+    public function blog()
+    {
+        $articles = \App\Models\CmsPage::where('is_published', true)
+            ->whereIn('type', ['blog', 'page'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('public.blog', compact('articles'));
+    }
+
+    /**
+     * Show single blog/article detail
+     */
+    public function blogDetail($slug)
+    {
+        $article = \App\Models\CmsPage::where('slug', $slug)
+            ->where('is_published', true)
+            ->whereIn('type', ['blog', 'page'])
+            ->firstOrFail();
+
+        return view('public.blog-detail', compact('article'));
+    }
+
+    /**
      * Show a public CMS page by slug
      */
     public function showPage($slug)
     {
         $page = \App\Models\CmsPage::where('slug', $slug)->where('is_published', true)->firstOrFail();
         return view('public.page', compact('page'));
+    }
+
+    /**
+     * Subscribe to newsletter
+     */
+    public function subscribe(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|unique:newsletters,email',
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        Newsletter::create($validated);
+
+        return back()->with('success', 'Terima kasih! Anda berhasil berlangganan newsletter kami.');
     }
 
     /**

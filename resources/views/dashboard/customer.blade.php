@@ -27,21 +27,21 @@
         <a href="/bookings/travel" style="text-decoration: none; color: inherit;">
             <div class="card" style="border-top: 4px solid #2563eb; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
                 <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">Pesan Tiket Travel</h3>
-                <p style="color: #666; font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Perjalanan antar kota praktis dan terjadwal di Flores.</p>
+                <p style="color: var(--trvl-gray-600); font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Perjalanan antar kota praktis dan terjadwal di Flores.</p>
                 <span style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Pesan Sekarang &rarr;</span>
             </div>
         </a>
         <a href="/bookings/rental" style="text-decoration: none; color: inherit;">
             <div class="card" style="border-top: 4px solid #10b981; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
                 <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">Rental Mobil</h3>
-                <p style="color: #666; font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Sewa mobil lepas kunci atau dengan driver untuk grup Anda.</p>
+                <p style="color: var(--trvl-gray-600); font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Sewa mobil lepas kunci atau dengan driver untuk grup Anda.</p>
                 <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">Sewa Sekarang &rarr;</span>
             </div>
         </a>
         <a href="/bookings/airport-transfer" style="text-decoration: none; color: inherit;">
             <div class="card" style="border-top: 4px solid #f59e0b; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
                 <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">Airport Transfer</h3>
-                <p style="color: #666; font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Penjemputan langsung dari bandara Flores ke penginapan Anda.</p>
+                <p style="color: var(--trvl-gray-600); font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">Penjemputan langsung dari bandara Flores ke penginapan Anda.</p>
                 <span style="color: #f59e0b; font-weight: 600; font-size: 0.9rem;">Pesan Sekarang &rarr;</span>
             </div>
         </a>
@@ -53,7 +53,7 @@
         <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div>
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Total Pemesanan Anda</p>
+                    <p style="color: var(--trvl-gray-600); font-size: 0.9rem; margin: 0;">Total Pemesanan Anda</p>
                     <p style="color: #2563eb; font-size: 2rem; font-weight: 700; margin: 0.5rem 0 0 0;">{{ $totalBookings ?? 0 }}</p>
                 </div>
                 <svg style="width: 2.5rem; height: 2.5rem; color: #dbeafe;" fill="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
         <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div>
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Menunggu Pembayaran</p>
+                    <p style="color: var(--trvl-gray-600); font-size: 0.9rem; margin: 0;">Menunggu Pembayaran</p>
                     <p style="color: #f59e0b; font-size: 2rem; font-weight: 700; margin: 0.5rem 0 0 0;">{{ $pendingBookings ?? 0 }}</p>
                 </div>
                 <svg style="width: 2.5rem; height: 2.5rem; color: #fed7aa;" fill="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@
         <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div>
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Perjalanan Selesai</p>
+                    <p style="color: var(--trvl-gray-600); font-size: 0.9rem; margin: 0;">Perjalanan Selesai</p>
                     <p style="color: #10b981; font-size: 2rem; font-weight: 700; margin: 0.5rem 0 0 0;">{{ $completedBookings ?? 0 }}</p>
                 </div>
                 <svg style="width: 2.5rem; height: 2.5rem; color: #d1fae5;" fill="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@
         <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div>
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">Total Pengeluaran</p>
+                    <p style="color: var(--trvl-gray-600); font-size: 0.9rem; margin: 0;">Total Pengeluaran</p>
                     <p style="color: #059669; font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0;">Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</p>
                 </div>
                 <svg style="width: 2.5rem; height: 2.5rem; color: #c6f6d5;" fill="currentColor" viewBox="0 0 24 24">
@@ -105,32 +105,32 @@
     <!-- Recent Activity Section -->
     <div style="margin-top: 2rem;">
         <div class="card">
-            <h2 style="font-size: 1.1rem; font-weight: 600; color: #111; margin: 0 0 1rem 0;">Riwayat Perjalanan Terbaru</h2>
+            <h2 style="font-size: 1.1rem; font-weight: 600; color: var(--trvl-text); margin: 0 0 1rem 0;">Riwayat Perjalanan Terbaru</h2>
             @if(isset($recentBookings) && $recentBookings->count() > 0)
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; font-size: 0.9rem; border-collapse: collapse;">
                         <thead>
-                            <tr style="border-bottom: 1px solid #e5e7eb; text-align: left;">
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Kode Booking</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Rute</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Jadwal Keberangkatan</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Kursi</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Total Harga</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Status</th>
-                                <th style="padding: 0.75rem; color: #666; font-weight: 500;">Aksi</th>
+                            <tr style="border-bottom: 1px solid var(--trvl-border); text-align: left;">
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Kode Booking</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Rute</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Jadwal Keberangkatan</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Kursi</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Total Harga</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Status</th>
+                                <th style="padding: 0.75rem; color: var(--trvl-gray-600); font-weight: 500;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentBookings as $booking)
-                                <tr style="border-bottom: 1px solid #f3f4f6;">
-                                    <td style="padding: 0.75rem; font-weight: 600; color: #111;">{{ $booking->booking_code }}</td>
-                                    <td style="padding: 0.75rem; color: #333;">{{ $booking->route ? $booking->route->name : 'N/A' }}</td>
-                                    <td style="padding: 0.75rem; color: #666;">
+                                <tr style="border-bottom: 1px solid var(--trvl-border);">
+                                    <td style="padding: 0.75rem; font-weight: 600; color: var(--trvl-text);">{{ $booking->booking_code }}</td>
+                                    <td style="padding: 0.75rem; color: var(--trvl-text);">{{ $booking->route ? $booking->route->name : 'N/A' }}</td>
+                                    <td style="padding: 0.75rem; color: var(--trvl-gray-600);">
                                         {{ $booking->scheduled_date ? $booking->scheduled_date->format('d M Y') : '-' }} 
                                         ({{ $booking->departure_time ? $booking->departure_time->format('H:i') : '-' }})
                                     </td>
-                                    <td style="padding: 0.75rem; color: #666;">{{ $booking->number_of_seats }} Kursi</td>
-                                    <td style="padding: 0.75rem; color: #111; font-weight: 500;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</td>
+                                    <td style="padding: 0.75rem; color: var(--trvl-gray-600);">{{ $booking->number_of_seats }} Kursi</td>
+                                    <td style="padding: 0.75rem; color: var(--trvl-text); font-weight: 500;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</td>
                                     <td style="padding: 0.75rem;">
                                         @if($booking->status === 'completed')
                                             <span style="display: inline-block; background: #d1fae5; color: #059669; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 500;">Selesai</span>
@@ -139,7 +139,7 @@
                                         @elseif($booking->status === 'confirmed')
                                             <span style="display: inline-block; background: #dbeafe; color: #2563eb; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 500;">Dikonfirmasi</span>
                                         @else
-                                            <span style="display: inline-block; background: #f3f4f6; color: #666; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 500;">{{ $booking->status }}</span>
+                                            <span style="display: inline-block; background: #f3f4f6; color: var(--trvl-gray-600); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 500;">{{ $booking->status }}</span>
                                         @endif
                                     </td>
                                     <td style="padding: 0.75rem;">
@@ -151,7 +151,7 @@
                     </table>
                 </div>
             @else
-                <div style="text-align: center; padding: 2rem; color: #666;">
+                <div style="text-align: center; padding: 2rem; color: var(--trvl-gray-600);">
                     <p style="margin: 0 0 1rem 0;">Anda belum memiliki riwayat pemesanan travel.</p>
                     <a href="/bookings/travel/create" class="btn btn-primary">Pesan Travel Pertama Anda</a>
                 </div>

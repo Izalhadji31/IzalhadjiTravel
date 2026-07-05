@@ -8,6 +8,7 @@ use App\Models\RentalBooking;
 use App\Models\Armada;
 use App\Models\Payment;
 use App\Models\RevenueSharing;
+use App\Models\Review;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -613,5 +614,84 @@ class AdminController extends Controller
     {
         $voucher->delete();
         return back()->with('success', 'Voucher deleted successfully');
+    }
+
+    /**
+     * Show review moderation page
+     */
+    public function reviews(Request $request)
+    {
+        $status = $request->get('status', '');
+
+        $reviews = Review::with(['user', 'booking'])
+            ->when($status, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        $totalReviews = Review::count();
+        $pendingReviews = Review::where('status', 'pending')->count();
+        $avgRating = Review::where('status', 'approved')->avg('rating');
+
+        return view('admin.reviews', compact(
+            'reviews',
+            'totalReviews',
+            'pendingReviews',
+            'avgRating',
+            'status'
+        ));
+    }
+
+    /**
+     * Approve a review
+     */
+    public function approveReview(Review $review)
+    {
+        $review->status = 'approved';
+        $review->save();
+
+        return back()->with('success', 'Review approved successfully');
+    }
+
+    /**
+     * Reject a review
+     */
+    public function rejectReview(Review $review)
+    {
+        $review->status = 'rejected';
+        $review->save();
+
+        return back()->with('success', 'Review rejected successfully');
+    }
+
+    /**
+     * Show newsletter subscribers list
+     */
+    public function newsletters(Request $request)
+    {
+        $query = \App\Models\Newsletter::query();
+
+        // Search by email or name
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('email', 'like', "%{$search}%")
+                  ->orWhere('name', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by subscription status
+        if ($request->filled('subscribed')) {
+            $query->where('subscribed', $request->subscribed === 'yes');
+        }
+
+        $subscribers = $query->latest()->paginate(20);
+
+        $totalSubscribers = \App\Models\Newsletter::count();
+        $activeSubscribers = \App\Models\Newsletter::where('subscribed', true)->count();
+
+        return view('admin.newsletters', compact('subscribers', 'totalSubscribers', 'activeSubscribers'));
     }
 }

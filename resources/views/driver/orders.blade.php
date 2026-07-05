@@ -3,6 +3,20 @@
 @section('title', 'Order Aktif')
 
 @section('content')
+<style>
+    .dark .bg-white { background-color: var(--trvl-card) !important; }
+    .dark .bg-gray-100 { background-color: var(--trvl-gray-100) !important; }
+    .dark .bg-gray-50 { background-color: var(--trvl-gray-100) !important; }
+    .dark .bg-gray-200 { background-color: var(--trvl-border) !important; }
+    .dark .border-gray-200 { border-color: var(--trvl-border) !important; }
+    .dark .border-gray-300 { border-color: var(--trvl-border) !important; }
+    .dark .text-gray-500 { color: var(--trvl-gray-600) !important; }
+    .dark .text-gray-700 { color: var(--trvl-text) !important; }
+    .dark .text-gray-800 { color: var(--trvl-text) !important; }
+    .dark .text-gray-900 { color: var(--trvl-text) !important; }
+    .dark .text-gray-400 { color: var(--trvl-gray-600) !important; }
+    .dark .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; }
+</style>
 <div class="min-h-screen bg-gray-100">
     <!-- Page Header -->
     <div class="bg-white shadow-sm border-b border-gray-200">

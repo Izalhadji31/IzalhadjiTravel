@@ -907,9 +907,9 @@
             <div>
                 <p class="trvl-footer-heading">Layanan</p>
                 <div class="flex flex-col gap-2">
+                    <a href="{{ route('public.blog') }}" class="trvl-footer-link">Blog & Artikel</a>
+                    <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">Destinasi Wisata</a>
                     <a href="{{ route('public.travel') }}" class="trvl-footer-link">Travel Antar Kota</a>
-                    <a href="{{ route('public.rental') }}" class="trvl-footer-link">Rental Mobil</a>
-                    <a href="#" class="trvl-footer-link">Airport Transfer</a>
                 </div>
             </div>
             <div>

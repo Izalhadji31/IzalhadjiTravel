@@ -16,14 +16,17 @@ class Review extends Model
         'type',
         'reviewable_id',
         'reviewable_type',
+        'booking_id',
         'rating',
         'comment',
         'helpful_count',
         'verified_purchase',
+        'status',
     ];
 
     protected $casts = [
         'verified_purchase' => 'boolean',
+        'status' => 'string',
     ];
 
     public function user(): BelongsTo
