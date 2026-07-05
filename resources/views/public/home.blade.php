@@ -42,11 +42,11 @@
         <div class="trvl-booking-wrapper max-w-5xl mx-auto">
             <div class="trvl-booking-card" style="background:var(--trvl-card); border:1px solid var(--trvl-border); border-radius:1.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.08); overflow:hidden;">
                 <!-- PANEL: RENTAL -->
-                <div id="panel-rental" class="trvl-booking-panel active" style="padding-left:1px;">
+                <div id="panel-rental" class="trvl-booking-panel active" style="border-left:3px solid #0064d2;">
                     <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--trvl-gray-200,#e9ecef);">
-                                <svg class="w-5 h-5" fill="none" stroke="var(--trvl-gray-700,#495057)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#e8f4fd;">
+                                <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                             </div>
                             <div>
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.rental_title') }}</p>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div class="flex items-center gap-2 flex-1">
-                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="var(--trvl-gray-600,#6c757d)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.rental_info') }}</span>
                             </div>
                             <a href="{{ route('public.vehicles') }}" class="trvl-btn-search flex-shrink-0 text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
@@ -94,11 +94,11 @@
                 </div>
 
                 <!-- PANEL: TRAVEL -->
-                <div id="panel-travel" class="trvl-booking-panel" style="padding-left:1px;">
+                <div id="panel-travel" class="trvl-booking-panel" style="border-left:3px solid #0e7490;">
                     <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--trvl-gray-200,#e9ecef);">
-                                <svg class="w-5 h-5" fill="none" stroke="var(--trvl-gray-700,#495057)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#cffafe;">
+                                <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </div>
                             <div>
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.travel_title') }}</p>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
                         <div class="flex items-center gap-2 mb-3">
-                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="var(--trvl-gray-600,#6c757d)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.travel_info') }}</span>
                         </div>
                         <div class="flex justify-center">
@@ -122,11 +122,11 @@
                 </div>
 
                 <!-- PANEL: AIRPORT TRANSFER -->
-                <div id="panel-airport" class="trvl-booking-panel" style="padding-left:1px;">
+                <div id="panel-airport" class="trvl-booking-panel" style="border-left:3px solid #d97706;">
                     <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--trvl-gray-200,#e9ecef);">
-                                <svg class="w-5 h-5" fill="none" stroke="var(--trvl-gray-700,#495057)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#fed7aa;">
+                                <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                             </div>
                             <div>
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.airport_title') }}</p>
