@@ -519,5 +519,7 @@
   "footer.email_placeholder": "Your Email",
   "footer.subscribe": "Subscribe",
   "home.fleet_badge": "🚐 Our Fleet",
-  "general.latest": "Latest"
+  "general.latest": "Latest",
+  "general.duration": "Duration",
+  "general.distance": "Distance"
 }

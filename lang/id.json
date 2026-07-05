@@ -519,5 +519,7 @@
   "footer.email_placeholder": "Email Anda",
   "footer.subscribe": "Berlangganan",
   "home.fleet_badge": "🚐 Armada Kami",
-  "general.latest": "Terbaru"
+  "general.latest": "Terbaru",
+  "general.duration": "Durasi",
+  "general.distance": "Jarak"
 }

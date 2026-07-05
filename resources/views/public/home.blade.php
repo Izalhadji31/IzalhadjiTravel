@@ -52,7 +52,7 @@
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.rental_title') }}</p>
                                 <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.rental_subtitle') }}</h2>
                             </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:var(--trvl-blue-light,#dbeafe); color:var(--trvl-blue,#1d4ed8);">🚗 RENTAL</span>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:var(--trvl-blue-light,#dbeafe); color:var(--trvl-blue,#1d4ed8);">RENTAL</span>
                         </div>
                     </div>
                     <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
@@ -104,7 +104,7 @@
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.travel_title') }}</p>
                                 <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.travel_subtitle') }}</h2>
                             </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#cffafe; color:#0e7490;">🚌 TRAVEL</span>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#cffafe; color:#0e7490;">TRAVEL</span>
                         </div>
                     </div>
                     <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
@@ -132,7 +132,7 @@
                                 <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.airport_title') }}</p>
                                 <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.airport_subtitle') }}</h2>
                             </div>
-                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#fed7aa; color:#7c2d12;">✈️ AIRPORT</span>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#fed7aa; color:#7c2d12;">AIRPORT</span>
                         </div>
                     </div>
                     <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
@@ -254,21 +254,21 @@
                 $duration = $route->estimated_hours ? number_format((float) $route->estimated_hours, 0) . ' jam' : 'Khusus';
                 $distance = $route->distance_km ? number_format((float) $route->distance_km, 0) . ' km' : 'Tersedia';
                 $kabupatenIcons = [
-                    'ende' => ['icon' => '🏛️', 'gradient' => 'linear-gradient(135deg,#1e40af 0%,#3b82f6 50%,#93c5fd 100%)'],
-                    'labuan bajo' => ['icon' => '🐉', 'gradient' => 'linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%)'],
-                    'maumere' => ['icon' => '🏖️', 'gradient' => 'linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%)'],
-                    'ruteng' => ['icon' => '🌾', 'gradient' => 'linear-gradient(135deg,#854d0e 0%,#eab308 50%,#fde047 100%)'],
-                    'bajawa' => ['icon' => '☕', 'gradient' => 'linear-gradient(135deg,#7c2d12 0%,#d97706 50%,#fbbf24 100%)'],
-                    'larantuka' => ['icon' => '⛪', 'gradient' => 'linear-gradient(135deg,#831843 0%,#db2777 50%,#f472b6 100%)'],
-                    'borong' => ['icon' => '🌋', 'gradient' => 'linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%)'],
-                    'default' => ['icon' => '📍', 'gradient' => 'linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%)'],
+                    'ende' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg,#1e40af 0%,#3b82f6 50%,#93c5fd 100%)'],
+                    'labuan bajo' => ['initial' => 'LB', 'gradient' => 'linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%)'],
+                    'maumere' => ['initial' => 'M', 'gradient' => 'linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%)'],
+                    'ruteng' => ['initial' => 'R', 'gradient' => 'linear-gradient(135deg,#854d0e 0%,#eab308 50%,#fde047 100%)'],
+                    'bajawa' => ['initial' => 'B', 'gradient' => 'linear-gradient(135deg,#7c2d12 0%,#d97706 50%,#fbbf24 100%)'],
+                    'larantuka' => ['initial' => 'L', 'gradient' => 'linear-gradient(135deg,#831843 0%,#db2777 50%,#f472b6 100%)'],
+                    'borong' => ['initial' => 'BR', 'gradient' => 'linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%)'],
+                    'default' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%)'],
                 ];
                 $originKey = strtolower($route->origin_city ?? '');
                 $iconData = $kabupatenIcons[$originKey] ?? $kabupatenIcons['default'];
             @endphp
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="background:{{ $iconData['gradient'] }}; display:flex; align-items:center; justify-content:center; font-size:3rem;">
-                    {{ $iconData['icon'] }}
+                <div class="trvl-route-card-img" style="background:{{ $iconData['gradient'] }}; display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:2.8rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:-2px; line-height:1;">{{ $iconData['initial'] }}</span>
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest">
@@ -277,8 +277,8 @@
                         <span class="trvl-route-city">{{ $route->destination_city ?? 'Labuan Bajo' }}</span>
                     </div>
                     <div class="trvl-route-meta">
-                        <span class="trvl-route-meta-item">⏱️ {{ $duration }}</span>
-                        <span class="trvl-route-meta-item">📍 {{ $distance }}</span>
+                        <span class="trvl-route-meta-item">{{ __('general.duration') }}: {{ $duration }}</span>
+                        <span class="trvl-route-meta-item">{{ __('general.distance') }}: {{ $distance }}</span>
                     </div>
                     <div class="trvl-route-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.routes_per_person') }}</span></div>
                     <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
@@ -286,34 +286,34 @@
             </div>
             @empty
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
-                    🐉
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%); display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:2.8rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:-2px; line-height:1;">E</span>
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
-                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 8 jam</span><span class="trvl-route-meta-item">📍 350 km</span></div>
+                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 8 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 350 km</span></div>
                     <div class="trvl-route-price">Rp 350.000 <span>{{ __('home.routes_per_person') }}</span></div>
                     <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-1">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
-                    🏖️
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%); display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:2.8rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:-2px; line-height:1;">E</span>
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Maumere</span></div>
-                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 5 jam</span><span class="trvl-route-meta-item">📍 200 km</span></div>
+                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 5 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 200 km</span></div>
                     <div class="trvl-route-price">Rp 250.000 <span>{{ __('home.routes_per_person') }}</span></div>
                     <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-2">
-                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
-                    🌋
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%); display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:2.8rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:-2px; line-height:1;">E</span>
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Kelimutu</span></div>
-                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">⏱️ 3 jam</span><span class="trvl-route-meta-item">📍 100 km</span></div>
+                    <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 3 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 100 km</span></div>
                     <div class="trvl-route-price">Rp 200.000 <span>{{ __('home.routes_per_person') }}</span></div>
                     <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
