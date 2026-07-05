@@ -40,37 +40,38 @@
 
         <!-- Booking Card -->
         <div class="trvl-booking-wrapper max-w-5xl mx-auto">
-            <div class="trvl-booking-card">
+            <div class="trvl-booking-card" style="background:var(--trvl-card); border:1px solid var(--trvl-border); border-radius:1.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.08); overflow:hidden;">
                 <!-- PANEL: RENTAL -->
-                <div id="panel-rental" class="trvl-booking-panel active">
-                    <div class="trvl-booking-header">
+                <div id="panel-rental" class="trvl-booking-panel active" style="border-left:4px solid transparent; border-image:linear-gradient(180deg,var(--trvl-blue,#1d4ed8),var(--trvl-accent,#3b82f6)) 1; border-image-slice:1; padding-left:1px;">
+                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#dbeafe;">
-                                <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--trvl-blue-light,#dbeafe);">
+                                <svg class="w-5 h-5" fill="none" stroke="var(--trvl-blue,#1d4ed8)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.rental_title') }}</p>
-                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.rental_subtitle') }}</h2>
+                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.rental_title') }}</p>
+                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.rental_subtitle') }}</h2>
                             </div>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:var(--trvl-blue-light,#dbeafe); color:var(--trvl-blue,#1d4ed8);">🚗 RENTAL</span>
                         </div>
                     </div>
-                    <div class="trvl-booking-body">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             <div>
-                                <label class="trvl-field-label">{{ __('booking.pickup_location') }}</label>
-                                <input type="text" value="Ende" readonly class="trvl-form-field" aria-label="{{ __('booking.pickup_location') }}">
+                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.pickup_location') }}</label>
+                                <input type="text" value="Ende" readonly class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;" aria-label="{{ __('booking.pickup_location') }}">
                             </div>
                             <div>
-                                <label class="trvl-field-label">{{ __('booking.start_date') }}</label>
-                                <input type="date" value="{{ date('Y-m-d') }}" class="trvl-form-field">
+                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.start_date') }}</label>
+                                <input type="date" value="{{ date('Y-m-d') }}" class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
                             </div>
                             <div>
-                                <label class="trvl-field-label">{{ __('booking.pickup_time') }}</label>
-                                <input type="time" value="08:00" class="trvl-form-field">
+                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.pickup_time') }}</label>
+                                <input type="time" value="08:00" class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
                             </div>
                             <div>
-                                <label class="trvl-field-label">{{ __('booking.duration') }}</label>
-                                <select class="trvl-form-field">
+                                <label class="trvl-field-label" style="font-size:0.7rem; margin-bottom:0.25rem;">{{ __('booking.duration') }}</label>
+                                <select class="trvl-form-field" style="font-size:0.8rem; padding:0.5rem 0.75rem;">
                                     <option>{{ __('rental.duration_12h') }}</option>
                                     <option>{{ __('rental.duration_1d') }}</option>
                                     <option>{{ __('rental.duration_2d') }}</option>
@@ -79,13 +80,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                            <div class="trvl-info-panel flex items-center gap-2 flex-1">
-                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span style="color:#1e40af; font-weight:500;">{{ __('booking.rental_info') }}</span>
+                        <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div class="flex items-center gap-2 flex-1">
+                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="var(--trvl-blue,#1d4ed8)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.rental_info') }}</span>
                             </div>
-                            <a href="{{ route('public.vehicles') }}" class="trvl-btn-search flex-shrink-0 text-decoration-none">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <a href="{{ route('public.vehicles') }}" class="trvl-btn-search flex-shrink-0 text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 {{ __('booking.search_vehicle') }}
                             </a>
                         </div>
@@ -93,26 +94,27 @@
                 </div>
 
                 <!-- PANEL: TRAVEL -->
-                <div id="panel-travel" class="trvl-booking-panel">
-                    <div class="trvl-booking-header">
+                <div id="panel-travel" class="trvl-booking-panel" style="border-left:4px solid transparent; border-image:linear-gradient(180deg,#0e7490,#06b6d4) 1; border-image-slice:1; padding-left:1px;">
+                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#dbeafe;">
-                                <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#cffafe;">
+                                <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.travel_title') }}</p>
-                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.travel_subtitle') }}</h2>
+                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.travel_title') }}</p>
+                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.travel_subtitle') }}</h2>
                             </div>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#cffafe; color:#0e7490;">🚌 TRAVEL</span>
                         </div>
                     </div>
-                    <div class="trvl-booking-body">
-                        <div class="trvl-info-panel flex items-center gap-2">
-                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span style="color:#1e40af; font-weight:500; font-size:0.875rem;">{{ __('booking.travel_info') }}</span>
+                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
+                        <div class="flex items-center gap-2 mb-3">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span style="color:var(--trvl-gray-700); font-weight:500; font-size:0.8rem;">{{ __('booking.travel_info') }}</span>
                         </div>
-                        <div class="mt-6 flex justify-center">
-                            <a href="{{ route('public.travel') }}" class="trvl-btn-search text-decoration-none">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <div class="flex justify-center">
+                            <a href="{{ route('public.travel') }}" class="trvl-btn-search text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 {{ __('booking.view_routes') }}
                             </a>
                         </div>
@@ -120,30 +122,29 @@
                 </div>
 
                 <!-- PANEL: AIRPORT TRANSFER -->
-                <div id="panel-airport" class="trvl-booking-panel">
-                    <div class="trvl-booking-header">
+                <div id="panel-airport" class="trvl-booking-panel" style="border-left:4px solid transparent; border-image:linear-gradient(180deg,#7c2d12,#d97706) 1; border-image-slice:1; padding-left:1px;">
+                    <div class="trvl-booking-header" style="padding:1rem 1.5rem 0.5rem;">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#dbeafe;">
-                                <svg class="w-5 h-5" fill="none" stroke="#1d4ed8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#fed7aa;">
+                                <svg class="w-5 h-5" fill="none" stroke="#7c2d12" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                             </div>
                             <div>
-                                <p class="trvl-field-label" style="margin:0;">{{ __('booking.airport_title') }}</p>
-                                <h2 class="text-base font-bold text-gray-900">{{ __('booking.airport_subtitle') }}</h2>
+                                <p class="trvl-field-label" style="margin:0; font-size:0.75rem;">{{ __('booking.airport_title') }}</p>
+                                <h2 class="text-sm font-bold" style="color:var(--trvl-gray-900);">{{ __('booking.airport_subtitle') }}</h2>
                             </div>
+                            <span class="ml-auto text-[0.6rem] font-semibold px-2.5 py-1 rounded-full" style="background:#fed7aa; color:#7c2d12;">✈️ AIRPORT</span>
                         </div>
                     </div>
-                    <div class="trvl-booking-body">
-                        <div class="trvl-info-panel mb-4">
-                            <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs font-medium" style="color:#1e40af;">
-                                <span>✅ {{ __('booking.airport_info_1') }}</span>
-                                <span>✅ {{ __('booking.airport_info_2') }}</span>
-                                <span>✅ {{ __('booking.airport_info_3') }}</span>
-                                <span>✅ {{ __('booking.airport_info_4') }}</span>
-                            </div>
+                    <div class="trvl-booking-body" style="padding:0.5rem 1.5rem 1.25rem;">
+                        <div class="flex flex-wrap gap-x-5 gap-y-1 mb-3">
+                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_1') }}</span>
+                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_2') }}</span>
+                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_3') }}</span>
+                            <span class="text-[0.7rem] font-medium" style="color:var(--trvl-gray-700);">✅ {{ __('booking.airport_info_4') }}</span>
                         </div>
                         <div class="flex justify-center">
-                            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="trvl-btn-search text-decoration-none">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="trvl-btn-search text-decoration-none" style="font-size:0.8rem; padding:0.5rem 1.25rem;">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 {{ __('booking.book_airport') }}
                             </a>
                         </div>
@@ -252,19 +253,22 @@
                 $price = $travelPrice?->price_per_seat ?? $travelPrice?->price ?? 0;
                 $duration = $route->estimated_hours ? number_format((float) $route->estimated_hours, 0) . ' jam' : 'Khusus';
                 $distance = $route->distance_km ? number_format((float) $route->distance_km, 0) . ' km' : 'Tersedia';
-                $routeImages = [
-                    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80',
-                    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80',
-                    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80',
-                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80',
-                    'https://images.unsplash.com/photo-1530789253388-582c4f0b2f1c?auto=format&fit=crop&w=600&q=80',
-                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
+                $kabupatenIcons = [
+                    'ende' => ['icon' => '🏛️', 'gradient' => 'linear-gradient(135deg,#1e40af 0%,#3b82f6 50%,#93c5fd 100%)'],
+                    'labuan bajo' => ['icon' => '🐉', 'gradient' => 'linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%)'],
+                    'maumere' => ['icon' => '🏖️', 'gradient' => 'linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%)'],
+                    'ruteng' => ['icon' => '🌾', 'gradient' => 'linear-gradient(135deg,#854d0e 0%,#eab308 50%,#fde047 100%)'],
+                    'bajawa' => ['icon' => '☕', 'gradient' => 'linear-gradient(135deg,#7c2d12 0%,#d97706 50%,#fbbf24 100%)'],
+                    'larantuka' => ['icon' => '⛪', 'gradient' => 'linear-gradient(135deg,#831843 0%,#db2777 50%,#f472b6 100%)'],
+                    'borong' => ['icon' => '🌋', 'gradient' => 'linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%)'],
+                    'default' => ['icon' => '📍', 'gradient' => 'linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%)'],
                 ];
-                $routeImg = $routeImages[$loop->index % count($routeImages)];
+                $originKey = strtolower($route->origin_city ?? '');
+                $iconData = $kabupatenIcons[$originKey] ?? $kabupatenIcons['default'];
             @endphp
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="overflow:hidden;">
-                    <img src="{{ $routeImg }}" alt="{{ $route->origin_city }} - {{ $route->destination_city }}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;" class="group-hover:scale-110">
+                <div class="trvl-route-card-img" style="background:{{ $iconData['gradient'] }}; display:flex; align-items:center; justify-content:center; font-size:3rem;">
+                    {{ $iconData['icon'] }}
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest">
@@ -282,8 +286,8 @@
             </div>
             @empty
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="overflow:hidden;">
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Ende - Labuan Bajo" style="width:100%;height:100%;object-fit:cover;">
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
+                    🐉
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
@@ -293,8 +297,8 @@
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-1">
-                <div class="trvl-route-card-img" style="overflow:hidden;">
-                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Ende - Maumere" style="width:100%;height:100%;object-fit:cover;">
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
+                    🏖️
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Maumere</span></div>
@@ -304,8 +308,8 @@
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-2">
-                <div class="trvl-route-card-img" style="overflow:hidden;">
-                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80" alt="Ende - Kelimutu" style="width:100%;height:100%;object-fit:cover;">
+                <div class="trvl-route-card-img" style="background:linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%); display:flex; align-items:center; justify-content:center; font-size:3rem;">
+                    🌋
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Kelimutu</span></div>
@@ -447,7 +451,7 @@
         <!-- Ende -->
         <div class="trvl-route-card group trvl-reveal">
             <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <img src="https://images.unsplash.com/photo-1563794146998-7245e6e5e9fb?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Ende</h4>
@@ -461,7 +465,7 @@
         <!-- Labuan Bajo -->
         <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
             <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <img src="https://images.unsplash.com/photo-1519722407087-d0f2c891224a?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
@@ -489,7 +493,7 @@
         <!-- Ruteng -->
         <div class="trvl-route-card group trvl-reveal">
             <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Ruteng</h4>
@@ -503,7 +507,7 @@
         <!-- Bajawa -->
         <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
             <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                     <h4 class="font-bold text-white text-lg">Bajawa</h4>
@@ -716,192 +720,9 @@
     </div>
 </section>
 
-<!-- ==================== PERBANDINGAN DENGAN TRAC GO ==================== -->
-<section class="trvl-section" id="perbandingan" style="background:var(--trvl-bg);">
-    <div class="trvl-container">
-        <div class="trvl-section-header-center mb-10 trvl-reveal">
-            <span class="trvl-section-badge" style="background:#dbeafe;color:#0064d2;">{{ __('home.comparison_badge') }}</span>
-            <h2 class="trvl-section-title">{{ __('home.comparison_title') }}</h2>
-            <p class="trvl-section-desc">{{ __('home.comparison_desc') }}</p>
-        </div>
-        <div class="trvl-reveal" style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
-                <thead>
-                    <tr style="background:#0064d2; color:white;">
-                        <th style="padding:16px 20px; text-align:left; font-size:0.9rem;">{{ __('home.comparison_col_feature') }}</th>
-                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem; background:#004ba0;">{{ __('home.comparison_col_asr') }}</th>
-                        <th style="padding:16px 20px; text-align:center; font-size:0.9rem;">{{ __('home.comparison_col_trac') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.coverage') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Pulau Flores (lokal)</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Nasional (kota besar)</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.service_types') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-blue); font-weight:700;">Travel + Rental + Airport</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:var(--trvl-gray-600);">Rental Mobil saja</td>
-                    </tr>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.book_online') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya, website full-stack</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.digital_payment') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Midtrans (BCA, GoPay, dll)</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                    </tr>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.tracking') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ GPS tracking armada</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.revenue_sharing') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ 30/50/20 otomatis</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Tidak ada</td>
-                    </tr>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.without_driver') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.with_driver') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Driver lokal Flores</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                    </tr>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.price') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Mulai Rp 200rb/hari</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Mulai Rp 400rb/hari</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.destinations') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Kelimutu, Komodo, dll</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#dc2626; font-weight:700;">❌ Fokus perkotaan</td>
-                    </tr>
-                    <tr style="background:var(--trvl-card);">
-                        <td style="padding:14px 20px; border-bottom:1px solid var(--trvl-border); font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.whatsapp') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ CS 24 jam</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:1px solid var(--trvl-border); color:#00a651; font-weight:700;">✅ Ya</td>
-                    </tr>
-                    <tr style="background:var(--trvl-gray-100);">
-                        <td style="padding:14px 20px; border-bottom:0; font-weight:600; color:var(--trvl-gray-900);">{{ __('comparison.insurance') }}</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
-                        <td style="padding:14px 20px; text-align:center; border-bottom:0; color:#00a651; font-weight:700;">✅ Termasuk</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="text-center mt-6 trvl-reveal">
-            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">{{ __('home.comparison_footnote') }}</p>
-        </div>
-    </div>
-</section>
 
-<!-- ==================== PERBANDINGAN ==================== -->
-<section class="trvl-section trvl-section-bg" id="perbandingan">
-    <div class="trvl-container">
-        <div class="trvl-section-header-center mb-12 trvl-reveal">
-            <span class="trvl-section-badge">⚖️ {{ __('comparison.title') }}</span>
-            <h2 class="trvl-section-title">{{ __('comparison.title') }}</h2>
-            <p class="trvl-section-desc">{{ __('comparison.desc') }}</p>
-        </div>
-        <div class="trvl-reveal" style="overflow-x:auto;">
-            <table class="trvl-comparison-table">
-                <thead>
-                    <tr>
-                        <th>{{ __('comparison.col_feature') }}</th>
-                        <th class="th-asr">
-                            <span class="table-brand">{{ __('comparison.col_asr') }}</span>
-                            <span class="table-brand-sub">{{ __('comparison.asr_sub') }}</span>
-                        </th>
-                        <th class="th-trac">
-                            <span class="table-brand">{{ __('comparison.col_trac') }}</span>
-                            <span class="table-brand-sub">{{ __('comparison.trac_sub') }}</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.coverage') }}</td>
-                        <td class="td-asr">📍 Pulau Flores (lokal)</td>
-                        <td class="td-trac">🏙️ Nasional (kota besar)</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.service_types') }}</td>
-                        <td class="td-asr">✅ Travel + Rental + Airport</td>
-                        <td class="td-trac">❌ Rental Mobil saja</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.book_online') }}</td>
-                        <td class="td-asr">✅ Ya, website full-stack</td>
-                        <td class="td-trac">✅ Ya</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.digital_payment') }}</td>
-                        <td class="td-asr">✅ Midtrans (BCA, GoPay, dll)</td>
-                        <td class="td-trac">✅ Ya</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.tracking') }}</td>
-                        <td class="td-asr">✅ GPS tracking armada</td>
-                        <td class="td-trac">❌ Tidak</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.revenue_sharing') }}</td>
-                        <td class="td-asr">✅ 30/50/20 otomatis</td>
-                        <td class="td-trac">❌ Tidak (sewa langsung)</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.without_driver') }}</td>
-                        <td class="td-asr">✅ Ya</td>
-                        <td class="td-trac">✅ Ya</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.with_driver') }}</td>
-                        <td class="td-asr">✅ Ya, driver lokal Flores</td>
-                        <td class="td-trac">✅ Ya</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.price') }}</td>
-                        <td class="td-asr">✅ Lebih terjangkau (mulai Rp200rb)</td>
-                        <td class="td-trac">❌ Lebih mahal (mulai Rp400rb)</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.destinations') }}</td>
-                        <td class="td-asr">✅ Danau Kelimutu, Komodo, Pink Beach, dll</td>
-                        <td class="td-trac">❌ Fokus perkotaan</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.whatsapp') }}</td>
-                        <td class="td-asr">✅ CS 24 jam via WhatsApp</td>
-                        <td class="td-trac">✅ Ya</td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">{{ __('comparison.insurance') }}</td>
-                        <td class="td-asr">✅ Termasuk</td>
-                        <td class="td-trac">✅ Termasuk</td>
-                    </tr>
-                    <tr class="tr-highlight">
-                        <td class="td-label">{{ __('comparison.airport_service') }}</td>
-                        <td class="td-asr">✅ 6 Bandara di Flores</td>
-                        <td class="td-trac">❌ Terbatas</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="text-center mt-8 trvl-reveal">
-            <p style="color:#64748b; font-size:0.9rem;">
-                {!! __('home.comparison_conclusion') !!}
-            </p>
-        </div>
-    </div>
-</section>
+
+
 
 <!-- ==================== CTA ==================== -->
 <section class="trvl-cta-section py-20">
