@@ -464,44 +464,6 @@
     </div>
 </section>
 
-<!-- ==================== FOOTER ==================== -->
-<footer class="trvl-footer py-12">
-    <div class="trvl-container">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-                <p class="trvl-footer-brand mb-4">ASR <span>GO</span></p>
-                <p class="text-sm" style="color:#64748b;">{{ __('footer.company_desc') }}</p>
-            </div>
-            <div>
-                <p class="trvl-footer-heading">{{ __('footer.information_heading') }}</p>
-                <div class="flex flex-col gap-2">
-                    <a href="{{ route('public.blog') }}" class="trvl-footer-link">{{ __('footer.blog') }}</a>
-                    <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">{{ __('footer.destinations') }}</a>
-                    <a href="{{ route('public.travel') }}" class="trvl-footer-link">{{ __('footer.travel') }}</a>
-                </div>
-            </div>
-            <div>
-                <p class="trvl-footer-heading">{{ __('footer.company_heading') }}</p>
-                <div class="flex flex-col gap-2">
-                    <a href="#" class="trvl-footer-link">{{ __('footer.about') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.terms') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
-                </div>
-            </div>
-            <div>
-                <p class="trvl-footer-heading">{{ __('footer.contact_heading') }}</p>
-                <div class="flex flex-col gap-2">
-                    <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-footer-link">{{ __('footer.whatsapp') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.location') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.email') }}</a>
-                </div>
-            </div>
-        </div>
-        <div style="border-top:1px solid #1e293b; margin-top:2rem; padding-top:2rem; text-align:center;">
-            <p class="text-sm" style="color:#64748b;">{{ __('footer.copyright') }}</p>
-        </div>
-    </div>
-</footer>
 <style>
 .dark .trvl-stats-section { background: var(--trvl-bg) !important; }
 .dark .trvl-stats-section .trvl-stat-card { background: var(--trvl-card) !important; }
