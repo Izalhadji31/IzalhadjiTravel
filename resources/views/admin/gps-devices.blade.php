@@ -128,9 +128,9 @@
                         </td>
                         <td class="px-4 py-3">
                             @if($device->armada)
-                            <a href="{{ route('admin.armadas.show', $device->armada) }}" class="text-sm text-blue-600 hover:text-blue-800">
+                            <span class="text-sm text-blue-600">
                                 {{ $device->armada->plate_number }}
-                            </a>
+                            </span>
                             @else
                             <span class="text-sm text-gray-400">Not linked</span>
                             @endif

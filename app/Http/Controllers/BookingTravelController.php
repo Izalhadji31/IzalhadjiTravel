@@ -32,7 +32,11 @@ class BookingTravelController extends Controller
                              ->latest()
                              ->paginate(10);
 
-        return view('bookings.travel', compact('bookings'));
+        $pendingCount = TravelBooking::where('status', 'pending')->count();
+        $confirmedCount = TravelBooking::where('status', 'confirmed')->count();
+        $completedCount = TravelBooking::where('status', 'completed')->count();
+
+        return view('bookings.travel', compact('bookings', 'pendingCount', 'confirmedCount', 'completedCount'));
     }
 
     /**

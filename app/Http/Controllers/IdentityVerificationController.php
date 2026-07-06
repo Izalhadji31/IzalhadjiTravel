@@ -76,10 +76,39 @@ class IdentityVerificationController extends Controller
     {
         $this->authorize('viewAny', IdentityVerification::class);
 
-        $companyId = auth()->user()->company_id;
-        $verifications = $this->service->getPendingVerifications($companyId);
+        $status = $request->get('status', 'pending');
 
-        return view('admin.identity-pending', compact('verifications'));
+        // Get users with identity verification based on status filter
+        $query = User::whereHas('identityVerification', function ($q) use ($status) {
+            if ($status === 'pending') {
+                $q->where('is_verified', false)->whereNull('verified_at');
+            } elseif ($status === 'verified') {
+                $q->where('is_verified', true)->whereNotNull('verified_at');
+            } elseif ($status === 'rejected') {
+                $q->where('is_verified', false)->whereNotNull('rejection_reason');
+            }
+        })->with('identityVerification');
+
+        $companyId = auth()->user()->company_id;
+        if ($companyId) {
+            $query->where('company_id', $companyId);
+        }
+
+        $users = $query->latest()->paginate(15)->withQueryString();
+
+        $pending_count = User::whereHas('identityVerification', function ($q) {
+            $q->where('is_verified', false)->whereNull('verified_at');
+        })->count();
+
+        $verified_count = User::whereHas('identityVerification', function ($q) {
+            $q->where('is_verified', true)->whereNotNull('verified_at');
+        })->count();
+
+        $rejected_count = User::whereHas('identityVerification', function ($q) {
+            $q->where('is_verified', false)->whereNotNull('rejection_reason');
+        })->count();
+
+        return view('admin.user-verification', compact('users', 'pending_count', 'verified_count', 'rejected_count'));
     }
 
     /**

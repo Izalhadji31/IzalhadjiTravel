@@ -44,7 +44,7 @@
                     @forelse($refunds as $refund)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-900 font-mono">
-                            #{{ substr($refund->id, 0, 8) }}
+                            #{{ $refund->id }}
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm font-medium text-gray-900">{{ $refund->user->name ?? 'N/A' }}</div>

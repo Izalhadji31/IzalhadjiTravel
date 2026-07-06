@@ -65,13 +65,13 @@
                                         @if ($user->identityVerification)
                                             <div class="text-sm">
                                                 <p class="font-semibold text-gray-900">
-                                                    {{ $user->identityVerification->identity_type == 'ktp' ? 'KTP' : 'SIM' }}
+                                                    {{ $user->identityVerification->id_type == 'KTP' ? 'KTP' : 'SIM' }}
                                                 </p>
                                                 <p class="text-gray-600">
-                                                    {{ $user->identityVerification->identity_number }}
+                                                    {{ $user->identityVerification->id_number }}
                                                 </p>
                                                 <p class="text-xs text-gray-500 mt-1">
-                                                    Nama: {{ $user->identityVerification->identity_name }}
+                                                    Nama: {{ $user->identityVerification->full_name }}
                                                 </p>
                                             </div>
                                         @else
@@ -121,8 +121,8 @@
                                                     Verifikasi Ulang
                                                 </button>
                                             @endif
-                                            @if ($user->identityVerification?->identity_photo)
-                                                <button data-action="photo" data-photo-url="{{ asset('storage/' . $user->identityVerification->identity_photo) }}"
+                                            @if ($user->identityVerification?->id_image_path)
+                                                <button data-action="photo" data-photo-url="{{ asset('storage/' . $user->identityVerification->id_image_path) }}"
                                                         class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors text-xs font-semibold btn-action">
                                                     📸 Lihat Foto
                                                 </button>
