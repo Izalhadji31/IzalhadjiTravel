@@ -49,9 +49,10 @@
                         <option value="4" {{ request('passengers') == '4' ? 'selected' : '' }}>4 {{ __('travel.passenger_count') }}</option>
                         <option value="5" {{ request('passengers') == '5' ? 'selected' : '' }}>+5 {{ __('travel.passenger_count') }}</option>
                     </select>
+                </div>
                 <div>
                     <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(0,100,210,0.35); width: 100%;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><mipath d="m21 21-4.35-4.35"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                         {{ __('travel.search') }}
                     </button>
                 </div>
@@ -63,74 +64,17 @@
 <!-- MAIN CONTENT -->
 <div style="background: var(--trvl-bg); padding: 1.5rem 0 3rem;" id="armada">
     <div class="trvl-container">
-        <div style="display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem;">
-
-            <!-- FILTER SIDEBAR -->
-            <aside>
-                <div style="background: var(--trvl-card); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid var(--trvl-border); position: sticky; top: 80px;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid #f0f6ff;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-                        <h3 style="font-size: 0.9rem; font-weight: 700; color: #0d2147;">{{ __('travel.filter_title') }}</h3>
-                    </div>
-                    <form method="GET" action="{{ route('public.travel') }}">
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('travel.filter_origin') }}</label>
-                            <select name="origin" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
-                                <option value="">{{ __('travel.filter_origin_all') }}</option>
-                                @foreach ($origins as $origin)
-                                    <option value="{{ $origin }}" {{ request('origin') == $origin ? 'selected' : '' }}>{{ $origin }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('travel.filter_destination') }}</label>
-                            <select name="destination" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
-                                <option value="">{{ __('travel.filter_destination_all') }}</option>
-                                @foreach ($destinations as $destination)
-                                    <option value="{{ $destination }}" {{ request('destination') == $destination ? 'selected' : '' }}>{{ $destination }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('travel.filter_date') }}</label>
-                            <input type="date" name="date" value="{{ request('date') }}" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
-                        </div>
-                        <div style="margin-bottom: 0.5rem;">
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('travel.filter_passengers') }}</label>
-                            <select name="passengers" class="trvl-form-field" style="font-size: 0.85rem; padding: 0.6rem 0.75rem;">
-                                <option value="">Jumlah</option>
-                                @for ($i = 1; $i <= 6; $i++)
-                                    <option value="{{ $i }}" {{ request('passengers') == $i ? 'selected' : '' }}>{{ $i }} {{ $i == 6 ? '+' : '' }} {{ __('travel.passenger_count') }}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div style="margin-top: 1.25rem; display: flex; gap: 0.5rem;">
-                            <button type="submit" style="flex: 1; background: #0064d2; color: white; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; transition: all 0.2s;">{{ __('travel.filter_title') }}</button>
-                            <a href="{{ route('public.travel') }}" style="background: #e9ecef; color: #6c757d; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s;">Reset</a>
-                        </div>
-                    </form>
-
-                    <!-- Price filter -->
-                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--trvl-border);">
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Harga</label>
-                        <div style="display: flex; gap: 0.4rem; align-items: center;">
-                            <input type="number" value="{{ request('price_min') }}" placeholder="Min" class="trvl-form-field" style="font-size: 0.8rem; padding: 0.5rem; flex: 1;" readonly>
-                            <span style="color: #6c757d;">–</span>
-                            <input type="number" value="{{ request('price_max') }}" placeholder="Max" class="trvl-form-field" style="font-size: 0.8rem; padding: 0.5rem; flex: 1;" readonly>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+        <div id="travel-grid" style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
 
             <!-- ROUTE LISTING -->
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.25rem;">
-                    <p style="font-size: 0.875rem; color: #6c757d; font-weight: 500;">
-                        <span style="font-weight: 700; color: #0d2147;">{{ $routes->total() }}</span> {{ __('travel.filter_date') }}
+                    <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">
+                        <span style="font-weight: 700; color: var(--trvl-text);">{{ $routes->total() }}</span> {{ __('travel.filter_date') }}
                     </p>
-                    <div style="font-size: 0.82rem; color: #6c757d; display: flex; align-items: center; gap: 0.4rem;">
+                    <div style="font-size: 0.82rem; color: var(--trvl-gray-600); display: flex; align-items: center; gap: 0.4rem;">
                         <span>Urutkan:</span>
-                        <select style="border: none; background: transparent; font-weight: 600; color: #0064d2; font-size: 0.82rem; cursor: pointer;">
+                        <select style="border: none; background: transparent; font-weight: 600; color: var(--trvl-blue); font-size: 0.82rem; cursor: pointer;">
                             <option>Harga Terendah</option>
                             <option>Keberangkatan Terlama</option>
                             <option>Durasi Terpendek</option>
@@ -152,21 +96,21 @@
                                     <!-- Route Info -->
                                     <div>
                                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                            <span style="font-weight: 800; font-size: 0.95rem; color: #0d2147;">{{ $route->origin_city }}</span>
+                                            <span style="font-weight: 800; font-size: 0.95rem; color: var(--trvl-text);">{{ $route->origin_city }}</span>
                                             <svg width="20" height="16" viewBox="0 0 24 16" fill="none" stroke="#0064d2" stroke-width="2"><path d="M5 8h14M13 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                            <span style="font-weight: 800; font-size: 0.95rem; color: #0d2147;">{{ $route->destination_city }}</span>
+                                            <span style="font-weight: 800; font-size: 0.95rem; color: var(--trvl-text);">{{ $route->destination_city }}</span>
                                         </div>
                                         <div style="display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 0.5rem;">
-                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--trvl-gray-700); font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                                                 {{ $route->estimated_hours ?? '-' }} {{ __('travel.est_hours') }}
                                             </div>
-                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--trvl-gray-700); font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                                 {{ $route->total_seats ?? '28' }} {{ __('rental.seats') }}
                                             </div>
-                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: #495057; font-weight: 500;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                            <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--trvl-gray-700); font-weight: 500;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                                 {{ ucfirst($route->route_type ?? 'Executive') }}
                                             </div>
                                             <div style="display: inline-flex; align-items: center; gap: 0.3rem;">
@@ -183,12 +127,12 @@
                                     @endphp
                                     @if ($cheapestPrice)
                                         <div>
-                                            <span style="font-size: 0.7rem; color: #6c757d; font-weight: 500;">mulai dari</span>
-                                            <p style="font-size: 1.35rem; font-weight: 800; color: #0064d2; line-height: 1.1;">Rp {{ number_format($cheapestPrice->price_per_seat, 0, ',', '.') }}</p>
-                                            <span style="font-size: 0.7rem; color: #6c757d; font-weight: 400;">/ {{ __('travel.passenger_count') }}</span>
+                                            <span style="font-size: 0.7rem; color: var(--trvl-gray-600); font-weight: 500;">mulai dari</span>
+                                            <p style="font-size: 1.35rem; font-weight: 800; color: var(--trvl-blue); line-height: 1.1;">Rp {{ number_format($cheapestPrice->price_per_seat, 0, ',', '.') }}</p>
+                                            <span style="font-size: 0.7rem; color: var(--trvl-gray-600); font-weight: 400;">/ {{ __('travel.passenger_count') }}</span>
                                         </div>
                                     @else
-                                        <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500;">Hubungi CS</span>
+                                        <span style="font-size: 0.85rem; color: var(--trvl-gray-600); font-weight: 500;">Hubungi CS</span>
                                     @endif
                                     @auth
                                         <a href="{{ route('bookings.travel.create', ['route_id' => $route->id]) }}" 
@@ -198,9 +142,9 @@
                                         </a>
                                     @else
                                         <a href="{{ route('login') }}" 
-                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: white; color: #0064d2; border: 2px solid #0064d2; padding: 0.65rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s;">
+                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: var(--trvl-card); color: var(--trvl-blue); border: 2px solid var(--trvl-blue); padding: 0.65rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s;">
                                             {{ __('travel.book') }}
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                         </a>
                                     @endauth
                                 </div>
@@ -208,27 +152,27 @@
 
                             <!-- Schedule Strip -->
                             <div style="background: var(--trvl-gray-100); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem;">
-                                <span style="font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.04em;">Jadwal Keberangkatan:</span>
+                                <span style="font-size: 0.72rem; font-weight: 700; color: var(--trvl-gray-600); text-transform: uppercase; letter-spacing: 0.04em;">Jadwal Keberangkatan:</span>
                                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     @if(!empty($route->departure_times))
                                         @foreach($route->departure_times as $time)
                                             <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">{{ is_string($time) ? $time : ($time->format('H:i') ?? '08:00') }}</span>
                                         @endforeach
                                     @else
-                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">08:00</span>
+                                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">08:00</span>
                                         <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">14:00</span>
                                         <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">19:30</span>
                                     @endif
                                 </div>
-                                <span style="margin-left: auto; font-size: 0.72rem; color: #6c757d; white-space: nowrap;">{{ __('travel.est_km') }} {{ $route->distance_km ?? '250' }} km</span>
+                                <span style="margin-left: auto; font-size: 0.72rem; color: var(--trvl-gray-600); white-space: nowrap;">{{ __('travel.est_km') }} {{ $route->distance_km ?? '250' }} km</span>
                         </div>
                     @empty
                         <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚐</div>
-                            <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">{{ __('travel.empty') }}</p>
-                            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">{{ __('travel.empty_desc') }}</p>
+                            <p style="font-size: 1rem; font-weight: 700; color: var(--trvl-text);">{{ __('travel.empty') }}</p>
+                            <p style="font-size: 0.85rem; color: var(--trvl-gray-600); margin-top: 0.5rem; line-height: 1.5;">{{ __('travel.empty_desc') }}</p>
                             <a href="{{ route('public.travel') }}" 
-                               style="display: inline-block; margin-top: 1rem; background: #0064d2; color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
+                               style="display: inline-block; margin-top: 1rem; background: var(--trvl-blue); color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
                         </div>
                     @endforelse
                 </div>
@@ -254,8 +198,6 @@
 .dark #travel-grid .trvl-form-field { background: var(--trvl-bg); color: var(--trvl-text); }
 @media (max-width: 900px) {
     #travel-grid { grid-template-columns: 1fr !important; }
-    #travel-grid > aside { order: -1; }
-    #travel-grid > aside > div { position: static !important; margin-bottom: 1rem; }
 }
 </style>
 <script>
