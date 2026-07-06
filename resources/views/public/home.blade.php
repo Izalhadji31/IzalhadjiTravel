@@ -26,28 +26,28 @@
         <div class="max-w-5xl mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Rental Card -->
-                <a href="{{ route('public.vehicles') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('public.vehicles') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_rental') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Mobil Avanza, Innova, Hiace — lepas kunci atau dengan sopir</p>
+                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_rental') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Mobil Avanza, Innova, Hiace — lepas kunci atau dengan sopir</p>
                 </a>
                 <!-- Travel Card -->
-                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_travel') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
+                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_travel') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
                 </a>
                 <!-- Airport Card -->
-                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20pesan%20airport%20transfer" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);">
+                <a href="#layanan" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.7);">Jemput & antar bandara — nyaman, tepat waktu</p>
+                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_airport') }}</h3>
+                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Jemput & antar bandara — nyaman, tepat waktu. <span style="color:#60a5fa;">Hubungi Kami</span></p>
                 </a>
             </div>
         </div>
@@ -242,7 +242,7 @@
                             <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">{{ __('home.destinations_featured_badge') }}</span>
                         </div>
                         <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-white/70 text-sm">📍 Ende, NTT</span>
+                            <span class="text-white/70 text-sm">Ende, NTT</span>
                             <h3 class="text-2xl font-bold text-white mt-1 mb-2">Danau Kelimutu</h3>
                             <p class="text-white/80 max-w-2xl">{{ __('home.destinations_kelimutu_desc') }}</p>
                         </div>
@@ -250,189 +250,126 @@
                 </div>
             </div>
 
-            <!-- Destinasi Grid -->
+            <!-- Cities as Destination Containers -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <div class="trvl-reveal">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                            <div class="h-48 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=80" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
-                            </div>
-                            <div class="trvl-route-card-body">
-                                <span class="text-xs text-amber-600 font-medium">📍 Ende</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Rumah Bung Karno</h4>
-                            <p class="text-gray-500 text-sm mt-1">Rumah tempat Bung Karno diasingkan 1934-1938. Kini menjadi museum bersejarah.</p>
+                <!-- Ende -->
+                <div class="trvl-route-card group trvl-reveal">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1563794146998-7245e6e5e9fb?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Ende</h4>
+                            <p class="text-white/80 text-sm">Kota Pancasila</p>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🌋 Danau Kelimutu</p>
+                            <p class="text-xs text-gray-500">Danau 3 warna, ikon Flores</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🏛️ Rumah Bung Karno</p>
+                            <p class="text-xs text-gray-500">Museum pengasingan Bung Karno 1934-1938</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="trvl-reveal trvl-reveal-delay-1">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&q=80" alt="Pulau Komodo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <!-- Labuan Bajo -->
+                <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1519722407087-d0f2c891224a?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
+                            <p class="text-white/80 text-sm">Gerbang Komodo</p>
                         </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-amber-600 font-medium">📍 Labuan Bajo</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Pulau Komodo</h4>
-                            <p class="text-gray-500 text-sm mt-1">Habitat asli komodo, kadal terbesar di dunia. Warisan Alam UNESCO.</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🦎 Pulau Komodo</p>
+                            <p class="text-xs text-gray-500">Habitat asli komodo, Warisan UNESCO</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🏖️ Pink Beach</p>
+                            <p class="text-xs text-gray-500">1 dari 7 pantai pink di dunia</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="trvl-reveal trvl-reveal-delay-2">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80" alt="Pink Beach" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <!-- Maumere -->
+                <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Maumere</h4>
+                            <p class="text-white/80 text-sm">Surga Bawah Laut</p>
                         </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-amber-600 font-medium">📍 Labuan Bajo</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Pink Beach</h4>
-                            <p class="text-gray-500 text-sm mt-1">Salah satu dari 7 pantai berpasir merah muda di dunia.</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🐠 Teluk Maumere</p>
+                            <p class="text-xs text-gray-500">Spot diving kelas dunia</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="trvl-reveal">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=500&q=80" alt="Wae Rebo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <!-- Ruteng -->
+                <div class="trvl-route-card group trvl-reveal">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Ruteng</h4>
+                            <p class="text-white/80 text-sm">Kota Dingin</p>
                         </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-amber-600 font-medium">📍 Ruteng</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Desa Wae Rebo</h4>
-                            <p class="text-gray-500 text-sm mt-1">Desa tradisional di atas awan 1.200 mdpl. Penghargaan UNESCO.</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🏡 Desa Wae Rebo</p>
+                            <p class="text-xs text-gray-500">Desa di atas awan, 1.200 mdpl</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="trvl-reveal trvl-reveal-delay-1">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&q=80" alt="Kampung Bena" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <!-- Bajawa -->
+                <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Bajawa</h4>
+                            <p class="text-white/80 text-sm">Kota Adat</p>
                         </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-amber-600 font-medium">📍 Bajawa</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Kampung Bena</h4>
-                            <p class="text-gray-500 text-sm mt-1">Desa adat Ngada dengan megalit kuno dan rumah tradisional.</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">🏘️ Kampung Bena</p>
+                            <p class="text-xs text-gray-500">Desa adat Ngada dengan megalit kuno</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="trvl-reveal trvl-reveal-delay-2">
-                    <div class="trvl-route-card group" style="overflow: hidden;">
-                        <div class="h-48 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Teluk Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <!-- Larantuka -->
+                <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=500&q=80" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <h4 class="font-bold text-white text-lg">Larantuka</h4>
+                            <p class="text-white/80 text-sm">Kota Tradisi</p>
                         </div>
-                        <div class="trvl-route-card-body">
-                            <span class="text-xs text-amber-600 font-medium">📍 Maumere</span>
-                            <h4 class="font-bold text-gray-900 mt-1">Teluk Maumere</h4>
-                            <p class="text-gray-500 text-sm mt-1">Surga diving dengan biodiversitas laut tertinggi di Indonesia Timur.</p>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                            <p class="font-semibold text-gray-900 text-sm">⛪ Semana Santa</p>
+                            <p class="text-xs text-gray-500">Tradisi Paskah berusia ratusan tahun</p>
                         </div>
                     </div>
                 </div>
 
             </div>
-
-<!-- Kota-kota di Flores -->
-<div class="mt-16">
-    <div class="trvl-section-header-center mb-8 trvl-reveal">
-        <span class="trvl-section-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">{{ __('home.cities_badge') }}</span>
-        <h2 class="trvl-section-title">{{ __('home.cities_title') }}</h2>
-        <p class="trvl-section-desc">{{ __('home.cities_desc') }}</p>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Ende -->
-        <div class="trvl-route-card group trvl-reveal">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1563794146998-7245e6e5e9fb?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Ende</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_ende_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_ende_desc') }}</p>
-            </div>
-        </div>
-        <!-- Labuan Bajo -->
-        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1519722407087-d0f2c891224a?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_labuanbajo_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_labuanbajo_desc') }}</p>
-            </div>
-        </div>
-        <!-- Maumere -->
-        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Maumere</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_maumere_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_maumere_desc') }}</p>
-            </div>
-        </div>
-        <!-- Ruteng -->
-        <div class="trvl-route-card group trvl-reveal">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Ruteng</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_ruteng_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_ruteng_desc') }}</p>
-            </div>
-        </div>
-        <!-- Bajawa -->
-        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Bajawa</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_bajawa_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_bajawa_desc') }}</p>
-            </div>
-        </div>
-        <!-- Larantuka -->
-        <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
-            <div class="h-48 overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=500&q=80" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 class="font-bold text-white text-lg">Larantuka</h4>
-                    <p class="text-white/80 text-sm">{{ __('home.cities_larantuka_sub') }}</p>
-                </div>
-            </div>
-            <div class="p-4">
-                <p class="text-sm" style="color:var(--trvl-gray-600);">{{ __('home.cities_larantuka_desc') }}</p>
-            </div>
-        </div>
-    </div>
-</div>
 
             <!-- CTA -->
             <div class="text-center mt-10 trvl-reveal">
@@ -486,7 +423,7 @@
             </div>
             @empty
             <div class="trvl-vehicle-card trvl-reveal">
-                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 50%,#60a5fa 100%);">🚐</div>
+                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 50%,#60a5fa 100%); display:flex; align-items:center; justify-content:center;"><span style="font-size:2rem; font-weight:800; color:rgba(255,255,255,0.3);">AV</span></div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Avanza</h3>
                     <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 6 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
