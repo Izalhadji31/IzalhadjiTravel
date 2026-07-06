@@ -28,6 +28,10 @@
             --trvl-green: #00a651;
             --trvl-red: #e53935;
             --trvl-yellow: #ffb800;
+            --trvl-bg: #f8fafc;
+            --trvl-text: #0f172a;
+            --trvl-card: #ffffff;
+            --trvl-border: #e2e8f0;
             --trvl-gray-100: #f8f9fa;
             --trvl-gray-200: #e9ecef;
             --trvl-gray-300: #dee2e6;
@@ -50,24 +54,43 @@
         }
 
         .dark {
-            --trvl-bg: #1a1a2e;
-            --trvl-text: #e0e0e0;
-            --trvl-card: #16213e;
-            --trvl-border: #2a2a4a;
-            --trvl-gray-100: #1a1a2e;
-            --trvl-gray-200: #2a2a4a;
-            --trvl-gray-300: #3a3a5a;
-            --trvl-gray-400: #5a5a7a;
-            --trvl-gray-500: #8a8aaa;
-            --trvl-gray-600: #aaaacc;
-            --trvl-gray-700: #ccccee;
-            --trvl-gray-800: #e0e0e0;
-            --trvl-gray-900: #f0f0f0;
+            --trvl-bg: #0f172a;
+            --trvl-text: #e2e8f0;
+            --trvl-card: #111827;
+            --trvl-border: #334155;
+            --trvl-gray-100: #111827;
+            --trvl-gray-200: #1e293b;
+            --trvl-gray-300: #273449;
+            --trvl-gray-400: #334155;
+            --trvl-gray-500: #475569;
+            --trvl-gray-600: #64748b;
+            --trvl-gray-700: #94a3b8;
+            --trvl-gray-800: #cbd5e1;
+            --trvl-gray-900: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         html { scroll-behavior: smooth; }
         body { background: var(--trvl-bg); color: var(--trvl-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transition: background 0.3s ease, color 0.3s ease; }
+
+        .dark .bg-white { background: var(--trvl-card) !important; }
+        .dark .bg-blue-50 { background: rgba(59,130,246,0.12) !important; }
+        .dark .bg-blue-100 { background: rgba(59,130,246,0.16) !important; }
+        .dark .bg-slate-50 { background: #111827 !important; }
+        .dark .bg-slate-100 { background: #111827 !important; }
+        .dark .bg-gray-100 { background: #111827 !important; }
+        .dark .bg-gray-200 { background: #1e293b !important; }
+        .dark .bg-gray-300 { background: #1f2937 !important; }
+        .dark .border-gray-100, .dark .border-slate-100 { border-color: #334155 !important; }
+        .dark .border-blue-200 { border-color: rgba(96,165,250,0.3) !important; }
+        .dark .text-gray-900, .dark .text-gray-800, .dark .text-gray-700, .dark .text-blue-900, .dark .text-blue-800, .dark .text-slate-900 { color: #e2e8f0 !important; }
+        .dark .text-gray-600, .dark .text-gray-500, .dark .text-gray-400, .dark .text-gray-300 { color: #cbd5e1 !important; }
+        .dark .form-field, .dark .trvl-form-field, .dark .bg-card, .dark .bg-section, .dark .airport-card, .dark .booking-card, .dark .info-panel, .dark .trvl-info-panel {
+            background: var(--trvl-card) !important;
+            color: var(--trvl-text) !important;
+            border-color: var(--trvl-border) !important;
+        }
+        .dark .field-label { color: #cbd5e1 !important; }
 
         /* ===== TRAVELOKA NAVBAR ===== */
         .trvl-navbar {
@@ -795,7 +818,9 @@
 
     @yield('content')
 
-    {{-- FOOTER WITH NEWSLETTER --}}
+    @hasSection('page-footer')
+        @yield('page-footer')
+    @else
     <footer class="trvl-footer py-12" style="background:#080f24;">
         <div class="trvl-container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
@@ -842,6 +867,7 @@
             </div>
         </div>
     </footer>
+    @endif
 
     {{-- Toast Notifications --}}
     @if(session('success'))
