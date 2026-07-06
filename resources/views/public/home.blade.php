@@ -42,12 +42,12 @@
                     <p class="text-sm" style="color:#6c757d;">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
                 </a>
                 <!-- Airport Card -->
-                <a href="{{ route('public.rental') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20mau%20booking%20airport%20transfer" target="_blank" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
                         <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
                     <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Mulai Rp50.000 (Brio/Agya) s.d Rp150.000 (Fortuner/Pajero) tergantung mobil</p>
+                    <p class="text-sm" style="color:#6c757d;">Agya Rp30rb, Avanza Rp50rb, Innova Rp100rb, Hiace Rp150rb — tergantung mobil</p>
                 </a>
             </div>
         </div>
