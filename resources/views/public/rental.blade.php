@@ -86,107 +86,67 @@
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.25rem;">
                     <p style="font-size: 0.875rem; color: #6c757d; font-weight: 500;">
-                        <span style="font-weight: 700; color: #0d2147;">{{ $vehicles->total() }}</span> kendaraan tersedia
+                        <span style="font-weight: 700; color: #0d2147;">20</span> kendaraan tersedia
                     </p>
-                    <div style="font-size: 0.82rem; color: #6c757d; display: flex; align-items: center; gap: 0.4rem;">
-                        <span>Urutkan:</span>
-                        <select name="sort" onchange="window.location.href='{{ route('public.rental') }}?'+new URLSearchParams({...Object.fromEntries(new URLSearchParams(window.location.search)), sort:this.value})" style="border: none; background: transparent; font-weight: 600; color: #0064d2; font-size: 0.82rem; cursor: pointer;">
-                            <option value="vehicle_type" {{ request('sort') === 'vehicle_type' ? 'selected' : '' }}>Tipe Kendaraan</option>
-                            <option value="seat_capacity" {{ request('sort') === 'seat_capacity' ? 'selected' : '' }}>Kapasitas</option>
-                            <option value="created_at" {{ request('sort') === 'created_at' ? 'selected' : '' }}>Terbaru</option>
-                        </select>
-                    </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                    @forelse ($vehicles as $vehicle)
-                        @php
-                            $priceMap = [
-                                'Avanza' => 350000,
-                                'Innova' => 500000,
-                                'Hiace' => 750000,
-                                'Elf' => 900000,
-                                'Mobilio' => 320000,
-                                'Brio' => 300000,
-                                'Grand Max' => 280000,
-                                'Fortuner' => 650000,
-                                'Xpander' => 450000,
-                                'Terios' => 400000,
-                            ];
-                            $basePrice = $priceMap[$vehicle->vehicle_type] ?? 420000;
-                            $withDriverPrice = $basePrice + 100000;
-                            $imageKeyword = strtolower(str_replace(' ', '-', $vehicle->vehicle_type));
-                            $imageUrl = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80";
-                            if (in_array($imageKeyword, ['avanza', 'innova', 'hiace', 'elf', 'mobilio', 'brio', 'grand-max', 'fortuner', 'xpander', 'terios'])) {
-                                $imageUrl = "https://images.unsplash.com/featured-" . $imageKeyword . "?auto=format&fit=crop&w=600&q=80";
-                            }
-                        @endphp
+                @php
+                    $armadaRental = [
+                        ['nama' => 'Toyota Avanza', 'kursi' => 6, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 1234 AB', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Rush', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 450000, 'plat' => 'EB 5678 CD', 'img' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Hiace', 'kursi' => 12, 'transmisi' => 'Manual', 'harga' => 750000, 'plat' => 'EB 9012 EF', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Innova', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 500000, 'plat' => 'EB 3456 GH', 'img' => 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Honda Brio', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 250000, 'plat' => 'EB 7890 IJ', 'img' => 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Honda Mobilio', 'kursi' => 6, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 2345 KL', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Daihatsu Grand Max', 'kursi' => 8, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 6789 MN', 'img' => 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Hilux', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 600000, 'plat' => 'EB 0123 OP', 'img' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Daihatsu Terios', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 1122 QR', 'img' => 'https://images.unsplash.com/photo-1543465077-db45b34b70a4?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Suzuki Ertiga', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 3344 ST', 'img' => 'https://images.unsplash.com/photo-1550355291-bedd4e5a8e4c?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Mitsubishi Xpander', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 450000, 'plat' => 'EB 5566 UV', 'img' => 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Suzuki Carry', 'kursi' => 2, 'transmisi' => 'Manual', 'harga' => 200000, 'plat' => 'EB 7788 WX', 'img' => 'https://images.unsplash.com/photo-1583267746897-2cf415887172?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Fortuner', 'kursi' => 7, 'transmisi' => 'Automatic', 'harga' => 1000000, 'plat' => 'EB 9900 YZ', 'img' => 'https://images.unsplash.com/photo-1550353127-b0da98aeaa0e?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Honda HR-V', 'kursi' => 5, 'transmisi' => 'Automatic', 'harga' => 700000, 'plat' => 'EB 1112 AB', 'img' => 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Mitsubishi Pajero Sport', 'kursi' => 7, 'transmisi' => 'Automatic', 'harga' => 1200000, 'plat' => 'EB 1314 CD', 'img' => 'https://images.unsplash.com/photo-1550353127-b0da98aeaa0e?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Calya', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 300000, 'plat' => 'EB 1516 EF', 'img' => 'https://images.unsplash.com/photo-1543465077-db45b34b70a4?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Daihatsu Sigra', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 300000, 'plat' => 'EB 1718 GH', 'img' => 'https://images.unsplash.com/photo-1550355291-bedd4e5a8e4c?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Toyota Agya', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 200000, 'plat' => 'EB 1920 IJ', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Nissan Livina', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 2122 KL', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
+                        ['nama' => 'Isuzu Elf', 'kursi' => 15, 'transmisi' => 'Manual', 'harga' => 900000, 'plat' => 'EB 2324 MN', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
+                    ];
+                @endphp
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                    @foreach($armadaRental as $kendaraan)
                         <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
                              onmouseover="this.style.boxShadow='0 8px 30px rgba(0,100,210,0.15)'; this.style.borderColor='#dbeafe'; this.style.transform='translateY(-4px)';"
                              onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='var(--trvl-border)'; this.style.transform='translateY(0)';">
 
-                            <div style="height: 140px; position: relative; overflow: hidden;">
-                                <img src="{{ $imageUrl }}" alt="{{ $vehicle->vehicle_type }}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
+                            <div style="height: 160px; position: relative; overflow: hidden;">
+                                <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
                                 <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.3) 100%);"></div>
-                                <span style="position: absolute; top: 12px; left: 12px; background: rgba(0,100,210,0.9); color: white; padding: 0.3rem 0.7rem; border-radius: 8px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">{{ $vehicle->vehicle_type }}</span>
-                                <span style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.9); color: #0d2147; padding: 0.3rem 0.7rem; border-radius: 8px; font-size: 0.72rem; font-weight: 700;">{{ $vehicle->seat_capacity }} Kursi</span>
                             </div>
 
-                            <div style="padding: 1.25rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.8rem;">
-                                    <div>
-                                        <h3 style="font-size: 1rem; font-weight: 700; color: #0d2147; margin-bottom: 0.35rem;">{{ $vehicle->vehicle_type }}</h3>
-                                        <p style="font-size: 0.85rem; color: #6c757d;">{{ $vehicle->mitra?->name ?? 'ASR GO Fleet' }}</p>
-                                    </div>
-                                    <div style="text-align: right;">
-                                        <p style="font-size: 0.95rem; font-weight: 800; color: #0064d2;">Rp {{ number_format($basePrice, 0, ',', '.') }}</p>
-                                        <p style="font-size: 0.7rem; color: #6c757d;">{{ __('rental.per_day') }}</p>
-                                    </div>
+                            <div style="padding: 1.15rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <h3 style="font-size: 1rem; font-weight: 700; color: #0d2147; margin: 0;">{{ $kendaraan['nama'] }}</h3>
+                                    <span style="font-size: 0.65rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px; background: #e8f4fd; color: #0064d2; white-space: nowrap;">{{ $kendaraan['transmisi'] }}</span>
                                 </div>
-
-                                <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-bottom: 1rem;">
-                                    <div style="background: #f8fafc; border-radius: 10px; padding: 0.75rem; border: 1px solid var(--trvl-border);">
-                                        <p style="font-size: 0.72rem; color: #6c757d; margin-bottom: 0.35rem;">Tanpa Sopir</p>
-                                        <p style="font-weight: 700; color: #0d2147;">Rp {{ number_format($basePrice, 0, ',', '.') }}</p>
-                                    </div>
-                                    <div style="background: #ecfdf5; border-radius: 10px; padding: 0.75rem; border: 1px solid #bbf7d0;">
-                                        <p style="font-size: 0.72rem; color: #6c757d; margin-bottom: 0.35rem;">Dengan Sopir</p>
-                                        <p style="font-weight: 700; color: #166534;">Rp {{ number_format($withDriverPrice, 0, ',', '.') }}</p>
-                                    </div>
+                                <p style="font-size: 0.8rem; color: #6c757d; margin-bottom: 0.6rem;">{{ $kendaraan['plat'] }}</p>
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">👥 {{ $kendaraan['kursi'] }} Kursi</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">❄️ AC</span>
                                 </div>
-
-                                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin-bottom: 1rem;">
-                                    <span style="display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.55rem 0.6rem; border-radius: 10px;">
-                                        👥 {{ $vehicle->seat_capacity }} Kursi
-                                    </span>
-                                    <span style="display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.55rem 0.6rem; border-radius: 10px;">
-                                        🚘 {{ $vehicle->vehicle_type }}
-                                    </span>
-                                    <span style="display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.55rem 0.6rem; border-radius: 10px;">
-                                        🧑‍✈️ {{ $vehicle->driver_name ? 'Driver Included' : 'Self Drive' }}
-                                    </span>
+                                <div style="margin-bottom: 0.85rem;">
+                                    <span style="font-size: 1.1rem; font-weight: 800; color: #0064d2;">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }}</span>
+                                    <span style="font-size: 0.72rem; color: #6c757d;"> /hari</span>
                                 </div>
-
-                                <a href="{{ route('login') }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.85rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
-                                    {{ __('rental.book') }}
+                                <a href="{{ route('login') }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.8rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
+                                    Sewa Sekarang
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                 </a>
                             </div>
                         </div>
-                    @empty
-                        <div style="grid-column: span 2; background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
-                            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚗</div>
-                            <p style="font-size: 1rem; font-weight: 700; color: #0d2147;">{{ __('rental.empty') }}</p>
-                            <p style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; line-height: 1.5;">{{ __('rental.empty_desc') }}</p>
-                            <a href="{{ route('public.rental') }}" 
-                               style="display: inline-block; margin-top: 1rem; background: #0064d2; color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
-                        </div>
-                    @endforelse
-                </div>
-
-                <!-- Pagination -->
-                <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
-                    {{ $vehicles->links() }}
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -210,12 +170,12 @@
     #rental-grid { grid-template-columns: 1fr !important; }
     #rental-grid > aside { order: -1; }
     #rental-grid > aside > div { position: static !important; margin-bottom: 1rem; }
-    #rental-grid > div > div[style*="grid-template-columns: repeat(2"] {
-        grid-template-columns: 1fr !important;
+    #rental-grid > div > div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
 @media (max-width: 600px) {
-    #rental-grid > div > div[style*="grid-template-columns: repeat(2"] {
+    #rental-grid > div > div[style*="grid-template-columns: repeat(3"] {
         grid-template-columns: 1fr !important;
     }
 }

@@ -47,7 +47,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
                     <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Jemput & antar bandara. Hubungi kami untuk pemesanan.</p>
+                    <p class="text-sm" style="color:#6c757d;">Mulai Rp50.000 (Brio/Agya) s.d Rp150.000 (Fortuner/Pajero) tergantung mobil</p>
                 </a>
             </div>
         </div>
@@ -395,8 +395,10 @@
                     ['nama' => 'Nissan Livina', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 2122 KL', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
                     ['nama' => 'Isuzu Elf', 'kursi' => 15, 'transmisi' => 'Manual', 'harga' => 900000, 'plat' => 'EB 2324 MN', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
                 ];
+                $showAll = request()->has('show_all');
+                $displayArmada = $showAll ? $armada : array_slice($armada, 0, 3);
             @endphp
-            @foreach($armada as $kendaraan)
+            @foreach($displayArmada as $kendaraan)
             <div class="trvl-vehicle-card trvl-reveal @if($loop->index > 0) trvl-reveal-delay-{{ min($loop->index, 3) }} @endif">
                 <div class="trvl-vehicle-card-img">
                     <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" loading="lazy">
@@ -417,6 +419,15 @@
             </div>
             @endforeach
         </div>
+
+        @if(!$showAll)
+        <div class="text-center mt-8">
+            <a href="{{ route('public.rental') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:-translate-y-0.5" style="background:#0064d2; color:white; box-shadow:0 4px 14px rgba(0,100,210,0.3);">
+                Lihat Semua Armada (20 Mobil)
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+        </div>
+        @endif
     </div>
 </section>
 
