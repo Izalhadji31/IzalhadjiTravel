@@ -123,7 +123,7 @@
                     @if($filteredRental->isEmpty())
                     <tr>
                         <td colspan="8" style="padding: 48px 16px; text-align: center; color: #94a3b8; font-size: 14px;">
-                            <div style="font-size: 40px; margin-bottom: 8px;">📋</div>
+                            <div style="font-size: 40px; margin-bottom: 8px; font-weight:700; color:#2563eb;">List</div>
                             No bookings found for this filter.
                         </td>
                     </tr>
@@ -182,7 +182,7 @@
                     @if($filteredTravel->isEmpty())
                     <tr>
                         <td colspan="8" style="padding: 48px 16px; text-align: center; color: #94a3b8; font-size: 14px;">
-                            <div style="font-size: 40px; margin-bottom: 8px;">📋</div>
+                            <div style="font-size: 40px; margin-bottom: 8px; font-weight:700; color:#2563eb;">List</div>
                             No bookings found for this filter.
                         </td>
                     </tr>
