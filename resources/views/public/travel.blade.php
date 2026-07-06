@@ -151,21 +151,44 @@
                             </div>
 
                             <!-- Schedule Strip -->
-                            <div style="background: var(--trvl-gray-100); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem;">
-                                <span style="font-size: 0.72rem; font-weight: 700; color: var(--trvl-gray-600); text-transform: uppercase; letter-spacing: 0.04em;">Jadwal Keberangkatan:</span>
-                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                    @if(!empty($route->departure_times))
-                                        @foreach($route->departure_times as $time)
-                                            <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">{{ is_string($time) ? $time : ($time->format('H:i') ?? '08:00') }}</span>
-                                        @endforeach
-                                    @else
-                                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">08:00</span>
-                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">14:00</span>
-                                        <span style="display: inline-block; background: var(--trvl-bg); border: 1px solid var(--trvl-border); border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--trvl-gray-900);">19:30</span>
-                                    @endif
+                                <div style="background: var(--trvl-gray-100); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                        <span style="font-size: 0.72rem; font-weight: 700; color: var(--trvl-gray-600); text-transform: uppercase; letter-spacing: 0.04em;">Jadwal:</span>
+                                        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                                            @php
+                                                $now = now()->format('H:i');
+                                                $times = !empty($route->departure_times) ? $route->departure_times : ['08:00', '14:00', '19:30'];
+                                            @endphp
+                                            @foreach($times as $time)
+                                                @php
+                                                    $t = is_string($time) ? $time : ($time->format('H:i') ?? '08:00');
+                                                    $available = $t >= $now;
+                                                @endphp
+                                                <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: {{ $available ? '#dbeafe' : 'var(--trvl-bg)' }}; border: 1px solid {{ $available ? '#93c5fd' : 'var(--trvl-border)' }}; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: {{ $available ? '#1d4ed8' : 'var(--trvl-gray-500)' }};">
+                                                    {{ $t }}
+                                                    @if($available)
+                                                        <span style="width:5px;height:5px;border-radius:50%;background:#00a651;display:inline-block;"></span>
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 0.7rem; color: var(--trvl-gray-500); font-weight: 500;">
+                                        @php
+                                            $hasAvailable = false;
+                                            foreach($times as $time) {
+                                                $t = is_string($time) ? $time : ($time->format('H:i') ?? '08:00');
+                                                if ($t >= $now) { $hasAvailable = true; break; }
+                                            }
+                                        @endphp
+                                        @if($hasAvailable)
+                                            <span style="color:#00a651;">Tersedia hari ini</span>
+                                        @else
+                                            <span style="color:#dc2626;">Keberangkatan hari ini habis</span>
+                                        @endif
+                                    </span>
+                                    <span style="margin-left: auto; font-size: 0.72rem; color: var(--trvl-gray-600); white-space: nowrap;">{{ $route->distance_km ?? '250' }} km</span>
                                 </div>
-                                <span style="margin-left: auto; font-size: 0.72rem; color: var(--trvl-gray-600); white-space: nowrap;">{{ __('travel.est_km') }} {{ $route->distance_km ?? '250' }} km</span>
-                        </div>
                     @empty
                         <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
                             <div style="font-size: 1rem; font-weight: 700; color: var(--trvl-blue); margin-bottom: 1rem;">Tidak Ada Rute</div>
