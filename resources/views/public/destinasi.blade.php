@@ -52,8 +52,8 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-lg">E</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Kabupaten Ende</h2>
-                    <p class="text-gray-500 text-sm">Ibu kota Kabupaten Ende — pusat sejarah dan danau tiga warna legendaris</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Kota Ende — Kota Pancasila</h2>
+                    <p class="text-gray-500 text-sm">Ende adalah Kota Pancasila dan gerbang menuju wisata terkenal Flores seperti Danau Kelimutu dan Renungan Bung Karno.</p>
                 </div>
             </div>
 
@@ -102,9 +102,9 @@
                         <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=500&q=80" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
                     <div class="p-4">
-                        <h4 class="font-bold text-gray-900 mb-1">Rumah Bung Karno</h4>
-                        <p class="text-gray-500 text-sm mb-2">Rumah tempat Ir. Soekarno diasingkan 1934-1938. Kini museum dengan koleksi foto dan barang bersejarah.</p>
-                        <span class="text-xs text-blue-600 font-medium">🏛️ Sejarah & Museum</span>
+                        <h4 class="font-bold text-gray-900 mb-1">Renungan Bung Karno</h4>
+                        <p class="text-gray-500 text-sm mb-2">Situs bersejarah perjuangan Bung Karno saat diasingkan di Ende. Tempat penuh nilai nasionalisme dan inspirasi Pancasila.</p>
+                        <span class="text-xs text-blue-600 font-medium">🏛️ Sejarah & Budaya</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group">

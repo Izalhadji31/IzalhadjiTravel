@@ -611,8 +611,9 @@
                                     <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Airport Transfer · Pulau Flores</p>
-                                    <h2 class="text-base font-bold text-gray-900">Antar-Jemput Bandara — 6 Bandara di Flores</h2>
+                                    <p class="text-xs text-blue-500 font-semibold uppercase tracking-wide">Airport Transfer · Pulau Flores</p>
+                                    <h2 class="text-base font-bold text-gray-900">Antar-Jemput Bandara & Pickup Hotel</h2>
+                                    <p class="text-sm text-gray-500 mt-1">Layanan penjemputan dan pengantaran dari/ke bandara, hotel, penginapan, dan alamat pilihan di seluruh Flores.</p>
                                 </div>
                             </div>
                             <!-- Transfer Type Toggle -->
@@ -665,8 +666,8 @@
                         <!-- Form Fields -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                             <div class="lg:col-span-2">
-                                <label class="field-label" id="location-label">Lokasi Penjemputan / Hotel</label>
-                                <input type="text" placeholder="Masukkan alamat / nama hotel di Ende" class="form-field" id="airport-location">
+                                <label class="field-label" id="location-label">Lokasi Penjemputan / Hotel / Penginapan</label>
+                                <input type="text" placeholder="Masukkan alamat, nama hotel, atau penginapan" class="form-field" id="airport-location">
                             </div>
                             <div>
                                 <label class="field-label">Tanggal</label>
@@ -1133,67 +1134,7 @@
         </div>
     </section>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer id="tentang" class="footer-main text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-10">
-                <div class="lg:col-span-2">
-                    <div class="flex items-center gap-2.5 mb-4">
-                        <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-white font-extrabold text-xl">ASR GO</p>
-                            <p class="text-slate-500 text-xs">Platform Transportasi Flores</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-xs">
-                        Layanan travel antar kota & airport transfer terpercaya di Pulau Flores, berpusat di Kota Ende, Nusa Tenggara Timur.
-                    </p>
-                    <div class="mt-5 space-y-1.5">
-                        <p class="text-sm text-slate-400">📞 <span class="text-white font-semibold">1500 009</span></p>
-                        <p class="text-sm text-slate-400">📍 <span class="text-white font-medium">Jl. Soekarno-Hatta, Ende, NTT</span></p>
-                        <p class="text-sm text-slate-400">🕐 <span class="text-white font-medium">Layanan 24 Jam</span></p>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm">Layanan</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="footer-link">Travel Antar Kota</a></li>
-                        <li><a href="#" class="footer-link">Airport Transfer</a></li>
-                        <li><a href="#" class="footer-link">Sewa Kendaraan</a></li>
-                        <li><a href="#" class="footer-link">Paket Wisata</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm">Rute Populer</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="footer-link">Ende → Labuan Bajo</a></li>
-                        <li><a href="#" class="footer-link">Ende → Maumere</a></li>
-                        <li><a href="#" class="footer-link">Ende → Bajawa</a></li>
-                        <li><a href="#" class="footer-link">Ende → Kelimutu</a></li>
-                        <li><a href="#" class="footer-link">Ende → Ruteng</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4 text-sm">Informasi</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="footer-link">Tentang Kami</a></li>
-                        <li><a href="#" class="footer-link">Cara Pemesanan</a></li>
-                        <li><a href="#bantuan" class="footer-link">Pusat Bantuan</a></li>
-                        <li><a href="#" class="footer-link">Syarat & Ketentuan</a></li>
-                        <li><a href="#" class="footer-link">Kebijakan Privasi</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p class="text-slate-600 text-sm">&copy; 2026 ASR GO. Seluruh hak dilindungi. &mdash; Ende, Flores, NTT</p>
-                <p class="text-slate-600 text-xs">Dibuat dengan ❤️ untuk kemajuan pariwisata Flores</p>
-            </div>
-        </div>
-    </footer>
+
 
     <script>
         /* ===== TAB SWITCHING ===== */
