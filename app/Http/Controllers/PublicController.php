@@ -69,32 +69,25 @@ class PublicController extends Controller
      */
     public function rentalList(Request $request)
     {
-        $query = RentalPrice::active()->with('route');
+        $query = \App\Models\Armada::available()->with('mitra');
 
-        // Filter by destination
-        if ($request->filled('destination')) {
-            $query->whereHas('route', function ($q) use ($request) {
-                $q->where('destination_city', $request->destination);
-            });
+        if ($request->filled('vehicle_type')) {
+            $query->where('vehicle_type', $request->vehicle_type);
         }
 
-        // Filter by price range
-        if ($request->filled('price_min') && $request->filled('price_max')) {
-            $query->whereBetween('price_without_driver', [$request->price_min, $request->price_max]);
+        if ($request->filled('min_capacity')) {
+            $query->where('seat_capacity', '>=', $request->min_capacity);
         }
 
-        // Sort
-        $sortBy = $request->get('sort', 'created_at');
-        if (in_array($sortBy, ['price_without_driver', 'created_at'])) {
+        $sortBy = $request->get('sort', 'vehicle_type');
+        if (in_array($sortBy, ['vehicle_type', 'seat_capacity', 'created_at'])) {
             $query->orderBy($sortBy, $request->get('order', 'asc'));
         }
 
-        $rentals = $query->paginate(12);
-        $destinations = Route::active()->rental()->distinct()->pluck('destination_city')->filter();
-
+        $vehicles = $query->paginate(12);
         $vehicleTypes = \App\Models\Armada::available()->distinct()->pluck('vehicle_type')->filter();
 
-        return view('public.rental', compact('rentals', 'destinations', 'vehicleTypes'));
+        return view('public.rental', compact('vehicles', 'vehicleTypes'));
     }
 
     /**
