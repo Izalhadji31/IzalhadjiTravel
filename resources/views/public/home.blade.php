@@ -265,11 +265,11 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🌋 Danau Kelimutu</p>
+                            <p class="font-semibold text-gray-900 text-sm">Danau Kelimutu</p>
                             <p class="text-xs text-gray-500">Danau 3 warna, ikon Flores</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🏛️ Rumah Bung Karno</p>
+                            <p class="font-semibold text-gray-900 text-sm">Rumah Bung Karno</p>
                             <p class="text-xs text-gray-500">Museum pengasingan Bung Karno 1934-1938</p>
                         </div>
                     </div>
@@ -287,11 +287,11 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🦎 Pulau Komodo</p>
+                            <p class="font-semibold text-gray-900 text-sm">Pulau Komodo</p>
                             <p class="text-xs text-gray-500">Habitat asli komodo, Warisan UNESCO</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🏖️ Pink Beach</p>
+                            <p class="font-semibold text-gray-900 text-sm">Pink Beach</p>
                             <p class="text-xs text-gray-500">1 dari 7 pantai pink di dunia</p>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🐠 Teluk Maumere</p>
+                            <p class="font-semibold text-gray-900 text-sm">Teluk Maumere</p>
                             <p class="text-xs text-gray-500">Spot diving kelas dunia</p>
                         </div>
                     </div>
@@ -327,7 +327,7 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🏡 Desa Wae Rebo</p>
+                            <p class="font-semibold text-gray-900 text-sm">Desa Wae Rebo</p>
                             <p class="text-xs text-gray-500">Desa di atas awan, 1.200 mdpl</p>
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">🏘️ Kampung Bena</p>
+                            <p class="font-semibold text-gray-900 text-sm">Kampung Bena</p>
                             <p class="text-xs text-gray-500">Desa adat Ngada dengan megalit kuno</p>
                         </div>
                     </div>
@@ -363,7 +363,7 @@
                     </div>
                     <div class="p-4 space-y-3">
                         <div>
-                            <p class="font-semibold text-gray-900 text-sm">⛪ Semana Santa</p>
+                            <p class="font-semibold text-gray-900 text-sm">Semana Santa</p>
                             <p class="text-xs text-gray-500">Tradisi Paskah berusia ratusan tahun</p>
                         </div>
                     </div>
@@ -414,8 +414,8 @@
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">{{ $vehicleName }}</h3>
                     <div class="trvl-vehicle-specs">
-                        <span class="trvl-vehicle-spec">👥 {{ $seatCapacity }} Kursi</span>
-                        <span class="trvl-vehicle-spec">❄️ AC</span>
+                        <span class="trvl-vehicle-spec">{{ $seatCapacity }} Kursi</span>
+                        <span class="trvl-vehicle-spec">AC</span>
                     </div>
                     <div class="trvl-vehicle-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
@@ -426,7 +426,7 @@
                 <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 50%,#60a5fa 100%); display:flex; align-items:center; justify-content:center;"><span style="font-size:2rem; font-weight:800; color:rgba(255,255,255,0.3);">AV</span></div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Avanza</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 6 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
+                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">6 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
                     <div class="trvl-vehicle-price">Rp 350.000 <span>{{ __('home.fleet_per_day') }}</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
@@ -437,7 +437,7 @@
                 </div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Innova</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 7 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
+                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">7 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
                     <div class="trvl-vehicle-price">Rp 500.000 <span>{{ __('home.fleet_per_day') }}</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
@@ -448,7 +448,7 @@
                 </div>
                 <div class="trvl-vehicle-card-body">
                     <h3 class="trvl-vehicle-name">Toyota Hiace</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">👥 12 Kursi</span><span class="trvl-vehicle-spec">❄️ AC</span></div>
+                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">12 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
                     <div class="trvl-vehicle-price">Rp 750.000 <span>{{ __('home.fleet_per_day') }}</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
