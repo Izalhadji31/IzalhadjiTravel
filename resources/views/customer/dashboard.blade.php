@@ -27,7 +27,7 @@
         <div style="background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.5rem;">
             <p style="color: #6b7280; font-weight: 600; margin: 0 0 0.5rem 0; font-size: 0.85rem;">Rating Anda</p>
             <h3 style="font-size: 1.75rem; font-weight: 700; color: #f59e0b; margin: 0; margin-bottom: 0.5rem;">
-                ⭐ {{ Auth::user()->rating ?? 0 }}
+                {{ Auth::user()->rating ?? 0 }}
             </h3>
             <p style="color: #9ca3af; margin: 0; font-size: 0.85rem;">Rating dari driver</p>
         </div>

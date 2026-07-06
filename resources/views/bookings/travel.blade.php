@@ -112,7 +112,7 @@
         <!-- Booking Card 1 -->
         <div class="travel-card">
             <div class="travel-card-img">
-                <span style="font-size:4rem;">🚐</span>
+                <span style="font-size:4rem; font-weight:700; color:#0064d2;">Bus</span>
                 <span class="travel-card-badge bg-emerald-500 text-white">Selesai</span>
             </div>
             <div class="travel-card-body">
@@ -214,7 +214,7 @@
         <!-- Booking Card 4 -->
         <div class="travel-card">
             <div class="travel-card-img" style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 50%,#f87171 100%);">
-                <span style="font-size:4rem;">🚐</span>
+                <span style="font-size:4rem; font-weight:700; color:#0064d2;">Bus</span>
                 <span class="travel-card-badge bg-red-500 text-white">Dibatalkan</span>
             </div>
             <div class="travel-card-body">
