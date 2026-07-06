@@ -43,9 +43,9 @@ class PaymentService
             'customer_details' => $customerDetails,
             'enabled_payments' => $this->getEnabledPaymentMethods(),
             'callbacks' => [
-                'finish' => config('midtrans.finish_redirect_url'),
-                'error' => config('midtrans.error_redirect_url'),
-                'pending' => config('midtrans.unfinish_redirect_url'),
+                'finish' => route('payments.success'),
+                'error' => route('payments.error'),
+                'pending' => route('payments.pending'),
             ],
             'expiry' => [
                 'unit' => 'hours',

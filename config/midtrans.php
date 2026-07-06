@@ -13,9 +13,9 @@ return [
     
     // Notification settings
     'notification_url' => env('MIDTRANS_NOTIFICATION_URL', '/api/midtrans/notification'),
-    'finish_redirect_url' => env('MIDTRANS_FINISH_URL', '/bookings/payment-success'),
-    'error_redirect_url' => env('MIDTRANS_ERROR_URL', '/bookings/payment-error'),
-    'unfinish_redirect_url' => env('MIDTRANS_UNFINISH_URL', '/bookings/payment-pending'),
+    'finish_redirect_url' => env('MIDTRANS_FINISH_URL', '/payments/success'),
+    'error_redirect_url' => env('MIDTRANS_ERROR_URL', '/payments/error'),
+    'unfinish_redirect_url' => env('MIDTRANS_UNFINISH_URL', '/payments/pending'),
     
     // Payment settings
     'enable_pay_later' => env('MIDTRANS_ENABLE_PAY_LATER', true),
