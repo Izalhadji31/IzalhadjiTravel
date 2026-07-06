@@ -95,7 +95,7 @@
     <!-- View Toggle: Table / Card Grid -->
     <div class="flex items-center justify-between mb-5">
         <div class="results-count">
-            <strong>4</strong> pemesanan ditemukan
+            <strong>{{ $bookings->total() }}</strong> pemesanan ditemukan
         </div>
         <div class="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
             <button class="px-3 py-1.5 rounded-md text-sm font-medium bg-white text-slate-900 shadow-sm" id="view-grid" onclick="switchView('grid')">
@@ -109,141 +109,70 @@
 
     <!-- ===== CARD GRID VIEW (Traveloka Style) ===== -->
     <div id="card-grid-view" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-8">
-        <!-- Booking Card 1 -->
+        @forelse($bookings as $booking)
         <div class="travel-card">
-            <div class="travel-card-img">
+            <div class="travel-card-img" style="background:linear-gradient(135deg,
+                @switch($booking->status)
+                    @case('completed') #065f46 0%,#10b981 50%,#6ee7b7 100%
+                    @case('confirmed') #1e3a8a 0%,#2563eb 50%,#60a5fa 100%
+                    @case('cancelled') #991b1b 0%,#dc2626 50%,#f87171 100%
+                    @default #92400e 0%,#d97706 50%,#fbbf24 100%
+                @endswitch
+            );">
                 <span style="font-size:4rem; font-weight:700; color:#0064d2;">Bus</span>
-                <span class="travel-card-badge bg-emerald-500 text-white">Selesai</span>
+                <span class="travel-card-badge
+                    @switch($booking->status)
+                        @case('pending') bg-amber-500
+                        @case('confirmed') bg-blue-500
+                        @case('completed') bg-emerald-500
+                        @case('cancelled') bg-red-500
+                        @default bg-amber-500
+                    @endswitch
+                text-white">
+                    @switch($booking->status)
+                        @case('pending') Menunggu
+                        @case('confirmed') Dikonfirmasi
+                        @case('completed') Selesai
+                        @case('cancelled') Dibatalkan
+                        @default {{ ucfirst($booking->status) }}
+                    @endswitch
+                </span>
             </div>
             <div class="travel-card-body">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-slate-400">#TB001</span>
-                    <span class="text-xs text-slate-400">May 15, 2026</span>
+                    <span class="text-xs font-bold text-slate-400">{{ $booking->booking_code }}</span>
+                    <span class="text-xs text-slate-400">{{ $booking->created_at ? $booking->created_at->format('M d, Y') : ($booking->scheduled_date ? $booking->scheduled_date->format('M d, Y') : '') }}</span>
                 </div>
-                <h3 class="travel-card-title">Jakarta → Surabaya</h3>
-                <p class="travel-card-subtitle">John Doe · 2 kursi</p>
+                <h3 class="travel-card-title">{{ $booking->route?->origin_city ?? 'N/A' }} → {{ $booking->route?->destination_city ?? 'N/A' }}</h3>
+                <p class="travel-card-subtitle">{{ $booking->user?->name ?? 'N/A' }} · {{ $booking->passenger_count ?? $booking->number_of_seats ?? 1 }} kursi</p>
                 <div class="travel-card-meta">
                     <span class="travel-card-meta-item">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        8 jam
+                        {{ $booking->route?->estimated_hours ? $booking->route->estimated_hours . ' jam' : '-' }}
                     </span>
                     <span class="travel-card-meta-item">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                        750 km
+                        {{ $booking->route?->distance_km ? number_format($booking->route->distance_km, 0) . ' km' : '-' }}
                     </span>
                     <span class="travel-card-meta-item">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                        Avanza
+                        {{ $booking->armada?->vehicle_type ?? $booking->assignedArmada?->vehicle_type ?? 'Bus' }}
                     </span>
                 </div>
                 <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
-                    <p class="travel-card-price">Rp 250.000 <span class="unit">/org</span></p>
-                    <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">Detail →</a>
+                    <p class="travel-card-price">Rp {{ number_format($booking->total_price, 0, ',', '.') }} <span class="unit">/org</span></p>
+                    <a href="{{ route('bookings.travel.show', $booking) }}" class="text-blue-600 text-sm font-semibold hover:underline">Detail →</a>
                 </div>
             </div>
         </div>
-
-        <!-- Booking Card 2 -->
-        <div class="travel-card">
-            <div class="travel-card-img" style="background:linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%);">
-                <span style="font-size:4rem;">🚌</span>
-                <span class="travel-card-badge bg-amber-500 text-white">Berjalan</span>
-            </div>
-            <div class="travel-card-body">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-slate-400">#TB002</span>
-                    <span class="text-xs text-slate-400">May 18, 2026</span>
-                </div>
-                <h3 class="travel-card-title">Bandung → Jakarta</h3>
-                <p class="travel-card-subtitle">Jane Smith · 1 kursi</p>
-                <div class="travel-card-meta">
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        3 jam
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                        150 km
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                        Innova
-                    </span>
-                </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
-                    <p class="travel-card-price">Rp 180.000 <span class="unit">/org</span></p>
-                    <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">Detail →</a>
-                </div>
-            </div>
+        @empty
+        <div class="col-span-full text-center py-12">
+            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+            </svg>
+            <p class="text-gray-500 text-lg">No travel bookings found</p>
         </div>
-
-        <!-- Booking Card 3 -->
-        <div class="travel-card">
-            <div class="travel-card-img" style="background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 50%,#60a5fa 100%);">
-                <span style="font-size:4rem;">🚗</span>
-                <span class="travel-card-badge bg-blue-500 text-white">Menunggu</span>
-            </div>
-            <div class="travel-card-body">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-slate-400">#TB003</span>
-                    <span class="text-xs text-slate-400">May 20, 2026</span>
-                </div>
-                <h3 class="travel-card-title">Jakarta → Bandung</h3>
-                <p class="travel-card-subtitle">Mike Johnson · 3 kursi</p>
-                <div class="travel-card-meta">
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        3 jam
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                        150 km
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                        Hiace
-                    </span>
-                </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
-                    <p class="travel-card-price">Rp 160.000 <span class="unit">/org</span></p>
-                    <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">Detail →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Booking Card 4 -->
-        <div class="travel-card">
-            <div class="travel-card-img" style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 50%,#f87171 100%);">
-                <span style="font-size:4rem; font-weight:700; color:#0064d2;">Bus</span>
-                <span class="travel-card-badge bg-red-500 text-white">Dibatalkan</span>
-            </div>
-            <div class="travel-card-body">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-slate-400">#TB004</span>
-                    <span class="text-xs text-slate-400">May 12, 2026</span>
-                </div>
-                <h3 class="travel-card-title">Yogyakarta → Solo</h3>
-                <p class="travel-card-subtitle">Sarah Wilson · 2 kursi</p>
-                <div class="travel-card-meta">
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        1.5 jam
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                        60 km
-                    </span>
-                    <span class="travel-card-meta-item">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                        Elf
-                    </span>
-                </div>
-                <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
-                    <p class="travel-card-price">Rp 120.000 <span class="unit">/org</span></p>
-                    <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">Detail →</a>
-                </div>
-            </div>
-        </div>
+        @endforelse
     </div>
 
     <!-- ===== TABLE VIEW ===== -->
@@ -265,60 +194,40 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($bookings as $booking)
                     <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
-                        <td class="px-6 py-3 font-semibold text-gray-900">#TB001</td>
-                        <td class="px-6 py-3 text-gray-700">John Doe</td>
-                        <td class="px-6 py-3 text-gray-700">Jakarta → Surabaya</td>
-                        <td class="px-6 py-3 text-gray-700">2</td>
-                        <td class="px-6 py-3 text-gray-700">May 15, 2026</td>
-                        <td class="px-6 py-3 font-semibold text-blue-600">Rp 250.000</td>
-                        <td class="px-6 py-3"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Completed</span></td>
-                        <td class="px-6 py-3"><button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button></td>
+                        <td class="px-6 py-3 font-semibold text-gray-900">{{ $booking->booking_code }}</td>
+                        <td class="px-6 py-3 text-gray-700">{{ $booking->user?->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-3 text-gray-700">{{ $booking->route?->origin_city ?? '' }} → {{ $booking->route?->destination_city ?? '' }}</td>
+                        <td class="px-6 py-3 text-gray-700">{{ $booking->passenger_count ?? $booking->number_of_seats ?? 1 }}</td>
+                        <td class="px-6 py-3 text-gray-700">{{ $booking->created_at ? $booking->created_at->format('M d, Y') : ($booking->scheduled_date ? $booking->scheduled_date->format('M d, Y') : '-') }}</td>
+                        <td class="px-6 py-3 font-semibold text-blue-600">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</td>
+                        <td class="px-6 py-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                @if($booking->status === 'completed') bg-green-100 text-green-800
+                                @elseif($booking->status === 'confirmed') bg-blue-100 text-blue-800
+                                @elseif($booking->status === 'cancelled') bg-red-100 text-red-800
+                                @else bg-yellow-100 text-yellow-800
+                                @endif">
+                                {{ ucfirst($booking->status) }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-3">
+                            <a href="{{ route('bookings.travel.show', $booking) }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</a>
+                        </td>
                     </tr>
-                    <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
-                        <td class="px-6 py-3 font-semibold text-gray-900">#TB002</td>
-                        <td class="px-6 py-3 text-gray-700">Jane Smith</td>
-                        <td class="px-6 py-3 text-gray-700">Bandung → Jakarta</td>
-                        <td class="px-6 py-3 text-gray-700">1</td>
-                        <td class="px-6 py-3 text-gray-700">May 18, 2026</td>
-                        <td class="px-6 py-3 font-semibold text-blue-600">Rp 180.000</td>
-                        <td class="px-6 py-3"><span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">In Progress</span></td>
-                        <td class="px-6 py-3"><button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button></td>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="px-6 py-12 text-center text-gray-500">No travel bookings found</td>
                     </tr>
-                    <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
-                        <td class="px-6 py-3 font-semibold text-gray-900">#TB003</td>
-                        <td class="px-6 py-3 text-gray-700">Mike Johnson</td>
-                        <td class="px-6 py-3 text-gray-700">Jakarta → Bandung</td>
-                        <td class="px-6 py-3 text-gray-700">3</td>
-                        <td class="px-6 py-3 text-gray-700">May 20, 2026</td>
-                        <td class="px-6 py-3 font-semibold text-blue-600">Rp 160.000</td>
-                        <td class="px-6 py-3"><span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">Pending</span></td>
-                        <td class="px-6 py-3"><button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button></td>
-                    </tr>
-                    <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
-                        <td class="px-6 py-3 font-semibold text-gray-900">#TB004</td>
-                        <td class="px-6 py-3 text-gray-700">Sarah Wilson</td>
-                        <td class="px-6 py-3 text-gray-700">Yogyakarta → Solo</td>
-                        <td class="px-6 py-3 text-gray-700">2</td>
-                        <td class="px-6 py-3 text-gray-700">May 12, 2026</td>
-                        <td class="px-6 py-3 font-semibold text-blue-600">Rp 120.000</td>
-                        <td class="px-6 py-3"><span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">Cancelled</span></td>
-                        <td class="px-6 py-3"><button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-            <p class="text-sm text-gray-600">Showing 1 to 4 of 856 bookings</p>
-            <div class="flex space-x-2">
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">← Previous</button>
-                <button class="px-3 py-2 border-2 border-blue-600 bg-blue-50 text-blue-600 rounded-lg font-medium">1</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">2</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">3</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">Next →</button>
-            </div>
+        <div class="px-6 py-4 border-t border-gray-200">
+            {{ $bookings->links() }}
         </div>
     </div>
 

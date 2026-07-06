@@ -98,8 +98,8 @@
                         @foreach($bookings as $booking)
                         <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
                             <td class="px-6 py-3 font-semibold text-gray-900">{{ $booking->booking_code ?? '#RB-' . $booking->id }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $booking->user->name ?? 'N/A' }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $booking->route->origin_city ?? '' }} → {{ $booking->route->destination_city ?? '' }}</td>
+                            <td class="px-6 py-3 text-gray-700">{{ $booking->user?->name ?? 'N/A' }}</td>
+                            <td class="px-6 py-3 text-gray-700">{{ $booking->route?->origin_city ?? '' }} → {{ $booking->route?->destination_city ?? '' }}</td>
                             <td class="px-6 py-3 text-gray-700">
                                 @if($booking->rental_type === 'with_driver')
                                     <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">With Driver</span>
@@ -145,65 +145,5 @@
                 <a href="{{ route('bookings.rental.create') }}" class="btn-primary inline-block">Create First Booking</a>
             </div>
         @endif
-    </div>
-@endsection
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Rental Period:</span>
-                    <span class="font-medium text-gray-900">May 22-29</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Price/Day:</span>
-                    <span class="font-medium text-blue-600">$65.00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Total:</span>
-                    <span class="font-bold text-gray-900">$455.00</span>
-                </div>
-            </div>
-
-            <div class="flex gap-2">
-                <button class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100">Confirm</button>
-                <button class="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100">Reject</button>
-            </div>
-        </div>
-
-        <!-- Booking Card 3 -->
-        <div class="card hover:shadow-xl transition-shadow">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h4 class="font-bold text-gray-900">#RB003</h4>
-                    <p class="text-sm text-gray-600">Mitsubishi Xpander</p>
-                </div>
-                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">Completed</span>
-            </div>
-
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 mb-4 text-center">
-                <svg class="w-12 h-12 text-blue-600 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
-                </svg>
-            </div>
-
-            <div class="space-y-2 mb-4 pb-4 border-b border-gray-200 text-sm">
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Customer:</span>
-                    <span class="font-medium text-gray-900">Chris Martinez</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Rental Period:</span>
-                    <span class="font-medium text-gray-900">May 10-17</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Price/Day:</span>
-                    <span class="font-medium text-blue-600">$55.00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Total:</span>
-                    <span class="font-bold text-gray-900">$385.00</span>
-                </div>
-            </div>
-
-            <button class="w-full px-3 py-2 bg-gray-100 text-gray-600 rounded-lg font-medium hover:bg-gray-200">Download Invoice</button>
-        </div>
     </div>
 @endsection
