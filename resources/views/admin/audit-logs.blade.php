@@ -79,7 +79,7 @@
                     </span>
                 </td>
                 <td style="padding: 0.75rem 1rem; font-size: 0.9rem; color: #666;">
-                    {{ class_basename($log->model_type) }} #{{ $log->model_id ? substr($log->model_id, 0, 8) : 'N/A' }}
+                    {{ class_basename($log->model) }} #{{ $log->model_id ? substr($log->model_id, 0, 8) : 'N/A' }}
                 </td>
                 <td style="padding: 0.75rem 1rem; font-size: 0.85rem; color: #999; font-family: monospace;">
                     {{ $log->ip_address ?? 'N/A' }}

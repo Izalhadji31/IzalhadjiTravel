@@ -28,7 +28,7 @@ class AuditLogController extends Controller
 
         // Filter by model
         if ($request->filled('model') && $request->model !== 'all') {
-            $query->where('model_type', $request->model);
+            $query->where('model', $request->model);
         }
 
         // Filter by date range
@@ -45,7 +45,7 @@ class AuditLogController extends Controller
         // Get filter options
         $users = User::select('id', 'name')->orderBy('name')->get();
         $actions = AuditLog::select('action')->distinct()->orderBy('action')->pluck('action');
-        $models = AuditLog::select('model_type')->distinct()->orderBy('model_type')->pluck('model_type');
+        $models = AuditLog::select('model')->distinct()->orderBy('model')->pluck('model');
 
         return view('admin.audit-logs', compact('logs', 'users', 'actions', 'models'));
     }
