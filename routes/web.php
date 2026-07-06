@@ -75,17 +75,12 @@ Route::prefix('public')->group(function () {
     Route::get('/airport', [PublicController::class, 'airport'])->name('public.airport');
 });
 
-// Payment Status Pages (public - called by Midtrans redirect)
-Route::get('/payments/success', [PaymentController::class, 'paymentSuccess'])->name('payments.success');
-Route::get('/payments/error', [PaymentController::class, 'paymentError'])->name('payments.error');
-Route::get('/payments/pending', [PaymentController::class, 'paymentPending'])->name('payments.pending');
-
 Route::middleware(['auth'])->group(function () {
     Route::post('/bookings', [BookingTravelController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{booking}', [BookingTravelController::class, 'show'])->name('bookings.show');
 });
 
-// Booking & Payment Routes - Require Verified Email
+// Payment Routes (require verified email)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/bookings/verified-store', [BookingTravelController::class, 'store'])->name('bookings.verified-store');
 });
@@ -283,6 +278,9 @@ Route::middleware(['auth'])->group(function () {
     // Payment Routes
     // Authenticated Payment Routes (require verified email)
     Route::middleware(['auth', 'verified'])->prefix('payments')->group(function () {
+        Route::get('/success', [PaymentController::class, 'paymentSuccess'])->name('payments.success');
+        Route::get('/error', [PaymentController::class, 'paymentError'])->name('payments.error');
+        Route::get('/pending', [PaymentController::class, 'paymentPending'])->name('payments.pending');
         Route::get('/travel/{travelBooking}', [PaymentController::class, 'showTravelPayment'])->name('payments.travel');
         Route::get('/rental/{rentalBooking}', [PaymentController::class, 'showRentalPayment'])->name('payments.rental');
         Route::post('/check-status/{payment}', [PaymentController::class, 'checkStatus'])->name('payments.check-status');
