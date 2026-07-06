@@ -26,28 +26,28 @@
         <div class="max-w-5xl mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Rental Card -->
-                <a href="{{ route('public.vehicles') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                <a href="{{ route('public.vehicles') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#e8f4fd;">
+                        <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_rental') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Mobil Avanza, Innova, Hiace — lepas kunci atau dengan sopir</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_rental') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">Mobil Avanza, Innova, Hiace — lepas kunci atau dengan sopir</p>
                 </a>
                 <!-- Travel Card -->
-                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
+                        <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_travel') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_travel') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
                 </a>
                 <!-- Airport Card -->
-                <a href="#layanan" class="block p-5 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:rgba(255,255,255,0.2);">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                <a href="{{ route('public.rental') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
+                        <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
-                    <h3 class="text-white font-bold text-base mb-1" style="text-shadow:0 1px 3px rgba(0,0,0,0.3);">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:rgba(255,255,255,0.85);">Jemput & antar bandara — nyaman, tepat waktu. <span style="color:#60a5fa;">Hubungi Kami</span></p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_airport') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">Jemput & antar bandara. Hubungi kami untuk pemesanan.</p>
                 </a>
             </div>
         </div>
@@ -230,24 +230,6 @@
                 <span class="trvl-section-badge">{{ __('home.destinations_badge') }}</span>
                 <h2 class="trvl-section-title">{{ __('home.destinations_title') }}</h2>
                 <p class="trvl-section-desc">{{ __('home.destinations_desc') }}</p>
-            </div>
-
-            <!-- Featured: Danau Kelimutu -->
-            <div class="trvl-reveal mb-8">
-                <div class="rounded-2xl overflow-hidden shadow-xl relative group cursor-pointer">
-                    <div class="aspect-video relative" style="max-height: 380px;">
-                        <img src="https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=1400&q=80" alt="Danau Kelimutu" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">{{ __('home.destinations_featured_badge') }}</span>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-white/70 text-sm">Ende, NTT</span>
-                            <h3 class="text-2xl font-bold text-white mt-1 mb-2">Danau Kelimutu</h3>
-                            <p class="text-white/80 max-w-2xl">{{ __('home.destinations_kelimutu_desc') }}</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Cities as Destination Containers -->
