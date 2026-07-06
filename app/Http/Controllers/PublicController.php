@@ -181,28 +181,7 @@ class PublicController extends Controller
      */
     public function vehiclesList(Request $request)
     {
-        $query = \App\Models\Armada::available()->with('mitra');
-
-        // Filter by vehicle type
-        if ($request->filled('vehicle_type')) {
-            $query->where('vehicle_type', $request->vehicle_type);
-        }
-
-        // Filter by seat capacity
-        if ($request->filled('min_capacity')) {
-            $query->where('seat_capacity', '>=', $request->min_capacity);
-        }
-
-        // Sort
-        $sortBy = $request->get('sort', 'vehicle_type');
-        if (in_array($sortBy, ['vehicle_type', 'seat_capacity', 'created_at'])) {
-            $query->orderBy($sortBy, $request->get('order', 'asc'));
-        }
-
-        $vehicles = $query->paginate(12);
-        $vehicleTypes = \App\Models\Armada::available()->distinct()->pluck('vehicle_type');
-
-        return view('public.vehicles', compact('vehicles', 'vehicleTypes'));
+        return view('public.vehicles');
     }
 
     /**
