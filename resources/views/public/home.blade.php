@@ -374,14 +374,26 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @php
                 $armada = [
-                    ['nama' => 'Toyota Avanza', 'kursi' => 6, 'harga' => 350000, 'plat' => 'EB 1234 AB', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Toyota Rush', 'kursi' => 7, 'harga' => 450000, 'plat' => 'EB 5678 CD', 'img' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Toyota Hiace', 'kursi' => 12, 'harga' => 750000, 'plat' => 'EB 9012 EF', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Toyota Innova', 'kursi' => 7, 'harga' => 500000, 'plat' => 'EB 3456 GH', 'img' => 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Honda Brio', 'kursi' => 4, 'harga' => 250000, 'plat' => 'EB 7890 IJ', 'img' => 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Honda Mobilio', 'kursi' => 6, 'harga' => 350000, 'plat' => 'EB 2345 KL', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Daihatsu Grand Max', 'kursi' => 8, 'harga' => 400000, 'plat' => 'EB 6789 MN', 'img' => 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'],
-                    ['nama' => 'Toyota Hilux', 'kursi' => 4, 'harga' => 600000, 'plat' => 'EB 0123 OP', 'img' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Avanza', 'kursi' => 6, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 1234 AB', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Rush', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 450000, 'plat' => 'EB 5678 CD', 'img' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Hiace', 'kursi' => 12, 'transmisi' => 'Manual', 'harga' => 750000, 'plat' => 'EB 9012 EF', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Innova', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 500000, 'plat' => 'EB 3456 GH', 'img' => 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Honda Brio', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 250000, 'plat' => 'EB 7890 IJ', 'img' => 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Honda Mobilio', 'kursi' => 6, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 2345 KL', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Daihatsu Grand Max', 'kursi' => 8, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 6789 MN', 'img' => 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Hilux', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 600000, 'plat' => 'EB 0123 OP', 'img' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Daihatsu Terios', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 1122 QR', 'img' => 'https://images.unsplash.com/photo-1543465077-db45b34b70a4?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Suzuki Ertiga', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 350000, 'plat' => 'EB 3344 ST', 'img' => 'https://images.unsplash.com/photo-1550355291-bedd4e5a8e4c?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Mitsubishi Xpander', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 450000, 'plat' => 'EB 5566 UV', 'img' => 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Suzuki Carry', 'kursi' => 2, 'transmisi' => 'Manual', 'harga' => 200000, 'plat' => 'EB 7788 WX', 'img' => 'https://images.unsplash.com/photo-1583267746897-2cf415887172?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Fortuner', 'kursi' => 7, 'transmisi' => 'Automatic', 'harga' => 1000000, 'plat' => 'EB 9900 YZ', 'img' => 'https://images.unsplash.com/photo-1550353127-b0da98aeaa0e?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Honda HR-V', 'kursi' => 5, 'transmisi' => 'Automatic', 'harga' => 700000, 'plat' => 'EB 1112 AB', 'img' => 'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Mitsubishi Pajero Sport', 'kursi' => 7, 'transmisi' => 'Automatic', 'harga' => 1200000, 'plat' => 'EB 1314 CD', 'img' => 'https://images.unsplash.com/photo-1550353127-b0da98aeaa0e?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Calya', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 300000, 'plat' => 'EB 1516 EF', 'img' => 'https://images.unsplash.com/photo-1543465077-db45b34b70a4?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Daihatsu Sigra', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 300000, 'plat' => 'EB 1718 GH', 'img' => 'https://images.unsplash.com/photo-1550355291-bedd4e5a8e4c?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Agya', 'kursi' => 4, 'transmisi' => 'Manual', 'harga' => 200000, 'plat' => 'EB 1920 IJ', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Nissan Livina', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'plat' => 'EB 2122 KL', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Isuzu Elf', 'kursi' => 15, 'transmisi' => 'Manual', 'harga' => 900000, 'plat' => 'EB 2324 MN', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
                 ];
             @endphp
             @foreach($armada as $kendaraan)
@@ -390,14 +402,17 @@
                     <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" loading="lazy">
                 </div>
                 <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">{{ $kendaraan['nama'] }}</h3>
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="trvl-vehicle-name" style="margin:0;">{{ $kendaraan['nama'] }}</h3>
+                        <span class="text-[0.55rem] font-semibold px-2 py-0.5 rounded-full" style="background:#e8f4fd; color:#0064d2;">{{ $kendaraan['transmisi'] }}</span>
+                    </div>
                     <p class="text-xs" style="color:#6c757d; margin-bottom:0.5rem;">{{ $kendaraan['plat'] }}</p>
                     <div class="trvl-vehicle-specs">
                         <span class="trvl-vehicle-spec">{{ $kendaraan['kursi'] }} Kursi</span>
                         <span class="trvl-vehicle-spec">AC</span>
                     </div>
-                    <div class="trvl-vehicle-price">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
+                    <div class="trvl-vehicle-price">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }} <span>/hari</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
                 </div>
             </div>
             @endforeach
