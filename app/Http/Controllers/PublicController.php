@@ -587,4 +587,11 @@ class PublicController extends Controller
         ];
     }
 
+    /**
+     * Show airport transfer page
+     */
+    public function airport()
+    {
+        return view('public.airport');
+    }
 }

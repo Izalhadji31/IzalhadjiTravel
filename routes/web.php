@@ -72,6 +72,7 @@ Route::prefix('public')->group(function () {
     Route::get('/blog', [PublicController::class, 'blog'])->name('public.blog');
     Route::get('/blog/{slug}', [PublicController::class, 'blogDetail'])->name('public.blog.detail');
     Route::post('/subscribe', [PublicController::class, 'subscribe'])->name('public.subscribe');
+    Route::get('/airport', [PublicController::class, 'airport'])->name('public.airport');
 });
 
 Route::middleware(['auth'])->group(function () {
