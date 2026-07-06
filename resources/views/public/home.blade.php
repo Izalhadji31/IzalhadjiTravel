@@ -372,70 +372,35 @@
             <p class="trvl-section-desc">{{ __('home.fleet_desc') }}</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @forelse(($rentalServices ?? []) as $service)
             @php
-                $vehicleName = $service->route?->name ?: ($service->vehicle_type ?? 'Armada Premium');
-                $seatCapacity = $service->route?->total_seats ?? 6;
-                $price = $service->price_without_driver ?? $service->price_with_driver ?? 350000;
-                $carImages = [
-                    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80',
+                $armada = [
+                    ['nama' => 'Toyota Avanza', 'kursi' => 6, 'harga' => 350000, 'plat' => 'EB 1234 AB', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Rush', 'kursi' => 7, 'harga' => 450000, 'plat' => 'EB 5678 CD', 'img' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Hiace', 'kursi' => 12, 'harga' => 750000, 'plat' => 'EB 9012 EF', 'img' => 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Innova', 'kursi' => 7, 'harga' => 500000, 'plat' => 'EB 3456 GH', 'img' => 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Honda Brio', 'kursi' => 4, 'harga' => 250000, 'plat' => 'EB 7890 IJ', 'img' => 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Honda Mobilio', 'kursi' => 6, 'harga' => 350000, 'plat' => 'EB 2345 KL', 'img' => 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Daihatsu Grand Max', 'kursi' => 8, 'harga' => 400000, 'plat' => 'EB 6789 MN', 'img' => 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'],
+                    ['nama' => 'Toyota Hilux', 'kursi' => 4, 'harga' => 600000, 'plat' => 'EB 0123 OP', 'img' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80'],
                 ];
-                $carImage = $carImages[$loop->index % count($carImages)];
             @endphp
-            <div class="trvl-vehicle-card trvl-reveal">
+            @foreach($armada as $kendaraan)
+            <div class="trvl-vehicle-card trvl-reveal @if($loop->index > 0) trvl-reveal-delay-{{ min($loop->index, 3) }} @endif">
                 <div class="trvl-vehicle-card-img">
-                    <img src="{{ $carImage }}" alt="{{ $vehicleName }} - ASR GO" loading="lazy">
+                    <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" loading="lazy">
                 </div>
                 <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">{{ $vehicleName }}</h3>
+                    <h3 class="trvl-vehicle-name">{{ $kendaraan['nama'] }}</h3>
+                    <p class="text-xs" style="color:#6c757d; margin-bottom:0.5rem;">{{ $kendaraan['plat'] }}</p>
                     <div class="trvl-vehicle-specs">
-                        <span class="trvl-vehicle-spec">{{ $seatCapacity }} Kursi</span>
+                        <span class="trvl-vehicle-spec">{{ $kendaraan['kursi'] }} Kursi</span>
                         <span class="trvl-vehicle-spec">AC</span>
                     </div>
-                    <div class="trvl-vehicle-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <div class="trvl-vehicle-price">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
                     <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
-            @empty
-            <div class="trvl-vehicle-card trvl-reveal">
-                <div class="trvl-vehicle-card-img" style="background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 50%,#60a5fa 100%); display:flex; align-items:center; justify-content:center;"><span style="font-size:2rem; font-weight:800; color:rgba(255,255,255,0.3);">AV</span></div>
-                <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">Toyota Avanza</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">6 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 350.000 <span>{{ __('home.fleet_per_day') }}</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
-                </div>
-            </div>
-            <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-1">
-                <div class="trvl-vehicle-card-img">
-                    <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80" alt="Toyota Innova ASR GO" loading="lazy">
-                </div>
-                <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">Toyota Innova</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">7 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 500.000 <span>{{ __('home.fleet_per_day') }}</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
-                </div>
-            </div>
-            <div class="trvl-vehicle-card trvl-reveal trvl-reveal-delay-2">
-                <div class="trvl-vehicle-card-img">
-                    <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80" alt="Toyota Hiace ASR GO" loading="lazy">
-                </div>
-                <div class="trvl-vehicle-card-body">
-                    <h3 class="trvl-vehicle-name">Toyota Hiace</h3>
-                    <div class="trvl-vehicle-specs"><span class="trvl-vehicle-spec">12 Kursi</span><span class="trvl-vehicle-spec">AC</span></div>
-                    <div class="trvl-vehicle-price">Rp 750.000 <span>{{ __('home.fleet_per_day') }}</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
-                </div>
-            </div>
-            @endforelse
+            @endforeach
         </div>
     </div>
 </section>

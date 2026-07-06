@@ -618,10 +618,10 @@
                             </div>
                             <!-- Transfer Type Toggle -->
                             <div class="transfer-toggle">
-                                <button class="transfer-btn active" onclick="setTransferType('to', this)">
+                                <button class="transfer-btn active" data-type="to" onclick="setTransferType('to', this)">
                                     ✈️ Ke Bandara
                                 </button>
-                                <button class="transfer-btn" onclick="setTransferType('from', this)">
+                                <button class="transfer-btn" data-type="from" onclick="setTransferType('from', this)">
                                     🏠 Dari Bandara
                                 </button>
                             </div>
@@ -683,11 +683,11 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label class="field-label">Tipe Kendaraan</label>
-                                <select class="form-field" style="appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22><path stroke=%22%236b7280%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221.5%22 d=%22M6 8l4 4 4-4%22/></svg>'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25rem; padding-right: 2.5rem;">
-                                    <option>🚗 Sedan / Avanza (1–4 orang)</option>
-                                    <option>🚙 Innova / Fortuner (1–6 orang)</option>
-                                    <option>🚐 Elf / Hiace (7–15 orang)</option>
-                                    <option>🚌 Mini Bus (15–25 orang)</option>
+                                <select id="airport-vehicle" class="form-field" onchange="updateAirportPrice()" style="appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 20 20%22><path stroke=%22%236b7280%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221.5%22 d=%22M6 8l4 4 4-4%22/></svg>'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.25rem; padding-right: 2.5rem;">
+                                    <option value="avanza">🚗 Sedan / Avanza (1–4 orang)</option>
+                                    <option value="innova">🚙 Innova / Fortuner (1–6 orang)</option>
+                                    <option value="elf">🚐 Elf / Hiace (7–15 orang)</option>
+                                    <option value="minibus">🚌 Mini Bus (15–25 orang)</option>
                                 </select>
                             </div>
                             <div>
@@ -698,6 +698,12 @@
                                     <button type="button" class="counter-btn" onclick="changePassenger(1, 'airport')">+</button>
                                 </div>
                             </div>
+                        </div>
+
+                        <div id="airport-price-preview" class="info-panel mb-4" style="display:none;">
+                            <p class="font-semibold text-gray-900 text-sm mb-1">Estimasi tarif</p>
+                            <p class="text-blue-900 font-bold text-lg" id="airport-price-estimate">Rp 0</p>
+                            <p class="text-xs text-gray-500" id="airport-price-detail">Pilih kendaraan dan arah transfer untuk melihat estimasi harga.</p>
                         </div>
 
                         <!-- Tarrif Info -->
@@ -1171,6 +1177,36 @@
             }
         }
 
+        const airportPricing = {
+            avanza: { label: 'Sedan / Avanza', to: 50000, from: 50000 },
+            innova: { label: 'Innova / Fortuner', to: 65000, from: 65000 },
+            elf: { label: 'Elf / Hiace', to: 90000, from: 90000 },
+            minibus: { label: 'Mini Bus', to: 130000, from: 130000 },
+        };
+
+        function formatRupiah(value) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+        }
+
+        function updateAirportPrice() {
+            const select = document.getElementById('airport-vehicle');
+            const type = select ? select.value : '';
+            const info = airportPricing[type];
+            const transferType = document.querySelector('.transfer-btn.active')?.dataset.type || 'to';
+            const preview = document.getElementById('airport-price-preview');
+            const estimate = document.getElementById('airport-price-estimate');
+            const detail = document.getElementById('airport-price-detail');
+
+            if (info && estimate && detail && preview) {
+                const price = info[transferType];
+                estimate.textContent = formatRupiah(price);
+                detail.textContent = `${transferType === 'to' ? 'Antar' : 'Jemput'} Bandara - ${info.label}`;
+                preview.style.display = 'block';
+            } else if (preview) {
+                preview.style.display = 'none';
+            }
+        }
+
         /* ===== PASSENGER COUNTER ===== */
         var paxCount = { travel: 1, airport: 1 };
         function changePassenger(delta, type) {
@@ -1194,6 +1230,8 @@
                 locLabel.textContent = 'Lokasi Tujuan / Hotel';
                 locInput.placeholder = 'Masukkan alamat tujuan setelah mendarat';
             }
+
+            updateAirportPrice();
         }
 
         /* ===== AIRPORT CARD RADIO ===== */
@@ -1206,8 +1244,13 @@
                     this.classList.add('selected');
                     const radio = this.querySelector('input[type="radio"]');
                     if (radio) radio.checked = true;
+                    updateAirportPrice();
                 }
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAirportPrice();
         });
     </script>
 </body>
