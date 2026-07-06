@@ -17,7 +17,7 @@
             <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">{{ __('travel.subtitle') }}</p>
         </div>
         <form method="GET" action="{{ route('public.travel') }}" style="background: var(--trvl-card); border-radius: 16px; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-            <div style="display: grid; grid-template-columns: 1fr 1fr 140px 100px 1fr; gap: 0.75rem; align-items: end;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; align-items: end;">
                 <div>
                     <label class="trvl-field-label">{{ __('travel.from') }}</label>
                     <select name="origin" class="trvl-form-field">
@@ -168,7 +168,7 @@
                         </div>
                     @empty
                         <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
-                            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚐</div>
+                            <div style="font-size: 1rem; font-weight: 700; color: var(--trvl-blue); margin-bottom: 1rem;">Tidak Ada Rute</div>
                             <p style="font-size: 1rem; font-weight: 700; color: var(--trvl-text);">{{ __('travel.empty') }}</p>
                             <p style="font-size: 0.85rem; color: var(--trvl-gray-600); margin-top: 0.5rem; line-height: 1.5;">{{ __('travel.empty_desc') }}</p>
                             <a href="{{ route('public.travel') }}" 
