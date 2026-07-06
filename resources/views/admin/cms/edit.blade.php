@@ -9,7 +9,7 @@
 </div>
 
 <div class="card" style="max-width: 900px;">
-    <form method="POST" action="{{ route('admin.cms.update', $cmsPage) }}">
+    <form method="POST" action="{{ route('cms.update', $cmsPage) }}">
         @csrf
         @method('PUT')
 
@@ -99,7 +99,7 @@
 
         <div style="display: flex; gap: 1rem;">
             <button type="submit" class="btn btn-primary">Update Page</button>
-            <a href="{{ route('admin.cms.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('cms.index') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>

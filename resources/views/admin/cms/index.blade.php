@@ -10,7 +10,7 @@
 
 <!-- Filters -->
 <div class="card" style="margin-bottom: 1.5rem;">
-    <form method="GET" action="{{ route('admin.cms.index') }}" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+    <form method="GET" action="{{ route('cms.index') }}" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
         <div>
             <label class="form-label">Search</label>
             <input type="text" name="search" value="{{ request('search') }}" class="form-input" placeholder="Title or slug..." style="width: 200px;">
@@ -33,7 +33,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Filter</button>
-        <a href="{{ route('admin.cms.create') }}" class="btn btn-primary" style="margin-left: auto;">+ New Page</a>
+        <a href="{{ route('cms.create') }}" class="btn btn-primary" style="margin-left: auto;">+ New Page</a>
     </form>
 </div>
 
@@ -67,8 +67,8 @@
                 </td>
                 <td style="padding: 0.75rem 1rem; color: #666; font-size: 0.9rem;">{{ $page->updated_at->format('d M Y') }}</td>
                 <td style="padding: 0.75rem 1rem; text-align: right;">
-                    <a href="{{ route('admin.cms.edit', $page) }}" style="color: #2563eb; text-decoration: none; margin-right: 0.75rem;">Edit</a>
-                    <form method="POST" action="{{ route('admin.cms.destroy', $page) }}" style="display: inline;" onsubmit="return confirm('Delete this page?')">
+                    <a href="{{ route('cms.edit', $page) }}" style="color: #2563eb; text-decoration: none; margin-right: 0.75rem;">Edit</a>
+                    <form method="POST" action="{{ route('cms.destroy', $page) }}" style="display: inline;" onsubmit="return confirm('Delete this page?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" style="color: #ef4444; background: none; border: none; cursor: pointer;">Delete</button>

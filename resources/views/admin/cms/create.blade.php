@@ -9,7 +9,7 @@
 </div>
 
 <div class="card" style="max-width: 900px;">
-    <form method="POST" action="{{ route('admin.cms.store') }}">
+    <form method="POST" action="{{ route('cms.store') }}">
         @csrf
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -98,7 +98,7 @@
 
         <div style="display: flex; gap: 1rem;">
             <button type="submit" class="btn btn-primary">Create Page</button>
-            <a href="{{ route('admin.cms.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('cms.index') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>
