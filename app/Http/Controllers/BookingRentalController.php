@@ -54,8 +54,8 @@ class BookingRentalController extends Controller
     {
         $user = Auth::user();
 
-        // Check identity verification
-        if (!$user->is_identity_verified) {
+        // Check identity verification — skip jika kolom belum ada
+        if (\Illuminate\Support\Facades\Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
             return redirect()->route('profile.edit')
                            ->with('error', 'Please verify your identity before booking');
         }
@@ -63,32 +63,52 @@ class BookingRentalController extends Controller
         $validated = $request->validate([
             'route_id' => 'required|exists:routes,id',
             'start_date' => 'required|date|after:today',
-            'end_date' => 'required|date|after:start_date',
-            'with_driver' => 'boolean',
+            'end_date' => 'nullable|date|after:start_date',
+            'rental_type' => 'required|in:with_driver,without_driver',
+            'regency_count' => 'required_if:rental_type,with_driver|integer|min:1',
         ]);
 
+        // If end_date not provided, default to start_date + 1 day
+        if (empty($validated['end_date'])) {
+            $validated['end_date'] = date('Y-m-d', strtotime($validated['start_date'] . ' +1 day'));
+        }
+
         $rentalPrice = RentalPrice::where('route_id', $validated['route_id'])->first();
-        $base_price = $rentalPrice->price_without_driver;
+        
+        if (!$rentalPrice) {
+            return back()->with('error', 'Harga rental untuk rute ini belum tersedia.')->withInput();
+        }
+        
+        $base_price = $rentalPrice->price_without_driver ?? 0;
 
         // Calculate driver fee if needed
         $driver_fee = 0;
-        if ($validated['with_driver']) {
-            // Count regencies (for this demo, assume 2 regencies per route)
-            $num_regencies = 2;
-            $driver_fee = $num_regencies * $rentalPrice->driver_fee_per_regency;
+        if ($validated['rental_type'] === 'with_driver') {
+            $num_regencies = $validated['regency_count'] ?? 2;
+            $driver_fee = $num_regencies * ($rentalPrice->driver_fee_per_regency ?? 0);
         }
 
         $total_price = $base_price + $driver_fee;
+
+        $withDriver = $validated['rental_type'] === 'with_driver';
 
         $booking = RentalBooking::create([
             'user_id' => $user->id,
             'route_id' => $validated['route_id'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'rental_type' => $validated['with_driver'] ? 'with_driver' : 'without_driver',
+            'rental_type' => $validated['rental_type'],
+            'with_driver' => $withDriver,
             'total_price' => $total_price,
             'status' => 'pending',
         ]);
+
+        // Generate booking code if not auto-generated
+        if (empty($booking->booking_code)) {
+            $booking->update([
+                'booking_code' => 'RNT-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(6))
+            ]);
+        }
 
         // Send WhatsApp notification
         try {
@@ -98,8 +118,8 @@ class BookingRentalController extends Controller
             \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('bookings.rental.show', $booking->id)
-                       ->with('success', 'Rental booking created. Please complete payment');
+        return redirect()->route('payments.rental', $booking->id)
+                       ->with('success', 'Pemesanan rental berhasil. Silakan selesaikan pembayaran.');
     }
 
     /**

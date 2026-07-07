@@ -52,6 +52,12 @@ Route::get('/lang/{locale}', function ($locale) {
 // Landing Page
 Route::get('/', [PublicController::class, 'home'])->name('home');
 
+// Clean URL Public Pages (outside prefix for clean URLs)
+Route::get('/tentang-kami', [PublicController::class, 'about'])->name('public.about');
+Route::get('/kebijakan-privasi', [PublicController::class, 'kebijakanPrivasi'])->name('public.kebijakan-privasi');
+Route::get('/syarat-ketentuan', [PublicController::class, 'syaratKetentuan'])->name('syarat-ketentuan');
+Route::get('/call-center', [PublicController::class, 'callCenter'])->name('public.call-center');
+
 // Public Pages (Guest Accessible)
 Route::prefix('public')->group(function () {
     Route::get('/travel', [PublicController::class, 'travelList'])->name('public.travel');
@@ -77,7 +83,7 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/bookings', [BookingTravelController::class, 'store'])->name('bookings.store');
-    Route::get('/bookings/{booking}', [BookingTravelController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking}', [BookingTravelController::class, 'show'])->name('bookings.show')->where('booking', '^(?!travel|rental|airport).*');
 });
 
 // Payment Routes (require verified email)
@@ -147,25 +153,27 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Travel Bookings (Admin manages, customers create)
+    // NOTE: These MUST be BEFORE the generic /bookings/{booking} route below
     Route::prefix('bookings/travel')->group(function () {
+        // CREATE must be BEFORE {travelBooking} to avoid matching "create" as ID
+        Route::get('/create', [BookingTravelController::class, 'create'])->middleware('verified')->name('bookings.travel.create');
+        Route::post('/', [BookingTravelController::class, 'store'])->middleware('verified')->name('bookings.travel.store');
+        Route::get('/', [BookingTravelController::class, 'index'])->name('bookings.travel');
         Route::middleware('role:admin')->group(function () {
-            Route::get('/', [BookingTravelController::class, 'index'])->name('bookings.travel');
             Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
             Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
         });
-        Route::get('/create', [BookingTravelController::class, 'create'])->middleware('verified')->name('bookings.travel.create');
-        Route::post('/', [BookingTravelController::class, 'store'])->middleware('verified')->name('bookings.travel.store');
     });
 
     // Rental Bookings (Admin manages, customers create)
     Route::prefix('bookings/rental')->group(function () {
+        Route::get('/create', [BookingRentalController::class, 'create'])->middleware('verified')->name('bookings.rental.create');
+        Route::post('/', [BookingRentalController::class, 'store'])->middleware('verified')->name('bookings.rental.store');
+        Route::get('/', [BookingRentalController::class, 'index'])->name('bookings.rental');
         Route::middleware('role:admin')->group(function () {
-            Route::get('/', [BookingRentalController::class, 'index'])->name('bookings.rental');
             Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
             Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
         });
-        Route::get('/create', [BookingRentalController::class, 'create'])->middleware('verified')->name('bookings.rental.create');
-        Route::post('/', [BookingRentalController::class, 'store'])->middleware('verified')->name('bookings.rental.store');
     });
 
     // Airport Transfer Bookings (Admin manages, customers create)
@@ -224,6 +232,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+        Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+        Route::post('/users/{user}/approve', [AdminController::class, 'approveUserRegistration'])->name('admin.users.approve');
+        Route::post('/users/{user}/reject', [AdminController::class, 'rejectUserRegistration'])->name('admin.users.reject');
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
         Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
         Route::put('/settings', [AdminController::class, 'updateSettings'])->name('admin.settings.update');
@@ -406,6 +418,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
     Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 });
+
+// Account Status Page (accessible by guests, for showing pending/rejected info)
+Route::get('/auth/pending', function () {
+    return view('auth.pending');
+})->name('auth.pending');
 
 // CMS Pages Admin Routes
 Route::middleware('role:admin')->prefix('admin')->group(function () {

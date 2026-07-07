@@ -129,7 +129,7 @@
             padding: 0 2rem;
             position: sticky;
             top: 0;
-            z-index: 20;
+            z-index: 9998;
         }
         
         .topbar-left { display: flex; align-items: center; gap: 2rem; flex: 1; }
@@ -207,24 +207,30 @@
             background: var(--trvl-card);
             border: 1px solid var(--trvl-border);
             border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 9999;
             margin-top: 0.5rem;
+            overflow: hidden;
         }
         
-        .user-menu:hover .dropdown-menu { display: block; }
+        .user-menu:hover .dropdown-menu,
+        .user-menu .dropdown-menu.open { display: block; }
         
         .dropdown-item {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             width: 100%;
             padding: 0.75rem 1rem;
             background: none;
             border: none;
             text-align: left;
-            color: #666;
+            color: #374151;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
+            transition: all 0.15s;
+            font-size: 0.875rem;
+            text-decoration: none;
+            font-family: inherit;
         }
         
         .dropdown-item:hover {
@@ -232,8 +238,16 @@
             color: #111;
         }
         
+        .dropdown-item svg {
+            width: 1.125rem;
+            height: 1.125rem;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+        
         .dropdown-item:first-child { border-radius: 0.5rem 0.5rem 0 0; }
         .dropdown-item:last-child { border-radius: 0 0 0.5rem 0.5rem; }
+        .dropdown-divider { height: 1px; background: var(--trvl-border); margin: 0; }
         
         /* Content Area */
         .content {
@@ -320,6 +334,157 @@
             from { transform: translateX(120%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
+
+        /* ===== SKELETON LOADING ===== */
+        .skeleton {
+            background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+            background-size: 200% 100%;
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+            border-radius: 0.375rem;
+            color: transparent !important;
+            user-select: none;
+            pointer-events: none;
+        }
+        .skeleton-text {
+            height: 0.875rem;
+            margin-bottom: 0.5rem;
+            width: 100%;
+        }
+        .skeleton-text-sm { width: 60%; }
+        .skeleton-text-lg { width: 80%; height: 1.25rem; }
+        .skeleton-avatar {
+            width: 2.5rem; height: 2.5rem;
+            border-radius: 9999px;
+        }
+        .skeleton-card {
+            height: 8rem;
+            border-radius: 0.625rem;
+            margin-bottom: 1rem;
+        }
+        .skeleton-button {
+            width: 6rem; height: 2.25rem;
+            border-radius: 0.5rem;
+        }
+        @keyframes skeleton-pulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ===== TOAST NOTIFICATION (fixed) ===== */
+        .toast-fixed {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+            max-width: 380px;
+            min-width: 280px;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            background: var(--trvl-card, #ffffff);
+            border: 1px solid var(--trvl-border, #e5e7eb);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes toastSlideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-fixed.toast-exit {
+            animation: toastSlideOut 0.3s ease-in forwards;
+        }
+        @keyframes toastSlideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        /* ===== MODAL (SweetAlert-style) ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+        .modal-overlay.modal-exit {
+            animation: modalFadeOut 0.2s ease-in forwards;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes modalFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .modal-content {
+            background: var(--trvl-card, #fff);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: modalContentSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+        }
+        .modal-content.modal-exit {
+            animation: modalContentOut 0.2s ease-in forwards;
+        }
+        @keyframes modalContentSlide {
+            from { transform: scale(0.85) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes modalContentOut {
+            from { transform: scale(1) translateY(0); opacity: 1; }
+            to { transform: scale(0.85) translateY(20px); opacity: 0; }
+        }
+        .modal-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.75rem;
+        }
+        .modal-icon.success { background: #d1fae5; color: #059669; }
+        .modal-icon.error { background: #fee2e2; color: #dc2626; }
+        .modal-icon.warning { background: #fef3c7; color: #d97706; }
+        .modal-icon.info { background: #dbeafe; color: #2563eb; }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--trvl-text, #1a1a1a);
+            margin-bottom: 0.5rem;
+        }
+        .modal-desc {
+            font-size: 0.9rem;
+            color: var(--trvl-gray-600, #6c757d);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .modal-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 120px;
+        }
+        .modal-btn-primary { background: #2563eb; color: white; }
+        .modal-btn-primary:hover { background: #1d4ed8; }
+        .modal-btn-secondary { background: #e5e7eb; color: #111; }
+        .modal-btn-secondary:hover { background: #d1d5db; }
+        .modal-btn-danger { background: #dc2626; color: white; }
+        .modal-btn-danger:hover { background: #b91c1c; }
     </style>
 </head>
 <body>
@@ -344,7 +509,7 @@
                 <div class="sidebar-section-label">Pemesanan</div>
                 <a href="{{ route('bookings.index') }}" class="sidebar-link @if(request()->routeIs('bookings.index')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                    My Bookings
+                    Booking Saya
                 </a>
                 <a href="{{ route('bookings.travel') }}" class="sidebar-link @if(request()->routeIs('bookings.travel*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
@@ -359,11 +524,11 @@
                 <div class="sidebar-section-label">Lainnya</div>
                 <a href="{{ route('refunds.index') }}" class="sidebar-link @if(request()->routeIs('refunds.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-                    My Refunds
+                    Refund Saya
                 </a>
                 <a href="{{ route('notifications.index') }}" class="sidebar-link @if(request()->routeIs('notifications.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    Notifications
+                    Notifikasi
                     @php $unreadCust = auth()->check() ? auth()->user()->notifications()->unread()->count() : 0; @endphp
                     @if($unreadCust > 0)
                         <span style="margin-left:auto;min-width:20px;height:20px;background:#ef4444;color:white;font-size:0.7rem;font-weight:700;border-radius:9999px;display:flex;align-items:center;justify-content:center;padding:0 6px;">{{ $unreadCust > 99 ? '99+' : $unreadCust }}</span>
@@ -371,7 +536,7 @@
                 </a>
                 <a href="{{ route('bookings.index', ['filter' => 'review']) }}" class="sidebar-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                    My Reviews
+                    Ulasan Saya
                 </a>
             </div>
             @endif
@@ -382,21 +547,21 @@
                 <div class="sidebar-section-label">Tugas</div>
                 <a href="{{ route('driver.orders') }}" class="sidebar-link @if(request()->routeIs('driver.orders')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                    Order Aktif
+                    Pesanan Aktif
                 </a>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-label">Pendapatan</div>
                 <a href="{{ route('driver.earnings') }}" class="sidebar-link @if(request()->routeIs('driver.earnings')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Earnings
+                    Pendapatan
                 </a>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-label">Lainnya</div>
                 <a href="{{ route('notifications.index') }}" class="sidebar-link @if(request()->routeIs('notifications.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    Notifications
+                    Notifikasi
                     @php $unreadDriver = auth()->check() ? auth()->user()->notifications()->unread()->count() : 0; @endphp
                     @if($unreadDriver > 0)
                         <span style="margin-left:auto;min-width:20px;height:20px;background:#ef4444;color:white;font-size:0.7rem;font-weight:700;border-radius:9999px;display:flex;align-items:center;justify-content:center;padding:0 6px;">{{ $unreadDriver > 99 ? '99+' : $unreadDriver }}</span>
@@ -419,18 +584,18 @@
                 </a>
                 <a href="{{ route('partner.drivers') }}" class="sidebar-link @if(request()->routeIs('partner.drivers.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    Drivers
+                    Sopir
                 </a>
                 <a href="{{ route('partner.revenue') }}" class="sidebar-link @if(request()->routeIs('partner.revenue')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Revenue
+                    Pendapatan
                 </a>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-label">Lainnya</div>
                 <a href="{{ route('notifications.index') }}" class="sidebar-link @if(request()->routeIs('notifications.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    Notifications
+                    Notifikasi
                     @php $unreadPartner = auth()->check() ? auth()->user()->notifications()->unread()->count() : 0; @endphp
                     @if($unreadPartner > 0)
                         <span style="margin-left:auto;min-width:20px;height:20px;background:#ef4444;color:white;font-size:0.7rem;font-weight:700;border-radius:9999px;display:flex;align-items:center;justify-content:center;padding:0 6px;">{{ $unreadPartner > 99 ? '99+' : $unreadPartner }}</span>
@@ -453,9 +618,9 @@
                 </a>
                 <a href="{{ route('admin.users') }}" class="sidebar-link @if(request()->routeIs('admin.users*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    Users
+                    Pengguna
                 </a>
-                <a href="{{ route('partners.index') }}" class="sidebar-link @if(request()->routeIs('partners.*')) active @endif">
+                <a href="{{ route('partners.index') }}"
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Mitra
                 </a>
@@ -468,30 +633,30 @@
                 <div class="sidebar-section-label">Booking</div>
                 <a href="{{ route('bookings.travel') }}" class="sidebar-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    Travel Booking
+                    Booking Travel
                 </a>
                 <a href="{{ route('bookings.rental') }}" class="sidebar-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012-2"/></svg>
-                    Rental Booking
+                    Booking Rental
                 </a>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-section-label">Keuangan</div>
                 <a href="{{ route('analytics.revenue') }}" class="sidebar-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    Revenue & Payout
+                    Pendapatan & Pencairan
                 </a>
                 <a href="{{ route('fleet.dashboard') }}" class="sidebar-link">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
-                    Fleet & Armada
+                    Armada
                 </a>
                 <a href="{{ route('admin.payments') }}" class="sidebar-link @if(request()->routeIs('admin.payments')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    Payments
+                    Pembayaran
                 </a>
                 <a href="{{ route('admin.revenue-sharing') }}" class="sidebar-link @if(request()->routeIs('admin.revenue-sharing*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
-                    Revenue Sharing
+                    Bagi Hasil
                 </a>
                 <a href="{{ route('admin.vouchers') }}" class="sidebar-link @if(request()->routeIs('admin.vouchers*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
@@ -502,7 +667,7 @@
                 <div class="sidebar-section-label">Lainnya</div>
                 <a href="{{ route('admin.refunds') }}" class="sidebar-link @if(request()->routeIs('admin.refunds*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-                    Refunds
+                    Refund
                 </a>
                 <a href="{{ route('identity.admin.pending') }}" class="sidebar-link @if(request()->routeIs('identity.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.472 10.226 8.618 11.944a2.09 2.09 0 00.764.056 2.09 2.09 0 00.764-.056A12.02 12.02 0 0021 9a12.02 12.02 0 00-.916-4.016z"/></svg>
@@ -510,19 +675,19 @@
                 </a>
                 <a href="{{ route('admin.audit-logs') }}" class="sidebar-link @if(request()->routeIs('admin.audit-logs')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    Audit Logs
+                    Log Audit
                 </a>
                 <a href="{{ route('cms.index') }}" class="sidebar-link @if(request()->routeIs('cms.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                    CMS Pages
+                    Halaman CMS
                 </a>
                 <a href="{{ route('admin.gps-devices.index') }}" class="sidebar-link @if(request()->routeIs('admin.gps-devices.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    GPS Devices
+                    Perangkat GPS
                 </a>
                 <a href="{{ route('admin.reviews') }}" class="sidebar-link @if(request()->routeIs('admin.reviews*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                    Reviews
+                    Ulasan
                 </a>
             </div>
             @endif
@@ -552,6 +717,13 @@
                 </div>
             </div>
             <div class="topbar-right">
+                <!-- Language Switcher -->
+                <a href="{{ route('lang.switch', ['locale' => app()->getLocale() === 'id' ? 'en' : 'id']) }}" 
+                   class="topbar-btn" 
+                   style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;"
+                   title="{{ app()->getLocale() === 'id' ? 'English' : 'Indonesia' }}">
+                    {{ app()->getLocale() === 'id' ? 'EN' : 'ID' }}
+                </a>
                 <button id="darkModeToggle" class="topbar-btn" type="button" title="Toggle Dark Mode">
                     <svg id="sunIcon" class="hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                     <svg id="moonIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:1.25rem;height:1.25rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
@@ -565,20 +737,26 @@
                     @endif
                 </a>
                 
-                <div class="user-menu">
+                <div class="user-menu" id="userMenu">
                     @auth
-                        <div class="user-avatar" style="overflow:hidden; border-radius:9999px;" title="{{ auth()->user()->name }}">
+                        <div class="user-avatar" id="userMenuToggle" style="overflow:hidden; border-radius:9999px; cursor:pointer;" title="{{ auth()->user()->name }}">
                             @if(auth()->user()->photo)
                                 <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" style="width:100%;height:100%;object-fit:cover;">
                             @else
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             @endif
                         </div>
-                        <div class="dropdown-menu">
-                            <a href="/profile" class="dropdown-item">Profil</a>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="{{ route('profile.show') }}" class="dropdown-item">
+                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                Profil
+                            </a>
                             <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                                 @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
+                                <button type="submit" class="dropdown-item">
+                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                    Keluar
+                                </button>
                             </form>
                         </div>
                     @else
@@ -705,6 +883,22 @@
                 searchInput.addEventListener('focus', function () {
                     if (this.value.trim().length >= 2) {
                         searchDropdown.style.display = 'block';
+                    }
+                });
+            }
+
+            // User dropdown toggle on click
+            var userToggle = document.getElementById('userMenuToggle');
+            var userDropdown = document.getElementById('userDropdown');
+            if (userToggle && userDropdown) {
+                userToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var isOpen = userDropdown.style.display === 'block';
+                    userDropdown.style.display = isOpen ? 'none' : 'block';
+                });
+                document.addEventListener('click', function (e) {
+                    if (!userToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+                        userDropdown.style.display = 'none';
                     }
                 });
             }

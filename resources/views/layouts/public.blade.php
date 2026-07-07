@@ -657,6 +657,106 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
+        /* ===== SKELETON LOADING ===== */
+        .skeleton {
+            background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+            background-size: 200% 100%;
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+            border-radius: 0.375rem;
+            color: transparent !important;
+            user-select: none;
+            pointer-events: none;
+        }
+        .skeleton-text { height: 0.875rem; margin-bottom: 0.5rem; width: 100%; }
+        .skeleton-text-sm { width: 60%; }
+        .skeleton-text-lg { width: 80%; height: 1.25rem; }
+        .skeleton-avatar { width: 2.5rem; height: 2.5rem; border-radius: 9999px; }
+        .skeleton-card { height: 8rem; border-radius: 0.625rem; margin-bottom: 1rem; }
+        .skeleton-button { width: 6rem; height: 2.25rem; border-radius: 0.5rem; }
+        @keyframes skeleton-pulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ===== TOAST NOTIFICATION (fixed) ===== */
+        .toast-fixed {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+            max-width: 380px;
+            min-width: 280px;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            background: var(--trvl-card, #ffffff);
+            border: 1px solid var(--trvl-border, #e5e7eb);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes toastSlideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-fixed.toast-exit {
+            animation: toastSlideOut 0.3s ease-in forwards;
+        }
+        @keyframes toastSlideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        /* ===== MODAL (SweetAlert-style) ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content {
+            background: var(--trvl-card, #fff);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: modalContentSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+        }
+        @keyframes modalContentSlide {
+            from { transform: scale(0.85) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .modal-icon {
+            width: 4rem; height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.75rem;
+        }
+        .modal-icon.success { background: #d1fae5; color: #059669; }
+        .modal-icon.error { background: #fee2e2; color: #dc2626; }
+        .modal-icon.warning { background: #fef3c7; color: #d97706; }
+        .modal-icon.info { background: #dbeafe; color: #2563eb; }
+        .modal-title { font-size: 1.25rem; font-weight: 700; color: var(--trvl-text, #1a1a1a); margin-bottom: 0.5rem; }
+        .modal-desc { font-size: 0.9rem; color: var(--trvl-gray-600, #6c757d); margin-bottom: 1.5rem; line-height: 1.5; }
+        .modal-btn { padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: all 0.2s; min-width: 120px; }
+        .modal-btn-primary { background: #2563eb; color: white; }
+        .modal-btn-primary:hover { background: #1d4ed8; }
+        .modal-btn-secondary { background: #e5e7eb; color: #111; }
+        .modal-btn-secondary:hover { background: #d1d5db; }
+        .modal-btn-danger { background: #dc2626; color: white; }
+        .modal-btn-danger:hover { background: #b91c1c; }
+
         /* ===== COMPARISON TABLE ===== */
         .trvl-comparison-table {
             width: 100%;
@@ -780,6 +880,7 @@
                 <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">{{ __('nav.advantages') }}</a>
                 <a href="{{ route('home') }}#rute" class="trvl-nav-link">{{ __('nav.popular_routes') }}</a>
                 <a href="{{ route('home') }}#armada" class="trvl-nav-link">{{ __('nav.fleet') }}</a>
+                <a href="{{ route('public.about') }}" class="trvl-nav-link">{{ __('nav.about') }}</a>
                 <a href="{{ route('public.blog') }}" class="trvl-nav-link">{{ __('nav.blog') }}</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
@@ -795,7 +896,10 @@
                     <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </button>
                 <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
-                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-nav-btn trvl-nav-btn-white">+62 831-5640-8078</a>
+                <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-nav-btn trvl-nav-btn-white inline-flex items-center gap-1.5" title="Hubungi Call Center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    Call Center
+                </a>
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -811,7 +915,9 @@
             <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">{{ __('nav.advantages') }}</a>
             <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">{{ __('nav.popular_routes') }}</a>
             <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">{{ __('nav.fleet') }}</a>
+            <a href="{{ route('public.about') }}" onclick="toggleMobileMenu()">{{ __('nav.about') }}</a>
             <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">{{ __('nav.blog') }}</a>
+            <a href="{{ route('public.call-center') }}" onclick="toggleMobileMenu()">Call Center</a>
             <a href="{{ route('login') }}" onclick="toggleMobileMenu()">{{ __('nav.login') }}</a>
             <a href="{{ route('lang.switch', ['locale' => app()->getLocale() === 'id' ? 'en' : 'id']) }}" onclick="toggleMobileMenu()">{{ app()->getLocale() === 'id' ? 'English' : 'Indonesia' }}</a>
         </div>
@@ -839,11 +945,13 @@
                 <div>
                     <p class="trvl-footer-heading">{{ __('footer.information') }}</p>
                     <div class="flex flex-col gap-2">
+                        <a href="{{ route('public.about') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
                         <a href="{{ route('public.blog') }}" class="trvl-footer-link">{{ __('footer.blog') }}</a>
                         <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">{{ __('footer.destinations') }}</a>
                         <a href="{{ route('public.faq') }}" class="trvl-footer-link">{{ __('footer.faq') }}</a>
-                        <a href="{{ route('public.syarat-ketentuan') }}" class="trvl-footer-link">{{ __('footer.terms') }}</a>
+                        <a href="{{ route('syarat-ketentuan') }}" class="trvl-footer-link">{{ __('footer.terms') }}</a>
                         <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
+                        <a href="{{ route('public.call-center') }}" class="trvl-footer-link">Call Center</a>
                     </div>
                 </div>
                 <div>

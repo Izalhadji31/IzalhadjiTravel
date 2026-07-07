@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'My Profile')
+@section('title', 'Profil Saya')
 
 @section('content')
+    <!-- Back Button -->
+    <a href="{{ url()->previous() }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Kembali
+    </a>
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">My Profile</h1>
-        <p class="text-gray-600">View and manage your account information</p>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Profil Saya</h1>
+        <p class="text-gray-600">Lihat dan kelola informasi akun Anda.</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -42,27 +49,26 @@
                 </div>
 
                 <div class="flex gap-2 mt-6">
-                    <a href="{{ route('profile.edit') }}" class="flex-1 btn-primary text-sm">Edit Profile</a>
-                    <button class="flex-1 btn-secondary text-sm">Download</button>
+                    <a href="{{ route('profile.edit') }}" class="flex-1 btn-primary text-sm">Edit Profil</a>
                 </div>
             </div>
 
             <!-- Quick Stats -->
             <div class="card mt-6">
-                <h4 class="font-semibold text-gray-900 mb-4">Account Status</h4>
+                <h4 class="font-semibold text-gray-900 mb-4">Status Akun</h4>
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-600 text-sm">Profile Completion</span>
+                        <span class="text-gray-600 text-sm">Kelengkapan Profil</span>
                         <div class="w-20 bg-gray-200 rounded-full h-2">
                             <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-600 text-sm">Verification</span>
-                        <span class="text-xs font-medium text-green-600">Verified ✓</span>
+                        <span class="text-gray-600 text-sm">Verifikasi</span>
+                        <span class="text-xs font-medium text-green-600">Terverifikasi</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-600 text-sm">Account Since</span>
+                        <span class="text-gray-600 text-sm">Akun Sejak</span>
                         <span class="text-xs font-medium text-gray-900">{{ auth()->user()->created_at?->format('M Y') ?? 'N/A' }}</span>
                     </div>
                 </div>
@@ -72,66 +78,61 @@
         <!-- Account Information -->
         <div class="lg:col-span-2">
             <div class="card mb-6">
-                <h3 class="card-header">Account Information</h3>
+                <h3 class="card-header">Informasi Akun</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Full Name</label>
+                        <label class="text-gray-600 text-sm font-medium">Nama Lengkap</label>
                         <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->name ?? 'N/A' }}</p>
                     </div>
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Email Address</label>
+                        <label class="text-gray-600 text-sm font-medium">Email</label>
                         <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->email ?? 'N/A' }}</p>
                     </div>
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Phone Number</label>
-                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->phone ?? 'Not set' }}</p>
+                        <label class="text-gray-600 text-sm font-medium">Nomor Telepon</label>
+                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->phone ?? 'Belum diisi' }}</p>
                     </div>
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Account Type</label>
+                        <label class="text-gray-600 text-sm font-medium">Tipe Akun</label>
                         <p class="text-gray-900 font-medium mt-1">{{ ucfirst(auth()->user()->role ?? 'customer') }}</p>
                     </div>
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Identification</label>
-                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->identity_number ?? 'Not set' }}</p>
+                        <label class="text-gray-600 text-sm font-medium">Identitas</label>
+                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->identity_number ?? 'Belum diisi' }}</p>
                     </div>
                     <div>
-                        <label class="text-gray-600 text-sm font-medium">Member Since</label>
-                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->created_at?->format('M d, Y') ?? 'N/A' }}</p>
+                        <label class="text-gray-600 text-sm font-medium">Anggota Sejak</label>
+                        <p class="text-gray-900 font-medium mt-1">{{ auth()->user()->created_at?->format('d M Y') ?? 'N/A' }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="card-header">Security Settings</h3>
+                <h3 class="card-header">Pengaturan Keamanan</h3>
                 
                 <div class="space-y-4">
                     <div class="flex justify-between items-center pb-4 border-b border-gray-200">
                         <div>
-                            <p class="font-semibold text-gray-900">Two-Factor Authentication</p>
-                            <p class="text-sm text-gray-600">Add extra security to your account</p>
+                            <p class="font-semibold text-gray-900">Autentikasi Dua Faktor</p>
+                            <p class="text-sm text-gray-600">Tambah keamanan ekstra untuk akun Anda</p>
                         </div>
-                        <button class="btn-secondary text-sm">Enable</button>
+                        <button class="btn-secondary text-sm">Aktifkan</button>
                     </div>
                     <div class="flex justify-between items-center pb-4 border-b border-gray-200">
                         <div>
-                            <p class="font-semibold text-gray-900">Change Password</p>
-                            <p class="text-sm text-gray-600">Update your password regularly</p>
+                            <p class="font-semibold text-gray-900">Ganti Password</p>
+                            <p class="text-sm text-gray-600">Perbarui password Anda secara berkala</p>
                         </div>
-                        <a href="{{ route('password.request') }}" class="btn-secondary text-sm">Change</a>
+                        <a href="{{ route('password.request') }}" class="btn-secondary text-sm">Ganti</a>
                     </div>
                     <div class="flex justify-between items-center">
                         <div>
-                            <p class="font-semibold text-gray-900">Session Management</p>
-                            <p class="text-sm text-gray-600">View and manage active sessions</p>
+                            <p class="font-semibold text-gray-900">Manajemen Sesi</p>
+                            <p class="text-sm text-gray-600">Lihat dan kelola sesi aktif</p>
                         </div>
-                        <button class="btn-secondary text-sm">View Sessions</button>
+                        <button class="btn-secondary text-sm">Lihat Sesi</button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
                 </div>
             </div>
         </div>

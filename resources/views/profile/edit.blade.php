@@ -1,18 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Profile')
+@section('title', 'Edit Profil')
 
 @section('content')
+    <!-- Back Button -->
+    <a href="{{ url()->previous() }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors mb-4">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Kembali
+    </a>
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Edit Profile</h1>
-        <p class="text-gray-600">Update your account information</p>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Edit Profil</h1>
+        <p class="text-gray-600">Perbarui informasi akun Anda.</p>
     </div>
 
     <div class="max-w-2xl">
         <!-- Profile Photo Section -->
         <div class="card mb-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Profile Photo</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Foto Profil</h3>
             
             <div class="flex items-center gap-6">
                 <!-- Current Photo -->
@@ -36,15 +43,15 @@
                     <form action="{{ route('profile.upload-photo') }}" method="POST" enctype="multipart/form-data" id="photoForm">
                         @csrf
                         <div class="mb-3">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Upload New Photo</label>
+                            <label class="text-gray-700 font-medium text-sm">Upload Foto Baru</label>
                             <input type="file" name="photo" id="photoInput" accept="image/jpeg,image/png,image/webp" 
                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
                             <p class="text-xs text-gray-500 mt-1">JPG, PNG, or WebP. Max 2MB.</p>
                         </div>
                         <div class="flex gap-2">
-                            <button type="submit" class="btn-primary text-sm">Upload Photo</button>
+                            <button type="submit" class="btn-primary text-sm">Upload Foto</button>
                             @if(auth()->user()->photo)
-                                <button type="button" onclick="removePhoto()" class="btn-secondary text-sm text-red-600 hover:bg-red-50">Remove Photo</button>
+                                <button type="button" onclick="removePhoto()" class="btn-secondary text-sm text-red-600 hover:bg-red-50">Hapus Foto</button>
                             @endif
                         </div>
                     </form>
@@ -60,7 +67,7 @@
 
         <!-- Personal Information -->
         <div class="card">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Informasi Pribadi</h3>
             
             <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">
                 @csrf
@@ -68,13 +75,13 @@
                 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-gray-700 font-medium text-sm">Full Name</label>
+                        <label class="text-gray-700 font-medium text-sm">Nama Lengkap</label>
                         <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" 
                                class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                         @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="text-gray-700 font-medium text-sm">Email Address</label>
+                        <label class="text-gray-700 font-medium text-sm">Email</label>
                         <input type="email" name="email" value="{{ old('email', auth()->user()->email) }}" 
                                class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                         @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
@@ -82,29 +89,29 @@
                 </div>
 
                 <div>
-                    <label class="text-gray-700 font-medium text-sm">Phone Number</label>
+                    <label class="text-gray-700 font-medium text-sm">Nomor Telepon</label>
                     <input type="tel" name="phone" value="{{ old('phone', auth()->user()->phone) }}" 
                            class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                     @error('phone')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
 
                 <div>
-                    <label class="text-gray-700 font-medium text-sm">Address</label>
+                    <label class="text-gray-700 font-medium text-sm">Alamat</label>
                     <input type="text" name="address" value="{{ old('address', auth()->user()->address) }}" 
-                           placeholder="Enter your address" 
+                           placeholder="Masukkan alamat" 
                            class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                     @error('address')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-gray-700 font-medium text-sm">City</label>
+                        <label class="text-gray-700 font-medium text-sm">Kota</label>
                         <input type="text" name="city" value="{{ old('city', auth()->user()->city) }}" 
                                class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                         @error('city')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="text-gray-700 font-medium text-sm">Country</label>
+                        <label class="text-gray-700 font-medium text-sm">Negara</label>
                         <input type="text" name="country" value="{{ old('country', auth()->user()->country ?? 'Indonesia') }}" 
                                class="w-full mt-2 px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600">
                         @error('country')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
@@ -112,8 +119,8 @@
                 </div>
 
                 <div class="flex gap-3 pt-6 border-t border-gray-200">
-                    <button type="submit" class="btn-primary">Save Changes</button>
-                    <a href="{{ route('profile.show') }}" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                    <a href="{{ route('profile.show') }}" class="btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
@@ -121,7 +128,7 @@
 
     <script>
         function removePhoto() {
-            if (confirm('Are you sure you want to remove your profile photo?')) {
+            if (confirm('Yakin ingin menghapus foto profil?')) {
                 document.getElementById('removePhotoForm').submit();
             }
         }

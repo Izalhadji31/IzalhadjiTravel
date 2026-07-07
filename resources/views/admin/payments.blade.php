@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Payments Management')
+@section('title', 'Manajemen Pembayaran')
 
 @section('content')
 <style>
@@ -199,8 +199,8 @@
 </style>
 
 <div class="page-header">
-    <h1 class="page-title">Payments Management</h1>
-    <p class="page-subtitle">Monitor and manage all payment transactions</p>
+            <h1 class="page-title">Manajemen Pembayaran</h1>
+    <p class="page-subtitle">Pantau dan kelola semua transaksi pembayaran</p>
 </div>
 
 <!-- Stats Cards -->
@@ -209,14 +209,14 @@
         <div class="stat-icon" style="background: #eff6ff;">
             <svg fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        <div class="stat-label">Total Amount</div>
+        <div class="stat-label">Total</div>
         <div class="stat-value">Rp {{ number_format($totalAmount, 0, ',', '.') }}</div>
     </div>
     <div class="stat-card">
         <div class="stat-icon" style="background: #d1fae5;">
             <svg fill="none" stroke="#059669" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        <div class="stat-label">Success</div>
+        <div class="stat-label">Sukses</div>
         <div class="stat-value" style="color: #059669;">Rp {{ number_format($totalSuccess, 0, ',', '.') }}</div>
     </div>
     <div class="stat-card">
@@ -230,7 +230,7 @@
         <div class="stat-icon" style="background: #fee2e2;">
             <svg fill="none" stroke="#dc2626" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        <div class="stat-label">Failed</div>
+        <div class="stat-label">Gagal</div>
         <div class="stat-value" style="color: #dc2626;">Rp {{ number_format($totalFailed, 0, ',', '.') }}</div>
     </div>
 </div>
@@ -241,19 +241,19 @@
         <div class="filter-group">
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option value="">All Status</option>
-                <option value="success" {{ request('status') === 'success' ? 'selected' : '' }}>Success</option>
+                <option value="">Semua Status</option>
+                <option value="success" {{ request('status') === 'success' ? 'selected' : '' }}>Sukses</option>
                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>Processing</option>
-                <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed</option>
+                <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>Diproses</option>
+                <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Gagal</option>
             </select>
         </div>
         <div class="filter-group">
-            <label for="date_from">From Date</label>
+            <label for="date_from">Dari Tanggal</label>
             <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}">
         </div>
         <div class="filter-group">
-            <label for="date_to">To Date</label>
+            <label for="date_to">Sampai Tanggal</label>
             <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}">
         </div>
         <div class="filter-group">
@@ -273,15 +273,15 @@
     <table class="payments-table">
         <thead>
             <tr>
-                <th>ID</th>
+            <th>ID</th>
                 <th>Customer</th>
-                <th>Booking Code</th>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Midtrans Reference</th>
+                <th>Kode Booking</th>
+                <th>Jumlah</th>
+                <th>Metode</th>
+                <th>Referensi Midtrans</th>
                 <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -338,7 +338,7 @@
                 <td colspan="9">
                     <div class="empty-state">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        <p>No payments found</p>
+                        <p>Tidak ada data pembayaran</p>
                     </div>
                 </td>
             </tr>

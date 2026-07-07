@@ -10,7 +10,7 @@
 
     <div class="trvl-container relative z-10 trvl-hero-content">
         <div class="text-center">
-            <div class="trvl-hero-badge">
+            <div class="trvl-hero-badge mt-8 md:mt-12">
                 <span class="pulse-dot"></span>
                 {{ __('hero.badge') }}
             </div>
@@ -373,6 +373,16 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @php
+                $carImages = [
+                    'https://images.unsplash.com/photo-1543465077-db45b34b70a4?w=600&q=80',
+                    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80',
+                    'https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=600&q=80',
+                    'https://images.unsplash.com/photo-1550353127-b0da98aeaa0e?w=600&q=80',
+                    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q=80',
+                    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80',
+                    'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80',
+                ];
                 $armada = [
                     ['nama' => 'Toyota Avanza (New)', 'kursi' => 6, 'transmisi' => 'Manual', 'harga' => 350000, 'tahun' => 2019, 'plat' => 'EB 1234 AB', 'img' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'],
                     ['nama' => 'Toyota Avanza (All New)', 'kursi' => 7, 'transmisi' => 'Manual', 'harga' => 400000, 'tahun' => 2022, 'plat' => 'EB 5678 CD', 'img' => 'https://images.unsplash.com/photo-1543465077-db45b34b70a4?auto=format&fit=crop&w=900&q=80'],
@@ -415,7 +425,7 @@
             @foreach($displayArmada as $kendaraan)
             <div class="trvl-vehicle-card trvl-reveal @if($loop->index > 0) trvl-reveal-delay-{{ min($loop->index, 3) }} @endif">
                 <div class="trvl-vehicle-card-img">
-                    <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" loading="lazy">
+                    <img src="{{ $carImages[$loop->index % 8] }}" alt="{{ $kendaraan['nama'] }}" loading="lazy">
                 </div>
                 <div class="trvl-vehicle-card-body">
                     <div class="flex items-center justify-between mb-2">
@@ -501,17 +511,16 @@
             <div>
                 <p class="trvl-footer-heading">{{ __('footer.company_heading') }}</p>
                 <div class="flex flex-col gap-2">
-                    <a href="#" class="trvl-footer-link">{{ __('footer.about') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.terms') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
+                    <a href="{{ route('public.about') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
+                    <a href="{{ route('syarat-ketentuan') }}" class="trvl-footer-link">{{ __('footer.terms') }}</a>
+                    <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
                 </div>
             </div>
             <div>
                 <p class="trvl-footer-heading">{{ __('footer.contact_heading') }}</p>
                 <div class="flex flex-col gap-2">
+                    <a href="{{ route('public.call-center') }}" class="trvl-footer-link">Call Center</a>
                     <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO%2C%20saya%20ingin%20bertanya%20tentang%20layanan" class="trvl-footer-link">{{ __('footer.whatsapp') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.location') }}</a>
-                    <a href="#" class="trvl-footer-link">{{ __('footer.email') }}</a>
                 </div>
             </div>
         </div>

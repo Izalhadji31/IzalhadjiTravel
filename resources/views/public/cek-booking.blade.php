@@ -98,10 +98,10 @@ function checkBooking(e) {
             'cancelled': 'bg-red-100 text-red-700'
         };
         const statusLabels = {
-            'confirmed': '✓ Terkonfirmasi',
-            'pending': '⏳ Menunggu Pembayaran',
-            'completed': '✅ Selesai',
-            'cancelled': '❌ Dibatalkan'
+            'confirmed': 'Terkonfirmasi',
+            'pending': 'Menunggu Pembayaran',
+            'completed': 'Selesai',
+            'cancelled': 'Dibatalkan'
         };
         
         result.classList.remove('hidden');

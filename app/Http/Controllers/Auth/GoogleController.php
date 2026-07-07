@@ -38,7 +38,7 @@ class GoogleController extends Controller
                     ->first();
 
         if (!$user) {
-            // Create new user with customer role
+            // Create new user with customer role (pending approval)
             $user = User::create([
                 'name' => $googleUser->getName(),
                 'email' => $googleUser->getEmail(),
@@ -46,8 +46,13 @@ class GoogleController extends Controller
                 'password' => Hash::make(Str::random(24)),
                 'role' => 'customer',
                 'is_verified' => true,
+                'status' => 'pending',
                 'profile_photo_path' => $googleUser->getAvatar(),
             ]);
+
+            // New user needs admin approval - redirect to pending page
+            return redirect()->route('auth.pending')
+                             ->with('success', 'Registrasi dengan Google berhasil! Akun Anda sedang ditinjau oleh admin. Silakan tunggu persetujuan.');
         } else {
             // Update google_id if not set
             if (!$user->google_id) {
@@ -55,6 +60,17 @@ class GoogleController extends Controller
                     'google_id' => $googleUser->getId(),
                     'profile_photo_path' => $user->profile_photo_path ?? $googleUser->getAvatar(),
                 ]);
+            }
+
+            // Check if existing user's account is pending or rejected
+            if ($user->status === 'pending') {
+                return redirect()->route('auth.pending')
+                                 ->with('info', 'Akun Anda sedang ditinjau oleh admin. Silakan tunggu persetujuan.');
+            }
+
+            if ($user->status === 'rejected') {
+                return redirect()->route('auth.pending')
+                                 ->with('error', 'Akun Anda telah ditolak. Silakan hubungi admin untuk informasi lebih lanjut.');
             }
         }
 

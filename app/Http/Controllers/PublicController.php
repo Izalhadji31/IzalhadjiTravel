@@ -263,6 +263,11 @@ class PublicController extends Controller
         return view('public.kebijakan-privasi');
     }
 
+    public function callCenter()
+    {
+        return view('public.call-center');
+    }
+
     public function cekBooking()
     {
         return view('public.cek-booking');

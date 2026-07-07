@@ -6,10 +6,10 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
         <div>
             <h1 style="font-size: 26px; font-weight: 700; color: #1e3a5f; margin: 0; letter-spacing: -0.5px;">
-                Partner / Mitra Management
+                Manajemen Partner / Mitra
             </h1>
             <p style="font-size: 14px; color: #64748b; margin: 4px 0 0 0;">
-                Manage partners, payouts, and armada assignments
+                Kelola mitra, pencairan dana, dan penugasan armada
             </p>
         </div>
         @if(isset($partners))
@@ -23,19 +23,19 @@
     @if(isset($partners))
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px;">
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #2563eb;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Total Armadas</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Total Armada</div>
             <div style="font-size: 28px; font-weight: 700; color: #1e3a5f; margin-top: 6px;">{{ $partners->sum('armadas_count') }}</div>
         </div>
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #059669;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Total Earnings</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Total Pendapatan</div>
             <div style="font-size: 28px; font-weight: 700; color: #1e3a5f; margin-top: 6px;">Rp {{ number_format($partners->sum('total_earnings'), 0, ',', '.') }}</div>
         </div>
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #d97706;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Pending Payouts</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Pencairan Tertunda</div>
             <div style="font-size: 28px; font-weight: 700; color: #1e3a5f; margin-top: 6px;">Rp {{ number_format($partners->sum('pending_payouts'), 0, ',', '.') }}</div>
         </div>
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #10b981;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Active Partners</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Mitra Aktif</div>
             <div style="font-size: 28px; font-weight: 700; color: #1e3a5f; margin-top: 6px;">{{ $partners->where('is_active', true)->count() }}</div>
         </div>
     </div>
@@ -44,9 +44,9 @@
     <!-- Partners Table -->
     <div style="background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden;">
         <div style="padding: 18px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-size: 17px; font-weight: 600; color: #1e3a5f; margin: 0;">All Partners</h2>
+            <h2 style="font-size: 17px; font-weight: 600; color: #1e3a5f; margin: 0;">Semua Mitra</h2>
             <div style="font-size: 13px; color: #64748b;">
-                Showing {{ isset($partners) ? $partners->count() : 0 }} entries
+                Showing {{ isset($partners) ? $partners->count() : 0 }} entri
             </div>
         </div>
 
@@ -55,14 +55,14 @@
                 <thead>
                     <tr style="background: #f8fafc;">
                         <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">No</th>
-                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Name</th>
-                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Phone</th>
-                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">City</th>
-                        <th style="padding: 14px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Armadas</th>
-                        <th style="padding: 14px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Total Earnings</th>
-                        <th style="padding: 14px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Pending Payouts</th>
+                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Nama</th>
+                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Telepon</th>
+                        <th style="padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Kota</th>
+                        <th style="padding: 14px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Armada</th>
+                        <th style="padding: 14px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Total Pendapatan</th>
+                        <th style="padding: 14px 16px; text-align: right; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Belum Dicairkan</th>
                         <th style="padding: 14px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Status</th>
-                        <th style="padding: 14px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Actions</th>
+                        <th style="padding: 14px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 2px solid #e2e8f0;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,12 +105,12 @@
                             @if($partner->is_active)
                             <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; background-color: #d1fae5; color: #065f46;">
                                 <span style="width: 6px; height: 6px; border-radius: 50%; background-color: #10b981;"></span>
-                                Active
+                                Aktif
                             </span>
                             @else
                             <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; background-color: #fee2e2; color: #991b1b;">
                                 <span style="width: 6px; height: 6px; border-radius: 50%; background-color: #ef4444;"></span>
-                                Inactive
+                                Nonaktif
                             </span>
                             @endif
                         </td>
@@ -146,8 +146,8 @@
                         <td colspan="9" style="padding: 60px 20px; text-align: center;">
                             <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
                                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                                <p style="font-size: 15px; font-weight: 600; color: #475569; margin: 0;">No partners found</p>
-                                <p style="font-size: 13px; color: #94a3b8; margin: 0;">Partners will appear here once they are registered in the system.</p>
+                                <p style="font-size: 15px; font-weight: 600; color: #475569; margin: 0;">Tidak ada mitra ditemukan</p>
+                                <p style="font-size: 13px; color: #94a3b8; margin: 0;">Mitra akan muncul di sini setelah mereka terdaftar di sistem.</p>
                             </div>
                         </td>
                     </tr>
@@ -160,7 +160,7 @@
         @if(isset($partners) && $partners->hasPages())
         <div style="padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
             <div style="font-size: 13px; color: #64748b;">
-                Showing {{ $partners->firstItem() }} to {{ $partners->lastItem() }} of {{ $partners->total() }} partners
+                Menampilkan {{ $partners->firstItem() }} hingga {{ $partners->lastItem() }} dari {{ $partners->total() }} mitra
             </div>
             <div style="display: flex; gap: 4px;">
                 {{ $partners->links() }}

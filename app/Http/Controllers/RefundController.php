@@ -118,7 +118,7 @@ class RefundController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('refunds.show', $bookingModel->id)
+        return redirect()->route('refunds.index')
             ->with('success', 'Refund request submitted successfully.');
     }
 

@@ -7,9 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -32,34 +30,21 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['required', 'string', 'max:20'],
-            'role' => ['nullable', 'in:customer,driver,partner'],        ]);
-
-        $role = $request->input('role', 'customer');
+            'phone' => ['required', 'string', 'max:20', 'regex:/^(08|\+62)\d{8,13}$/'],
+        ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'role' => $role,
+            'role' => 'customer',
+            'status' => 'pending',
         ]);
 
-        // Auto-create driver profile if registering as driver
-        if ($role === 'driver') {
-            \App\Models\Driver::create([
-                'user_id' => $user->id,
-                'phone' => $request->phone,
-                'sim_number' => 'PENDING-' . strtoupper(Str::random(8)),
-                'sim_expiry' => now()->addYears(5),
-                'address' => '',
-                'status' => 'offline',
-            ]);
-        }
-
         event(new Registered($user));
-        Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil! Selamat datang di ASR GO');
+        return redirect()->route('auth.pending')
+                         ->with('success', 'Registrasi berhasil! Akun Anda sedang ditinjau oleh admin. Silakan tunggu persetujuan melalui email.');
     }
 }

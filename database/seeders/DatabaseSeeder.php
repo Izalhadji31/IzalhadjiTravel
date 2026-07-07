@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Mitra;
 use App\Models\Armada;
 use App\Models\Route;
 use App\Models\TravelPrice;
@@ -30,67 +28,13 @@ class DatabaseSeeder extends Seeder
         // Seed companies
         $this->call(\Database\Seeders\CompanySeeder::class);
         
-        // Insert demo users with fixed credentials (idempotent)
-        $this->call(\Database\Seeders\IdempotentDemoUsersSeeder::class);
-        
-        // Insert demo drivers (idempotent)
-        $this->call(\Database\Seeders\DemoDriversSeeder::class);
-        
-        // Insert demo mitras (idempotent)
-        $this->call(\Database\Seeders\DemoMitraSeeder::class);
+        // ============================================================
+        // SEED ALL USERS — Admin, Mitra, Driver, Customer
+        // (Idempotent — aman dijalankan berkali-kali)
+        // ============================================================
+        $this->call(\Database\Seeders\UserSeeder::class);
 
-        // Create admin user (idempotent)
-        $adminEmail = 'admin@asrgo.com';
-
-        if (!User::where('email', $adminEmail)->exists()) {
-            User::factory()->create([
-                'name' => 'Admin ASR GO',
-                'email' => $adminEmail,
-                'phone' => '081234567890',
-                'role' => 'admin',
-                'is_verified' => true,
-            ]);
-        }
-
-
-        // Create regular users
-        User::factory(5)->create([
-            'role' => 'customer',
-        ]);
-
-        // Create mitras (partners)
-        $mitras = [
-            [
-                'name' => 'PT. Jaya Transport',
-                'phone' => '081234567891',
-                'email' => 'jaya@transport.com',
-                'address' => 'Jl. Sudirman No. 1',
-                'city' => 'Ende',
-                'bank_name' => 'Bank BRI',
-                'bank_account' => '1234567890',
-                'bank_holder' => 'Jaya Transport',
-            ],
-            [
-                'name' => 'PT. Flores Travels',
-                'phone' => '081234567892',
-                'email' => 'flores@travels.com',
-                'address' => 'Jl. Ahmad Yani No. 2',
-                'city' => 'Ende',
-                'bank_name' => 'Bank BNI',
-                'bank_account' => '0987654321',
-                'bank_holder' => 'Flores Travels',
-            ],
-        ];
-
-        foreach ($mitras as $mitra) {
-            Mitra::updateOrCreate(
-                ['email' => $mitra['email']],
-                $mitra
-            );
-        }
-
-
-        // Create armadas
+        // Seed armadas (tetap pakai DatabaseSeeder untuk FK ke mitra)
         $armadas = [
             [
                 'mitra_id' => 1,
@@ -127,7 +71,6 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($armadas as $armada) {
-            // Use plate_number as unique identifier (if present)
             $plate = $armada['plate_number'] ?? null;
             if ($plate) {
                 Armada::updateOrCreate(
@@ -138,7 +81,6 @@ class DatabaseSeeder extends Seeder
                 Armada::create($armada);
             }
         }
-
 
         // Create routes
         $routes = [
@@ -154,7 +96,6 @@ class DatabaseSeeder extends Seeder
         $createdRoutes = [];
 
         foreach ($routes as $route) {
-            // Use (origin_city, destination_city, route_type) as stable key
             $createdRoutes[$route['name']] = Route::updateOrCreate(
                 [
                     'origin_city' => $route['origin_city'],
@@ -170,7 +111,6 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-
         // Create travel prices
         $travelPrices = [
             ['route' => 'Ende - Mbay', 'price_per_seat' => 100000],
@@ -184,10 +124,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($travelPrices as $price) {
             $route = $createdRoutes[$price['route']] ?? null;
-
-            if (!$route) {
-                continue;
-            }
+            if (!$route) continue;
 
             TravelPrice::updateOrCreate(
                 ['route_id' => $route->id],
@@ -198,7 +135,6 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
-
 
         // Create rental prices
         $rentalPrices = [
@@ -213,10 +149,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($rentalPrices as $price) {
             $route = $createdRoutes[$price['route']] ?? null;
-
-            if (!$route) {
-                continue;
-            }
+            if (!$route) continue;
 
             RentalPrice::updateOrCreate(
                 ['route_id' => $route->id],

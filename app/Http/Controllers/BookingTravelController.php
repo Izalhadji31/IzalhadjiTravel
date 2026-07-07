@@ -60,8 +60,8 @@ class BookingTravelController extends Controller
     {
         $user = Auth::user();
 
-        // Check identity verification
-        if (!$user->is_identity_verified) {
+        // Check identity verification — skip jika kolom belum ada
+        if (Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
             return redirect()->route('profile.edit')
                            ->with('error', 'Please verify your identity before booking');
         }
@@ -115,8 +115,8 @@ class BookingTravelController extends Controller
             \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
         }
 
-        return redirect()->route('bookings.travel.show', $booking->id)
-                       ->with('success', 'Booking created. Please complete payment');
+        return redirect()->route('payments.travel', $booking->id)
+                       ->with('success', 'Pemesanan travel berhasil. Silakan selesaikan pembayaran.');
     }
 
     /**

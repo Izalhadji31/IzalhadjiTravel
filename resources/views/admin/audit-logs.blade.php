@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Audit Logs')
+@section('title', 'Audit Logs - Admin')
 
 @section('content')
 <div class="page-header">
-    <h1 class="page-title">Audit Logs</h1>
-    <p class="page-subtitle">View system activity and user actions</p>
+    <h1 class="page-title">Log Audit</h1>
+    <p class="page-subtitle">Lihat aktivitas sistem dan tindakan pengguna</p>
 </div>
 
 <!-- Filters -->
@@ -14,7 +14,7 @@
         <div>
             <label class="form-label">User</label>
             <select name="user_id" class="form-input" style="width: 180px;">
-                <option value="all" {{ request('user_id') == 'all' ? 'selected' : '' }}>All Users</option>
+                <option value="all" {{ request('user_id') == 'all' ? 'selected' : '' }}>Semua Pengguna</option>
                 @foreach($users as $user)
                     <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                 @endforeach
@@ -23,7 +23,7 @@
         <div>
             <label class="form-label">Action</label>
             <select name="action" class="form-input" style="width: 150px;">
-                <option value="all" {{ request('action') == 'all' ? 'selected' : '' }}>All Actions</option>
+                <option value="all" {{ request('action') == 'all' ? 'selected' : '' }}>Semua Aksi</option>
                 @foreach($actions as $action)
                     <option value="{{ $action }}" {{ request('action') == $action ? 'selected' : '' }}>{{ $action }}</option>
                 @endforeach
@@ -32,18 +32,18 @@
         <div>
             <label class="form-label">Model</label>
             <select name="model" class="form-input" style="width: 180px;">
-                <option value="all" {{ request('model') == 'all' ? 'selected' : '' }}>All Models</option>
+                <option value="all" {{ request('model') == 'all' ? 'selected' : '' }}>Semua Model</option>
                 @foreach($models as $model)
                     <option value="{{ $model }}" {{ request('model') == $model ? 'selected' : '' }}>{{ class_basename($model) }}</option>
                 @endforeach
             </select>
         </div>
         <div>
-            <label class="form-label">From</label>
+            <label class="form-label">Dari</label>
             <input type="date" name="date_from" value="{{ request('date_from') }}" class="form-input">
         </div>
         <div>
-            <label class="form-label">To</label>
+            <label class="form-label">Sampai</label>
             <input type="date" name="date_to" value="{{ request('date_to') }}" class="form-input">
         </div>
         <button type="submit" class="btn btn-primary">Filter</button>
@@ -56,11 +56,11 @@
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
-                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Timestamp</th>
-                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">User</th>
-                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Action</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Waktu</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Pengguna</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Aksi</th>
                 <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Model</th>
-                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">IP Address</th>
+                <th style="padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; color: #666;">Alamat IP</th>
             </tr>
         </thead>
         <tbody>
@@ -87,7 +87,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="5" style="padding: 2rem; text-align: center; color: #999;">No audit logs found.</td>
+                <td colspan="5" style="padding: 2rem; text-align: center; color: #999;">Tidak ada log audit ditemukan.</td>
             </tr>
             @endforelse
         </tbody>

@@ -254,7 +254,7 @@
         <div style="padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; justify-content: space-between;">
             <h2 style="font-size: 1rem; font-weight: 600; color: #111827;">Booking Terbaru</h2>
             <div style="display: flex; gap: 6px;">
-                <span class="filter-tab active" onclick="filterBookings('all', this)">All</span>
+                <span class="filter-tab active" onclick="filterBookings('all', this)">Semua</span>
                 <span class="filter-tab" onclick="filterBookings('travel', this)">Travel</span>
                 <span class="filter-tab" onclick="filterBookings('rental', this)">Rental</span>
                 <span class="filter-tab" onclick="filterBookings('airport', this)">Airport</span>
@@ -283,11 +283,11 @@
                             @if($booking->status == 'pending')
                                 <span class="status-badge status-pending">Pending</span>
                             @elseif($booking->status == 'confirmed')
-                                <span class="status-badge status-confirmed">Confirmed</span>
+                                <span class="status-badge status-confirmed">Dikonfirmasi</span>
                             @elseif($booking->status == 'completed')
-                                <span class="status-badge status-completed">Completed</span>
+                                <span class="status-badge status-completed">Selesai</span>
                             @elseif($booking->status == 'cancelled')
-                                <span class="status-badge status-cancelled">Cancelled</span>
+                                <span class="status-badge status-cancelled">Dibatalkan</span>
                             @else
                                 <span class="status-badge" style="background: #f3f4f6; color: #6b7280;">{{ ucfirst($booking->status) }}</span>
                             @endif
@@ -308,11 +308,11 @@
                             @if($booking->status == 'pending')
                                 <span class="status-badge status-pending">Pending</span>
                             @elseif($booking->status == 'confirmed')
-                                <span class="status-badge status-confirmed">Confirmed</span>
+                                <span class="status-badge status-confirmed">Dikonfirmasi</span>
                             @elseif($booking->status == 'completed')
-                                <span class="status-badge status-completed">Completed</span>
+                                <span class="status-badge status-completed">Selesai</span>
                             @elseif($booking->status == 'cancelled')
-                                <span class="status-badge status-cancelled">Cancelled</span>
+                                <span class="status-badge status-cancelled">Dibatalkan</span>
                             @else
                                 <span class="status-badge" style="background: #f3f4f6; color: #6b7280;">{{ ucfirst($booking->status) }}</span>
                             @endif
@@ -347,21 +347,21 @@
             <div class="quick-stat-item">
                 <div style="display: flex; align-items: center;">
                     <div class="quick-stat-dot" style="background: #0064d2;"></div>
-                    <span style="font-size: 0.85rem; color: #374151;">Confirmed</span>
+                    <span style="font-size: 0.85rem; color: #374151;">Dikonfirmasi</span>
                 </div>
                 <span style="font-size: 0.85rem; font-weight: 700; color: #111827;">{{ $totalBookings ? ceil($totalBookings * 0.4) : 0 }}</span>
             </div>
             <div class="quick-stat-item">
                 <div style="display: flex; align-items: center;">
                     <div class="quick-stat-dot" style="background: #22c55e;"></div>
-                    <span style="font-size: 0.85rem; color: #374151;">Completed</span>
+                    <span style="font-size: 0.85rem; color: #374151;">Selesai</span>
                 </div>
                 <span style="font-size: 0.85rem; font-weight: 700; color: #111827;">{{ $totalBookings ? ceil($totalBookings * 0.45) : 0 }}</span>
             </div>
             <div class="quick-stat-item">
                 <div style="display: flex; align-items: center;">
                     <div class="quick-stat-dot" style="background: #ef4444;"></div>
-                    <span style="font-size: 0.85rem; color: #374151;">Cancelled</span>
+                    <span style="font-size: 0.85rem; color: #374151;">Dibatalkan</span>
                 </div>
                 <span style="font-size: 0.85rem; font-weight: 700; color: #111827;">{{ $totalBookings ? ceil($totalBookings * 0.05) : 0 }}</span>
             </div>

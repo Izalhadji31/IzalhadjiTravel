@@ -6,8 +6,8 @@
     <!-- Page Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
         <div>
-            <h1 style="font-size: 26px; font-weight: 700; color: #1e3a5f; margin: 0;">Driver / Sopir Management</h1>
-            <p style="font-size: 14px; color: #6b7c93; margin: 4px 0 0 0;">Manage and monitor all registered drivers in the system</p>
+            <h1 style="font-size: 26px; font-weight: 700; color: #1e3a5f; margin: 0;">Manajemen Driver / Sopir</h1>
+            <p style="font-size: 14px; color: #6b7c93; margin: 4px 0 0 0;">Kelola dan pantau semua driver yang terdaftar di sistem</p>
         </div>
         <div style="display: flex; gap: 10px;">
             <span style="background-color: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;">
@@ -22,11 +22,11 @@
     <!-- Stats Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #22c55e;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Available</div>
+            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Tersedia</div>
             <div style="font-size: 28px; font-weight: 700; color: #16a34a;">{{ $drivers->where('status', 'available')->count() }}</div>
         </div>
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #f97316;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">On Trip</div>
+            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Sedang Bertugas</div>
             <div style="font-size: 28px; font-weight: 700; color: #ea580c;">{{ $drivers->where('status', 'busy')->count() }}</div>
         </div>
         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #9ca3af;">
@@ -42,29 +42,29 @@
     <!-- Filter Section -->
     <div style="background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
         <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div style="font-size: 14px; font-weight: 600; color: #374151;">Filters:</div>
+            <div style="font-size: 14px; font-weight: 600; color: #374151;">Filter:</div>
             
-            <input type="text" id="searchFilter" placeholder="Search name or phone..." 
+            <input type="text" id="searchFilter" placeholder="Cari nama atau telepon..." 
                    style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; width: 220px; outline: none;"
                    onkeydown="if(event.key==='Enter') applyFilters()">
             
             <select id="statusFilter" style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; outline: none; cursor: pointer;">
-                <option value="">All Statuses</option>
-                <option value="available">Available</option>
-                <option value="busy">Busy</option>
+                <option value="">Semua Status</option>
+                <option value="available">Tersedia</option>
+                <option value="busy">Sibuk</option>
                 <option value="offline">Offline</option>
-                <option value="on_leave">On Leave</option>
+                <option value="on_leave">Cuti</option>
             </select>
             
             <select id="armadaFilter" style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; outline: none; cursor: pointer;">
-                <option value="">All Armadas</option>
+                <option value="">Semua Armada</option>
                 @foreach($drivers->pluck('armada.name')->unique()->filter() as $armadaName)
                     <option value="{{ strtolower($armadaName) }}">{{ $armadaName }}</option>
                 @endforeach
             </select>
             
             <button onclick="applyFilters()" style="padding: 8px 18px; background-color: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
-                Apply
+                Terapkan
             </button>
             <button onclick="resetFilters()" style="padding: 8px 18px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                 Reset
@@ -78,15 +78,15 @@
             <thead>
                 <tr style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);">
                     <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">#</th>
-                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Name</th>
-                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space:nowrap;">Phone</th>
-                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">SIM Number</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Nama</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space:nowrap;">Telepon</th>
+                    <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">No. SIM</th>
                     <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Armada</th>
                     <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Status</th>
                     <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Rating</th>
-                    <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Total Trips</th>
-                    <th style="padding: 14px 16px; text-align: right; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Earnings (Balance)</th>
-                    <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Actions</th>
+                    <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Total Trip</th>
+                    <th style="padding: 14px 16px; text-align: right; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Saldo</th>
+                    <th style="padding: 14px 16px; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,7 +147,7 @@
                             {{ number_format($avgRating ?? $driver->rating ?? 0, 1) }}
                         </div>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            {{ \App\Models\Review::where('rated_user_id', $driver->id)->count() }} reviews
+                            {{ \App\Models\Review::where('rated_user_id', $driver->id)->count() }} ulasan
                         </div>
                     </td>
                     
@@ -166,16 +166,16 @@
                                         style="padding: 6px 12px; background-color: #16a34a; color: #fff; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;"
                                         onmouseover="this.style.backgroundColor='#15803d';"
                                         onmouseout="this.style.backgroundColor='#16a34a';"
-                                        title="Approve / Activate this driver">
-                                    ✓ Approve
+                                        title="Setujui / Aktifkan driver ini">
+                                    ✓ Setujui
                                 </button>
                             @else
                                 <button 
                                         style="padding: 6px 12px; background-color: #2563eb; color: #fff; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;"
                                         onmouseover="this.style.backgroundColor='#1d4ed8';"
                                         onmouseout="this.style.backgroundColor='#2563eb';"
-                                        title="View driver details">
-                                    ☰ Details
+                                        title="Lihat detail driver">
+                                    ☰ Detail
                                 </button>
                             @endif
                             <button onclick="viewDetails({{ $driver->id }})" 
@@ -192,8 +192,8 @@
                 <tr>
                     <td colspan="10" style="padding: 60px 20px; text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.3;">🚗</div>
-                        <div style="font-size: 16px; font-weight: 600; color: #6b7280;">No drivers found</div>
-                        <div style="font-size: 13px; color: #9ca3af; margin-top: 4px;">Drivers will appear here once they register in the system.</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #6b7280;">Tidak ada driver ditemukan</div>
+                        <div style="font-size: 13px; color: #9ca3af; margin-top: 4px;">Driver akan muncul di sini setelah mereka mendaftar di sistem.</div>
                     </td>
                 </tr>
                 @endforelse
@@ -204,7 +204,7 @@
         @if($drivers->hasPages())
         <div style="padding: 16px 20px; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
             <div style="font-size: 13px; color: #6b7280;">
-                Showing {{ $drivers->firstItem() }} to {{ $drivers->lastItem() }} of {{ $drivers->total() }} drivers
+                Menampilkan {{ $drivers->firstItem() }} hingga {{ $drivers->lastItem() }} dari {{ $drivers->total() }} driver
             </div>
             <div style="display: flex; gap: 8px;">
                 {{ $drivers->links() }}
@@ -215,7 +215,7 @@
 
     <!-- Footer Info -->
     <div style="margin-top: 16px; text-align: center; font-size: 12px; color: #9ca3af;">
-        Last updated: {{ now()->format('d M Y H:i') }} • Driver Management System • ASR GO
+        Last updated: {{ now()->format('d M Y H:i') }} • Sistem Manajemen Driver • ASR GO
     </div>
 </div>
 
@@ -249,8 +249,8 @@ function resetFilters() {
 }
 
 function approveDriver(id) {
-    if (confirm('Are you sure you want to approve/activate this driver?')) {
-        alert('Driver #' + id + ' has been activated successfully.');
+    if (confirm('Yakin ingin menyetujui/mengaktifkan driver ini?')) {
+        alert('Driver #' + id + ' berhasil diaktifkan.');
         // window.location.href = '/admin/drivers/' + id + '/approve';
     }
 }

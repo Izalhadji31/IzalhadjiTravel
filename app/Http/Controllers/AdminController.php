@@ -56,11 +56,11 @@ class AdminController extends Controller
     }
 
     /**
-     * Show user management
+     * Show user management with pending first
      */
     public function users()
     {
-        $users = User::where('role', 'user')
+        $users = User::orderByRaw("CASE WHEN status = 'pending' THEN 0 WHEN status = 'approved' THEN 1 ELSE 2 END")
                      ->latest()
                      ->paginate(10);
 
@@ -68,7 +68,58 @@ class AdminController extends Controller
     }
 
     /**
-     * Show settings
+     * Show create user form (admin can create mitra/driver/customer/admin)
+     */
+    public function createUser()
+    {
+        return view('admin.users-create');
+    }
+
+    /**
+     * Store a new user created by admin
+     */
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6'],
+            'phone' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'in:admin,customer,driver,partner'],
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'password' => bcrypt($validated['password']),
+            'role' => $validated['role'],
+            'status' => 'approved',
+            'is_verified' => true,
+            'email_verified_at' => now(),
+        ]);
+
+        // Auto-create driver profile if role is driver
+        if ($validated['role'] === 'driver') {
+            \App\Models\Driver::create([
+                'user_id' => $user->id,
+                'phone' => $validated['phone'],
+                'sim_number' => 'ADM-' . strtoupper(substr(md5(time()), 0, 8)),
+                'sim_expiry' => now()->addYears(5),
+                'address' => '',
+                'status' => 'available',
+                'rating' => 5.0,
+                'total_trips' => 0,
+                'balance' => 0,
+            ]);
+        }
+
+        return redirect()->route('admin.users')
+                         ->with('success', 'Akun ' . $validated['role'] . ' berhasil dibuat: ' . $validated['email']);
+    }
+
+    /**
+     * Approve pending user registration
      */
     public function settings()
     {
@@ -94,6 +145,40 @@ class AdminController extends Controller
         setting()->save();
 
         return back()->with('success', 'Settings updated successfully');
+    }
+
+    /**
+     * Approve pending user registration
+     */
+    public function approveUserRegistration($userId)
+    {
+        $user = User::findOrFail($userId);
+        
+        if ($user->status !== 'pending') {
+            return back()->with('warning', 'User is not in pending status.');
+        }
+
+        $user->update(['status' => 'approved']);
+        
+        return redirect()->route('admin.users')
+                         ->with('success', 'Akun ' . $user->name . ' telah disetujui.');
+    }
+
+    /**
+     * Reject pending user registration
+     */
+    public function rejectUserRegistration($userId)
+    {
+        $user = User::findOrFail($userId);
+        
+        if ($user->status !== 'pending') {
+            return back()->with('warning', 'User is not in pending status.');
+        }
+
+        $user->update(['status' => 'rejected']);
+        
+        return redirect()->route('admin.users')
+                         ->with('success', 'Akun ' . $user->name . ' telah ditolak.');
     }
 
     /**

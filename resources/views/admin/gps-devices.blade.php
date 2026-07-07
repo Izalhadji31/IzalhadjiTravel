@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'GPS Devices Management')
+@section('title', 'GPS Devices - Admin')
 
 @section('content')
 <div class="px-6 py-6">
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">GPS Devices</h1>
-            <p class="text-sm text-gray-500 mt-1">Manage GPS tracking devices and their configuration</p>
+            <h1 class="text-2xl font-bold text-gray-900">Perangkat GPS</h1>
+            <p class="text-sm text-gray-500 mt-1">Kelola perangkat pelacak GPS dan konfigurasinya</p>
         </div>
         <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg font-medium text-sm transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-500 uppercase font-medium">Total Devices</p>
+                    <p class="text-xs text-gray-500 uppercase font-medium">Total Perangkat</p>
                     <p class="text-xl font-bold text-gray-900">{{ $devices->total() }}</p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-500 uppercase font-medium">Active</p>
+                    <p class="text-xs text-gray-500 uppercase font-medium">Aktif</p>
                     <p class="text-xl font-bold text-gray-900">{{ \App\Models\GpsDevice::where('is_active', true)->count() }}</p>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-500 uppercase font-medium">Online (5min)</p>
+                    <p class="text-xs text-gray-500 uppercase font-medium">Online (5menit)</p>
                     <p class="text-xl font-bold text-gray-900">{{ \App\Models\GpsDevice::where('last_contact_at', '>=', now()->subMinutes(5))->count() }}</p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-gray-500 uppercase font-medium">Linked to Armada</p>
+                    <p class="text-xs text-gray-500 uppercase font-medium">Tertaut Armada</p>
                     <p class="text-xl font-bold text-gray-900">{{ \App\Models\GpsDevice::whereNotNull('armada_id')->count() }}</p>
                 </div>
             </div>
@@ -92,11 +92,11 @@
     <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
             <div class="flex items-center gap-3">
-                <input type="text" id="searchInput" placeholder="Search devices..." value="{{ request('search') }}" onkeyup="if(event.key==='Enter') window.location='?search='+this.value" class="flex-1 max-w-xs border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <input type="text" id="searchInput" placeholder="Cari perangkat..." value="{{ request('search') }}" onkeyup="if(event.key==='Enter') window.location='?search='+this.value" class="flex-1 max-w-xs border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                 <select onchange="window.location='?status='+this.value" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                    <option value="">All Status</option>
-                    <option value="active" {{ request('status')==='active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ request('status')==='inactive' ? 'selected' : '' }}>Inactive</option>
+                    <option value="">Semua Status</option>
+                    <option value="active" {{ request('status')==='active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="inactive" {{ request('status')==='inactive' ? 'selected' : '' }}>Nonaktif</option>
                 </select>
             </div>
         </div>
@@ -104,12 +104,12 @@
             <table class="w-full">
                 <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Device</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Type</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Perangkat</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tipe</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Armada</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Last Contact</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kontak Terakhir</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -132,7 +132,7 @@
                                 {{ $device->armada->plate_number }}
                             </span>
                             @else
-                            <span class="text-sm text-gray-400">Not linked</span>
+                            <span class="text-sm text-gray-400">Belum tertaut</span>
                             @endif
                         </td>
                         <td class="px-4 py-3">
@@ -140,12 +140,12 @@
                                 @if($device->is_active)
                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-                                    Active
+                                    Aktif
                                 </span>
                                 @else
                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                     <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                                    Inactive
+                                    Nonaktif
                                 </span>
                                 @endif
                                 @if($device->isOnline())
@@ -163,7 +163,7 @@
                                 <p class="text-xs text-gray-500">{{ $device->last_contact_at->format('Y-m-d H:i:s') }}</p>
                             </div>
                             @else
-                            <span class="text-sm text-gray-400">Never</span>
+                            <span class="text-sm text-gray-400">Tidak Pernah</span>
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right">
@@ -173,10 +173,10 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </button>
-                                <form action="{{ route('admin.gps-devices.destroy', $device) }}" method="POST" class="inline" onsubmit="return confirm('Delete this GPS device?')">
+                                <form action="{{ route('admin.gps-devices.destroy', $device) }}" method="POST" class="inline" onsubmit="return confirm('Hapus perangkat GPS ini?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Delete">
+                                    <button type="submit" class="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors" title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
@@ -191,8 +191,8 @@
                             <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <p class="text-gray-500 text-sm">No GPS devices found</p>
-                            <button onclick="openAddModal()" class="mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium">+ Add your first device</button>
+                            <p class="text-gray-500 text-sm">Tidak ada perangkat GPS ditemukan</p>
+                            <button onclick="openAddModal()" class="mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium">+ Tambah perangkat pertama</button>
                         </td>
                     </tr>
                     @endforelse
@@ -211,7 +211,7 @@
 <div id="addModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-gray-900">Add GPS Device</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Tambah Perangkat GPS</h3>
             <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -222,17 +222,17 @@
             @csrf
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device ID *</label>
-                    <input type="text" name="device_id" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="e.g. GT06-001">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">ID Perangkat *</label>
+                    <input type="text" name="device_id" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="cth. GT06-001">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device Name *</label>
-                    <input type="text" name="device_name" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="e.g. Car #1 Tracker">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Perangkat *</label>
+                    <input type="text" name="device_name" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="cth. Pelacak Mobil #1">
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device Type *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Perangkat *</label>
                     <select name="device_type" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                         <option value="generic">Generic</option>
                         <option value="gt06">GT06</option>
@@ -244,9 +244,9 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Link to Armada</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tautkan ke Armada</label>
                     <select name="armada_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        <option value="">Not linked</option>
+                        <option value="">Belum tertaut</option>
                         @foreach(\App\Models\Armada::all() as $armada)
                         <option value="{{ $armada->id }}">{{ $armada->plate_number }} - {{ $armada->driver_name }}</option>
                         @endforeach
@@ -255,16 +255,16 @@
             </div>
             <div class="flex items-center gap-2">
                 <input type="checkbox" name="is_active" id="add_is_active" value="1" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <label for="add_is_active" class="text-sm text-gray-700">Device is active</label>
+                <label for="add_is_active" class="text-sm text-gray-700">Perangkat aktif</label>
             </div>
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <p class="text-xs text-blue-700">
-                    <strong>Note:</strong> An API key will be automatically generated. The device will authenticate using the <code class="bg-blue-100 px-1 rounded">X-Device-Key</code> header.
+                    <strong>Catatan:</strong> API key akan dibuat secara otomatis. Perangkat akan melakukan autentikasi menggunakan header <code class="bg-blue-100 px-1 rounded">X-Device-Key</code>.
                 </p>
             </div>
             <div class="flex justify-end gap-3 pt-2">
-                <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
-                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">Create Device</button>
+                <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Batal</button>
+                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">Buat Perangkat</button>
             </div>
         </form>
     </div>
@@ -274,7 +274,7 @@
 <div id="editModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-gray-900">Edit GPS Device</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Edit Perangkat GPS</h3>
             <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -286,17 +286,17 @@
             @method('PUT')
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device ID *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">ID Perangkat *</label>
                     <input type="text" name="device_id" id="edit_device_id" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device Name *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Perangkat *</label>
                     <input type="text" name="device_name" id="edit_device_name" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Device Type *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Perangkat *</label>
                     <select name="device_type" id="edit_device_type" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                         <option value="generic">Generic</option>
                         <option value="gt06">GT06</option>
@@ -308,9 +308,9 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Link to Armada</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tautkan ke Armada</label>
                     <select name="armada_id" id="edit_armada_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        <option value="">Not linked</option>
+                        <option value="">Belum tertaut</option>
                         @foreach(\App\Models\Armada::all() as $armada)
                         <option value="{{ $armada->id }}">{{ $armada->plate_number }} - {{ $armada->driver_name }}</option>
                         @endforeach
@@ -319,11 +319,11 @@
             </div>
             <div class="flex items-center gap-2">
                 <input type="checkbox" name="is_active" id="edit_is_active" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <label for="edit_is_active" class="text-sm text-gray-700">Device is active</label>
+                <label for="edit_is_active" class="text-sm text-gray-700">Perangkat aktif</label>
             </div>
             <div class="flex justify-end gap-3 pt-2">
-                <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
-                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">Update Device</button>
+                <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Batal</button>
+                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">Perbarui Perangkat</button>
             </div>
         </form>
     </div>

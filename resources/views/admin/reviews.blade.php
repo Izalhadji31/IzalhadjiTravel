@@ -6,14 +6,14 @@
 <div style="padding: 24px; background-color: #f1f5f9; min-height: 100vh;">
     <!-- Page Header -->
     <div style="margin-bottom: 24px;">
-        <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">Review Moderation</h1>
-        <p style="font-size: 14px; color: #64748b; margin: 4px 0 0 0;">Approve or reject customer reviews</p>
+        <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">Moderasi Ulasan</h1>
+        <p style="font-size: 14px; color: #64748b; margin: 4px 0 0 0;">Setujui atau tolak ulasan pelanggan</p>
     </div>
 
     <!-- Stats Cards -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
         <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Total Reviews</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Total Ulasan</div>
             <div style="font-size: 28px; font-weight: 700; color: #3b82f6; margin-top: 4px;">{{ $totalReviews }}</div>
         </div>
         <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #f59e0b;">
@@ -21,7 +21,7 @@
             <div style="font-size: 28px; font-weight: 700; color: #f59e0b; margin-top: 4px;">{{ $pendingReviews }}</div>
         </div>
         <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #22c55e;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Avg Rating</div>
+            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Rata-rata Rating</div>
             <div style="font-size: 28px; font-weight: 700; color: #22c55e; margin-top: 4px;">{{ $avgRating ? number_format($avgRating, 1) : 'N/A' }} <span style="font-size: 14px; color: #64748b;">/ 5</span></div>
         </div>
     </div>
@@ -31,10 +31,10 @@
         <!-- Filter Bar -->
         <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
-                <a href="{{ route('admin.reviews') }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === '' ? 'background-color: #2563eb; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">All</a>
+                <a href="{{ route('admin.reviews') }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === '' ? 'background-color: #2563eb; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Semua</a>
                 <a href="{{ route('admin.reviews', ['status' => 'pending']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === 'pending' ? 'background-color: #f59e0b; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Pending</a>
-                <a href="{{ route('admin.reviews', ['status' => 'approved']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === 'approved' ? 'background-color: #22c55e; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Approved</a>
-                <a href="{{ route('admin.reviews', ['status' => 'rejected']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === 'rejected' ? 'background-color: #ef4444; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Rejected</a>
+                <a href="{{ route('admin.reviews', ['status' => 'approved']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === 'approved' ? 'background-color: #22c55e; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Disetujui</a>
+                <a href="{{ route('admin.reviews', ['status' => 'rejected']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ $status === 'rejected' ? 'background-color: #ef4444; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Ditolak</a>
             </div>
             <div style="font-size: 13px; color: #64748b;">
                 Total: <strong style="color: #1e293b;">{{ $reviews->total() }}</strong> reviews
@@ -46,13 +46,13 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #f8fafc;">
-                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Reviewer</th>
+                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Pengulas</th>
                         <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Booking</th>
                         <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Rating</th>
-                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Comment</th>
-                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Date</th>
+                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Komentar</th>
+                        <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Tanggal</th>
                         <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Status</th>
-                        <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Actions</th>
+                        <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,15 +116,15 @@
                                 </form>
                                 <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST" style="display:inline;">
                                     @csrf
-                                    <button type="submit" onclick="return confirm('Reject this review?');" style="padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #ef4444; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.backgroundColor='#dc2626';" onmouseout="this.style.backgroundColor='#ef4444';">
+                                    <button type="submit" onclick="return confirm('Tolak ulasan ini?');" style="padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #ef4444; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.backgroundColor='#dc2626';" onmouseout="this.style.backgroundColor='#ef4444';">
                                         <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                        Reject
+                                        Tolak
                                     </button>
                                 </form>
                                 @elseif($s === 'approved')
-                                <span style="font-size: 11px; color: #166534; font-weight: 500;">✓ Approved</span>
+                                <span style="font-size: 11px; color: #166534; font-weight: 500;">✓ Disetujui</span>
                                 @else
-                                <span style="font-size: 11px; color: #991b1b; font-weight: 500;">✕ Rejected</span>
+                                <span style="font-size: 11px; color: #991b1b; font-weight: 500;">✕ Ditolak</span>
                                 @endif
                             </div>
                         </td>
@@ -133,7 +133,7 @@
                     <tr>
                         <td colspan="7" style="padding: 48px 16px; text-align: center; color: #94a3b8; font-size: 14px;">
                             <div style="font-size: 40px; margin-bottom: 8px;">📝</div>
-                            No reviews found for this filter.
+            Tidak ada ulasan untuk filter ini.
                         </td>
                     </tr>
                     @endforelse
@@ -143,7 +143,7 @@
 
         <!-- Footer with Pagination -->
         <div style="padding: 12px 20px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 8px;">
-            <span>Showing {{ $reviews->firstItem() ?? 0 }} - {{ $reviews->lastItem() ?? 0 }} of {{ $reviews->total() }} reviews</span>
+            <span>Menampilkan {{ $reviews->firstItem() ?? 0 }} - {{ $reviews->lastItem() ?? 0 }} dari {{ $reviews->total() }} ulasan</span>
             <div style="display: flex; gap: 4px;">
                 {{ $reviews->links() }}
             </div>

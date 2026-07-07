@@ -104,7 +104,10 @@
                     <div class="p-4">
                         <h4 class="font-bold text-gray-900 mb-1">Renungan Bung Karno</h4>
                         <p class="text-gray-500 text-sm mb-2">Situs bersejarah perjuangan Bung Karno saat diasingkan di Ende. Tempat penuh nilai nasionalisme dan inspirasi Pancasila.</p>
-                        <span class="text-xs text-blue-600 font-medium">🏛️ Sejarah & Budaya</span>
+                        <span class="text-xs text-blue-600 font-medium">
+                            <svg class="w-3.5 h-3.5 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            Sejarah & Budaya
+                        </span>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group">
@@ -114,7 +117,10 @@
                     <div class="p-4">
                         <h4 class="font-bold text-gray-900 mb-1">Air Terjun Ogi</h4>
                         <p class="text-gray-500 text-sm mb-2">Air terjun setinggi 30 meter di tengah hutan tropis. Air jernih dan suasana sejuk sepanjang tahun.</p>
-                        <span class="text-xs text-blue-600 font-medium">💧 Alam & Waterfall</span>
+                        <span class="text-xs text-blue-600 font-medium">
+                            <svg class="w-3.5 h-3.5 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 7.464A5 5 0 0117.95 11H12l-6.364 6.364A9 9 0 1115.536 7.464z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>
+                            Alam & Waterfall
+                        </span>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group">
@@ -124,7 +130,10 @@
                     <div class="p-4">
                         <h4 class="font-bold text-gray-900 mb-1">Pantai Ende</h4>
                         <p class="text-gray-500 text-sm mb-2">Pantai pasir hitam dengan latar Gunung Kelimutu. Tempat sempurna menikmati sunset.</p>
-                        <span class="text-xs text-blue-600 font-medium">🏖️ Pantai & Sunset</span>
+                        <span class="text-xs text-blue-600 font-medium">
+                            <svg class="w-3.5 h-3.5 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                            Pantai & Sunset
+                        </span>
                     </div>
                 </div>
             </div>
@@ -150,8 +159,14 @@
                         <h4 class="font-bold text-lg text-gray-900 mb-2">Pulau Komodo</h4>
                         <p class="text-gray-500 text-sm mb-3">Habitat asli komodo dengan 3.000+ ekor. Trekking bersama ranger untuk melihat kadal purba raksasa di alam liar.</p>
                         <div class="flex items-center gap-3 text-xs text-gray-500">
-                            <span>🐉 3.000+ Komodo</span>
-                            <span>📍 247 km dari Ende</span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                3.000+ Komodo
+                            </span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                247 km dari Ende
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -163,8 +178,14 @@
                         <h4 class="font-bold text-lg text-gray-900 mb-2">Pulau Padar</h4>
                         <p class="text-gray-500 text-sm mb-3">Bukit ikonik dengan tiga teluk berwarna. Hiking 30 menit ke puncak untuk panorama yang Instagram-worthy.</p>
                         <div class="flex items-center gap-3 text-xs text-gray-500">
-                            <span>📸 Spot Foto Terbaik</span>
-                            <span>📍 247 km dari Ende</span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                Spot Foto Terbaik
+                            </span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                247 km dari Ende
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -217,13 +238,24 @@
                         <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=800&q=80" alt="Wae Rebo" class="w-full h-full object-cover">
                     </div>
                     <div class="p-8 flex flex-col justify-center order-1 md:order-2">
-                        <span class="text-xs font-bold text-amber-600 mb-2">🏆 UNESCO Asia-Pacific Heritage Award 2012</span>
+                        <span class="text-xs font-bold text-amber-600 mb-2">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            UNESCO Asia-Pacific Heritage Award 2012</span>
                         <h3 class="text-2xl font-bold text-gray-900 mb-3">Desa Wae Rebo</h3>
                         <p class="text-gray-600 leading-relaxed mb-4">Desa terpencil di ketinggian 1.200 mdpl dengan 7 rumah kerucut tradisional (Mbaru Niang). Untuk sampai ke sini, Anda harus trekking 4-5 menit melalui hutan tropis dan lembah.</p>
                         <div class="flex items-center gap-4 text-sm text-gray-500">
-                            <span>🏔️ 1.200 mdpl</span>
-                            <span>🚶 4.5 km trekking</span>
-                            <span>📍 198 km dari Ende</span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                1.200 mdpl
+                            </span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                                4.5 km trekking
+                            </span>
+                            <span>
+                                <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                198 km dari Ende
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -269,7 +301,10 @@
                     <div class="p-5">
                         <h4 class="font-bold text-lg text-gray-900 mb-2">Kampung Bena</h4>
                         <p class="text-gray-500 text-sm mb-2">Desa adat Ngada dengan 9 rumah tradisional dan kompleks megalit. Terletak di lereng Gunung Inerie, menawarkan panorama spektakuler.</p>
-                        <span class="text-xs text-blue-600 font-medium">⛰️ 85 km dari Ende</span>
+                        <span class="text-xs text-blue-600 font-medium">
+                            <svg class="w-3.5 h-3.5 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            85 km dari Ende
+                        </span>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group">
@@ -334,9 +369,18 @@
                     <h4 class="font-bold text-xl text-gray-900 mb-2">Taman Laut 17 Pulau</h4>
                     <p class="text-gray-500 text-sm mb-3">Kepulauan dengan 17 pulau kecil yang tersebar di Teluk Riung. Snorkeling, berenamg dengan kelelawar raksasa (kalong) di Pulau Ontoloe, dan melihat komodo kerdil.</p>
                     <div class="flex items-center gap-4 text-xs text-gray-500">
-                        <span>🏝️ 17 Pulau</span>
-                        <span>🦇 Kelelawar Raksasa</span>
-                        <span>📍 125 km dari Ende</span>
+                        <span>
+                            <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                            17 Pulau
+                        </span>
+                        <span>
+                            <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2.5 5.5L20 8.5l-4 4 1 5.5-5-3-5 3 1-5.5-4-4 5.5-1L12 2z"/></svg>
+                            Kelelawar Raksasa
+                        </span>
+                        <span>
+                            <svg class="w-4 h-4 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            125 km dari Ende
+                        </span>
                     </div>
                 </div>
             </div>
