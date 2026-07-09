@@ -11,7 +11,7 @@ use Illuminate\View\View;
 class ForgotPasswordController extends Controller
 {
     /**
-     * Show the forgot password form.
+     * Tampilkan formulir lupa kata sandi.
      */
     public function showForgotForm(): View
     {
@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * Send a password reset link to the given user.
+     * Kirim tautan atur ulang kata sandi ke user.
      */
     public function sendResetLink(Request $request): RedirectResponse
     {
@@ -38,7 +38,7 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * Show the password reset form.
+     * Tampilkan formulir atur ulang kata sandi.
      */
     public function showResetForm(Request $request, string $token): View
     {
@@ -49,7 +49,7 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * Reset the user's password.
+     * Atur ulang kata sandi user.
      */
     public function resetPassword(Request $request): RedirectResponse
     {
@@ -66,7 +66,7 @@ class ForgotPasswordController extends Controller
                     'password' => \Illuminate\Support\Facades\Hash::make($password),
                 ])->save();
 
-                // Re-hash the remember token for security
+                // Buat ulang remember token demi keamanan.
                 $user->setRememberToken(\Illuminate\Support\Str::random(60));
                 $user->save();
             }

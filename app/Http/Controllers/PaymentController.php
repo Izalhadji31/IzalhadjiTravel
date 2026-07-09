@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\RentalBooking;
 use App\Models\TravelBooking;
+use App\Models\AirportTransferBooking;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -78,6 +79,38 @@ class PaymentController extends Controller
 
         return view('payments.rental-checkout', [
             'booking' => $rentalBooking,
+            'payment' => $payment,
+            'snapToken' => $snapToken,
+            'clientKey' => config('midtrans.client_key'),
+        ]);
+    }
+
+    /**
+     * Show payment page for airport transfer booking
+     */
+    public function showAirportPayment(AirportTransferBooking $airportTransferBooking): View
+    {
+        $this->authorize('view', $airportTransferBooking);
+
+        // Check if payment already exists and is pending
+        $existingPayment = $airportTransferBooking->payments()->where('status', '!=', 'failed')->first();
+        
+        if ($existingPayment && $existingPayment->status !== 'success') {
+            return view('payments.airport-checkout', [
+                'booking' => $airportTransferBooking,
+                'payment' => $existingPayment,
+            ]);
+        }
+
+        // Generate snap token
+        $orderId = now()->format('YmdHis') . '-' . $airportTransferBooking->id;
+        $snapToken = $this->paymentService->createSnapToken($airportTransferBooking, 'airport_transfer');
+        
+        // Record payment
+        $payment = $this->paymentService->recordPayment($airportTransferBooking, 'airport_transfer', $orderId, $snapToken);
+
+        return view('payments.airport-checkout', [
+            'booking' => $airportTransferBooking,
             'payment' => $payment,
             'snapToken' => $snapToken,
             'clientKey' => config('midtrans.client_key'),

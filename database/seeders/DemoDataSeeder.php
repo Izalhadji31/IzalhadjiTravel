@@ -86,7 +86,7 @@ class DemoDataSeeder extends Seeder
                 [
                     'slug' => 'tentang-kami',
                     'title' => 'Tentang ASR GO',
-                    'content' => '<h2>ASR GO</h2><p>ASR GO adalah layanan travel dan rental kendaraan terpercaya di Pulau Flores, NTT. Kami melayani rute antar kota, airport transfer, dan rental mobil dengan armada terbaik dan sopir profesional.</p><p>Berdiri sejak 2020, ASR GO telah melayani ribuan pelanggan dengan rute mencakup Ende, Maumere, Bajawa, Ruteng, Labuan Bajo, dan berbagai destinasi wisata di Flores.</p>',
+                    'content' => '<h2>ASR GO</h2><p>ASR GO adalah layanan travel dan rental kendaraan terpercaya di Pulau Flores, NTT. Kami melayani rute antar kota, airport transfer, dan rental mobil dengan armada terbaik dan driver profesional.</p><p>Berdiri sejak 2020, ASR GO telah melayani ribuan pelanggan dengan rute mencakup Ende, Maumere, Bajawa, Ruteng, Labuan Bajo, dan berbagai destinasi wisata di Flores.</p>',
                     'excerpt' => 'Layanan travel dan rental kendaraan terpercaya di Flores, NTT',
                     'type' => 'about',
                     'is_published' => 1,
@@ -411,7 +411,7 @@ class DemoDataSeeder extends Seeder
             $completedBookings = DB::table('travel_bookings')->whereIn('status', ['completed', 'confirmed'])->get();
             $reviewTypes = ['cleanliness', 'comfort', 'driver', 'price', 'overall'];
             $comments = [
-                'Pelayanan bagus, sopir ramah',
+                'Pelayanan bagus, driver ramah',
                 'Tepat waktu, mobil bersih',
                 'Recommended untuk traveling di Flores',
                 'Perjalanan nyaman, AC dingin',

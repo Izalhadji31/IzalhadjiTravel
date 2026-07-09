@@ -59,9 +59,11 @@ Route::get('/syarat-ketentuan', [PublicController::class, 'syaratKetentuan'])->n
 Route::get('/call-center', [PublicController::class, 'callCenter'])->name('public.call-center');
 
 // Public Pages (Guest Accessible)
+Route::get('/travel', [PublicController::class, 'travelList'])->name('public.travel');
+Route::get('/rental', [PublicController::class, 'rentalList'])->name('public.rental');
+Route::get('/airport', [PublicController::class, 'airport'])->name('public.airport');
+
 Route::prefix('public')->group(function () {
-    Route::get('/travel', [PublicController::class, 'travelList'])->name('public.travel');
-    Route::get('/rental', [PublicController::class, 'rentalList'])->name('public.rental');
     Route::get('/vehicles', [PublicController::class, 'vehiclesList'])->name('public.vehicles');
     Route::get('/price-calculator', [PublicController::class, 'priceCalculator'])->name('public.price-calculator');
     Route::post('/calculate-price', [PublicController::class, 'calculatePrice'])->name('public.calculate-price');
@@ -78,7 +80,6 @@ Route::prefix('public')->group(function () {
     Route::get('/blog', [PublicController::class, 'blog'])->name('public.blog');
     Route::get('/blog/{slug}', [PublicController::class, 'blogDetail'])->name('public.blog.detail');
     Route::post('/subscribe', [PublicController::class, 'subscribe'])->name('public.subscribe');
-    Route::get('/airport', [PublicController::class, 'airport'])->name('public.airport');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -295,6 +296,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pending', [PaymentController::class, 'paymentPending'])->name('payments.pending');
         Route::get('/travel/{travelBooking}', [PaymentController::class, 'showTravelPayment'])->name('payments.travel');
         Route::get('/rental/{rentalBooking}', [PaymentController::class, 'showRentalPayment'])->name('payments.rental');
+        Route::get('/airport/{airportTransferBooking}', [PaymentController::class, 'showAirportPayment'])->name('payments.airport');
         Route::post('/check-status/{payment}', [PaymentController::class, 'checkStatus'])->name('payments.check-status');
         Route::post('/retry/{payment}', [PaymentController::class, 'retryPayment'])->name('payments.retry');
     });

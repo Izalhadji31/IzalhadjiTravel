@@ -75,7 +75,7 @@ class ProfileController extends Controller
             ]
         );
 
-        return back()->with('success', 'Identity document uploaded. Please wait for verification');
+        return back()->with('success', 'Dokumen identitas berhasil diunggah. Silakan tunggu proses verifikasi.');
     }
 
     /**
@@ -100,7 +100,7 @@ class ProfileController extends Controller
         // Update user
         $user->update(['photo' => $path]);
 
-        return back()->with('success', 'Profile photo updated successfully');
+        return back()->with('success', 'Foto profil berhasil diperbarui.');
     }
 
     /**
@@ -116,6 +116,6 @@ class ProfileController extends Controller
 
         $user->update(['photo' => null]);
 
-        return back()->with('success', 'Profile photo removed');
+        return back()->with('success', 'Foto profil berhasil dihapus.');
     }
 }

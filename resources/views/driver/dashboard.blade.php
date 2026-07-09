@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard Driver')
+@section('title', __('driver.dashboard_title'))
 
 @section('content')
 <style>
@@ -334,8 +334,8 @@
 <!-- Header -->
 <div class="tracgo-header">
     <div>
-        <h1 class="tracgo-title">Dashboard Driver</h1>
-        <p class="tracgo-greeting">Selamat datang, {{ auth()->user()->name }}</p>
+        <h1 class="tracgo-title">{{ __('driver.dashboard_title') }}</h1>
+        <p class="tracgo-greeting">{{ __('driver.welcome', [':name' => auth()->user()->name]) }}</p>
     </div>
 </div>
 
@@ -348,16 +348,16 @@
             {{ ($driverStatus ?? '') === 'busy' ? 'status-busy' : '' }}"></span>
         <div>
             <div class="status-label">
-                Status: 
+                {{ __('driver.status_label') }}: 
                 @if(($driverStatus ?? '') === 'available')
-                    Online
+                    {{ __('driver.online') }}
                 @elseif(($driverStatus ?? '') === 'busy')
-                    Sibuk
+                    {{ __('driver.busy') }}
                 @else
-                    Offline
+                    {{ __('driver.offline') }}
                 @endif
             </div>
-            <div class="status-desc">Ubah status kesiapan Anda menerima order</div>
+            <div class="status-desc">{{ __('driver.status_desc') }}</div>
         </div>
     </div>
     <form method="POST" action="{{ route('driver.status.toggle') }}" class="status-form">
@@ -380,11 +380,11 @@
                 offline
             @endif">
             @if(($driverStatus ?? '') === 'available')
-                ONLINE
+                {{ __('driver.online') }}
             @elseif(($driverStatus ?? '') === 'busy')
-                SIBUK
+                {{ __('driver.busy') }}
             @else
-                OFFLINE
+                {{ __('driver.offline') }}
             @endif
         </button>
     </form>
@@ -394,7 +394,7 @@
 <div class="stats-row">
     <div class="stat-card stat-blue">
         <div>
-            <div class="stat-label">Order Aktif</div>
+            <div class="stat-label">{{ __('driver.order_aktif') }}</div>
             <div class="stat-value">{{ $activeOrderCount ?? 0 }}</div>
         </div>
         <div class="stat-icon">
@@ -405,7 +405,7 @@
     </div>
     <div class="stat-card stat-green">
         <div>
-            <div class="stat-label">Total Trip</div>
+            <div class="stat-label">{{ __('driver.total_trip') }}</div>
             <div class="stat-value">{{ $totalTrips ?? 0 }}</div>
         </div>
         <div class="stat-icon">
@@ -416,7 +416,7 @@
     </div>
     <div class="stat-card stat-orange">
         <div>
-            <div class="stat-label">Saldo</div>
+            <div class="stat-label">{{ __('driver.saldo') }}</div>
             <div class="stat-value" style="font-size: 1.5rem;">Rp {{ number_format($balance ?? 0, 0, ',', '.') }}</div>
         </div>
         <div class="stat-icon">
@@ -430,8 +430,8 @@
 <!-- Active Orders Section -->
 <div class="orders-section">
     <div class="orders-header">
-        <h2 class="orders-title">Order Aktif</h2>
-        <span class="orders-count">{{ $activeOrderCount ?? 0 }} order</span>
+        <h2 class="orders-title">{{ __('driver.active_orders') }}</h2>
+        <span class="orders-count">{{ $activeOrderCount ?? 0 }} {{ __('driver.order_count') }}</span>
     </div>
 
     @php
@@ -446,8 +446,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                 </svg>
             </div>
-            <div class="empty-title">Tidak Ada Order Aktif</div>
-            <div class="empty-desc">Saat ini Anda tidak memiliki order yang sedang berjalan. Aktifkan status Online untuk menerima order baru.</div>
+            <div class="empty-title">{{ __('driver.empty_title') }}</div>
+            <div class="empty-desc">{{ __('driver.empty_desc') }}</div>
         </div>
     @else
         @foreach($activeOrders as $order)
@@ -479,32 +479,32 @@
                     <span class="order-booking-code">{{ $bookingCode }}</span>
                     <div class="order-badges">
                         @if($isTravel)
-                            <span class="badge badge-travel">Travel</span>
+                            <span class="badge badge-travel">{{ __('driver.badge_travel') }}</span>
                         @elseif($isRental)
-                            <span class="badge badge-rental">Rental</span>
+                            <span class="badge badge-rental">{{ __('driver.badge_rental') }}</span>
                         @elseif($isAirport)
-                            <span class="badge badge-airport">Airport</span>
+                            <span class="badge badge-airport">{{ __('driver.badge_airport') }}</span>
                         @endif
 
                         @if($status === 'confirmed')
-                            <span class="badge badge-confirmed">Dikonfirmasi</span>
+                            <span class="badge badge-confirmed">{{ __('driver.status_confirmed') }}</span>
                         @elseif($status === 'departed')
-                            <span class="badge badge-departed">Dalam Perjalanan</span>
+                            <span class="badge badge-departed">{{ __('driver.status_departed') }}</span>
                         @elseif($status === 'active')
-                            <span class="badge badge-active">Aktif</span>
+                            <span class="badge badge-active">{{ __('driver.status_active') }}</span>
                         @elseif($status === 'completed')
-                            <span class="badge badge-completed">Selesai</span>
+                            <span class="badge badge-completed">{{ __('driver.status_completed') }}</span>
                         @endif
                     </div>
                 </div>
 
                 <div class="order-details">
                     <div class="order-detail-item">
-                        <span class="order-detail-label">Pelanggan</span>
+                        <span class="order-detail-label">{{ __('driver.label_customer') }}</span>
                         <span class="order-detail-value">{{ $customerName }}</span>
                     </div>
                     <div class="order-detail-item">
-                        <span class="order-detail-label">Rute</span>
+                        <span class="order-detail-label">{{ __('driver.label_route') }}</span>
                         <div class="order-route">
                             <span>{{ $origin }}</span>
                             <span class="route-arrow">&rarr;</span>
@@ -512,11 +512,11 @@
                         </div>
                     </div>
                     <div class="order-detail-item">
-                        <span class="order-detail-label">Tanggal</span>
+                        <span class="order-detail-label">{{ __('driver.label_date') }}</span>
                         <span class="order-detail-value">{{ $formattedDate }}</span>
                     </div>
                     <div class="order-detail-item">
-                        <span class="order-detail-label">Harga</span>
+                        <span class="order-detail-label">{{ __('driver.label_price') }}</span>
                         <span class="order-detail-value price">Rp {{ number_format($price, 0, ',', '.') }}</span>
                     </div>
                 </div>
@@ -530,7 +530,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Mulai Perjalanan
+                                {{ __('driver.btn_start') }}
                             </button>
                         </form>
                     @endif
@@ -542,7 +542,7 @@
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Selesaikan
+                                {{ __('driver.btn_complete') }}
                             </button>
                         </form>
                     @endif
@@ -552,7 +552,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        Navigasi
+                        {{ __('driver.btn_navigate') }}
                     </a>
                 </div>
             </div>

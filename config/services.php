@@ -38,7 +38,8 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_REDIRECT_URI'),
+        // Match the callback route to avoid redirect URI mismatch on shared hosting.
+        'redirect' => rtrim(url('/'), '/') . '/auth/google/callback',
     ],
 
     'whatsapp' => [

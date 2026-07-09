@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Mitra Dashboard')
+@section('title', __('partner.dashboard_title'))
 
 @section('content')
 <style>
@@ -360,8 +360,8 @@
 <div class="dashboard-container">
     <!-- Header -->
     <div class="dashboard-header">
-        <h1>Dashboard Mitra</h1>
-        <p>Selamat datang, {{ $partner->name ?? 'Partner' }}! Berikut ringkasan operasional Anda.</p>
+        <h1>{{ __('partner.dashboard_title') }}</h1>
+        <p>{{ __('partner.welcome', [':name' => $partner->name ?? 'Partner']) }}</p>
     </div>
 
     <!-- Top Stats Row -->
@@ -369,28 +369,28 @@
         <div class="stat-card">
             <div class="stat-indicator blue"></div>
             <div class="stat-details">
-                <div class="stat-label">Total Armada</div>
+                <div class="stat-label">{{ __('partner.total_armada') }}</div>
                 <div class="stat-value">{{ $totalArmadas ?? 0 }}</div>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-indicator green"></div>
             <div class="stat-details">
-                <div class="stat-label">Driver Aktif</div>
+                <div class="stat-label">{{ __('partner.driver_aktif') }}</div>
                 <div class="stat-value">{{ $totalDrivers ?? 0 }}</div>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-indicator orange"></div>
             <div class="stat-details">
-                <div class="stat-label">Total Earnings</div>
+                <div class="stat-label">{{ __('partner.total_earnings') }}</div>
                 <div class="stat-value">Rp {{ number_format($totalEarnings ?? 0, 0, ',', '.') }}</div>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-indicator purple"></div>
             <div class="stat-details">
-                <div class="stat-label">Pending Payout</div>
+                <div class="stat-label">{{ __('partner.pending_payout') }}</div>
                 <div class="stat-value">Rp {{ number_format($pendingPayouts ?? 0, 0, ',', '.') }}</div>
             </div>
         </div>
@@ -400,7 +400,7 @@
     <div class="service-row">
         <div class="service-card">
             <div class="service-info">
-                <h3>Travel Bookings</h3>
+                <h3>{{ __('partner.travel_bookings') }}</h3>
                 <div class="service-count">{{ $travelBookings ?? 0 }}</div>
             </div>
             <div class="service-badge travel">
@@ -409,7 +409,7 @@
         </div>
         <div class="service-card">
             <div class="service-info">
-                <h3>Rental Bookings</h3>
+                <h3>{{ __('partner.rental_bookings') }}</h3>
                 <div class="service-count">{{ $rentalBookings ?? 0 }}</div>
             </div>
             <div class="service-badge rental">
@@ -418,7 +418,7 @@
         </div>
         <div class="service-card">
             <div class="service-info">
-                <h3>Airport Transfer</h3>
+                <h3>{{ __('partner.airport_transfer') }}</h3>
                 <div class="service-count">{{ $airportBookings ?? 0 }}</div>
             </div>
             <div class="service-badge airport">
@@ -432,8 +432,8 @@
         <!-- Left: Recent Revenue Sharing Transactions -->
         <div class="panel-card">
             <div class="panel-header">
-                <h2>Transaksi Revenue Sharing Terbaru</h2>
-                <span style="font-size: 12px; color: #6b7280; background: #f3f4f6; padding: 3px 10px; border-radius: 12px;">{{ isset($recentTransactions) ? $recentTransactions->count() : 0 }} transaksi</span>
+                <h2>{{ __('partner.revenue_sharing') }}</h2>
+                <span style="font-size: 12px; color: #6b7280; background: #f3f4f6; padding: 3px 10px; border-radius: 12px;">{{ isset($recentTransactions) ? $recentTransactions->count() : 0 }} {{ __('partner.transactions_count') }}</span>
             </div>
             <div class="panel-body">
                 @if(isset($recentTransactions) && $recentTransactions->count() > 0)
@@ -441,10 +441,10 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Booking</th>
-                                <th>Mitra Share</th>
-                                <th>Status</th>
+                                <th>{{ __('partner.table_date') }}</th>
+                                <th>{{ __('partner.table_booking') }}</th>
+                                <th>{{ __('partner.table_mitra_share') }}</th>
+                                <th>{{ __('partner.table_status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -461,9 +461,9 @@
                                 </td>
                                 <td>
                                     @if($trx->status == 'completed')
-                                        <span class="status-badge completed">Completed</span>
+                                        <span class="status-badge completed">{{ __('status.completed') }}</span>
                                     @elseif($trx->status == 'pending')
-                                        <span class="status-badge pending">Pending</span>
+                                        <span class="status-badge pending">{{ __('status.pending') }}</span>
                                     @else
                                         <span class="status-badge {{ $trx->status }}">{{ ucfirst($trx->status) }}</span>
                                     @endif
@@ -475,8 +475,8 @@
                 </div>
                 @else
                 <div class="empty-state">
-                    <h3>Belum ada transaksi</h3>
-                    <p>Transaksi revenue sharing akan muncul di sini setelah booking selesai.</p>
+                    <h3>{{ __('partner.empty_transactions') }}</h3>
+                    <p>{{ __('partner.empty_transactions_desc') }}</p>
                 </div>
                 @endif
             </div>
@@ -487,27 +487,27 @@
             <!-- Armada Status Summary -->
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2>Status Armada</h2>
+                    <h2>{{ __('partner.armada_status') }}</h2>
                 </div>
                 <ul class="armada-status-list">
                     <li class="armada-status-item">
                         <div class="armada-status-label">
                             <span class="status-dot tersedia"></span>
-                            <span>Tersedia</span>
+                            <span>{{ __('partner.status_tersedia') }}</span>
                         </div>
                         <span class="armada-count">{{ $armadaTersedia ?? 0 }}</span>
                     </li>
                     <li class="armada-status-item">
                         <div class="armada-status-label">
                             <span class="status-dot jalan"></span>
-                            <span>Jalan</span>
+                            <span>{{ __('partner.status_jalan') }}</span>
                         </div>
                         <span class="armada-count">{{ $armadaJalan ?? 0 }}</span>
                     </li>
                     <li class="armada-status-item">
                         <div class="armada-status-label">
                             <span class="status-dot maintenance"></span>
-                            <span>Maintenance</span>
+                            <span>{{ __('partner.status_maintenance') }}</span>
                         </div>
                         <span class="armada-count">{{ $armadaMaintenance ?? 0 }}</span>
                     </li>
@@ -517,12 +517,12 @@
             <!-- Revenue Trend Mini Chart -->
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2>Tren Pendapatan (7 Hari)</h2>
+                    <h2>{{ __('partner.revenue_trend') }}</h2>
                 </div>
                 <div class="chart-container">
                     @if(isset($revenueTrend) && $revenueTrend->count() > 0)
                     <div class="trend-header">
-                        <span class="trend-total">Total: <strong>Rp {{ number_format($revenueTrend->sum('total'), 0, ',', '.') }}</strong></span>
+                        <span class="trend-total">{{ __('partner.total') }}: <strong>Rp {{ number_format($revenueTrend->sum('total'), 0, ',', '.') }}</strong></span>
                     </div>
                     <div class="chart-bars">
                         @php
@@ -542,8 +542,8 @@
                     </div>
                     @else
                     <div class="empty-state" style="padding: 32px 24px;">
-                        <h3>Belum ada data pendapatan</h3>
-                        <p>Tren pendapatan akan muncul setelah ada transaksi completed.</p>
+                        <h3>{{ __('partner.empty_revenue') }}</h3>
+                        <p>{{ __('partner.empty_revenue_desc') }}</p>
                     </div>
                     @endif
                 </div>
@@ -552,20 +552,20 @@
             <!-- Quick Links -->
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2>Aksi Cepat</h2>
+                    <h2>{{ __('partner.quick_actions') }}</h2>
                 </div>
                 <div class="quick-links-grid">
                     <a href="{{ route('partner.armadas') }}" class="quick-link-btn">
                         <div class="quick-link-icon armada-icon">
                             <svg width="18" height="18" fill="none" stroke="#0064d2" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
                         </div>
-                        <span>Kelola Armada</span>
+                        <span>{{ __('partner.manage_armada') }}</span>
                     </a>
                     <a href="{{ route('partner.drivers') }}" class="quick-link-btn">
                         <div class="quick-link-icon driver-icon">
                             <svg width="18" height="18" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
-                        <span>Kelola Driver</span>
+                        <span>{{ __('partner.manage_driver') }}</span>
                     </a>
                 </div>
             </div>

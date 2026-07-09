@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - ASR GO</title>
+    <title>Atur Ulang Kata Sandi - ASR GO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -191,7 +191,7 @@
                     </svg>
                 </div>
                 <h1 class="login-logo"><span>ASR</span> GO</h1>
-                <p class="login-subtitle">Buat password baru untuk akun Anda</p>
+                <p class="login-subtitle">Buat kata sandi baru untuk akun Anda</p>
             </div>
 
             <!-- Error Messages -->
@@ -205,7 +205,7 @@
                 </div>
             @endif
 
-            <!-- Reset Password Form -->
+            <!-- Form Atur Ulang Kata Sandi -->
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
 
@@ -229,7 +229,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="password">Password Baru</label>
+                    <label class="form-label" for="password">Kata Sandi Baru</label>
                     <input
                         type="password"
                         id="password"
@@ -245,13 +245,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="password_confirmation">Konfirmasi Password Baru</label>
+                    <label class="form-label" for="password_confirmation">Konfirmasi Kata Sandi Baru</label>
                     <input
                         type="password"
                         id="password_confirmation"
                         name="password_confirmation"
                         class="form-input"
-                        placeholder="Ulangi password baru"
+                        placeholder="Ulangi kata sandi baru"
                         required
                     >
                     @error('password_confirmation')
@@ -260,13 +260,13 @@
                 </div>
 
                 <button type="submit" class="login-button">
-                    Reset Password
+                    Atur Ulang Kata Sandi
                 </button>
             </form>
 
             <!-- Footer -->
             <div class="login-footer">
-                <p style="margin: 0;">Ingat password Anda? <a href="{{ route('login') }}">Login di sini</a></p>
+                <p style="margin: 0;">Ingat kata sandi Anda? <a href="{{ route('login') }}">Masuk di sini</a></p>
             </div>
         </div>
     </div>

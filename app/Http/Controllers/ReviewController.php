@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     /**
-     * Show review form for a completed booking
+     * Tampilkan formulir ulasan untuk pemesanan yang sudah selesai.
      */
     public function create($booking)
     {
         $user = Auth::user();
 
-        // Try to find booking in travel_bookings first
+        // Cari pemesanan travel terlebih dahulu.
         $booking = TravelBooking::with(['user', 'route', 'armada'])
             ->where('id', $booking)
             ->where('user_id', $user->id)
@@ -37,21 +37,21 @@ class ReviewController extends Controller
             abort(404, 'Booking not found');
         }
 
-        // Only completed bookings can be reviewed
+        // Hanya pemesanan selesai yang dapat diberi ulasan.
         if ($booking->status !== 'completed') {
-            return back()->with('error', 'Only completed bookings can be reviewed.');
+            return back()->with('error', 'Hanya pemesanan yang sudah selesai yang dapat diberi ulasan.');
         }
 
-        // Check if already reviewed
+        // Cegah ulasan ganda.
         $existingReview = Review::where('booking_id', $booking->id)
             ->where('user_id', $user->id)
             ->first();
 
         if ($existingReview) {
-            return back()->with('error', 'You have already reviewed this booking.');
+            return back()->with('error', 'Anda sudah memberikan ulasan untuk pemesanan ini.');
         }
 
-        // Get driver info from armada
+        // Ambil info driver dari armada.
         $driver = null;
         if ($booking->armada && $booking->armada->driver_phone) {
             $driver = \App\Models\User::where('phone', $booking->armada->driver_phone)->first();
@@ -61,7 +61,7 @@ class ReviewController extends Controller
     }
 
     /**
-     * Store review
+     * Simpan ulasan.
      */
     public function store(Request $request, $booking)
     {
@@ -72,7 +72,7 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:1000',
         ]);
 
-        // Find booking
+        // Cari pemesanan.
         $bookingModel = TravelBooking::where('id', $booking)
             ->where('user_id', $user->id)
             ->first();
@@ -90,21 +90,21 @@ class ReviewController extends Controller
             abort(404, 'Booking not found');
         }
 
-        // Only completed bookings
+        // Hanya pemesanan selesai yang dapat diberi ulasan.
         if ($bookingModel->status !== 'completed') {
-            return back()->with('error', 'Only completed bookings can be reviewed.');
+            return back()->with('error', 'Hanya pemesanan yang sudah selesai yang dapat diberi ulasan.');
         }
 
-        // Prevent duplicate reviews
+        // Cegah ulasan ganda.
         $existingReview = Review::where('booking_id', $bookingModel->id)
             ->where('user_id', $user->id)
             ->first();
 
         if ($existingReview) {
-            return back()->with('error', 'You have already reviewed this booking.');
+            return back()->with('error', 'Anda sudah memberikan ulasan untuk pemesanan ini.');
         }
 
-        // Get driver id
+        // Ambil ID driver.
         $driverId = null;
         if ($bookingModel->armada && $bookingModel->armada->driver_phone) {
             $driver = \App\Models\User::where('phone', $bookingModel->armada->driver_phone)->first();
@@ -122,6 +122,6 @@ class ReviewController extends Controller
         ]);
 
         return redirect()->route('bookings.show', $bookingModel->id)
-            ->with('success', 'Thank you for your review!');
+            ->with('success', 'Terima kasih atas ulasan Anda!');
     }
 }

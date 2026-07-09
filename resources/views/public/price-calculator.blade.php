@@ -255,7 +255,7 @@
         let driverCost = driverOption === 'with' ? 150000 * days : 0;
         currentPrice = (basePricePerDay * days) + driverCost;
         
-        const driverLabel = driverOption === 'with' ? 'dengan sopir' : 'tanpa sopir';
+        const driverLabel = driverOption === 'with' ? 'dengan driver' : 'tanpa driver';
         document.getElementById('result-detail').textContent = `${destination} — ${selectedVehicle.text.split('(')[0].trim()} ${driverLabel} (${days} hari)`;
         
         showResult();

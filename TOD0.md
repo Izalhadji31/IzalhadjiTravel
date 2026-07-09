@@ -1,0 +1,3 @@
+- [ ] Kirim redirect uri Google agar match `/auth/google/callback` dengan `url('/')`
+- [ ] Tambahkan logging detail di `GoogleController` untuk diagnosa 400 malformed
+- [ ] Jalankan quick check: `php artisan route:list | findstr auth.google` (opsional)

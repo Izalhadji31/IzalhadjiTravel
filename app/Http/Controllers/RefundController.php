@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class RefundController extends Controller
 {
     /**
-     * List user's refund requests
+     * Tampilkan daftar permintaan pengembalian dana milik user.
      */
     public function index()
     {
@@ -26,7 +26,7 @@ class RefundController extends Controller
     }
 
     /**
-     * Show refund form for a booking
+     * Tampilkan formulir pengembalian dana untuk pemesanan.
      */
     public function create($booking)
     {
@@ -51,28 +51,28 @@ class RefundController extends Controller
             abort(404, 'Booking not found');
         }
 
-        // Check if payment exists
+        // Pastikan pembayaran berhasil tersedia.
         $payment = $bookingModel->payments()->where('status', 'success')->latest()->first();
 
         if (!$payment) {
-            return back()->with('error', 'No completed payment found for this booking.');
+            return back()->with('error', 'Tidak ada pembayaran selesai untuk pemesanan ini.');
         }
 
-        // Check if refund already requested
+        // Cegah pengajuan pengembalian dana ganda.
         $existingRefund = Refund::where('refundable_id', $bookingModel->id)
             ->where('refundable_type', $bookingType === 'travel' ? TravelBooking::class : RentalBooking::class)
             ->where('user_id', $user->id)
             ->first();
 
         if ($existingRefund) {
-            return back()->with('error', 'A refund has already been requested for this booking.');
+            return back()->with('error', 'Pengembalian dana untuk pemesanan ini sudah pernah diajukan.');
         }
 
         return view('refunds.create', compact('bookingModel', 'bookingType', 'payment'));
     }
 
     /**
-     * Store refund request
+     * Simpan permintaan pengembalian dana.
      */
     public function store(Request $request, $booking)
     {
@@ -104,7 +104,7 @@ class RefundController extends Controller
         $payment = $bookingModel->payments()->where('status', 'success')->latest()->first();
 
         if (!$payment) {
-            return back()->with('error', 'No completed payment found for this booking.');
+            return back()->with('error', 'Tidak ada pembayaran selesai untuk pemesanan ini.');
         }
 
         Refund::create([
@@ -119,11 +119,11 @@ class RefundController extends Controller
         ]);
 
         return redirect()->route('refunds.index')
-            ->with('success', 'Refund request submitted successfully.');
+            ->with('success', 'Permintaan pengembalian dana berhasil diajukan.');
     }
 
     /**
-     * Show refund status
+     * Tampilkan status pengembalian dana.
      */
     public function show($booking)
     {

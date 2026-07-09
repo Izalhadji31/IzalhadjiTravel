@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password - ASR GO</title>
+    <title>Lupa Kata Sandi - ASR GO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -191,7 +191,7 @@
                     </svg>
                 </div>
                 <h1 class="login-logo"><span>ASR</span> GO</h1>
-                <p class="login-subtitle">Lupa password? Masukkan email untuk reset password</p>
+                <p class="login-subtitle">Lupa kata sandi? Masukkan email untuk mengatur ulang kata sandi</p>
             </div>
 
             <!-- Status Message -->
@@ -234,13 +234,13 @@
                 </div>
 
                 <button type="submit" class="login-button">
-                    Kirim Link Reset Password
+                    Kirim Tautan Atur Ulang Kata Sandi
                 </button>
             </form>
 
             <!-- Footer -->
             <div class="login-footer">
-                <p style="margin: 0 0 0.5rem 0;">Ingat password Anda? <a href="{{ route('login') }}">Login di sini</a></p>
+                <p style="margin: 0 0 0.5rem 0;">Ingat kata sandi Anda? <a href="{{ route('login') }}">Masuk di sini</a></p>
                 <p style="margin: 0;">Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
             </div>
         </div>

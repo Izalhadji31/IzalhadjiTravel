@@ -26,14 +26,7 @@ class LoginController extends Controller
         $validRoles = ['admin', 'customer', 'driver', 'partner'];
         
         if ($role && in_array($role, $validRoles)) {
-            $view = match($role) {
-                'admin' => 'auth.login',
-                'customer' => 'auth.login',
-                'driver' => 'auth.login',
-                'partner' => 'auth.login',
-                default => 'auth.login',
-            };
-            return view($view);
+            return view('auth.login');
         }
 
         return view('auth.login');
@@ -45,27 +38,48 @@ class LoginController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email'    => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $user = Auth::user();
-            
+
             // Validate role if provided in request
             if ($request->has('role') && $request->input('role') !== $user->role) {
                 Auth::logout();
                 return back()->withErrors([
-                    'email' => 'Email atau password salah untuk peran ini.',
+                    'email' => __('auth.role_mismatch'),
                 ])->onlyInput('email');
             }
 
+            // Block pending accounts – require admin approval
+            if ($user->status === 'pending') {
+                Auth::logout();
+                return redirect()->route('auth.pending')
+                                 ->with('info', app()->getLocale() === 'id'
+                                     ? 'Akun Anda sedang menunggu persetujuan admin. Harap tunggu konfirmasi melalui email.'
+                                     : 'Your account is awaiting admin approval. Please wait for an email confirmation.');
+            }
+
+            // Block rejected accounts
+            if ($user->status === 'rejected') {
+                Auth::logout();
+                return redirect()->route('auth.pending')
+                                 ->with('error', app()->getLocale() === 'id'
+                                     ? 'Akun Anda telah ditolak. Silakan hubungi admin untuk informasi lebih lanjut.'
+                                     : 'Your account has been rejected. Please contact the admin for more information.');
+            }
+
             $request->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'Selamat datang!');
+            return redirect()->route('dashboard')->with('success',
+                app()->getLocale() === 'id' ? 'Selamat datang!' : 'Welcome back!');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password tidak sesuai dengan catatan kami.',
+            'email' => app()->getLocale() === 'id'
+                ? 'Email atau kata sandi tidak sesuai dengan catatan kami.'
+                : 'These credentials do not match our records.',
         ])->onlyInput('email');
     }
 
@@ -79,6 +93,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Anda berhasil keluar.');
+        return redirect('/')->with('success',
+            app()->getLocale() === 'id' ? 'Anda berhasil keluar.' : 'You have been logged out.');
     }
 }

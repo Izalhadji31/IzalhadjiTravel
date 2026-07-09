@@ -57,7 +57,7 @@ class BookingRentalController extends Controller
         // Check identity verification — skip jika kolom belum ada
         if (\Illuminate\Support\Facades\Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
             return redirect()->route('profile.edit')
-                           ->with('error', 'Please verify your identity before booking');
+                           ->with('error', 'Silakan verifikasi identitas Anda sebelum melakukan pemesanan');
         }
 
         $validated = $request->validate([
@@ -140,10 +140,10 @@ class BookingRentalController extends Controller
         $this->authorize('delete', $booking);
 
         if ($booking->status === 'cancelled') {
-            return back()->with('error', 'Booking already cancelled');
+            return back()->with('error', 'Pemesanan sudah dibatalkan');
         }
 
         $booking->update(['status' => 'cancelled']);
-        return back()->with('success', 'Booking cancelled successfully');
+        return back()->with('success', 'Pemesanan berhasil dibatalkan');
     }
 }

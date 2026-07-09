@@ -104,8 +104,16 @@ class AirportTransferController extends Controller
             'company_id' => $user->company_id,
         ]);
 
-        return redirect()->route('bookings.airport-transfer.show', $booking)
-                       ->with('success', 'Pemesanan airport transfer berhasil dibuat!');
+        // Send WhatsApp notification
+        try {
+            $notificationService = app(\App\Services\BookingNotificationService::class);
+            $notificationService->notifyBookingCreated($booking);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification failed: ' . $e->getMessage());
+        }
+
+        return redirect()->route('payments.airport', $booking->id)
+                       ->with('success', 'Pemesanan airport transfer berhasil. Silakan selesaikan pembayaran.');
     }
 
     /**

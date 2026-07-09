@@ -62,7 +62,12 @@ class PaymentService
      */
     private function generateOrderId(int $bookingId, string $bookingType): string
     {
-        $prefix = $bookingType === 'travel' ? 'TRV' : 'RNT';
+        $prefix = match ($bookingType) {
+            'travel' => 'TRV',
+            'rental' => 'RNT',
+            'airport_transfer' => 'ATB',
+            default => 'ORD'
+        };
         $timestamp = now()->format('YmdHis');
         return "{$prefix}-{$bookingId}-{$timestamp}";
     }
@@ -82,6 +87,16 @@ class PaymentService
                 'name' => "Travel Booking - {$booking->route->origin} to {$booking->route->destination}",
                 'brand' => 'ASR GO',
                 'category' => 'travel',
+                'merchant_name' => 'ASR GO',
+            ];
+        } elseif ($bookingType === 'airport_transfer') {
+            $items[] = [
+                'id' => "airport-{$booking->id}",
+                'price' => (int) $booking->total_price,
+                'quantity' => 1,
+                'name' => "Airport Transfer - " . substr($booking->pickup_location, 0, 15) . " to " . substr($booking->dropoff_location, 0, 15),
+                'brand' => 'ASR GO',
+                'category' => 'airport_transfer',
                 'merchant_name' => 'ASR GO',
             ];
         } else {
@@ -159,6 +174,7 @@ class PaymentService
         $bookingTypeFQCN = match ($bookingType) {
             'travel' => TravelBooking::class,
             'rental' => RentalBooking::class,
+            'airport_transfer' => \App\Models\AirportTransferBooking::class,
             default => $bookingType,
         };
 
