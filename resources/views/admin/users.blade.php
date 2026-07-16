@@ -30,6 +30,24 @@
         </div>
     @endif
 
+    <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <form method="GET" action="{{ route('admin.users') }}" class="flex flex-wrap gap-3 items-center">
+            <input type="text" name="search" value="{{ old('search', $search ?? request('search')) }}" placeholder="Cari nama, email, telepon..." class="form-input" style="min-width:220px;" />
+            <select name="status" class="form-select">
+                <option value="">Semua status</option>
+                <option value="pending" @if(($status ?? request('status')) === 'pending') selected @endif>Pending</option>
+                <option value="approved" @if(($status ?? request('status')) === 'approved') selected @endif>Disetujui</option>
+                <option value="rejected" @if(($status ?? request('status')) === 'rejected') selected @endif>Ditolak</option>
+            </select>
+            <button type="submit" class="btn-primary">Filter</button>
+        </form>
+        <div class="text-sm text-gray-500">Menampilkan {{ $users->total() }} pengguna</div>
+    </div>
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded-lg mb-6">
+            {{ session('warning') }}
+        </div>
+    @endif
+
     <!-- Users Table -->
     <div class="card overflow-hidden">
         <div class="card-header">Daftar Pengguna</div>

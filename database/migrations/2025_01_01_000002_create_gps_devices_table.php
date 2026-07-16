@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('device_id')->unique();
             $table->string('device_name');
             $table->string('device_type')->default('generic');
-            $table->foreignId('armada_id')->nullable()->constrained()->nullOnDelete();
+            $table->uuid('armada_id')->nullable();
             $table->string('api_key')->unique();
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_contact_at')->nullable();
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->index('armada_id');
             $table->index('is_active');
             $table->index('last_contact_at');
+
+            $table->foreign('armada_id')->references('id')->on('vehicles')->onDelete('set null');
         });
     }
 

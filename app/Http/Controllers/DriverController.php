@@ -12,16 +12,27 @@ class DriverController extends Controller
      */
     public function index(Request $request)
     {
-        $drivers = Armada::query();
+        $query = Armada::query();
 
         if ($request->has('search')) {
             $search = $request->search;
-            $drivers->where('driver_name', 'like', "%$search%")
-                    ->orWhere('driver_phone', 'like', "%$search%");
+            $query->where('driver_name', 'like', "%$search%")
+                  ->orWhere('driver_phone', 'like', "%$search%");
         }
 
-        $drivers = $drivers->with('mitra')->get();
-        return view('drivers.index', compact('drivers'));
+        $drivers = $query->with('mitra')->get();
+        $totalDrivers = $drivers->count();
+        $availableDrivers = $drivers->where('status', 'tersedia')->count();
+        $onDutyDrivers = $drivers->where('status', 'jalan')->count();
+        $maintenanceDrivers = $drivers->where('status', 'maintenance')->count();
+
+        return view('drivers.index', compact(
+            'drivers',
+            'totalDrivers',
+            'availableDrivers',
+            'onDutyDrivers',
+            'maintenanceDrivers'
+        ));
     }
 
     /**
@@ -41,11 +52,15 @@ class DriverController extends Controller
             'driver_name' => 'required|string|max:255',
             'driver_phone' => 'required|string',
             'plate_number' => 'required|string|unique:armadas',
-            'vehicle_type' => 'required|string',
-            'seat_capacity' => 'required|integer|min:1',
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
+            'status' => 'nullable|in:tersedia,jalan,maintenance',
         ]);
 
-        Armada::create($validated);
+        Armada::create(array_merge($validated, [
+            'status' => $validated['status'] ?? 'tersedia',
+        ]));
+
         return redirect()->route('drivers.index')
                        ->with('success', 'Driver added successfully');
     }
@@ -75,6 +90,9 @@ class DriverController extends Controller
         $validated = $request->validate([
             'driver_name' => 'required|string|max:255',
             'driver_phone' => 'required|string',
+            'plate_number' => 'required|string|unique:armadas,plate_number,' . $driver->id,
+            'vehicle_type' => 'required|string|max:255',
+            'seat_capacity' => 'required|integer|min:1|max:30',
             'status' => 'required|in:tersedia,jalan,maintenance',
         ]);
 

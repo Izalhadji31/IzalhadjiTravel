@@ -9,6 +9,7 @@ use App\Models\Armada;
 use App\Models\Payment;
 use App\Models\RevenueSharing;
 use App\Models\Review;
+use App\Models\Setting;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,13 +59,28 @@ class AdminController extends Controller
     /**
      * Show user management with pending first
      */
-    public function users()
+    public function users(Request $request)
     {
-        $users = User::orderByRaw("CASE WHEN status = 'pending' THEN 0 WHEN status = 'approved' THEN 1 ELSE 2 END")
-                     ->latest()
-                     ->paginate(10);
+        $search = $request->input('search');
+        $status = $request->input('status');
 
-        return view('admin.users', compact('users'));
+        $users = User::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%")
+                      ->orWhere('phone', 'like', "%{$search}%");
+                });
+            })
+            ->when($status && in_array($status, ['pending', 'approved', 'rejected']), function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 WHEN status = 'approved' THEN 1 ELSE 2 END")
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.users', compact('users', 'search', 'status'));
     }
 
     /**
@@ -138,11 +154,9 @@ class AdminController extends Controller
             'timezone' => 'required|string',
         ]);
 
-        // Update settings (implement based on your settings storage)
         foreach ($validated as $key => $value) {
-            setting([$key => $value]);
+            Setting::set($key, $value);
         }
-        setting()->save();
 
         return back()->with('success', 'Settings updated successfully');
     }
@@ -150,7 +164,7 @@ class AdminController extends Controller
     /**
      * Approve pending user registration
      */
-    public function approveUserRegistration($userId)
+    public function approveUserRegistration(int $userId)
     {
         $user = User::findOrFail($userId);
         
@@ -167,7 +181,7 @@ class AdminController extends Controller
     /**
      * Reject pending user registration
      */
-    public function rejectUserRegistration($userId)
+    public function rejectUserRegistration(int $userId)
     {
         $user = User::findOrFail($userId);
         
@@ -184,7 +198,7 @@ class AdminController extends Controller
     /**
      * Delete user
      */
-    public function deleteUser($userId)
+    public function deleteUser(int $userId)
     {
         $user = User::findOrFail($userId);
 
@@ -202,7 +216,7 @@ class AdminController extends Controller
      */
     public function manageBookings(Request $request)
     {
-        $status = $request->get('status', 'all');
+        $status = $request->input('status', 'all');
 
         $travelBookings = TravelBooking::with(['user', 'armada'])
             ->when($status !== 'all', function ($query) use ($status) {
@@ -226,7 +240,7 @@ class AdminController extends Controller
     /**
      * Approve booking and assign armada
      */
-    public function approveBooking(Request $request, $type, $id)
+    public function approveBooking(Request $request, string $type, int $id)
     {
         $request->validate([
             'armada_id' => 'required|integer',
@@ -262,7 +276,7 @@ class AdminController extends Controller
     /**
      * Complete a booking
      */
-    public function completeBooking($type, $id)
+    public function completeBooking(string $type, int $id)
     {
         if ($type === 'travel') {
             $booking = TravelBooking::findOrFail($id);
@@ -293,7 +307,7 @@ class AdminController extends Controller
     /**
      * Cancel a booking
      */
-    public function cancelBooking($type, $id)
+    public function cancelBooking(string $type, int $id)
     {
         if ($type === 'travel') {
             $booking = TravelBooking::findOrFail($id);
@@ -324,7 +338,7 @@ class AdminController extends Controller
     /**
      * Show booking detail with armada assignment
      */
-    public function showBooking($type, $id)
+    public function showBooking(string $type, int $id)
     {
         if ($type === 'travel') {
             $booking = TravelBooking::with(['user', 'route', 'armada', 'payments'])->findOrFail($id);
@@ -362,7 +376,7 @@ class AdminController extends Controller
     /**
      * Process payout to partner (mark revenue sharing as completed)
      */
-    public function payoutMitra(Request $request, $mitraId)
+    public function payoutMitra(Request $request, int $mitraId)
     {
         $revenueSharings = RevenueSharing::where('mitra_id', $mitraId)
             ->where('status', 'pending')
@@ -431,7 +445,7 @@ class AdminController extends Controller
      */
     public function payments(Request $request)
     {
-        $status = $request->get('status', '');
+        $status = $request->input('status', '');
         $dateFrom = $request->get('date_from', '');
         $dateTo = $request->get('date_to', '');
 
@@ -487,10 +501,10 @@ class AdminController extends Controller
      */
     public function revenueSharing(Request $request)
     {
-        $dateFrom = $request->get('date_from', '');
-        $dateTo = $request->get('date_to', '');
-        $status = $request->get('status', 'all');
-        $bookingType = $request->get('booking_type', 'all');
+        $dateFrom = $request->input('date_from', '');
+        $dateTo = $request->input('date_to', '');
+        $status = $request->input('status', 'all');
+        $bookingType = $request->input('booking_type', 'all');
 
         // Base query with relationships
         $query = RevenueSharing::with(['booking' => function ($morphTo) {
@@ -582,10 +596,10 @@ class AdminController extends Controller
      */
     public function exportRevenueSharingCSV(Request $request)
     {
-        $dateFrom = $request->get('date_from', '');
-        $dateTo = $request->get('date_to', '');
-        $status = $request->get('status', 'all');
-        $bookingType = $request->get('booking_type', 'all');
+        $dateFrom = $request->input('date_from', '');
+        $dateTo = $request->input('date_to', '');
+        $status = $request->input('status', 'all');
+        $bookingType = $request->input('booking_type', 'all');
 
         $query = RevenueSharing::with(['booking', 'mitra']);
 
@@ -659,7 +673,7 @@ class AdminController extends Controller
     /**
      * Approve/activate driver
      */
-    public function approveDriver($driverId)
+    public function approveDriver(int $driverId)
     {
         $user = User::where('role', 'driver')->findOrFail($driverId);
         $driver = $user->driverProfile;
@@ -729,7 +743,7 @@ class AdminController extends Controller
      */
     public function reviews(Request $request)
     {
-        $status = $request->get('status', '');
+        $status = $request->input('status', '');
 
         $reviews = Review::with(['user', 'booking'])
             ->when($status, function ($query) use ($status) {

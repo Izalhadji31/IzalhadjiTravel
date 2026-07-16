@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['user_id', 'route_id', 'rental_type', 'with_driver', 'regency_count', 'base_price', 'driver_fee', 'total_price', 'booking_code', 'status', 'start_date', 'end_date', 'start_time', 'assigned_armada_id'])]
+#[Fillable(['user_id', 'route_id', 'rental_type', 'with_driver', 'regency_count', 'base_price', 'driver_fee', 'total_price', 'booking_code', 'status', 'payment_status', 'start_date', 'end_date', 'start_time', 'assigned_armada_id'])]
 class RentalBooking extends Model
 {
     use HasFactory;

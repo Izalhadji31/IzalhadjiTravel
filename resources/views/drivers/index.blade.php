@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm font-medium">Total Drivers</p>
-                    <p class="text-3xl font-bold text-blue-600 mt-2">45</p>
+                    <p class="text-3xl font-bold text-blue-600 mt-2">{{ $totalDrivers }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm font-medium">On Duty</p>
-                    <p class="text-3xl font-bold text-amber-600 mt-2">18</p>
+                    <p class="text-3xl font-bold text-amber-600 mt-2">{{ $onDutyDrivers }}</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm font-medium">Available</p>
-                    <p class="text-3xl font-bold text-emerald-600 mt-2">23</p>
+                    <p class="text-3xl font-bold text-emerald-600 mt-2">{{ $availableDrivers }}</p>
                 </div>
                 <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,28 +64,43 @@
         <div class="card">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-600 text-sm font-medium">Avg Rating</p>
-                    <p class="text-3xl font-bold text-yellow-600 mt-2">4.8</p>
+                    <p class="text-gray-600 text-sm font-medium">Maintenance</p>
+                    <p class="text-3xl font-bold text-red-600 mt-2">{{ $maintenanceDrivers }}</p>
                 </div>
-                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Drivers Grid -->
+    <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
+        <form method="GET" action="{{ route('drivers.index') }}" class="flex flex-wrap gap-3 items-center">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Cari driver atau telepon..."
+                class="form-input"
+                style="min-width:220px;"
+            />
+            <button type="submit" class="btn-primary">Cari</button>
+        </form>
+
+        <div class="text-sm text-gray-500">Menampilkan {{ $drivers->count() }} dari {{ $totalDrivers }} driver</div>
+    </div>
+
     <div class="grid-responsive">
-        @for ($i = 1; $i <= 5; $i++)
+        @forelse ($drivers as $driver)
         <div class="card hover:shadow-lg transition-shadow duration-200">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Driver {{ $i }}</h3>
-                    <p class="text-sm text-gray-600 mt-1">License: <strong>DL-{{ rand(100000, 999999) }}</strong></p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ $driver->driver_name }}</h3>
+                    <p class="text-sm text-gray-600 mt-1">Plat: <strong>{{ $driver->plate_number }}</strong></p>
                 </div>
-                <span class="badge badge-success">Available</span>
+                <span class="badge badge-{{ $driver->status === 'tersedia' ? 'success' : ($driver->status === 'jalan' ? 'info' : 'danger') }}">{{ ucfirst($driver->status) }}</span>
             </div>
 
             <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg h-24 flex items-center justify-center mb-4">
@@ -96,27 +111,29 @@
 
             <div class="space-y-2 mb-4 pb-4 border-b border-gray-200 text-sm">
                 <div class="flex justify-between">
-                    <span class="text-gray-600">Phone:</span>
-                    <span class="font-medium text-gray-900">+628123456{{ $i }}000</span>
+                    <span class="text-gray-600">Telepon:</span>
+                    <span class="font-medium text-gray-900">{{ $driver->driver_phone ?? '-' }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-gray-600">Vehicle:</span>
-                    <span class="font-medium text-gray-900">Toyota Avanza</span>
+                    <span class="text-gray-600">Kendaraan:</span>
+                    <span class="font-medium text-gray-900">{{ $driver->vehicle_type }}</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Rating:</span>
-                    <div class="flex items-center">
-                        <span class="text-yellow-500 text-lg">★★★★★</span>
-                        <span class="ml-1 font-medium text-gray-900">4.9</span>
-                    </div>
+                    <span class="text-gray-600">Kursi:</span>
+                    <span class="font-medium text-gray-900">{{ $driver->seat_capacity }}</span>
                 </div>
             </div>
 
             <div class="flex gap-2">
-                <a href="#" class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 text-center text-sm transition-colors">Details</a>
-                <a href="#" class="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100 text-center text-sm transition-colors">Delete</a>
+                <a href="{{ route('drivers.edit', $driver->id) }}" class="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 text-center text-sm transition-colors">Edit</a>
+                <a href="{{ route('drivers.show', $driver->id) }}" class="flex-1 px-3 py-2 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 text-center text-sm transition-colors">Detail</a>
             </div>
         </div>
-        @endfor
+        @empty
+        <div class="card col-span-full text-center text-gray-600">
+            <div class="text-4xl mb-3">🚚</div>
+            Belum ada driver ditemukan. Tambahkan driver baru untuk mulai menggunakan sistem.
+        </div>
+        @endforelse
     </div>
 @endsection

@@ -50,16 +50,29 @@
     <!-- Armada Cards -->
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
         @forelse($armadas as $armada)
-        <div style="background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid {{ $armada->status === 'tersedia' ? '#22c55e' : ($armada->status === 'jalan' ? '#3b82f6' : '#ef4444') }};">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+        @php
+            $borderClass = 'border-l-4 border-rose-500';
+            $badgeClass = 'inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-semibold text-center';
+            if ($armada->status === 'tersedia') {
+                $borderClass = 'border-l-4 border-emerald-500';
+                $badgeClass .= ' bg-emerald-100 text-emerald-800';
+            } elseif ($armada->status === 'jalan') {
+                $borderClass = 'border-l-4 border-sky-500';
+                $badgeClass .= ' bg-sky-100 text-sky-800';
+            } elseif ($armada->status === 'maintenance') {
+                $borderClass = 'border-l-4 border-rose-500';
+                $badgeClass .= ' bg-rose-100 text-rose-800';
+            } else {
+                $badgeClass .= ' bg-slate-100 text-slate-700';
+            }
+        @endphp
+        <div class="bg-white rounded-2xl p-5 shadow-sm {{ $borderClass }}">
+            <div class="flex justify-between items-start gap-3 mb-3">
                 <div>
-                    <div style="font-size: 16px; font-weight: 700; color: #1e293b;">{{ $armada->plate_number }}</div>
-                    <div style="font-size: 13px; color: #64748b;">{{ $armada->vehicle_type }}</div>
+                    <div class="text-base font-semibold text-slate-900">{{ $armada->plate_number }}</div>
+                    <div class="text-sm text-slate-500">{{ $armada->vehicle_type }}</div>
                 </div>
-                <span style="display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: capitalize;
-                    {{ $armada->status === 'tersedia' ? 'background-color:#dcfce7;color:#166534;' : '' }}
-                    {{ $armada->status === 'jalan' ? 'background-color:#dbeafe;color:#1e40af;' : '' }}
-                    {{ $armada->status === 'maintenance' ? 'background-color:#fee2e2;color:#991b1b;' : '' }}">
+                <span class="{{ $badgeClass }}" style="text-transform: capitalize;">
                     {{ $armada->status }}
                 </span>
             </div>

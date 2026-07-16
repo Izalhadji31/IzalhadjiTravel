@@ -33,8 +33,8 @@ return new class extends Migration
             $table->dateTime('return_date')->nullable();
             
             // Vehicle & Driver
-            $table->uuid('assigned_armada_id')->nullable();
-            $table->uuid('assigned_driver_id')->nullable();
+                        $table->unsignedBigInteger('assigned_armada_id')->nullable();
+                        $table->unsignedBigInteger('assigned_driver_id')->nullable();
             
             // Pricing
             $table->decimal('base_price', 12, 2);

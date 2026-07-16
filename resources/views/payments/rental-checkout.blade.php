@@ -205,7 +205,7 @@
     }
 </style>
 
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ $clientKey }}"></script>
+<script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ $clientKey }}"></script>
 
 <div class="checkout-container">
     <!-- Header -->
@@ -324,7 +324,7 @@
 </div>
 
 <script>
-    const snapToken = "{{ $snapToken ?? null }}";
+    let snapToken = "{{ $snapToken ?? null }}";
 
     // Countdown Timer (24 hours from payment creation)
     @if($payment->status === 'pending')
@@ -404,7 +404,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.snapToken = data.snapToken;
+                snapToken = data.snapToken;
                 triggerMidtransPayment();
             } else {
                 alert('Gagal mempersiapkan pembayaran ulang: ' + data.message);

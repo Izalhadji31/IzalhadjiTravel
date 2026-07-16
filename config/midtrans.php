@@ -10,6 +10,9 @@ return [
     'environment' => env('MIDTRANS_ENVIRONMENT', 'sandbox'), // sandbox or production
     
     'is_production' => env('MIDTRANS_ENVIRONMENT', 'sandbox') === 'production',
+    'snap_url' => env('MIDTRANS_SNAP_URL', env('MIDTRANS_ENVIRONMENT', 'sandbox') === 'production'
+        ? 'https://app.midtrans.com/snap/snap.js'
+        : 'https://app.sandbox.midtrans.com/snap/snap.js'),
     
     // Notification settings
     'notification_url' => env('MIDTRANS_NOTIFICATION_URL', '/api/midtrans/notification'),

@@ -26,10 +26,10 @@ class PaymentService
     /**
      * Create Snap token for payment
      */
-    public function createSnapToken($booking, string $bookingType): string
+    public function createSnapToken($booking, string $bookingType, string $orderId): string
     {
         $transactionDetails = [
-            'order_id' => $this->generateOrderId($booking->id, $bookingType),
+            'order_id' => $orderId,
             'gross_amount' => (int) $booking->total_price,
         ];
 
@@ -60,7 +60,7 @@ class PaymentService
     /**
      * Generate order ID
      */
-    private function generateOrderId(int $bookingId, string $bookingType): string
+    public function generateOrderId(string $bookingId, string $bookingType): string
     {
         $prefix = match ($bookingType) {
             'travel' => 'TRV',
@@ -179,8 +179,10 @@ class PaymentService
         };
 
         $payment = Payment::create([
+            'user_id' => $booking->user_id,
             'booking_id' => $booking->id,
             'booking_type' => $bookingTypeFQCN,
+            'transaction_id' => $orderId,
             'amount' => $booking->total_price,
             'payment_method' => 'midtrans',
             'midtrans_reference' => $orderId,
@@ -200,8 +202,8 @@ class PaymentService
     {
         $orderId = $notification['order_id'];
         $transactionStatus = $notification['transaction_status'];
-        $paymentType = $notification['payment_type'];
-        $transactionId = $notification['transaction_id'];
+        $paymentType = $notification['payment_type'] ?? 'midtrans';
+        $transactionId = $notification['transaction_id'] ?? null;
 
         // Find payment by order ID
         $payment = Payment::where('midtrans_reference', $orderId)->first();
@@ -223,6 +225,10 @@ class PaymentService
             $booking = $payment->booking;
             $booking->update(['status' => 'confirmed']);
 
+            if (array_key_exists('payment_status', $booking->getAttributes())) {
+                $booking->update(['payment_status' => 'paid']);
+            }
+
             // Auto-create revenue sharing
             try {
                 $revenueService = app(RevenueShareService::class);
@@ -238,6 +244,22 @@ class PaymentService
         }
 
         return ['success' => true, 'message' => 'Payment status updated'];
+    }
+
+    /**
+     * Validate that the webhook was sent by Midtrans before changing a booking.
+     */
+    public function isValidNotification(array $notification): bool
+    {
+        foreach (['order_id', 'status_code', 'gross_amount', 'signature_key'] as $field) {
+            if (empty($notification[$field])) {
+                return false;
+            }
+        }
+
+        $signature = hash('sha512', $notification['order_id'] . $notification['status_code'] . $notification['gross_amount'] . config('midtrans.server_key'));
+
+        return hash_equals($signature, $notification['signature_key']);
     }
 
     /**
@@ -264,11 +286,13 @@ class PaymentService
             // Midtrans returns array or stdClass
             $transactionStatus = is_array($status) ? $status['transaction_status'] : $status->transaction_status;
             $paymentType = is_array($status) ? ($status['payment_type'] ?? 'unknown') : ($status->payment_type ?? 'unknown');
+            $transactionId = is_array($status) ? ($status['transaction_id'] ?? null) : ($status->transaction_id ?? null);
             
             return [
                 'success' => true,
                 'transaction_status' => $transactionStatus,
                 'payment_type' => $paymentType,
+                'transaction_id' => $transactionId,
             ];
         } catch (\Exception $e) {
             return [

@@ -35,12 +35,14 @@ class PaymentController extends Controller
             return view('payments.travel-checkout', [
                 'booking' => $travelBooking,
                 'payment' => $existingPayment,
+                'snapToken' => cache()->get("midtrans_snap_{$existingPayment->midtrans_reference}"),
+                'clientKey' => config('midtrans.client_key'),
             ]);
         }
 
         // Generate snap token
-        $orderId = now()->format('YmdHis') . '-' . $travelBooking->id;
-        $snapToken = $this->paymentService->createSnapToken($travelBooking, 'travel');
+        $orderId = $this->paymentService->generateOrderId($travelBooking->id, 'travel');
+        $snapToken = $this->paymentService->createSnapToken($travelBooking, 'travel', $orderId);
         
         // Record payment
         $payment = $this->paymentService->recordPayment($travelBooking, 'travel', $orderId, $snapToken);
@@ -67,12 +69,14 @@ class PaymentController extends Controller
             return view('payments.rental-checkout', [
                 'booking' => $rentalBooking,
                 'payment' => $existingPayment,
+                'snapToken' => cache()->get("midtrans_snap_{$existingPayment->midtrans_reference}"),
+                'clientKey' => config('midtrans.client_key'),
             ]);
         }
 
         // Generate snap token
-        $orderId = now()->format('YmdHis') . '-' . $rentalBooking->id;
-        $snapToken = $this->paymentService->createSnapToken($rentalBooking, 'rental');
+        $orderId = $this->paymentService->generateOrderId($rentalBooking->id, 'rental');
+        $snapToken = $this->paymentService->createSnapToken($rentalBooking, 'rental', $orderId);
         
         // Record payment
         $payment = $this->paymentService->recordPayment($rentalBooking, 'rental', $orderId, $snapToken);
@@ -99,12 +103,14 @@ class PaymentController extends Controller
             return view('payments.airport-checkout', [
                 'booking' => $airportTransferBooking,
                 'payment' => $existingPayment,
+                'snapToken' => cache()->get("midtrans_snap_{$existingPayment->midtrans_reference}"),
+                'clientKey' => config('midtrans.client_key'),
             ]);
         }
 
         // Generate snap token
-        $orderId = now()->format('YmdHis') . '-' . $airportTransferBooking->id;
-        $snapToken = $this->paymentService->createSnapToken($airportTransferBooking, 'airport_transfer');
+        $orderId = $this->paymentService->generateOrderId($airportTransferBooking->id, 'airport_transfer');
+        $snapToken = $this->paymentService->createSnapToken($airportTransferBooking, 'airport_transfer', $orderId);
         
         // Record payment
         $payment = $this->paymentService->recordPayment($airportTransferBooking, 'airport_transfer', $orderId, $snapToken);
@@ -124,6 +130,10 @@ class PaymentController extends Controller
     {
         try {
             $notification = $request->all();
+            $payment = Payment::where('midtrans_reference', $notification['order_id'] ?? null)->first();
+            if (!$payment || !$this->paymentService->isValidNotification($notification)) {
+                return response()->json(['success' => false, 'message' => 'Invalid notification'], 403);
+            }
             $result = $this->paymentService->handleNotification($notification);
             
             return response()->json($result, $result['success'] ? 200 : 400);
@@ -146,9 +156,19 @@ class PaymentController extends Controller
         if (!$payment) {
             abort(404, 'Payment not found');
         }
+        $this->authorize('view', $payment->booking);
 
         // Verify payment status with Midtrans
         $statusCheck = $this->paymentService->checkPaymentStatus($orderId);
+        if ($statusCheck['success']) {
+            $this->paymentService->handleNotification([
+                'order_id' => $orderId,
+                'transaction_status' => $statusCheck['transaction_status'],
+                'payment_type' => $statusCheck['payment_type'],
+                'transaction_id' => $statusCheck['transaction_id'],
+            ]);
+            $payment->refresh();
+        }
 
         // Send WhatsApp notification on payment success
         if ($payment->status === 'success') {
@@ -178,6 +198,10 @@ class PaymentController extends Controller
 
         $payment = Payment::where('midtrans_reference', $orderId)->first();
 
+        if ($payment) {
+            $this->authorize('view', $payment->booking);
+        }
+
         return view('payments.error', [
             'payment' => $payment,
             'orderId' => $orderId,
@@ -197,6 +221,7 @@ class PaymentController extends Controller
         if (!$payment) {
             abort(404, 'Payment not found');
         }
+        $this->authorize('view', $payment->booking);
 
         return view('payments.pending', [
             'payment' => $payment,
@@ -210,6 +235,7 @@ class PaymentController extends Controller
      */
     public function checkStatus(Payment $payment)
     {
+        $this->authorize('view', $payment->booking);
         $status = $this->paymentService->checkPaymentStatus($payment->midtrans_reference);
 
         if ($status['success']) {
@@ -217,7 +243,7 @@ class PaymentController extends Controller
                 'order_id' => $payment->midtrans_reference,
                 'transaction_status' => $status['transaction_status'],
                 'payment_type' => $status['payment_type'],
-                'transaction_id' => $payment->midtrans_transaction_id,
+                'transaction_id' => $status['transaction_id'],
             ]);
 
             return response()->json([
@@ -234,6 +260,7 @@ class PaymentController extends Controller
      */
     public function retryPayment(Payment $payment)
     {
+        $this->authorize('view', $payment->booking);
         if ($payment->status === 'success') {
             return response()->json(['error' => 'Payment already successful'], 400);
         }
@@ -242,8 +269,14 @@ class PaymentController extends Controller
         $bookingType = class_basename($booking);
 
         // Generate new snap token
-        $orderId = now()->format('YmdHis') . '-' . $booking->id . '-retry';
-        $snapToken = $this->paymentService->createSnapToken($booking, strtolower($bookingType));
+        $bookingType = match ($bookingType) {
+            'TravelBooking' => 'travel',
+            'RentalBooking' => 'rental',
+            'AirportTransferBooking' => 'airport_transfer',
+            default => strtolower($bookingType),
+        };
+        $orderId = $this->paymentService->generateOrderId($booking->id, $bookingType);
+        $snapToken = $this->paymentService->createSnapToken($booking, $bookingType, $orderId);
 
         $payment->update([
             'midtrans_reference' => $orderId,

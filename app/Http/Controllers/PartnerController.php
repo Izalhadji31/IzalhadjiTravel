@@ -289,6 +289,7 @@ class PartnerController extends Controller
 
         $drivers = Armada::where('mitra_id', $partner->id)
             ->whereNotNull('driver_name')
+            ->with('mitra')
             ->latest()
             ->get();
 

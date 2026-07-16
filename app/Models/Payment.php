@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['booking_id', 'booking_type', 'amount', 'payment_method', 'midtrans_transaction_id', 'midtrans_reference', 'status', 'paid_at'])]
+#[Fillable(['user_id', 'booking_id', 'booking_type', 'transaction_id', 'amount', 'payment_method', 'midtrans_transaction_id', 'midtrans_reference', 'status', 'paid_at'])]
 class Payment extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected function casts(): array
     {

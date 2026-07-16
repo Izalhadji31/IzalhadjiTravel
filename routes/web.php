@@ -106,6 +106,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+    Route::post('/register/verify-otp', [RegisterController::class, 'verifyOtp'])->name('register.verify-otp');
+    Route::post('/register/resend-otp', [RegisterController::class, 'resendOtp'])->name('register.resend-otp');
+    Route::post('/register/cancel', [RegisterController::class, 'cancelPending'])->name('register.cancel');
 
     // Forgot Password Routes
     Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
