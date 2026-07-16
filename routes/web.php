@@ -44,9 +44,16 @@ Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['id', 'en'])) {
         Session::put('locale', $locale);
         App::setLocale($locale);
-        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+
+        $response = redirect()->back();
+        if (!request()->headers->has('referer') || url()->previous() === url()->current()) {
+            $response = redirect()->route('home');
+        }
+
+        return $response->withCookie(cookie()->forever('locale', $locale));
     }
-    return redirect()->back();
+
+    return redirect()->route('home');
 })->name('lang.switch');
 
 // Landing Page
