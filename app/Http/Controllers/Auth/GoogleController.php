@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,18 @@ class GoogleController extends Controller
      */
     public function redirect(): RedirectResponse
     {
+        $clientId = config('services.google.client_id');
+        $clientSecret = config('services.google.client_secret');
+
+        if (empty($clientId) || empty($clientSecret) || str_starts_with($clientId, 'your-') || str_starts_with($clientSecret, 'your-')) {
+            Log::error('Google OAuth credentials are missing or placeholder values are still configured.', [
+                'client_id' => $clientId ? 'present' : 'missing',
+                'client_secret' => $clientSecret ? 'present' : 'missing',
+            ]);
+
+            return redirect()->route('login')->with('error', 'Google login not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env.');
+        }
+
         // Use stateless to avoid issues with session/cookies on certain hosts
         Log::info('Google OAuth redirect', [
             'app_url' => config('app.url'),
@@ -26,7 +39,10 @@ class GoogleController extends Controller
             'current_url' => url()->current(),
         ]);
 
-        return Socialite::driver('google')->stateless()->redirect();
+        return Socialite::driver('google')
+            ->stateless()
+            ->redirectUrl(config('services.google.redirect'))
+            ->redirect();
     }
 
     /**
@@ -47,12 +63,19 @@ class GoogleController extends Controller
         ]);
 
         try {
-            // Use stateless for reliability on shared hosting / different domains
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            // Use stateless and explicit redirect URL for reliable callback behavior.
+            $googleUser = Socialite::driver('google')
+                ->stateless()
+                ->redirectUrl(config('services.google.redirect'))
+                ->setHttpClient($this->createGoogleHttpClient())
+                ->user();
         } catch (\Throwable $e) {
             Log::error('Google OAuth callback failed', [
                 'message' => $e->getMessage(),
                 'class' => get_class($e),
+                'curl_cainfo' => ini_get('curl.cainfo'),
+                'openssl_cafile' => ini_get('openssl.cafile'),
+                'google_verify_setting' => config('services.google.verify'),
             ]);
 
             return redirect()->route('login')
@@ -75,7 +98,8 @@ class GoogleController extends Controller
                     // If your table doesn't have these columns, creation will throw and we will show a clear error.
                     'role' => 'customer',
                     'is_verified' => true,
-                    'status' => 'pending',
+                    'status' => 'approved',
+                    'email_verified_at' => now(),
                     'profile_photo_path' => $googleUser->getAvatar(),
                 ]);
             } catch (\Throwable $e) {
@@ -90,8 +114,10 @@ class GoogleController extends Controller
                     ->with('error', 'Masuk dengan Google berhasil, tetapi akun gagal disimpan. Silakan hubungi admin atau developer.');
             }
 
-            return redirect()->route('auth.pending')
-                ->with('success', 'Registrasi dengan Google berhasil! Akun Anda sedang ditinjau oleh admin. Silakan tunggu persetujuan.');
+            Auth::login($user, true);
+
+            return redirect()->route('dashboard')
+                ->with('success', 'Selamat datang! Akun Google Anda telah dibuat dan Anda berhasil masuk.');
         } else {
             // Update google_id if not set
             if (empty($user->google_id)) {
@@ -126,5 +152,38 @@ class GoogleController extends Controller
 
         return redirect()->route('dashboard')
             ->with('success', 'Selamat datang! Berhasil masuk dengan Google.');
+    }
+
+    /**
+     * Create a Guzzle HTTP client for Google OAuth.
+     *
+     * Uses the configured verify setting or local CA certificates when available.
+     */
+    protected function createGoogleHttpClient(): Client
+    {
+        $verify = config('services.google.verify', true);
+        $cafile = ini_get('curl.cainfo') ?: ini_get('openssl.cafile');
+
+        if ($verify === true && ! empty($cafile)) {
+            $verify = $cafile;
+        }
+
+        if ($verify === true && app()->environment('local') && empty($cafile)) {
+            Log::warning('Google OAuth local environment missing CA bundle; disabling SSL verification for callback.', [
+                'curl_cainfo' => ini_get('curl.cainfo'),
+                'openssl_cafile' => ini_get('openssl.cafile'),
+                'google_verify_setting' => config('services.google.verify'),
+            ]);
+
+            $verify = false;
+        }
+
+        Log::info('Google OAuth HTTP client config', [
+            'verify' => $verify,
+            'curl_cainfo' => ini_get('curl.cainfo'),
+            'openssl_cafile' => ini_get('openssl.cafile'),
+        ]);
+
+        return new Client(['verify' => $verify]);
     }
 }

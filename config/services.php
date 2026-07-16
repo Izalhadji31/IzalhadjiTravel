@@ -39,7 +39,9 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         // Match the callback route to avoid redirect URI mismatch on shared hosting.
-        'redirect' => rtrim(url('/'), '/') . '/auth/google/callback',
+        'redirect' => env('GOOGLE_REDIRECT_URI', rtrim(env('APP_URL', 'http://localhost'), '/') . '/auth/google/callback'),
+        // Set this to false only if PHP/cURL cannot validate Google's SSL certs locally.
+        'verify' => env('GOOGLE_OAUTH_VERIFY_SSL', true),
     ],
 
     'whatsapp' => [

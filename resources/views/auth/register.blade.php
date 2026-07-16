@@ -242,7 +242,14 @@
             </div>
         </div>
 
-        {{-- Errors --}}
+        {{-- Alerts --}}
+        @if (session('success'))
+            <div class="alert alert-success" style="background:#ecfdf5;border:1px solid #bbf7d0;color:#166534;">
+                <span>✅</span>
+                <div>{{ session('success') }}</div>
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="alert alert-error">
                 <span>⚠️</span>
@@ -257,8 +264,49 @@
             </div>
         @endif
 
-        {{-- Register Form --}}
-        <form method="POST" action="{{ route('register.store') }}" id="registerForm">
+        @if (! empty($pendingRegistration))
+            <div class="alert alert-info" style="background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;">
+                <span>ℹ️</span>
+                <div>
+                    {{ $locale === 'id'
+                        ? 'Kami telah mengirimkan kode OTP ke nomor WhatsApp Anda. Masukkan kode untuk menyelesaikan pendaftaran.'
+                        : 'We have sent the OTP code to your WhatsApp number. Enter it to complete registration.' }}
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('register.verify-otp') }}" id="otpForm">
+                @csrf
+                <div class="form-group">
+                    <label class="form-label" for="otp">{{ $locale === 'id' ? 'Kode OTP' : 'OTP Code' }}</label>
+                    <input type="text" id="otp" name="otp"
+                           class="form-input"
+                           placeholder="123456"
+                           maxlength="6"
+                           required autofocus>
+                    @error('otp')
+                        <div class="form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn-register">
+                    {{ $locale === 'id' ? 'Verifikasi OTP' : 'Verify OTP' }}
+                </button>
+            </form>
+
+            <div class="divider"><span>{{ $locale === 'id' ? 'atau' : 'or' }}</span></div>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                <form method="POST" action="{{ route('register.resend-otp') }}" style="flex:1; min-width:180px;">
+                    @csrf
+                    <button type="submit" class="btn-register" style="background:#f97316;">{{ $locale === 'id' ? 'Kirim Ulang OTP' : 'Resend OTP' }}</button>
+                </form>
+                <form method="POST" action="{{ route('register.cancel') }}" style="flex:1; min-width:180px;">
+                    @csrf
+                    <button type="submit" class="btn-register" style="background:#9ca3af;">{{ $locale === 'id' ? 'Batalkan' : 'Cancel' }}</button>
+                </form>
+            </div>
+        @else
+            {{-- Register Form --}}
+            <form method="POST" action="{{ route('register.store') }}" id="registerForm">
             @csrf
             <input type="hidden" name="role" value="customer">
 
@@ -361,7 +409,15 @@
 
         {{-- Google OAuth --}}
         <div class="divider"><span>{{ $locale === 'id' ? 'atau' : 'or' }}</span></div>
-        <a href="{{ route('auth.google') }}" class="btn-google">
+        @php
+            $googleConfigured = config('services.google.client_id') && config('services.google.client_secret');
+            $googleDisabledMessage = $locale === 'id'
+                ? 'Google login belum dikonfigurasi. Isi GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET di .env.'
+                : 'Google login is not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env.';
+        @endphp
+        <a href="{{ $googleConfigured ? route('auth.google') : '#' }}"
+           class="btn-google"
+           {{ $googleConfigured ? '' : 'onclick="event.preventDefault(); alert(\'' . $googleDisabledMessage . '\');"' }}>
             <svg width="18" height="18" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.83C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -370,6 +426,12 @@
             </svg>
             {{ $locale === 'id' ? 'Daftar dengan Google' : 'Sign up with Google' }}
         </a>
+
+        @unless($googleConfigured)
+            <p class="login-link" style="margin-top:0.75rem; color:#6b7280; font-size:0.9rem;">
+                {{ $googleDisabledMessage }}
+            </p>
+        @endunless
 
         <div class="login-link">
             {{ $locale === 'id' ? 'Sudah punya akun?' : 'Already have an account?' }}
@@ -420,19 +482,42 @@
             }
         }
 
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            updatePhone();
-            var err = document.getElementById('phoneError');
-            if (err.style.display === 'block') {
-                e.preventDefault();
-                document.getElementById('phoneRow').style.borderColor = '#ef4444';
-            }
-        });
+        var registerForm = document.getElementById('registerForm');
 
-        // Init hidden field with old value
-        var oldPhone = '{{ old('phone') }}';
-        if (oldPhone) {
-            document.getElementById('phone').value = oldPhone;
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                updatePhone();
+                var err = document.getElementById('phoneError');
+                if (err.style.display === 'block') {
+                    e.preventDefault();
+                    document.getElementById('phoneRow').style.borderColor = '#ef4444';
+                }
+            });
+
+            var oldPhone = '{{ old('phone') }}';
+            if (oldPhone) {
+                document.getElementById('phone').value = oldPhone;
+                var normalized = oldPhone.replace(/[^0-9+]/g, '');
+                if (normalized.startsWith('+')) {
+                    var dialMatch = normalized.match(/^\+(\d{1,4})/);
+                    if (dialMatch) {
+                        var dialCode = '+' + dialMatch[1];
+                        var select = document.getElementById('dialCode');
+                        for (var i = 0; i < select.options.length; i++) {
+                            if (select.options[i].value === dialCode) {
+                                select.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        document.getElementById('phone_display').value = normalized.slice(dialMatch[1].length + 1);
+                    }
+                } else if (normalized.startsWith('0')) {
+                    document.getElementById('dialCode').value = '+62';
+                    document.getElementById('phone_display').value = normalized.slice(1);
+                } else {
+                    document.getElementById('phone_display').value = normalized;
+                }
+            }
         }
     })();
     </script>

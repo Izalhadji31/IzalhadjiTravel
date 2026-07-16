@@ -314,10 +314,19 @@
             </button>
         </form>
 
-        {{-- Google Login – always shown --}}
+        {{-- Google Login --}}
         <div class="divider"><span>{{ $locale === 'id' ? 'atau' : 'or' }}</span></div>
 
-        <a href="{{ route('auth.google') }}" class="btn-google">
+        @php
+            $googleConfigured = config('services.google.client_id') && config('services.google.client_secret');
+            $googleDisabledMessage = $locale === 'id'
+                ? 'Google login belum dikonfigurasi. Isi GOOGLE_CLIENT_ID dan GOOGLE_CLIENT_SECRET di .env.'
+                : 'Google login is not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env.';
+        @endphp
+
+        <a href="{{ $googleConfigured ? route('auth.google') : '#' }}"
+           class="btn-google"
+           {{ $googleConfigured ? '' : 'onclick="event.preventDefault(); alert(\'' . $googleDisabledMessage . '\');"' }}>
             <svg width="18" height="18" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.83C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -326,6 +335,12 @@
             </svg>
             {{ $locale === 'id' ? 'Masuk dengan Google' : 'Continue with Google' }}
         </a>
+
+        @unless($googleConfigured)
+            <p class="register-link" style="margin-top:0.75rem; color:#6b7280; font-size:0.9rem;">
+                {{ $googleDisabledMessage }}
+            </p>
+        @endunless
 
         <div class="register-link">
             {{ $locale === 'id' ? 'Belum punya akun?' : "Don't have an account?" }}
