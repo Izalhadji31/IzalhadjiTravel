@@ -494,7 +494,7 @@
                 }
             });
 
-            var oldPhone = '{{ old('phone') }}';
+            var oldPhone = @json(old('phone'));
             if (oldPhone) {
                 document.getElementById('phone').value = oldPhone;
                 var normalized = oldPhone.replace(/[^0-9+]/g, '');
