@@ -92,7 +92,7 @@
                     @endif
                     <div>
                         <p class="text-gray-600 text-sm">Price per Seat</p>
-                        <p class="text-lg font-semibold text-gray-900">Rp {{ number_format($booking->route->travelPrices->first()->price_per_seat, 0, ',', '.') }}</p>
+                        <p class="text-lg font-semibold text-gray-900">Rp {{ number_format($booking->route->travelPrices->first()?->price_per_seat ?? ($booking->total_price / ($booking->number_of_seats ?: 1)), 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
                         <span class="text-gray-600">Price per Seat</span>
-                        <span class="font-semibold">Rp {{ number_format($booking->route->travelPrices->first()->price_per_seat, 0, ',', '.') }}</span>
+                        <span class="font-semibold">Rp {{ number_format($booking->route->travelPrices->first()?->price_per_seat ?? ($booking->total_price / ($booking->number_of_seats ?: 1)), 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
                         <span class="text-gray-600">Number of Seats</span>

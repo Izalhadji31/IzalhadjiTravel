@@ -29,6 +29,12 @@ class BookingFlowTest extends TestCase
             'to_location_id' => $to->id,
             'base_price' => 100000,
         ]);
+
+        \App\Models\TravelPrice::create([
+            'route_id' => $this->route->id,
+            'price_per_seat' => 100000,
+            'is_active' => true,
+        ]);
     }
 
     public function test_customer_can_create_booking()
@@ -63,7 +69,7 @@ class BookingFlowTest extends TestCase
         $booking = TravelBooking::where('user_id', $this->user->id)->first();
 
         $this->assertNotNull($booking);
-        $this->assertGreater($booking->total_price, 0);
+        $this->assertGreaterThan(0, $booking->total_price);
     }
 
     public function test_customer_cannot_create_booking_without_identity()

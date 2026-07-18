@@ -12,7 +12,7 @@ class IdentityVerificationService
     /**
      * Create or update identity verification
      */
-    public function createOrUpdate($user, array $data, UploadedFile $idImage = null)
+    public function createOrUpdate($user, array $data, ?UploadedFile $idImage = null)
     {
         $verification = IdentityVerification::updateOrCreate(
             ['user_id' => $user->id],

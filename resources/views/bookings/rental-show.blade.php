@@ -131,13 +131,13 @@
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
                         <span class="text-gray-600">Base Rental</span>
-                        <span class="font-semibold">Rp {{ number_format($booking->route->rentalPrices->first()->price_without_driver, 0, ',', '.') }}</span>
+                        <span class="font-semibold">Rp {{ number_format($booking->route->rentalPrices->first()?->price_without_driver ?? $booking->total_price, 0, ',', '.') }}</span>
                     </div>
 
                     @if($booking->with_driver)
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
                         <span class="text-gray-600">Driver Fee</span>
-                        <span class="font-semibold">Rp {{ number_format($booking->total_price - $booking->route->rentalPrices->first()->price_without_driver, 0, ',', '.') }}</span>
+                        <span class="font-semibold">Rp {{ number_format($booking->total_price - ($booking->route->rentalPrices->first()?->price_without_driver ?? 0), 0, ',', '.') }}</span>
                     </div>
                     @else
                     <div class="bg-blue-50 p-2 rounded text-xs text-blue-700 mb-2">

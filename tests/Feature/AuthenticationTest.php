@@ -42,6 +42,10 @@ class AuthenticationTest extends TestCase
 
     public function test_user_can_register()
     {
+        $this->mock(\App\Services\WhatsAppService::class, function ($mock) {
+            $mock->shouldReceive('send')->andReturn(true);
+        });
+
         $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -49,6 +53,14 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
             'role' => 'customer',
+        ]);
+
+        $response->assertRedirect();
+        $pending = session('register.pending');
+        $this->assertNotNull($pending);
+
+        $response2 = $this->post('/register/verify-otp', [
+            'otp' => $pending['otp'],
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -91,14 +103,14 @@ class AuthenticationTest extends TestCase
 
         $this->actingAs($customerUser);
         $response = $this->get('/dashboard');
-        $response->assertViewIs('customer.dashboard');
+        $response->assertViewIs('dashboard.customer');
 
         $this->actingAs($adminUser);
         $response = $this->get('/dashboard');
-        $response->assertViewIs('admin.dashboard');
+        $response->assertRedirect(route('admin.dashboard'));
 
         $this->actingAs($driverUser);
         $response = $this->get('/dashboard');
-        $response->assertViewIs('driver.dashboard');
+        $response->assertViewIs('dashboard.driver');
     }
 }

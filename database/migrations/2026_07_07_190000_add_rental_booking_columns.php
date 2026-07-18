@@ -10,7 +10,8 @@ return new class extends Migration
     {
         Schema::table('rental_bookings', function (Blueprint $table) {
             if (!Schema::hasColumn('rental_bookings', 'route_id')) {
-                $table->foreignId('route_id')->nullable()->after('user_id')->constrained()->nullOnDelete();
+                $table->uuid('route_id')->nullable()->after('user_id');
+                $table->foreign('route_id')->references('id')->on('routes')->nullOnDelete();
             }
             if (!Schema::hasColumn('rental_bookings', 'rental_type')) {
                 $table->string('rental_type')->default('without_driver')->after('route_id');

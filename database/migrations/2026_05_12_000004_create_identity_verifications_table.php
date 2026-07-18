@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->enum('id_type', ['KTP', 'SIM']);
             $table->string('id_number')->unique();
-            $table->string('id_image_path');
+            $table->string('id_image_path')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->uuid('verified_by')->nullable();
             $table->foreign('verified_by')->references('id')->on('users')->nullOnDelete();

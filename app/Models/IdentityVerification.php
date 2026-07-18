@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['user_id', 'full_name', 'id_type', 'id_number', 'id_image_path', 'is_verified', 'verified_by', 'verified_at'])]
+#[Fillable(['user_id', 'full_name', 'id_type', 'id_number', 'id_image_path', 'is_verified', 'verified_by', 'verified_at', 'rejection_reason', 'id_expiry_date'])]
 class IdentityVerification extends Model
 {
     use HasFactory, HasUuids;

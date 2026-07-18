@@ -69,8 +69,8 @@ class BookingTravelController extends Controller
 
         $validated = $request->validate([
             'route_id' => 'required|exists:routes,id',
-            'travel_date' => 'nullable|date|after:today',
-            'scheduled_date' => 'nullable|date|after:today',
+            'travel_date' => 'required_without:scheduled_date|date|after:today',
+            'scheduled_date' => 'required_without:travel_date|date|after:today',
             'number_of_seats' => 'required|integer|min:1|max:16',
             'passengers' => 'nullable|array',
             'passengers.*.name' => 'required_with:passengers|string|max:255',
