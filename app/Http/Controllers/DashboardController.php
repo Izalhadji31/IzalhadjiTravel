@@ -24,12 +24,17 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Branching for Admin
+        // 1. Branching for Super Admin
+        if ($user->isSuperAdmin()) {
+            return redirect()->route('super-admin.dashboard');
+        }
+
+        // 2. Branching for Admin
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
 
-        // 2. Branching for Partner/Mitra
+        // 3. Branching for Partner/Mitra
         if ($user->isPartner() || $user->role === 'partner') {
             $partner = $user->partnerProfile;
             
@@ -62,7 +67,7 @@ class DashboardController extends Controller
             ));
         }
 
-        // 3. Branching for Driver/Sopir
+        // 4. Branching for Driver/Sopir
         if ($user->isDriver()) {
             $driver = $user->driverProfile;
             $armada = $user->armada;
@@ -110,7 +115,7 @@ class DashboardController extends Controller
             ));
         }
 
-        // 4. Branching for Customer/User
+        // 5. Branching for Customer/User
         // Count total bookings (Travel + Rental)
         $travelBookings = TravelBooking::where('user_id', $user->id)->count();
         $rentalBookings = RentalBooking::where('user_id', $user->id)->count();

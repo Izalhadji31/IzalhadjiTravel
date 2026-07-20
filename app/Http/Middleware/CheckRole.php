@@ -16,24 +16,37 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!Auth::check()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthenticated. Please login first.',
-                'code' => 'UNAUTHENTICATED'
-            ], 401);
+        if (! Auth::check()) {
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthenticated. Please login first.',
+                    'code' => 'UNAUTHENTICATED',
+                ], 401);
+            }
+
+            return redirect()->route('login');
         }
 
-        if (!in_array(Auth::user()->role, $roles)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Forbidden. Your role does not have access to this resource.',
-                'code' => 'FORBIDDEN',
-                'user_role' => Auth::user()->role,
-                'required_roles' => $roles
-            ], 403);
+        if (! in_array(Auth::user()->role, $roles)) {
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Forbidden. Your role does not have access to this resource.',
+                    'code' => 'FORBIDDEN',
+                    'user_role' => Auth::user()->role,
+                    'required_roles' => $roles,
+                ], 403);
+            }
+
+            abort(403, 'Unauthorized access');
         }
 
         return $next($request);
+    }
+
+    private function wantsJson(Request $request): bool
+    {
+        return $request->expectsJson() || $request->is('api/*');
     }
 }

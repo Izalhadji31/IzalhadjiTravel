@@ -37,6 +37,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\VoucherController;
 
 
 // Language Switch
@@ -74,7 +75,7 @@ Route::prefix('public')->group(function () {
     Route::get('/vehicles', [PublicController::class, 'vehiclesList'])->name('public.vehicles');
     Route::get('/price-calculator', [PublicController::class, 'priceCalculator'])->name('public.price-calculator');
     Route::post('/calculate-price', [PublicController::class, 'calculatePrice'])->name('public.calculate-price');
-    Route::get('/about', [PublicController::class, 'about'])->name('public.about');
+    Route::redirect('/about', '/tentang-kami');
     Route::get('/contact', [PublicController::class, 'contact'])->name('public.contact');
     Route::post('/contact', [PublicController::class, 'submitContact'])->name('public.contact.submit');
     Route::get('/destinasi', [PublicController::class, 'destinasi'])->name('public.destinasi');
@@ -91,7 +92,6 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/bookings', [BookingTravelController::class, 'store'])->name('bookings.store');
-    Route::get('/bookings/{booking}', [BookingTravelController::class, 'show'])->name('bookings.show')->where('booking', '^(?!travel|rental|airport).*');
 });
 
 // Payment Routes (require verified email)
@@ -325,32 +325,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Voucher Validation API (for checkout)
-    Route::get('/api/voucher/validate', function (Illuminate\Http\Request $request) {
-        $code = strtoupper($request->get('code'));
-        $amount = floatval($request->get('amount', 0));
-
-        $voucher = \App\Models\Voucher::where('code', $code)->first();
-
-        if (!$voucher) {
-            return response()->json(['valid' => false, 'message' => 'Kode voucher tidak ditemukan']);
-        }
-
-        if (!$voucher->isValid()) {
-            return response()->json(['valid' => false, 'message' => 'Voucher sudah tidak berlaku']);
-        }
-
-        $discount = 0;
-        if ($voucher->type === 'percentage') {
-            $discount = $amount * ($voucher->value / 100);
-            if ($voucher->max_discount) {
-                $discount = min($discount, $voucher->max_discount);
-            }
-        } else {
-            $discount = min($voucher->value, $amount);
-        }
-
-        return response()->json(['valid' => true, 'discount' => round($discount), 'voucher_id' => $voucher->id]);
-    })->middleware('auth');
+    Route::get('/api/voucher/validate', [VoucherController::class, 'validateCode'])->name('api.voucher.validate');
 
     // Identity Verification Routes
     Route::prefix('identity')->group(function () {
@@ -409,7 +384,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Super Admin Routes - Global SaaS Management
-    Route::middleware('role:admin')->prefix('super-admin')->group(function () {
+    Route::middleware('super_admin')->prefix('super-admin')->group(function () {
         Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
         Route::get('/companies', [SuperAdminController::class, 'companies'])->name('super-admin.companies');
         Route::get('/companies/create', [SuperAdminController::class, 'createCompany'])->name('super-admin.companies.create');

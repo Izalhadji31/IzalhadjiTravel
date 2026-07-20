@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'phone' => '083156408079',
-                'role' => 'admin',
+                'role' => 'super_admin',
                 'is_verified' => true,
                 'is_active' => true,
                 'email_verified_at' => $now,

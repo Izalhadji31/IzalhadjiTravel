@@ -31,7 +31,7 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->scheduled_date,
                 'detail' => $b->route ? ($b->route->origin_city . ' → ' . $b->route->destination_city) : '-',
-                'show_route' => route('bookings.travel.show', $b->id),
+                'show_route' => route('bookings.show', $b->id),
             ]);
 
         // Get rental bookings
@@ -47,7 +47,7 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->start_date,
                 'detail' => $b->route ? ($b->route->origin_city . ' → ' . $b->route->destination_city) : '-',
-                'show_route' => route('bookings.rental.show', $b->id),
+                'show_route' => route('bookings.show', $b->id),
             ]);
 
         // Get airport transfer bookings
@@ -63,12 +63,12 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->scheduled_date,
                 'detail' => ($b->pickup_location ?? '-') . ' → ' . ($b->dropoff_location ?? '-'),
-                'show_route' => route('bookings.airport-transfer.show', $b->id),
+                'show_route' => route('bookings.show', $b->id),
             ]);
 
         // Merge and sort
         $allBookings = $travelBookings->merge($rentalBookings)->merge($airportBookings);
-        
+
         if ($status === 'all') {
             $allBookings = $allBookings->sortByDesc('date');
         }
@@ -91,28 +91,33 @@ class BookingController extends Controller
     }
 
     /**
-     * Universal booking show - detect type and redirect
+     * Universal booking show — detect type and render the correct detail view.
      */
     public function show(Request $request, $id)
     {
         $user = Auth::user();
 
-        // Try travel booking
         $travel = TravelBooking::where('id', $id)->where('user_id', $user->id)->first();
         if ($travel) {
-            return redirect()->route('bookings.travel.show', $travel->id);
+            $this->authorize('view', $travel);
+            $travel->load(['user', 'route', 'armada']);
+
+            return view('bookings.travel-show', ['booking' => $travel]);
         }
 
-        // Try rental booking
         $rental = RentalBooking::where('id', $id)->where('user_id', $user->id)->first();
         if ($rental) {
-            return redirect()->route('bookings.rental.show', $rental->id);
+            $this->authorize('view', $rental);
+            $rental->load(['user', 'route', 'armada']);
+
+            return view('bookings.rental-show', ['booking' => $rental]);
         }
 
-        // Try airport transfer booking
         $airport = AirportTransferBooking::where('id', $id)->where('user_id', $user->id)->first();
         if ($airport) {
-            return redirect()->route('bookings.airport-transfer.show', $airport->id);
+            $airport->load(['user']);
+
+            return view('bookings.airport-transfer-show', ['booking' => $airport]);
         }
 
         abort(404, 'Booking not found');
