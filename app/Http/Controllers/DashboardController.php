@@ -24,18 +24,17 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Branching for Super Admin
-        if ($user->isSuperAdmin()) {
-            return redirect()->route('super-admin.dashboard');
+        if (! $user instanceof User) {
+            abort(403);
         }
 
-        // 2. Branching for Admin
-        if ($user->isAdmin()) {
+        // 1. Branching for Admin
+        if (method_exists($user, 'isAdmin') && $user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
 
         // 3. Branching for Partner/Mitra
-        if ($user->isPartner() || $user->role === 'partner') {
+        if ((method_exists($user, 'isPartner') && $user->isPartner()) || $user->role === 'partner') {
             $partner = $user->partnerProfile;
             
             // Fallback in case profile is not yet created
@@ -68,7 +67,7 @@ class DashboardController extends Controller
         }
 
         // 4. Branching for Driver/Sopir
-        if ($user->isDriver()) {
+        if (method_exists($user, 'isDriver') && $user->isDriver()) {
             $driver = $user->driverProfile;
             $armada = $user->armada;
 

@@ -27,14 +27,18 @@ class EmailVerificationController extends Controller
     public function verify(EmailVerificationRequest $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('dashboard')->with('status', 'Email sudah terverifikasi.');
+            $intended = session()->pull('verification.intended', route('dashboard'));
+
+            return redirect($intended)->with('status', 'Email sudah terverifikasi.');
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->route('dashboard')->with('status', 'Email berhasil diverifikasi! Terima kasih.');
+        $intended = session()->pull('verification.intended', route('dashboard'));
+
+        return redirect($intended)->with('status', 'Email berhasil diverifikasi! Terima kasih.');
     }
 
     /**

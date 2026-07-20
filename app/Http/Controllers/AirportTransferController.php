@@ -57,6 +57,14 @@ class AirportTransferController extends Controller
     {
         $user = Auth::user();
 
+        if (! $user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            session()->put('verification.intended', route('bookings.airport-transfer.create'));
+
+            return redirect()->route('verification.notice')
+                ->with('status', 'Link verifikasi telah dikirim ke email Anda. Silakan klik link untuk melanjutkan pemesanan.');
+        }
+
         // Check identity verification
         if (!$user->is_identity_verified) {
             return redirect()->route('profile.edit')

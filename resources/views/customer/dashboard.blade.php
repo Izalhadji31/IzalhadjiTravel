@@ -318,7 +318,7 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ route('bookings.show', $booking->id) }}" class="action-link">
+                                <a href="{{ route('bookings.detail', $booking->id) }}" class="action-link">
                                     {{ $locale === 'id' ? 'Detail' : 'View' }} →
                                 </a>
 

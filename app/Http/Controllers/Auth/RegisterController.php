@@ -152,6 +152,10 @@ class RegisterController extends Controller
             'status'   => $pending['status'],
         ]);
 
+        if (! $user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+        }
+
         event(new Registered($user));
         session()->forget('register.pending');
 

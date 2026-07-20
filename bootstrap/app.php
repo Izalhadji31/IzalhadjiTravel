@@ -18,8 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'role' => \App\Http\Middleware\CheckRole::class,
-            'super_admin' => \App\Http\Middleware\CheckSuperAdmin::class,
+            'role' => \App\Http\Middleware\CheckUserRole::class,
+            'api.role' => \App\Http\Middleware\CheckRole::class,
             'identity_verified' => \App\Http\Middleware\EnsureIdentityVerified::class,
         ]);
     })

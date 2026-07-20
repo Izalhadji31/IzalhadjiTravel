@@ -179,6 +179,6 @@ class CompanySeeder extends Seeder
         $company3->update(['admin_user_id' => $admin3->id]);
 
         echo "Company seeder completed! Total companies: 3\n";
-        echo "Super Admin, admin@izalhadji.com, admin@floresjaya.com, admin@nttexpress.com\n";
+        echo "Admin accounts: admin@izalhadji.com, admin@floresjaya.com, admin@nttexpress.com\n";
     }
 }

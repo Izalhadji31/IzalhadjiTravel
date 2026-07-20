@@ -158,7 +158,7 @@ Booking → Payment Success → Revenue Sharing Auto Split:
 - Laragon (Apache + MySQL) aktif
 - PHP 8.3
 - Composer
-- Node 18 (opsional, CDN only)
+- Node 18
 
 ### Setup
 
@@ -169,6 +169,10 @@ cd C:\laragon\www\asr-go
 composer install
 npm install
 
+# Salin environment example jika belum ada .env
+copy .env.example .env
+php artisan key:generate
+
 # Database (MySQL harus aktif dari Laragon CP)
 php artisan migrate:fresh --seed
 
@@ -178,7 +182,7 @@ php artisan serve
 
 ### Akses
 ```
-URL: http://asr-go.test
+URL: http://localhost:8000
 ```
 
 ### Demo Accounts
@@ -188,6 +192,18 @@ URL: http://asr-go.test
 | Customer | customer@asrgo.test | password |
 | Driver | driver@asrgo.test | password |
 | Partner | partner@asrgo.test | password |
+
+### Callback URL Midtrans
+- Finish: http://localhost:8000/payments/success
+- Error: http://localhost:8000/payments/error
+- Pending: http://localhost:8000/payments/pending
+- Notification: http://localhost:8000/api/midtrans/notification
+
+### Catatan Deployment
+- Gunakan URL publik yang benar pada saat pengaturan Midtrans Production.
+- Pastikan route webhook dapat diakses dari internet agar notifikasi Midtrans diterima.
+- Jika memakai Vite, jalankan npm run dev untuk asset lokal; jika ingin memakai CDN, pastikan tag asset yang dipakai konsisten dengan environment.
+
 
 ---
 
@@ -244,12 +260,14 @@ URL: http://asr-go.test
 ```
 GET /api/voucher/validate?code=XXX&amount=100000
   → Validasi voucher saat checkout (auth required)
-POST /payments/callback
+POST /api/midtrans/notification
   → Midtrans notification callback
 GET /tickets/verify/{token}
   → Verifikasi tiket via QR
 POST /tickets/checkin/{booking}
   → Checkin tiket
+GET /api/admin/routes
+  → Endpoint admin API terproteksi middleware role API
 ```
 
 ---

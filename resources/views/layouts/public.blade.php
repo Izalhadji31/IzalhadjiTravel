@@ -880,7 +880,7 @@
                 <a href="{{ route('home') }}#keunggulan" class="trvl-nav-link">{{ __('nav.advantages') }}</a>
                 <a href="{{ route('home') }}#rute" class="trvl-nav-link">{{ __('nav.popular_routes') }}</a>
                 <a href="{{ route('home') }}#armada" class="trvl-nav-link">{{ __('nav.fleet') }}</a>
-                <a href="{{ route('public.about') }}" class="trvl-nav-link">{{ __('nav.about') }}</a>
+                <a href="{{ route('public.about.index') }}" class="trvl-nav-link">{{ __('nav.about') }}</a>
                 <a href="{{ route('public.blog') }}" class="trvl-nav-link">{{ __('nav.blog') }}</a>
             </div>
             <div style="display:flex; align-items:center; gap:0.75rem;">
@@ -915,7 +915,7 @@
             <a href="{{ route('home') }}#keunggulan" onclick="toggleMobileMenu()">{{ __('nav.advantages') }}</a>
             <a href="{{ route('home') }}#rute" onclick="toggleMobileMenu()">{{ __('nav.popular_routes') }}</a>
             <a href="{{ route('home') }}#armada" onclick="toggleMobileMenu()">{{ __('nav.fleet') }}</a>
-            <a href="{{ route('public.about') }}" onclick="toggleMobileMenu()">{{ __('nav.about') }}</a>
+            <a href="{{ route('public.about.index') }}" onclick="toggleMobileMenu()">{{ __('nav.about') }}</a>
             <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">{{ __('nav.blog') }}</a>
             <a href="{{ route('public.call-center') }}" onclick="toggleMobileMenu()">{{ __('nav.call_center') }}</a>
             <a href="{{ route('login') }}" onclick="toggleMobileMenu()">{{ __('nav.login') }}</a>
@@ -945,7 +945,7 @@
                 <div>
                     <p class="trvl-footer-heading">{{ __('footer.information') }}</p>
                     <div class="flex flex-col gap-2">
-                        <a href="{{ route('public.about') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
+                        <a href="{{ route('public.about.index') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
                         <a href="{{ route('public.blog') }}" class="trvl-footer-link">{{ __('footer.blog') }}</a>
                         <a href="{{ route('public.destinasi') }}" class="trvl-footer-link">{{ __('footer.destinations') }}</a>
                         <a href="{{ route('public.faq') }}" class="trvl-footer-link">{{ __('footer.faq') }}</a>

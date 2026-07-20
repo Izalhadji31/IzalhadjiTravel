@@ -12,7 +12,6 @@ class DemoDataSeeder extends Seeder
     public function run(): void
     {
         $now = Carbon::now();
-        $superAdminId = '9032071f-2157-4630-b0f8-80aa6eebbd35'; // Super Admin
         $adminId = '97c0e46b-e362-45d5-9ea8-78054ef32ab7';       // Admin Izalhadji
         $customerIds = [
             '715c649f-30f1-4c50-8c84-bca71f95f59d', // Customer 1
@@ -91,8 +90,8 @@ class DemoDataSeeder extends Seeder
                     'type' => 'about',
                     'is_published' => 1,
                     'order' => 1,
-                    'created_by' => $superAdminId,
-                    'updated_by' => $superAdminId,
+                    'created_by' => $adminId,
+                    'updated_by' => $adminId,
                     'published_at' => $now,
                 ],
                 [
@@ -103,8 +102,8 @@ class DemoDataSeeder extends Seeder
                     'type' => 'faq',
                     'is_published' => 1,
                     'order' => 2,
-                    'created_by' => $superAdminId,
-                    'updated_by' => $superAdminId,
+                    'created_by' => $adminId,
+                    'updated_by' => $adminId,
                     'published_at' => $now,
                 ],
                 [
@@ -115,8 +114,8 @@ class DemoDataSeeder extends Seeder
                     'type' => 'other',
                     'is_published' => 1,
                     'order' => 3,
-                    'created_by' => $superAdminId,
-                    'updated_by' => $superAdminId,
+                    'created_by' => $adminId,
+                    'updated_by' => $adminId,
                     'published_at' => $now,
                 ],
             ];
@@ -155,7 +154,7 @@ class DemoDataSeeder extends Seeder
                 $vehicleIds[] = $vid;
                 DB::table('vehicles')->insert([
                     'id' => $vid,
-                    'partner_id' => $superAdminId,
+                    'partner_id' => $adminId,
                     'plate_number' => $armada->plate_number,
                     'brand' => 'Toyota',
                     'model' => $armada->vehicle_type,
@@ -444,7 +443,7 @@ class DemoDataSeeder extends Seeder
             for ($i = 0; $i < 15; $i++) {
                 DB::table('audit_logs')->insert([
                     'id' => (string) Str::uuid(),
-                    'user_id' => [null, $superAdminId, $adminId, $customerIds[array_rand($customerIds)]][array_rand([0, 1, 1, 2])],
+                    'user_id' => [null, $adminId, $customerIds[array_rand($customerIds)]][array_rand([0, 1, 2])],
                     'action' => $actions[array_rand($actions)],
                     'model' => $models[array_rand($models)],
                     'model_id' => (string) rand(1, 50),

@@ -14,7 +14,9 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => (env('MAIL_MAILER', 'log') === 'smtp' && blank(env('MAIL_USERNAME')) && blank(env('MAIL_PASSWORD')))
+        ? 'log'
+        : env('MAIL_MAILER', 'log'),
 
     /*
     |--------------------------------------------------------------------------

@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Route;
 use App\Models\Location;
 use App\Models\TravelBooking;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class BookingFlowTest extends TestCase
@@ -54,6 +56,33 @@ class BookingFlowTest extends TestCase
         ]);
 
         $response->assertRedirect();
+    }
+
+    public function test_unverified_customer_can_access_booking_form()
+    {
+        $this->actingAs($this->user);
+        $this->user->forceFill(['email_verified_at' => null])->save();
+
+        $response = $this->get('/bookings/travel/create');
+
+        $response->assertSuccessful();
+        $response->assertViewIs('bookings.travel-create');
+    }
+
+    public function test_unverified_customer_receives_verification_link_when_booking()
+    {
+        Notification::fake();
+        $this->actingAs($this->user);
+        $this->user->forceFill(['email_verified_at' => null])->save();
+
+        $response = $this->post('/bookings', [
+            'route_id' => $this->route->id,
+            'number_of_seats' => 2,
+            'scheduled_date' => now()->addDay(),
+        ]);
+
+        $response->assertRedirect(route('verification.notice'));
+        Notification::assertSentTo($this->user, VerifyEmailNotification::class);
     }
 
     public function test_booking_creates_payment_record()

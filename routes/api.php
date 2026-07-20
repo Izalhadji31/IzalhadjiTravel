@@ -13,7 +13,7 @@ Route::middleware('api')->group(function () {
     /**
      * Admin Routes - Route Management
      */
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/routes')->group(function () {
+    Route::middleware(['auth:sanctum', 'api.role:admin'])->prefix('admin/routes')->group(function () {
         Route::get('/', [AdminRouteController::class, 'index']);
         Route::post('/', [AdminRouteController::class, 'store']);
         Route::get('{route}', [AdminRouteController::class, 'show']);
@@ -25,7 +25,7 @@ Route::middleware('api')->group(function () {
     /**
      * Admin Routes - Armada Management
      */
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/armadas')->group(function () {
+    Route::middleware(['auth:sanctum', 'api.role:admin'])->prefix('admin/armadas')->group(function () {
         Route::get('/', [AdminArmadaController::class, 'index']);
         Route::post('/', [AdminArmadaController::class, 'store']);
         Route::get('{armada}', [AdminArmadaController::class, 'show']);
@@ -39,7 +39,7 @@ Route::middleware('api')->group(function () {
     /**
      * Admin Routes - Mitra Management
      */
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/mitras')->group(function () {
+    Route::middleware(['auth:sanctum', 'api.role:admin'])->prefix('admin/mitras')->group(function () {
         Route::get('/', [AdminMitraController::class, 'index']);
         Route::post('/', [AdminMitraController::class, 'store']);
         Route::get('{mitra}', [AdminMitraController::class, 'show']);
@@ -52,7 +52,7 @@ Route::middleware('api')->group(function () {
     /**
      * Admin Routes - Travel Booking Management
      */
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/travel-bookings')->group(function () {
+    Route::middleware(['auth:sanctum', 'api.role:admin'])->prefix('admin/travel-bookings')->group(function () {
         Route::get('/', [AdminTravelBookingController::class, 'index']);
         Route::get('{travelBooking}', [AdminTravelBookingController::class, 'show']);
         Route::post('{travelBooking}/assign-armada', [AdminTravelBookingController::class, 'assignArmada']);
@@ -66,7 +66,7 @@ Route::middleware('api')->group(function () {
     /**
      * Admin Routes - Rental Booking Management
      */
-    Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin/rental-bookings')->group(function () {
+    Route::middleware(['auth:sanctum', 'api.role:admin'])->prefix('admin/rental-bookings')->group(function () {
         Route::get('/', [AdminRentalBookingController::class, 'index']);
         Route::get('{rentalBooking}', [AdminRentalBookingController::class, 'show']);
         Route::post('{rentalBooking}/assign-armada', [AdminRentalBookingController::class, 'assignArmada']);

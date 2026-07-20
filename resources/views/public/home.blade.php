@@ -31,7 +31,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
                     <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_rental') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Sewa mobil dengan atau tanpa driver, harga terjangkau</p>
+                    <p class="text-sm" style="color:#6c757d;">Sewa mobil dengan atau tanpa driver mulai dari Rp 200.000/hari</p>
                 </a>
                 <!-- Travel Card -->
                 <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
@@ -47,7 +47,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
                     <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Agya Rp30rb, Avanza Rp50rb, Innova Rp100rb, Hiace Rp150rb — tergantung mobil</p>
+                    <p class="text-sm" style="color:#6c757d;">Agya mulai Rp 30.000, Avanza Rp 50.000, Innova Rp 100.000, Hiace Rp 150.000 per hari</p>
                 </a>
             </div>
         </div>
@@ -148,32 +148,38 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse(($travelRoutes ?? []) as $route)
             @php
-                $travelPrice = $route->travelPrices->first();
+                $travelPrice = data_get($route, 'travelPrices')?->first();
                 $price = $travelPrice?->price_per_seat ?? $travelPrice?->price ?? 0;
-                $duration = $route->estimated_hours ? number_format((float) $route->estimated_hours, 0) . ' jam' : 'Khusus';
-                $distance = $route->distance_km ? number_format((float) $route->distance_km, 0) . ' km' : 'Tersedia';
+                $duration = data_get($route, 'estimated_hours') ? number_format((float) data_get($route, 'estimated_hours'), 0) . ' jam' : 'Khusus';
+                $distance = data_get($route, 'distance_km') ? number_format((float) data_get($route, 'distance_km'), 0) . ' km' : 'Tersedia';
                 $kabupatenIcons = [
-                    'ende' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg,#1e40af 0%,#3b82f6 50%,#93c5fd 100%)'],
-                    'labuan bajo' => ['initial' => 'LB', 'gradient' => 'linear-gradient(135deg,#065f46 0%,#10b981 50%,#6ee7b7 100%)'],
-                    'maumere' => ['initial' => 'M', 'gradient' => 'linear-gradient(135deg,#0e7490 0%,#06b6d4 50%,#67e8f9 100%)'],
-                    'ruteng' => ['initial' => 'R', 'gradient' => 'linear-gradient(135deg,#854d0e 0%,#eab308 50%,#fde047 100%)'],
-                    'bajawa' => ['initial' => 'B', 'gradient' => 'linear-gradient(135deg,#7c2d12 0%,#d97706 50%,#fbbf24 100%)'],
-                    'larantuka' => ['initial' => 'L', 'gradient' => 'linear-gradient(135deg,#831843 0%,#db2777 50%,#f472b6 100%)'],
-                    'borong' => ['initial' => 'BR', 'gradient' => 'linear-gradient(135deg,#451a03 0%,#9a3412 50%,#ea580c 100%)'],
-                    'default' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg,#0f766e 0%,#14b8a6 50%,#5eead4 100%)'],
+                    'ende' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #93c5fd 100%)'],
+                    'labuan bajo' => ['initial' => 'LB', 'gradient' => 'linear-gradient(135deg, #065f46 0%, #10b981 50%, #6ee7b7 100%)'],
+                    'maumere' => ['initial' => 'M', 'gradient' => 'linear-gradient(135deg, #0e7490 0%, #06b6d4 50%, #67e8f9 100%)'],
+                    'ruteng' => ['initial' => 'R', 'gradient' => 'linear-gradient(135deg, #854d0e 0%, #eab308 50%, #fde047 100%)'],
+                    'bajawa' => ['initial' => 'B', 'gradient' => 'linear-gradient(135deg, #7c2d12 0%, #d97706 50%, #fbbf24 100%)'],
+                    'larantuka' => ['initial' => 'L', 'gradient' => 'linear-gradient(135deg, #831843 0%, #db2777 50%, #f472b6 100%)'],
+                    'borong' => ['initial' => 'BR', 'gradient' => 'linear-gradient(135deg, #451a03 0%, #9a3412 50%, #ea580c 100%)'],
+                    'default' => ['initial' => 'E', 'gradient' => 'linear-gradient(135deg, #0f766e 0%, #14b8a6 50%, #5eead4 100%)'],
                 ];
-                $originKey = strtolower($route->origin_city ?? '');
+                $originKey = strtolower((string) data_get($route, 'origin_city', ''));
                 $iconData = $kabupatenIcons[$originKey] ?? $kabupatenIcons['default'];
             @endphp
             <div class="trvl-route-card trvl-reveal">
-                <div class="trvl-route-card-img" style="background:{{ $iconData['gradient'] }}; display:flex; align-items:center; justify-content:center;">
+                <div class="trvl-route-card-img"
+                     @style([
+                         'background:' . $iconData['gradient'],
+                         'display:flex',
+                         'align-items:center',
+                         'justify-content:center',
+                     ])>
                     <span style="font-size:2.8rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:-2px; line-height:1;">{{ $iconData['initial'] }}</span>
                 </div>
                 <div class="trvl-route-card-body">
                     <div class="trvl-route-origin-dest">
-                        <span class="trvl-route-city">{{ $route->origin_city ?? 'Ende' }}</span>
+                        <span class="trvl-route-city">{{ data_get($route, 'origin_city', 'Ende') }}</span>
                         <span class="trvl-route-arrow">→</span>
-                        <span class="trvl-route-city">{{ $route->destination_city ?? 'Labuan Bajo' }}</span>
+                        <span class="trvl-route-city">{{ data_get($route, 'destination_city', 'Labuan Bajo') }}</span>
                     </div>
                     <div class="trvl-route-meta">
                         <span class="trvl-route-meta-item">{{ __('general.duration') }}: {{ $duration }}</span>
@@ -238,7 +244,7 @@
                 <!-- Ende -->
                 <div class="trvl-route-card group trvl-reveal">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1563794146998-7245e6e5e9fb?w=500&q=80" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/danau-kelimutu.jpg') }}" alt="Ende" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Ende</h4>
@@ -260,7 +266,7 @@
                 <!-- Labuan Bajo -->
                 <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1519722407087-d0f2c891224a?w=500&q=80" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/pulau-komodo.avif') }}" alt="Labuan Bajo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Labuan Bajo</h4>
@@ -282,7 +288,7 @@
                 <!-- Maumere -->
                 <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/teluk-maumere.jpg') }}" alt="Maumere" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Maumere</h4>
@@ -300,7 +306,7 @@
                 <!-- Ruteng -->
                 <div class="trvl-route-card group trvl-reveal">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/wae-rebo.jpg') }}" alt="Ruteng" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Ruteng</h4>
@@ -318,7 +324,7 @@
                 <!-- Bajawa -->
                 <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-1">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=500&q=80" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/kampung-bena.jpg') }}" alt="Bajawa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Bajawa</h4>
@@ -336,7 +342,7 @@
                 <!-- Larantuka -->
                 <div class="trvl-route-card group trvl-reveal trvl-reveal-delay-2">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=500&q=80" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ asset('images/destinations/benteng-lohayong.jpg') }}" alt="Larantuka" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4">
                             <h4 class="font-bold text-white text-lg">Larantuka</h4>
@@ -511,7 +517,7 @@
             <div>
                 <p class="trvl-footer-heading">{{ __('footer.company_heading') }}</p>
                 <div class="flex flex-col gap-2">
-                    <a href="{{ route('public.about') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
+                    <a href="{{ route('public.about.index') }}" class="trvl-footer-link">{{ __('footer.about') }}</a>
                     <a href="{{ route('syarat-ketentuan') }}" class="trvl-footer-link">{{ __('footer.terms') }}</a>
                     <a href="{{ route('public.kebijakan-privasi') }}" class="trvl-footer-link">{{ __('footer.privacy') }}</a>
                 </div>

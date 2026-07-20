@@ -134,7 +134,7 @@
                     <p class="text-3xl font-extrabold text-blue-600">Rp {{ number_format($destination['price_start'] ?? 150000) }}</p>
                     <span class="text-xs text-gray-400">{{ __('destinasi_detail.per_person_trip') }}</span>
                 </div>
-                <a href="/public/travel?destination={{ urlencode($destination['region']) }}" class="block w-full py-3.5 bg-blue-600 text-white text-center rounded-xl font-bold hover:bg-blue-700 transition mb-3">
+                <a href="{{ route('public.travel') }}" class="block w-full py-3.5 bg-blue-600 text-white text-center rounded-xl font-bold hover:bg-blue-700 transition mb-3">
                     {{ __('destinasi_detail.book_travel') }}
                 </a>
                 <a href="https://wa.me/6283156408078?text=Halo ASR GO, saya ingin tanya tentang travel ke {{ urlencode($destination['name']) }}" 

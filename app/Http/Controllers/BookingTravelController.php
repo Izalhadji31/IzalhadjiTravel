@@ -61,6 +61,14 @@ class BookingTravelController extends Controller
     {
         $user = Auth::user();
 
+        if (! $user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            session()->put('verification.intended', route('bookings.travel.create'));
+
+            return redirect()->route('verification.notice')
+                ->with('status', 'Link verifikasi telah dikirim ke email Anda. Silakan klik link untuk melanjutkan pemesanan.');
+        }
+
         // Check identity verification — skip jika kolom belum ada
         if (Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
             return redirect()->route('profile.edit')

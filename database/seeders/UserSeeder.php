@@ -39,25 +39,7 @@ class UserSeeder extends Seeder
         $this->command->info("  ✅ Admin: admin@asrgo.com / {$defaultPassword}");
 
         // ============================================================
-        // 2. SUPER ADMIN
-        // ============================================================
-        User::updateOrCreate(
-            ['email' => 'superadmin@asrgo.com'],
-            [
-                'name' => 'Super Admin',
-                'phone' => '083156408079',
-                'role' => 'super_admin',
-                'is_verified' => true,
-                'is_active' => true,
-                'email_verified_at' => $now,
-                'status' => 'approved',
-                'password' => Hash::make($defaultPassword),
-            ]
-        );
-        $this->command->info("  ✅ Super Admin: superadmin@asrgo.com / {$defaultPassword}");
-
-        // ============================================================
-        // 3. MITRA (PARTNER) — User + Mitra Profile
+        // 2. MITRA (PARTNER) — User + Mitra Profile
         // ============================================================
         $mitraData = [
             [

@@ -17,13 +17,16 @@ class Authenticate
             return redirect('/login');
         }
 
-        // Redirect unverified users to verification notice (except for verification routes)
+        // Redirect unverified users to verification notice, except for booking/payment flows
         $user = Auth::user();
         if ($user && method_exists($user, 'hasVerifiedEmail') && !$user->hasVerifiedEmail()) {
             $verificationRoutes = ['verification.notice', 'verification.verify', 'verification.send', 'logout'];
             $currentRoute = $request->route()?->getName();
+            $currentPath = $request->path();
+            $allowsBookingFlow = str_starts_with($currentPath, 'bookings')
+                || str_starts_with($currentPath, 'payments');
 
-            if (!in_array($currentRoute, $verificationRoutes)) {
+            if (!in_array($currentRoute, $verificationRoutes) && !$allowsBookingFlow) {
                 return redirect()->route('verification.notice');
             }
         }

@@ -97,14 +97,10 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Create Roles
-        $superAdmin = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
         $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $partner = Role::firstOrCreate(['name' => 'partner', 'guard_name' => 'web']);
         $driver = Role::firstOrCreate(['name' => 'driver', 'guard_name' => 'web']);
-        $user = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
-
-        // Super Admin - All Permissions
-        $superAdmin->syncPermissions(Permission::all());
+        $customer = Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
 
         // Admin - Full access (all permissions)
         $admin->syncPermissions(Permission::all());
@@ -134,12 +130,12 @@ class RolePermissionSeeder extends Seeder
             'manage_driver_tracking',
         ]);
 
-        // User (Customer/Guest) - booking & view availability
+        // Customer/User (Guest/Customer) - booking & view availability
         // Requirement: user hanya memesan + melihat ketersediaan.
         // Di sistem permission yang ada, paling dekat adalah:
         // - view_travels/view_rentals (ketersediaan & info)
         // - manage_bookings (buat booking)
-        $user->syncPermissions([
+        $customer->syncPermissions([
             'view_travels',
             'view_rentals',
             'manage_bookings',
