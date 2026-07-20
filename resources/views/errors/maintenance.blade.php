@@ -210,7 +210,7 @@
 
         <div class="contact-section">
             <h3>{{ __('errors.maintenance_help') }}</h3>
-            <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO" target="_blank" class="contact-link">
+                <a href="tel:+6283156408078" class="contact-link">
                 {{ __('errors.maintenance_wa') }}
             </a>
             <a href="mailto:info@asrgo.id" class="contact-link">

@@ -26,7 +26,7 @@
         
         <div class="mt-12 p-4 bg-white rounded-xl shadow-sm inline-block">
             <p class="text-sm text-gray-400">{{ __('errors.404_help') }}</p>
-            <a href="https://wa.me/6283156408078" class="text-blue-600 font-medium text-sm">{{ __('errors.404_chat') }}</a>
+            <a href="tel:+6283156408078" class="text-blue-600 font-medium text-sm">{{ __('errors.404_chat') }}</a>
         </div>
     </div>
 </body>

@@ -39,7 +39,7 @@
 
         <!-- Help -->
         <div class="mt-6 text-center text-sm text-gray-500">
-            <p>{{ __('cek_booking.help') }} <a href="https://wa.me/6283156408078" class="text-blue-600 font-medium">{{ __('cek_booking.help_wa') }}</a></p>
+            <p>{{ __('cek_booking.help') }} <a href="tel:+6283156408078" class="text-blue-600 font-medium">{{ __('cek_booking.help_call') }}</a></p>
         </div>
     </div>
 </div>

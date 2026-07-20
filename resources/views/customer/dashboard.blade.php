@@ -257,10 +257,10 @@
             </div>
             <div class="ud-notice-sub">
                 {{ $locale === 'id'
-                    ? 'Saat ini pemesanan travel dan rental dilakukan langsung melalui WhatsApp atau call center kami. Fitur booking online akan segera tersedia.'
-                    : 'Currently, travel and rental bookings are made directly via WhatsApp or our call center. Online booking will be available soon.' }}
-                <a href="https://wa.me/621500009" target="_blank" style="color:#b45309; font-weight:700; margin-left:0.25rem;">
-                    📱 {{ $locale === 'id' ? 'Pesan via WhatsApp' : 'Book via WhatsApp' }} →
+                    ? 'Saat ini pemesanan travel dan rental dapat dilakukan melalui Call Center kami. Fitur booking online akan segera tersedia.'
+                    : 'Currently, travel and rental bookings can be made via our Call Center. Online booking will be available soon.' }}
+                <a href="tel:+6283156408078" style="color:#b45309; font-weight:700; margin-left:0.25rem;">
+                    📞 {{ $locale === 'id' ? 'Hubungi Call Center' : 'Call Center' }} →
                 </a>
             </div>
         </div>
@@ -352,12 +352,12 @@
                 <div class="ud-empty-title">{{ $locale === 'id' ? 'Belum ada perjalanan' : 'No bookings yet' }}</div>
                 <div class="ud-empty-sub">
                     {{ $locale === 'id'
-                        ? 'Pesan perjalanan pertama Anda melalui WhatsApp kami.'
-                        : 'Book your first trip through our WhatsApp.' }}
+                        ? 'Untuk memulai, hubungi Call Center kami.'
+                        : 'To get started, contact our Call Center.' }}
                 </div>
-                <a href="https://wa.me/621500009" target="_blank"
+                <a href="tel:+6283156408078"
                    style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;padding:0.625rem 1.5rem;background:#2563eb;color:white;border-radius:0.625rem;text-decoration:none;font-weight:700;font-size:0.875rem;">
-                    📱 WhatsApp
+                    📞 {{ $locale === 'id' ? 'Hubungi Call Center' : 'Call Center' }}
                 </a>
             </div>
         @endif

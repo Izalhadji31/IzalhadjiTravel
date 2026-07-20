@@ -129,7 +129,7 @@ function kirimWA() {
     pesan += 'Nama: ' + nama + '%0A';
     pesan += 'WA: ' + nowa;
 
-    window.open('https://wa.me/6283156408078?text=' + pesan, '_blank');
+    window.location.href = 'tel:+6283156408078';
     return false;
 }
 </script>

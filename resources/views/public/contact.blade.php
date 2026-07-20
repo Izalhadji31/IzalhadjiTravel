@@ -34,7 +34,7 @@
                         <h3 style="font-size: 1rem; font-weight: 700; color: var(--trvl-gray-900);">{{ __('contact.whatsapp_title') }}</h3>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--trvl-gray-600); margin-bottom: 1rem; line-height: 1.5;">{{ __('contact.whatsapp_desc') }}</p>
-                    <a href="https://wa.me/6283156408078?text=Halo%20ASR%20GO" 
+                        <a href="tel:+6283156408078" 
                        target="_blank"
                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #00a651; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s;">
                         (+62)831-5640-8078

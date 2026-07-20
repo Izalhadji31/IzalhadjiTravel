@@ -203,9 +203,9 @@
             <a href="{{ route('login') }}" class="btn btn-primary">
                 {{ $locale === 'id' ? '← Kembali ke Masuk' : '← Back to Login' }}
             </a>
-            <a href="https://wa.me/621500009" target="_blank" class="btn btn-ghost">
-                📱 WhatsApp
-            </a>
+                <a href="tel:+6283156408078" class="btn btn-ghost">
+                    📞 Hubungi Kami
+                </a>
         </div>
     </div>
 </body>
