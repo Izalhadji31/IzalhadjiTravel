@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
-class SuperAdminController extends Controller
+class AdminCompanyController extends Controller
 {
     /**
      * Dashboard - Show global metrics
@@ -53,7 +53,7 @@ class SuperAdminController extends Controller
             ->sortBy('month')
             ->values();
 
-        return view('super-admin.dashboard', [
+        return view('admin.company-dashboard', [
             'totalCompanies' => $totalCompanies,
             'activeCompanies' => $activeCompanies,
             'totalUsers' => $totalUsers,
@@ -72,7 +72,7 @@ class SuperAdminController extends Controller
         $companies = Company::with('adminUser')
             ->paginate(15);
 
-        return view('super-admin.companies', [
+        return view('admin.companies', [
             'companies' => $companies,
         ]);
     }
@@ -83,7 +83,7 @@ class SuperAdminController extends Controller
     public function showCompany(Company $company)
     {
         $company->load(['users', 'mitras', 'travelBookings', 'rentalBookings']);
-        $companyId = data_get($company, 'id');
+        $companyId = $company->id ?? $company->getKey();
 
         $stats = [
             'total_users' => $company->users()->count(),
@@ -98,7 +98,7 @@ class SuperAdminController extends Controller
             )->sum('amount'),
         ];
 
-        return view('super-admin.company-show', [
+        return view('admin.company-show', [
             'company' => $company,
             'stats' => $stats,
         ]);
@@ -109,7 +109,7 @@ class SuperAdminController extends Controller
      */
     public function createCompany()
     {
-        return view('super-admin.company-create');
+        return view('admin.company-create');
     }
 
     /**
@@ -132,7 +132,7 @@ class SuperAdminController extends Controller
 
         $company = Company::create($validated);
 
-        return redirect()->route('super-admin.companies.show', $company)
+        return redirect()->route('admin.companies.show', $company)
             ->with('success', 'Company created successfully');
     }
 
@@ -141,7 +141,7 @@ class SuperAdminController extends Controller
      */
     public function updateCompany(Company $company, Request $request)
     {
-        $companyId = $company->getKey();
+        $companyId = $company->id ?? $company->getKey();
 
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:companies,name,' . $companyId,
@@ -186,7 +186,7 @@ class SuperAdminController extends Controller
         $users = User::with('company')
             ->paginate(20);
 
-        return view('super-admin.users', [
+        return view('admin.users', [
             'users' => $users,
         ]);
     }
@@ -200,7 +200,7 @@ class SuperAdminController extends Controller
         $revenueByCompany = Company::with(['travelBookings', 'rentalBookings'])
             ->get()
             ->map(function ($company) {
-                $companyId = data_get($company, 'id');
+                $companyId = $company->id ?? data_get($company, 'id');
                 $revenue = Payment::whereHasMorph('booking', 
                     [TravelBooking::class, RentalBooking::class],
                     function ($query) use ($companyId) {
@@ -227,7 +227,7 @@ class SuperAdminController extends Controller
             ->groupBy('payment_method')
             ->get();
 
-        return view('super-admin.analytics', [
+        return view('admin.analytics', [
             'revenueByCompany' => $revenueByCompany,
             'topMitras' => $topMitras,
             'paymentMethods' => $paymentMethods,
@@ -239,7 +239,7 @@ class SuperAdminController extends Controller
      */
     public function settings()
     {
-        return view('super-admin.settings');
+        return view('admin.settings');
     }
 
     /**
