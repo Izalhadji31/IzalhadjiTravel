@@ -13,7 +13,7 @@ class ReviewController extends Controller
     /**
      * Tampilkan formulir ulasan untuk pemesanan yang sudah selesai.
      */
-    public function create($booking)
+    public function create(mixed $booking)
     {
         $user = Auth::user();
 
@@ -63,7 +63,7 @@ class ReviewController extends Controller
     /**
      * Simpan ulasan.
      */
-    public function store(Request $request, $booking)
+    public function store(Request $request, mixed $booking)
     {
         $user = Auth::user();
 
@@ -121,7 +121,7 @@ class ReviewController extends Controller
             'is_verified' => true,
         ]);
 
-        return redirect()->route('bookings.show', $bookingModel->id)
+        return redirect()->route('bookings.detail', $bookingModel->id)
             ->with('success', 'Terima kasih atas ulasan Anda!');
     }
 }

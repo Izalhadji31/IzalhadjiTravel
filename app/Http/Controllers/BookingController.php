@@ -16,7 +16,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $status = $request->get('status', 'all');
+        $status = $request->input('status', 'all');
 
         // Get travel bookings
         $travelBookings = TravelBooking::where('user_id', $user->id)
@@ -31,7 +31,7 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->scheduled_date,
                 'detail' => $b->route ? ($b->route->origin_city . ' → ' . $b->route->destination_city) : '-',
-                'show_route' => route('bookings.show', $b->id),
+                'show_route' => route('bookings.detail', $b->id),
             ]);
 
         // Get rental bookings
@@ -47,7 +47,7 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->start_date,
                 'detail' => $b->route ? ($b->route->origin_city . ' → ' . $b->route->destination_city) : '-',
-                'show_route' => route('bookings.show', $b->id),
+                'show_route' => route('bookings.detail', $b->id),
             ]);
 
         // Get airport transfer bookings
@@ -63,7 +63,7 @@ class BookingController extends Controller
                 'total_price' => $b->total_price,
                 'date' => $b->scheduled_date,
                 'detail' => ($b->pickup_location ?? '-') . ' → ' . ($b->dropoff_location ?? '-'),
-                'show_route' => route('bookings.show', $b->id),
+                'show_route' => route('bookings.detail', $b->id),
             ]);
 
         // Merge and sort
@@ -75,7 +75,7 @@ class BookingController extends Controller
 
         // Manual pagination
         $perPage = 10;
-        $page = $request->get('page', 1);
+        $page = (int) $request->input('page', 1);
         $total = $allBookings->count();
         $bookings = $allBookings->forPage($page, $perPage)->values();
 
@@ -97,7 +97,7 @@ class BookingController extends Controller
     {
         $user = Auth::user();
 
-        $travel = TravelBooking::where('id', $id)->where('user_id', $user->id)->first();
+        $travel = TravelBooking::find($id);
         if ($travel) {
             $this->authorize('view', $travel);
             $travel->load(['user', 'route', 'armada']);
@@ -105,7 +105,7 @@ class BookingController extends Controller
             return view('bookings.travel-show', ['booking' => $travel]);
         }
 
-        $rental = RentalBooking::where('id', $id)->where('user_id', $user->id)->first();
+        $rental = RentalBooking::find($id);
         if ($rental) {
             $this->authorize('view', $rental);
             $rental->load(['user', 'route', 'armada']);
@@ -113,8 +113,9 @@ class BookingController extends Controller
             return view('bookings.rental-show', ['booking' => $rental]);
         }
 
-        $airport = AirportTransferBooking::where('id', $id)->where('user_id', $user->id)->first();
+        $airport = AirportTransferBooking::find($id);
         if ($airport) {
+            $this->authorize('view', $airport);
             $airport->load(['user']);
 
             return view('bookings.airport-transfer-show', ['booking' => $airport]);

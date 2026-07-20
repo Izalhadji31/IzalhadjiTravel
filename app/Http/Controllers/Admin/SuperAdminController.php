@@ -8,7 +8,6 @@ use App\Models\TravelBooking;
 use App\Models\RentalBooking;
 use App\Models\Payment;
 use App\Models\Mitra;
-use App\Models\Armada;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -41,10 +40,18 @@ class SuperAdminController extends Controller
         // Monthly revenue trend
         $monthlyRevenue = Payment::where('status', 'settlement')
             ->where('created_at', '>=', Carbon::now()->subMonths(12))
-            ->selectRaw('DATE_TRUNC(\'month\', created_at) as month, SUM(amount) as total')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+            ->get()
+            ->groupBy(function ($payment) {
+                return $payment->created_at->format('Y-m');
+            })
+            ->map(function ($payments, $month) {
+                return (object) [
+                    'month' => $month,
+                    'total' => $payments->sum('amount'),
+                ];
+            })
+            ->sortBy('month')
+            ->values();
 
         return view('super-admin.dashboard', [
             'totalCompanies' => $totalCompanies,
@@ -76,7 +83,8 @@ class SuperAdminController extends Controller
     public function showCompany(Company $company)
     {
         $company->load(['users', 'mitras', 'travelBookings', 'rentalBookings']);
-        
+        $companyId = data_get($company, 'id');
+
         $stats = [
             'total_users' => $company->users()->count(),
             'total_mitras' => $company->mitras()->count(),
@@ -84,8 +92,8 @@ class SuperAdminController extends Controller
             'total_bookings' => $company->travelBookings()->count() + $company->rentalBookings()->count(),
             'total_revenue' => Payment::whereHasMorph('booking', 
                 [TravelBooking::class, RentalBooking::class],
-                function ($query) use ($company) {
-                    $query->where('company_id', $company->id);
+                function ($query) use ($companyId) {
+                    $query->where('company_id', $companyId);
                 }
             )->sum('amount'),
         ];
@@ -133,9 +141,11 @@ class SuperAdminController extends Controller
      */
     public function updateCompany(Company $company, Request $request)
     {
+        $companyId = $company->getKey();
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:companies,name,' . $company->id,
-            'email' => 'required|email|unique:companies,email,' . $company->id,
+            'name' => 'required|string|max:255|unique:companies,name,' . $companyId,
+            'email' => 'required|email|unique:companies,email,' . $companyId,
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
             'city' => 'nullable|string',
@@ -190,10 +200,11 @@ class SuperAdminController extends Controller
         $revenueByCompany = Company::with(['travelBookings', 'rentalBookings'])
             ->get()
             ->map(function ($company) {
+                $companyId = data_get($company, 'id');
                 $revenue = Payment::whereHasMorph('booking', 
                     [TravelBooking::class, RentalBooking::class],
-                    function ($query) use ($company) {
-                        $query->where('company_id', $company->id);
+                    function ($query) use ($companyId) {
+                        $query->where('company_id', $companyId);
                     }
                 )->where('status', 'settlement')->sum('amount');
                 
