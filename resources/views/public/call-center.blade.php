@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Call Center - ASR GO')
+@section('title', __('call_center.title') . ' - ASR GO')
 
 @section('content')
 <style>
@@ -21,11 +21,11 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                     </svg>
-                    Call Center
+                    {{ __('call_center.title') }}
                 </span>
             </h1>
             <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">
-                Kami siap membantu Anda 24/7
+                {{ __('call_center.subtitle') }}
             </p>
         </div>
     </div>
@@ -42,8 +42,8 @@
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     </div>
                     <div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">Call Center</h3>
-                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">Layanan 24/7 — Telepon untuk bantuan cepat</p>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">{{ __('call_center.contact_title') }}</h3>
+                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">{{ __('call_center.contact_desc') }}</p>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
@@ -54,7 +54,7 @@
                     <a href="tel:+6283156408078" 
                        style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #0064d2; color: white; border-radius: var(--trvl-radius-md); font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 14px rgba(0,100,210,0.25);">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Hubungi Call Center
+                        {{ __('call_center.button') }}
                     </a>
                 </div>
             </div>
@@ -68,8 +68,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">Jam Operasional</h3>
-                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">Kami siap melayani Anda</p>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">{{ __('call_center.operational_hours_title') }}</h3>
+                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">{{ __('call_center.operational_hours_desc') }}</p>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
@@ -101,8 +101,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">Form Kontak Cepat</h3>
-                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">Atau kirim pesan langsung melalui form di bawah</p>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--trvl-gray-900);">{{ __('call_center.quick_contact_title') }}</h3>
+                        <p style="color: var(--trvl-gray-600); font-size: 0.9rem;">{{ __('call_center.quick_contact_desc') }}</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('public.contact.submit') }}">

@@ -96,13 +96,13 @@
                     </select>
                 </div>
                 <div>
-                    <label class="trvl-field-label">Min. {{ __('rental.seats') }}</label>
+                    <label class="trvl-field-label">{{ __('rental.min_seats') }}</label>
                     <input type="number" name="min_capacity" placeholder="Contoh: 6" value="{{ request('min_capacity') }}" class="trvl-form-field">
                 </div>
                 <div>
                     <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(0,100,210,0.35); width: 100%;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                        Cari Kendaraan
+                        {{ __('rental.search') }}
                     </button>
                 </div>
             </div>
@@ -119,7 +119,7 @@
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.25rem;">
                     <p style="font-size: 0.875rem; color: #6c757d; font-weight: 500;">
-                        <span style="font-weight: 700; color: #0d2147;">{{ count($armadaRental) }}</span> kendaraan tersedia
+                        <span style="font-weight: 700; color: #0d2147;">{{ count($armadaRental) }}</span> {{ __('rental.available_vehicles') }}
                     </p>
                 </div>
 
@@ -143,21 +143,21 @@
                                 </div>
                                 <p style="font-size: 0.8rem; color: #6c757d; margin-bottom: 0.6rem;">{{ $kendaraan['plat'] }}</p>
                                 <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
-                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">👥 {{ $kendaraan['kursi'] }} Kursi</span>
-                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">❄️ AC</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">👥 {{ $kendaraan['kursi'] }} {{ __('rental.seats') }}</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: #495057; background: #f8f9fa; padding: 0.4rem 0.7rem; border-radius: 8px;">❄️ {{ __('rental.ac') }}</span>
                                 </div>
                                 <div style="margin-bottom: 0.85rem;">
                                     <span style="font-size: 1.1rem; font-weight: 800; color: #0064d2;">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }}</span>
-                                    <span style="font-size: 0.72rem; color: #6c757d;"> /hari</span>
+                                    <span style="font-size: 0.72rem; color: #6c757d;"> {{ __('rental.per_day') }}</span>
                                 </div>
                                 @auth
                                     <a href="{{ route('bookings.rental.create', ['vehicle' => $kendaraan['nama']]) }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.8rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
-                                        Sewa Sekarang
+                                        {{ __('rental.book') }}
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                     </a>
                                 @else
                                     <a href="{{ route('login') }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.8rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
-                                        Sewa Sekarang
+                                        {{ __('rental.book') }}
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                     </a>
                                 @endauth

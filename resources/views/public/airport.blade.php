@@ -11,10 +11,10 @@
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
                 <span style="display:inline-flex; align-items:center; gap:0.4rem;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
-                    Airport Transfer
+                    {{ __('airport.title') }}
                 </span>
             </h1>
-            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem;">Antar jemput bandara — pilih mobil, pilih jadwal</p>
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem;">{{ __('airport.subtitle') }}</p>
         </div>
 
         <!-- Booking Form -->
@@ -22,14 +22,14 @@
             <form id="airportForm" onsubmit="return kirimWA()">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div>
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Tipe Layanan</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.service_type') }}</label>
                         <select id="tipe" required style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem; background:white;">
                             <option value="Jemput dari Bandara">Jemput dari Bandara</option>
                             <option value="Antar ke Bandara">Antar ke Bandara</option>
                         </select>
                     </div>
                     <div>
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Pilih Mobil</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.pick_vehicle') }}</label>
                         <select id="mobil" required style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem; background:white;">
                             <option value="Agya/Rp30000">Agya / Calya — Rp30.000</option>
                             <option value="Brio/Rp35000">Brio — Rp35.000</option>
@@ -41,19 +41,19 @@
                         </select>
                     </div>
                     <div>
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Tanggal</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.date') }}</label>
                         <input type="date" id="tanggal" required value="{{ date('Y-m-d') }}" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                     <div>
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Jam</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.time') }}</label>
                         <input type="time" id="jam" required value="08:00" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                     <div style="grid-column: 1 / -1;">
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Nama Lengkap</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.full_name') }}</label>
                         <input type="text" id="nama" required placeholder="Masukkan nama" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                     <div style="grid-column: 1 / -1;">
-                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Nomor WA Aktif</label>
+                        <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.whatsapp_number') }}</label>
                         <input type="tel" id="nowa" required placeholder="08xxxx" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                 </div>
@@ -69,9 +69,9 @@
 <div style="background: var(--trvl-bg); padding: 3rem 0;">
     <div class="trvl-container">
         <div style="text-align:center; margin-bottom:2rem;">
-            <span style="display:inline-block; background:#e8f4fd; color:#0064d2; font-size:0.75rem; font-weight:700; padding:0.35rem 1rem; border-radius:20px;">Daftar Harga</span>
-            <h2 style="font-size:1.5rem; font-weight:800; color:var(--trvl-text); margin-top:0.75rem;">Tarif Airport Transfer</h2>
-            <p style="color:var(--trvl-gray-600); font-size:0.85rem; margin-top:0.25rem;">Harga sekali jalan — antar jemput dalam kota Ende</p>
+            <span style="display:inline-block; background:#e8f4fd; color:#0064d2; font-size:0.75rem; font-weight:700; padding:0.35rem 1rem; border-radius:20px;">{{ __('airport.pricing_title') }}</span>
+            <h2 style="font-size:1.5rem; font-weight:800; color:var(--trvl-text); margin-top:0.75rem;">{{ __('airport.pricing_title') }}</h2>
+            <p style="color:var(--trvl-gray-600); font-size:0.85rem; margin-top:0.25rem;">{{ __('airport.pricing_desc') }}</p>
         </div>
         <div style="max-width:500px; margin:0 auto; background:var(--trvl-card); border-radius:16px; border:1px solid var(--trvl-border); overflow:hidden;">
             @php

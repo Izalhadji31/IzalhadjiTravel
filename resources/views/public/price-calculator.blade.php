@@ -105,9 +105,9 @@
                     <div>
                         <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tipe Kendaraan</label>
                         <select id="rental-vehicle-type" class="trvl-form-field" onchange="calculateRentalPrice()">
-                            <option value="standard" data-base="300000">Standard (Rp 300rb/hari)</option>
-                            <option value="premium" data-base="500000">Premium (Rp 500rb/hari)</option>
-                            <option value="luxury" data-base="1000000">Luxury (Rp 1jt/hari)</option>
+                            <option value="standard" data-base="300000">Standard (Rp 300rb per hari)</option>
+                            <option value="premium" data-base="500000">Premium (Rp 500rb per hari)</option>
+                            <option value="luxury" data-base="1000000">Luxury (Rp 1jt per hari)</option>
                         </select>
                     </div>
                     <div>
@@ -115,11 +115,11 @@
                         <div style="display: flex; gap: 0.75rem; padding: 0.6rem 0;">
                             <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
                                 <input type="radio" name="driver_option" value="without" onchange="calculateRentalPrice()" checked style="accent-color: #0064d2; width: 16px; height: 16px;">
-                                <span style="font-size: 0.9rem; font-weight: 600; color: #495057;">Tanpa Sopir</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #495057;">{{ __('price_calc.without_driver') }}</span>
                             </label>
                             <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
                                 <input type="radio" name="driver_option" value="with" onchange="calculateRentalPrice()" style="accent-color: #0064d2; width: 16px; height: 16px;">
-                                <span style="font-size: 0.9rem; font-weight: 600; color: #495057;">Dengan Sopir (+Rp 150rb/hari)</span>
+                                <span style="font-size: 0.9rem; font-weight: 600; color: #495057;">{{ __('price_calc.with_driver') }}</span>
                             </label>
                         </div>
                     </div>
@@ -149,13 +149,13 @@
                         @auth
                             <button onclick="proceedToBooking()" 
                                     style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #004ba0; padding: 0.9rem 2rem; border-radius: 10px; font-weight: 800; font-size: 0.95rem; border: none; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 16px rgba(0,0,0,0.15); text-decoration: none;">
-                                Booking Sekarang
+                                {{ __('price_calc.booking_now') }}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004ba0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </button>
                         @else
                             <a href="{{ route('login') }}" 
                                style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #004ba0; padding: 0.9rem 2rem; border-radius: 10px; font-weight: 800; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 16px rgba(0,0,0,0.15);">
-                                Login & Booking
+                                {{ __('price_calc.login_booking') }}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004ba0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </a>
                         @endauth
@@ -168,7 +168,7 @@
                 <div style="display: flex; gap: 0.65rem; align-items: flex-start;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px; color: var(--trvl-blue);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                     <p style="font-size: 0.8rem; color: var(--trvl-gray-700); line-height: 1.6;">
-                        <strong>Catatan:</strong> Harga yang ditampilkan adalah estimasi harga dasar. Harga final dapat berubah sesuai dengan kondisi perjalanan, ketersediaan armada, dan kebijakan yang berlaku saat pemesanan.
+                        <strong>{{ __('price_calc.note') }}</strong> {{ __('price_calc.note_desc') }}
                     </p>
                 </div>
             </div>
@@ -255,7 +255,7 @@
         let driverCost = driverOption === 'with' ? 150000 * days : 0;
         currentPrice = (basePricePerDay * days) + driverCost;
         
-        const driverLabel = driverOption === 'with' ? 'dengan driver' : 'tanpa driver';
+        const driverLabel = driverOption === 'with' ? '{{ __('price_calc.with_driver') }}' : '{{ __('price_calc.without_driver') }}';
         document.getElementById('result-detail').textContent = `${destination} — ${selectedVehicle.text.split('(')[0].trim()} ${driverLabel} (${days} hari)`;
         
         showResult();

@@ -30,24 +30,24 @@
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#e8f4fd;">
                         <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_rental') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Sewa mobil dengan atau tanpa driver mulai dari Rp 200.000/hari</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.rental_card_title') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">{{ __('home.rental_card_desc') }}</p>
                 </a>
                 <!-- Travel Card -->
                 <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
                         <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_travel') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Rute Ende-Mbay, Ende-Bajawa, Ende-Maumere, dan lainnya</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">Travel Antar Kota</h3>
+                    <p class="text-sm" style="color:#6c757d;">Layanan travel ke Ende, Maumere, Bajawa, Ruteng, Labuan Bajo, dan destinasi wisata Flores.</p>
                 </a>
                 <!-- Airport Card -->
                 <a href="{{ route('public.airport') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
                         <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('services.tab_airport') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">Agya mulai Rp 30.000, Avanza Rp 50.000, Innova Rp 100.000, Hiace Rp 150.000 per hari</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">Transfer Bandara</h3>
+                    <p class="text-sm" style="color:#6c757d;">Layanan antar jemput bandara dengan berbagai pilihan kendaraan nyaman.</p>
                 </a>
             </div>
         </div>
@@ -440,11 +440,11 @@
                     </div>
                     <p class="text-xs" style="color:#6c757d; margin-bottom:0.5rem;">{{ $kendaraan['plat'] }}</p>
                     <div class="trvl-vehicle-specs">
-                        <span class="trvl-vehicle-spec">{{ $kendaraan['kursi'] }} Kursi</span>
-                        <span class="trvl-vehicle-spec">AC</span>
+                        <span class="trvl-vehicle-spec">{{ $kendaraan['kursi'] }} {{ __('rental.seats') }}</span>
+                        <span class="trvl-vehicle-spec">{{ __('rental.ac') }}</span>
                     </div>
-                    <div class="trvl-vehicle-price">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }} <span>/hari</span></div>
-                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">Sewa Sekarang</a>
+                    <div class="trvl-vehicle-price">Rp {{ number_format($kendaraan['harga'], 0, ',', '.') }} <span>{{ __('home.fleet_per_day') }}</span></div>
+                    <a href="{{ route('public.rental') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.fleet_book') }}</a>
                 </div>
             </div>
             @endforeach
@@ -453,7 +453,7 @@
         @if(!$showAll)
         <div class="text-center mt-8">
             <a href="{{ route('public.rental') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:-translate-y-0.5" style="background:#0064d2; color:white; box-shadow:0 4px 14px rgba(0,100,210,0.3);">
-                Lihat Semua Armada (35 Mobil)
+                {{ __('home.fleet_see_all') }}
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
         </div>

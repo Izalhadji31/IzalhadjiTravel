@@ -91,6 +91,10 @@
             border-color: var(--trvl-border) !important;
         }
         .dark .field-label { color: #cbd5e1 !important; }
+        .dark .trvl-nav-link, .dark .trvl-footer-link { color: rgba(255,255,255,0.85) !important; }
+        .dark .trvl-footer-heading { color: #e2e8f0 !important; }
+        .dark .trvl-nav-btn-outline { border-color: rgba(255,255,255,0.45) !important; color: white !important; }
+        .dark .trvl-nav-btn-white { background: rgba(255,255,255,0.12) !important; color: white !important; }
 
         /* ===== TRAVELOKA NAVBAR ===== */
         .trvl-navbar {
@@ -896,10 +900,6 @@
                     <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </button>
                 <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
-                <a href="tel:+6283156408078" class="trvl-nav-btn trvl-nav-btn-white inline-flex items-center gap-1.5" title="Hubungi Call Center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                    {{ __('nav.call_center') }}
-                </a>
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -1041,14 +1041,6 @@
         });
     })();
     </script>
-
-<!-- CALL CENTER FLOATING BUTTON -->
-<a href="tel:+6283156408078" 
-   id="call-float"
-   class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition-all hover:scale-110 group" title="Hubungi Call Center">
-    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-    <span class="absolute right-full mr-3 bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">{{ __('nav.call_center') }}</span>
-</a>
 
 <!-- TOAST NOTIFICATION -->
 <div id="toast-container" class="fixed top-20 right-4 z-50 space-y-2"></div>

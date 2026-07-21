@@ -11,16 +11,10 @@
             <h1 style="font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.5px;">
                 <span style="display:inline-flex; align-items:center; gap:0.4rem;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-                    Sewa Kendaraan
+                    {{ __('vehicles.title') }}
                 </span>
             </h1>
-            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">Pilih kendaraan sesuai kebutuhan — harga mulai Rp200rb/hari</p>
-        </div>
-    </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div style="background: var(--trvl-bg); padding: 1.5rem 0 4rem;">
+            <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem; margin-top: 0.25rem; font-weight: 400;">{{ __('vehicles.subtitle') }}</p>
     <div class="trvl-container">
         @php
             $armada = [
@@ -80,34 +74,33 @@
         <div style="background: var(--trvl-card); border-radius: 16px; border: 1px solid var(--trvl-border); padding: 1.25rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
             <form method="GET" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; align-items: end;">
                 <div>
-                    <label style="display:block; font-size:0.72rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Jumlah Kursi</label>
-                    <select name="kursi" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.82rem; background:white; cursor:pointer; appearance:none;" onchange="this.form.submit()">
-                        <option value="">Semua Kursi</option>
+                    <label style="display:block; font-size:0.72rem; font-weight:600; color:var(--trvl-gray-700); margin-bottom:0.3rem;">{{ __('vehicles.filter_seats') }}</label>
+                    <select name="kursi" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid var(--trvl-border); border-radius:8px; font-size:0.82rem; background: var(--trvl-card); color: var(--trvl-text); cursor:pointer; appearance:none;" onchange="this.form.submit()">
+                        <option value="">{{ __('vehicles.all_seats') }}</option>
                         @foreach($kursiList as $k)
-                            <option value="{{ $k }}" {{ request('kursi') == $k ? 'selected' : '' }}>{{ $k }} Kursi</option>
+                            <option value="{{ $k }}" {{ request('kursi') == $k ? 'selected' : '' }}>{{ $k }} {{ __('rental.seats') }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.72rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">Tahun Pembuatan</label>
-                    <select name="tahun" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.82rem; background:white; cursor:pointer; appearance:none;" onchange="this.form.submit()">
-                        <option value="">Semua Tahun</option>
+                    <label style="display:block; font-size:0.72rem; font-weight:600; color:var(--trvl-gray-700); margin-bottom:0.3rem;">{{ __('vehicles.filter_year') }}</label>
+                    <select name="tahun" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid var(--trvl-border); border-radius:8px; font-size:0.82rem; background: var(--trvl-card); color: var(--trvl-text); cursor:pointer; appearance:none;" onchange="this.form.submit()">
+                        <option value="">{{ __('vehicles.all_years') }}</option>
                         @foreach($tahunList as $t)
                             <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.72rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">&nbsp;</label>
-                    <a href="{{ route('public.vehicles') }}" style="display:flex; align-items:center; justify-content:center; gap:0.3rem; width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.82rem; color:#6c757d; text-decoration:none; font-weight:600;">Reset</a>
+                    <label style="display:block; font-size:0.72rem; font-weight:600; color:var(--trvl-gray-700); margin-bottom:0.3rem;">&nbsp;</label>
+                    <a href="{{ route('public.vehicles') }}" style="display:flex; align-items:center; justify-content:center; gap:0.3rem; width:100%; padding:0.6rem 0.8rem; border:1.5px solid var(--trvl-border); border-radius:8px; font-size:0.82rem; color:var(--trvl-text); background: var(--trvl-card); text-decoration:none; font-weight:600;">{{ __('vehicles.reset') }}</a>
                 </div>
             </form>
         </div>
 
         <!-- Results count -->
         <p style="font-size:0.85rem; color:var(--trvl-gray-600); margin-bottom:1rem;">
-            <span style="font-weight:700; color:var(--trvl-text);">{{ count($filtered) }}</span> kendaraan ditemukan
-        </p>
+            <span style="font-weight:700; color:var(--trvl-text);">{{ count($filtered) }}</span> {{ __('vehicles.found') }}
 
         <!-- Vehicle Grid -->
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
@@ -117,28 +110,28 @@
                  onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'; this.style.borderColor='var(--trvl-border)';">
                 <div style="height: 180px; overflow: hidden; position:relative;">
                     <img src="{{ $kendaraan['img'] }}" alt="{{ $kendaraan['nama'] }}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
-                    <div style="position:absolute; top:0.75rem; right:0.75rem; background:#00a651; color:white; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem; font-weight:700;">Tersedia</div>
+                    <div style="position:absolute; top:0.75rem; right:0.75rem; background: var(--trvl-green); color:white; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem; font-weight:700;">{{ __('vehicles.available_now') }}</div>
                 </div>
                 <div style="padding: 1rem;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.3rem;">
                         <h3 style="font-size:0.95rem; font-weight:700; color:var(--trvl-text); margin:0;">{{ $kendaraan['nama'] }}</h3>
-                        <span style="font-size:0.6rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:20px; background:#e8f4fd; color:#0064d2;">{{ $kendaraan['transmisi'] }}</span>
+                        <span style="font-size:0.6rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:20px; background: var(--trvl-blue-light); color: var(--trvl-blue);">{{ $kendaraan['transmisi'] }}</span>
                     </div>
-                    <p style="font-size:0.75rem; color:#6c757d; margin-bottom:0.75rem;">{{ $kendaraan['plat'] }} • {{ $kendaraan['tahun'] }}</p>
+                    <p style="font-size:0.75rem; color:var(--trvl-gray-600); margin-bottom:0.75rem;">{{ $kendaraan['plat'] }} • {{ $kendaraan['tahun'] }}</p>
 
                     <div style="display:flex; align-items:center; gap:1rem; padding:0.6rem 0; border-top:1px solid var(--trvl-border); border-bottom:1px solid var(--trvl-border); margin-bottom:0.75rem;">
-                        <span style="font-size:0.8rem; color:var(--trvl-gray-600);">{{ $kendaraan['kursi'] }} Kursi</span>
-                        <span style="font-size:0.8rem; color:var(--trvl-gray-600);">AC</span>
+                        <span style="font-size:0.8rem; color:var(--trvl-gray-600);">{{ $kendaraan['kursi'] }} {{ __('rental.seats') }}</span>
+                        <span style="font-size:0.8rem; color:var(--trvl-gray-600);">{{ __('vehicles.ac') }}</span>
                     </div>
 
                     <div style="display:flex; align-items:center; justify-content:space-between;">
                         <div>
-                            <span style="font-size:0.7rem; color:var(--trvl-gray-600);">Mulai</span>
-                            <p style="font-size:1.1rem; font-weight:800; color:#0064d2; margin:0;">Rp{{ number_format($kendaraan['harga'], 0, ',', '.') }}</p>
-                            <span style="font-size:0.65rem; color:var(--trvl-gray-500);">/hari</span>
+                            <span style="font-size:0.7rem; color:var(--trvl-gray-600);">{{ __('vehicles.starting') }}</span>
+                            <p style="font-size:1.1rem; font-weight:800; color:var(--trvl-blue); margin:0;">Rp{{ number_format($kendaraan['harga'], 0, ',', '.') }}</p>
+                            <span style="font-size:0.65rem; color:var(--trvl-gray-500);">{{ __('price_calc.per_day') }}</span>
                         </div>
-                        <a href="{{ route('login') }}" style="display:inline-flex; align-items:center; gap:0.3rem; background:linear-gradient(135deg,#0064d2,#004ba0); color:white; padding:0.55rem 1rem; border-radius:8px; font-weight:700; font-size:0.8rem; text-decoration:none; box-shadow:0 4px 14px rgba(0,100,210,0.3);">
-                            Sewa
+                        <a href="{{ route('login') }}" style="display:inline-flex; align-items:center; gap:0.3rem; background:linear-gradient(135deg,var(--trvl-blue) 0%, var(--trvl-blue-dark) 100%); color:white; padding:0.55rem 1rem; border-radius:8px; font-weight:700; font-size:0.8rem; text-decoration:none; box-shadow:0 4px 14px rgba(0,100,210,0.3);">
+                            {{ __('vehicles.rent') }}
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </a>
                     </div>
@@ -149,9 +142,9 @@
 
         @if(!count($filtered))
         <div style="background: var(--trvl-card); border-radius: 16px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
-            <p style="font-size:1rem; font-weight:700; color:var(--trvl-text); margin-bottom:0.5rem;">Tidak ada kendaraan</p>
-            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">Coba ubah filter atau reset pencarian</p>
-            <a href="{{ route('public.vehicles') }}" style="display:inline-block; margin-top:1rem; background:#0064d2; color:white; padding:0.65rem 1.5rem; border-radius:8px; font-weight:600; font-size:0.85rem; text-decoration:none;">Reset Filter</a>
+            <p style="font-size:1rem; font-weight:700; color:var(--trvl-text); margin-bottom:0.5rem;">{{ __('vehicles.no_vehicle') }}</p>
+            <p style="font-size:0.85rem; color:var(--trvl-gray-600);">{{ __('vehicles.change_filter') }}</p>
+            <a href="{{ route('public.vehicles') }}" style="display:inline-block; margin-top:1rem; background: var(--trvl-blue); color:white; padding:0.65rem 1.5rem; border-radius:8px; font-weight:600; font-size:0.85rem; text-decoration:none;">{{ __('vehicles.reset_filter') }}</a>
         </div>
         @endif
     </div>

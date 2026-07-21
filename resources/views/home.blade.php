@@ -1031,7 +1031,7 @@
                 <!-- Riung - Taman Laut 17 Pulau -->
                 <div class="dest-card group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
                     <div class="relative h-52 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&q=80" 
+                        <img src="{{ asset('images/destinations/taman-laut-17-pulau.png') }}" 
                              alt="Taman Laut 17 Pulau" 
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute top-3 left-3">
@@ -1040,9 +1040,9 @@
                     </div>
                     <div class="p-5">
                         <h3 class="font-bold text-lg text-gray-900 mb-1">Taman Laut 17 Pulau</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed mb-3">17 pulau kecil dengan ekosistem terumbu karang terjaga. Kelelawar raksasa dan komodo kerdil di pulau Ontoloe.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-3">17 pulau kecil dengan pantai eksotis, snorkeling, dan pemandangan laut yang memesona.</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-xs text-blue-600 font-medium">Snorkeling & Wildlife</span>
+                            <span class="text-xs text-blue-600 font-medium">Snorkeling & Wisata Bahari</span>
                             <span class="text-xs text-gray-400">125 km dari Ende</span>
                         </div>
                     </div>

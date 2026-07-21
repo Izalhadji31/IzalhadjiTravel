@@ -20,7 +20,7 @@
         <div class="max-w-4xl">
             <div class="trvl-hero-badge" style="margin-bottom:0.75rem;">
                 <span class="pulse-dot"></span>
-                {{ $article->type === 'blog' ? 'Blog' : 'Artikel' }}
+                {{ $article->type === 'blog' ? __('blog.type_blog') : __('blog.type_article') }}
             </div>
             <h1 class="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-3">
                 {{ $article->title }}
@@ -30,7 +30,7 @@
                     {{ $article->published_at ? $article->published_at->isoFormat('D MMMM YYYY') : $article->created_at->isoFormat('D MMMM YYYY') }}
                 </span>
                 <span class="w-1 h-1 rounded-full" style="background:rgba(255,255,255,0.4);"></span>
-                <span>Dipublikasikan</span>
+                <span>{{ __('blog.published') }}</span>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Kembali ke Blog
+                    {{ __('blog.back_to_blog') }}
                 </a>
             </div>
         </div>

@@ -11,7 +11,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center">
             <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4">{{ __('destinasi.title') }}</h1>
-            <p class="text-blue-100 text-lg max-w-2xl mx-auto">Jelajahi 21+ destinasi wisata terbaik Pulau Flores dari Ende hingga Larantuka</p>
+            <p class="text-blue-100 text-lg max-w-2xl mx-auto">{{ __('destinasi.subtitle') }}</p>
             <div class="mt-8 max-w-xl mx-auto">
                 <div class="relative">
                     <input type="text" id="searchDest" placeholder="{{ __('destinasi.search_placeholder') }}" 
@@ -51,8 +51,8 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold">E</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Kota Ende</h2>
-                    <p class="text-gray-500">Kota Pancasila, gerbang menuju Danau Kelimutu legendaris</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Ende</h2>
+                    <p class="text-gray-500">Gerbang menuju Danau Kelimutu yang legendaris.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -63,10 +63,6 @@
                 <a href="{{ route('public.destinasi.detail', 'rumah-bung-karno') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/rumah-bung-karno.jpg') }}" alt="Rumah Bung Karno" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
                     <div class="p-4"><h4 class="font-bold text-gray-900">Rumah Bung Karno</h4><p class="text-gray-500 text-sm">Situs bersejarah perjuangan nasional</p></div>
-                </a>
-                <a href="{{ route('public.destinasi.detail', 'air-terjun-ogi') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/air-terjun-ogi.jpg') }}" alt="Air Terjun Ogi" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Air Terjun Ogi</h4><p class="text-gray-500 text-sm">Air terjun di hutan tropis lebat</p></div>
                 </a>
                 <a href="{{ route('public.destinasi.detail', 'pantai-ena-bara') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/pantai-ena-bara.jpg') }}" alt="Pantai Ena Bara" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
@@ -81,7 +77,7 @@
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 flex items-center justify-center text-white font-bold">L</div>
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900">Larantuka</h2>
-                    <p class="text-gray-500">Kota dengan tradisi Semana Santa mendunia</p>
+                    <p class="text-gray-500">Kota yang dikenal dengan tradisi Semana Santa yang mendunia.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -97,10 +93,6 @@
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/pantai-watotena.jpg') }}" alt="Pantai Watotena" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
                     <div class="p-4"><h4 class="font-bold text-gray-900">Pantai Watotena</h4><p class="text-gray-500 text-sm">Pantai terindah di Larantuka</p></div>
                 </a>
-                <a href="{{ route('public.destinasi.detail', 'semana-santa-larantuka') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/semana-santa-flotim.jpg') }}" alt="Semana Santa" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Semana Santa</h4><p class="text-gray-500 text-sm">Tradisi Paskah 400+ tahun</p></div>
-                </a>
             </div>
         </div>
 
@@ -110,17 +102,21 @@
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center text-white font-bold">Ma</div>
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900">Maumere</h2>
-                    <p class="text-gray-500">Surga diving dengan terumbu karang terbaik dunia</p>
+                    <p class="text-gray-500">Surga penyelaman, pantai eksotis, dan pesona laut yang memikat.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <a href="{{ route('public.destinasi.detail', 'teluk-maumere') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/teluk-maumere.jpg') }}" alt="Teluk Maumere" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Teluk Maumere</h4><p class="text-gray-500 text-sm">Lokasi diving terbaik dunia 30+ spot</p></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Teluk Maumere</h4><p class="text-gray-500 text-sm">Lokasi diving terbaik dunia dengan 30+ spot yang menawan</p></div>
                 </a>
                 <a href="{{ route('public.destinasi.detail', 'pantai-koka') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/pantai-koka.jpg') }}" alt="Pantai Koka" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Pantai Koka</h4><p class="text-gray-500 text-sm">Pantai pasir hitam vulkanik</p></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Pantai Koka</h4><p class="text-gray-500 text-sm">Pantai pasir hitam vulkanik dengan suasana tenang dan eksotis</p></div>
+                </a>
+                <a href="{{ route('public.destinasi.detail', 'museum-maumere') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/museum-bikon-blewut.jpg') }}" alt="Museum Bikon" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Museum Bikon</h4><p class="text-gray-500 text-sm">Pusat wawasan sejarah dan budaya lokal yang menarik untuk dikunjungi</p></div>
                 </a>
             </div>
         </div>
@@ -130,18 +126,22 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-bold">Ri</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Mbay (Nagekeo)</h2>
-                    <p class="text-gray-500">Taman laut 17 pulau & pulau-pulau cantik</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Mbay</h2>
+                    <p class="text-gray-500">Wilayah pesisir dan alam yang kaya, mulai dari pantai, pulau kecil, hingga situs sejarah yang menarik.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <a href="{{ route('public.destinasi.detail', 'taman-laut-17-pulau') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/taman-laut-17-pulau.jpg') }}" alt="Taman Laut 17 Pulau" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Taman Laut 17 Pulau</h4><p class="text-gray-500 text-sm">Kelelawar raksasa & snorkeling</p></div>
+                <a href="{{ route('public.destinasi.detail', 'bunker-jepang-rane') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/bunker-jepang-rane.jpg') }}" alt="Bunker Jepang Rane" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Bunker Jepang Rane</h4><p class="text-gray-500 text-sm">Sisa peninggalan sejarah perang yang menyimpan kisah masa lalu.</p></div>
                 </a>
-                <a href="{{ route('public.destinasi.detail', 'pulau-kinde') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/pulau-kinde.jpg') }}" alt="Pulau Kinde" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Pulau Kinde</h4><p class="text-gray-500 text-sm">Snorkeling terbaik di Riung</p></div>
+                <a href="{{ route('public.destinasi.detail', 'gunung-ebulobo') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/gunung-ebulobo.jpeg') }}" alt="Gunung Ebulobo" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Gunung Ebulobo</h4><p class="text-gray-500 text-sm">Gunung yang menawarkan panorama alam luas dan pemandangan hijau yang memikat.</p></div>
+                </a>
+                <a href="{{ route('public.destinasi.detail', 'kampung-adat-kawa') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/kampung-adat-kawa.jpg') }}" alt="Kampung Adat Kawa" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Kampung Adat Kawa</h4><p class="text-gray-500 text-sm">Kampung adat yang menyimpan budaya lokal dan suasana tradisional yang khas.</p></div>
                 </a>
             </div>
         </div>
@@ -151,18 +151,22 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white font-bold">B</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Bajawa (Ngada)</h2>
-                    <p class="text-gray-500">Desa megalit kuno dan Gunung Inerie aktif</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Bajawa</h2>
+                    <p class="text-gray-500">Desa megalit kuno, pegunungan hijau, dan budaya Ngada yang khas.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <a href="{{ route('public.destinasi.detail', 'kampung-bena') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/kampung-bena.jpg') }}" alt="Kampung Bena" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Kampung Bena</h4><p class="text-gray-500 text-sm">Desa adat dengan 9 rumah megalit</p></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Kampung Bena</h4><p class="text-gray-500 text-sm">Desa adat dengan rumah megalit dan budaya Ngada yang khas</p></div>
                 </a>
                 <a href="{{ route('public.destinasi.detail', 'gunung-inerie') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/gunung-inerie.jpg') }}" alt="Gunung Inerie" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Gunung Inerie</h4><p class="text-gray-500 text-sm">Gunung berapi 2.245 m trekking</p></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Gunung Inerie</h4><p class="text-gray-500 text-sm">Gunung berapi aktif yang ideal untuk pendakian dan panorama sunrise</p></div>
+                </a>
+                <a href="{{ route('public.destinasi.detail', 'taman-laut-17-pulau') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/taman-laut-17-pulau.png') }}" alt="Taman Laut 17 Pulau" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Taman Laut 17 Pulau</h4><p class="text-gray-500 text-sm">17 pulau kecil dengan pantai eksotis, snorkeling, dan pemandangan laut yang memesona</p></div>
                 </a>
             </div>
         </div>
@@ -172,11 +176,24 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center text-white font-bold">BR</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Borong (Manggarai Timur)</h2>
-                    <p class="text-gray-500">Destinasi akan kami tambahkan segera</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Borong</h2>
+                    <p class="text-gray-500">Wilayah dengan panorama alam yang masih alami dan cocok untuk wisata alam dan petualangan.</p>
                 </div>
             </div>
-            <div class="bg-white rounded-xl p-6 text-center text-gray-600">Belum ada destinasi terdaftar di Kabupaten Manggarai Timur (Borong). Kami akan segera menambahkannya.</div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <a href="{{ route('public.destinasi.detail', 'air-terjun-cunca-rede') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/air-terjun-cunca-rede.jpg') }}" alt="Air Terjun Cunca Rede" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Air Terjun Cunca Rede</h4><p class="text-gray-500 text-sm">Air terjun dengan panorama hutan yang hijau dan suasana sejuk.</p></div>
+                </a>
+                <a href="{{ route('public.destinasi.detail', 'danau-rana-mese') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/danau-rana-mese.jpg') }}" alt="Danau Rana Mese" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Danau Rana Mese</h4><p class="text-gray-500 text-sm">Danau pegunungan yang menyuguhkan pemandangan tenang dan eksotis.</p></div>
+                </a>
+                <a href="{{ route('public.destinasi.detail', 'savana-mausui') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/savana-mausui.jpg') }}" alt="Savana Mausui" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
+                    <div class="p-4"><h4 class="font-bold text-gray-900">Savana Mausui</h4><p class="text-gray-500 text-sm">Padang savana luas dengan panorama alam yang memukau.</p></div>
+                </a>
+            </div>
         </div>
 
         <!-- RUTENG SECTION -->
@@ -184,8 +201,8 @@
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white font-bold">R</div>
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Ruteng & Manggarai</h2>
-                    <p class="text-gray-500">Desa di atas awan dan sawah jaring laba-laba</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Ruteng</h2>
+                    <p class="text-gray-500">Desa di atas awan dan sawah terasering yang unik.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -201,10 +218,6 @@
                     <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/sawah-lodok-spiderman.jpg') }}" alt="Sawah Spiderman" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
                     <div class="p-4"><h4 class="font-bold text-gray-900">Sawah Spiderman</h4><p class="text-gray-500 text-sm">Persawahan terasering pola unik</p></div>
                 </a>
-                <a href="{{ route('public.destinasi.detail', 'taman-wisata-alam-ruteng') }}" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                    <div class="h-44 overflow-hidden"><img src="{{ asset('images/destinations/taman-wisata-alam-ruteng.jpg') }}" alt="Taman Wisata Alam Ruteng" class="w-full h-full object-cover group-hover:scale-105 transition-transform"></div>
-                    <div class="p-4"><h4 class="font-bold text-gray-900">Taman Wisata Alam</h4><p class="text-gray-500 text-sm">Trek hiking hutan tropis</p></div>
-                </a>
             </div>
         </div>
 
@@ -214,7 +227,7 @@
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center text-white font-bold">LB</div>
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900">Labuan Bajo</h2>
-                    <p class="text-gray-500">Gerbang Taman Nasional Komodo UNESCO World Heritage</p>
+                    <p class="text-gray-500">Gerbang menuju Taman Nasional Komodo yang menjadi warisan dunia UNESCO.</p>
                 </div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

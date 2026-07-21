@@ -51,7 +51,7 @@
                     </select>
                 </div>
                 <div>
-                    <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(0,100,210,0.35); width: 100%;">
+                    <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, var(--trvl-blue) 0%, var(--trvl-blue-dark) 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(0,100,210,0.35); width: 100%;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                         {{ __('travel.search') }}
                     </button>
@@ -70,14 +70,14 @@
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.25rem;">
                     <p style="font-size: 0.875rem; color: var(--trvl-gray-600); font-weight: 500;">
-                        <span style="font-weight: 700; color: var(--trvl-text);">{{ $routes->total() }}</span> {{ __('travel.filter_date') }}
+                        <span style="font-weight: 700; color: var(--trvl-text);">{{ $routes->total() }}</span> {{ __('travel.routes_found') }}
                     </p>
                     <div style="font-size: 0.82rem; color: var(--trvl-gray-600); display: flex; align-items: center; gap: 0.4rem;">
-                        <span>Urutkan:</span>
+                        <span>{{ __('travel.sort_by') }}</span>
                         <select style="border: none; background: transparent; font-weight: 600; color: var(--trvl-blue); font-size: 0.82rem; cursor: pointer;">
-                            <option>Harga Terendah</option>
-                            <option>Keberangkatan Terlama</option>
-                            <option>Durasi Terpendek</option>
+                            <option>{{ __('travel.sort_lowest_price') }}</option>
+                            <option>{{ __('travel.sort_latest_departure') }}</option>
+                            <option>{{ __('travel.sort_shortest_duration') }}</option>
                         </select>
                     </div>
                 </div>
@@ -114,8 +114,8 @@
                                                 {{ ucfirst($route->route_type ?? 'Executive') }}
                                             </div>
                                             <div style="display: inline-flex; align-items: center; gap: 0.3rem;">
-                                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00a651;"></span>
-                                                <span style="font-size: 0.75rem; color: #00a651; font-weight: 600;">Tersedia</span>
+                                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--trvl-green);"></span>
+                                                <span style="font-size: 0.75rem; color: var(--trvl-green); font-weight: 600;">{{ __('travel.seats_available') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -127,16 +127,16 @@
                                     @endphp
                                     @if ($cheapestPrice)
                                         <div>
-                                            <span style="font-size: 0.7rem; color: var(--trvl-gray-600); font-weight: 500;">mulai dari</span>
+                                            <span style="font-size: 0.7rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('travel.starting_from') }}</span>
                                             <p style="font-size: 1.35rem; font-weight: 800; color: var(--trvl-blue); line-height: 1.1;">Rp {{ number_format($cheapestPrice->price_per_seat, 0, ',', '.') }}</p>
                                             <span style="font-size: 0.7rem; color: var(--trvl-gray-600); font-weight: 400;">/ {{ __('travel.passenger_count') }}</span>
                                         </div>
                                     @else
-                                        <span style="font-size: 0.85rem; color: var(--trvl-gray-600); font-weight: 500;">Hubungi CS</span>
+                                        <span style="font-size: 0.85rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('travel.contact_cs') }}</span>
                                     @endif
                                     @auth
                                         <a href="{{ route('bookings.travel.create', ['route_id' => $route->id]) }}" 
-                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: linear-gradient(135deg, #0064d2 0%, #004ba0 100%); color: white; padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
+                                           style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: linear-gradient(135deg, var(--trvl-blue) 0%, var(--trvl-blue-dark) 100%); color: white; padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
                                             {{ __('travel.book') }}
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                                         </a>
@@ -151,9 +151,9 @@
                             </div>
 
                             <!-- Schedule Strip -->
-                                <div style="background: var(--trvl-gray-100); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                <div style="background: var(--trvl-card); padding: 0.6rem 1.25rem; border-top: 1px solid var(--trvl-border); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
                                     <div style="display: flex; align-items: center; gap: 0.4rem;">
-                                        <span style="font-size: 0.72rem; font-weight: 700; color: var(--trvl-gray-600); text-transform: uppercase; letter-spacing: 0.04em;">Jadwal:</span>
+                                        <span style="font-size: 0.72rem; font-weight: 700; color: var(--trvl-gray-600); text-transform: uppercase; letter-spacing: 0.04em;">{{ __('travel.schedule_label') }}</span>
                                         <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
                                             @php
                                                 $now = now()->format('H:i');
@@ -164,10 +164,10 @@
                                                     $t = is_string($time) ? $time : ($time->format('H:i') ?? '08:00');
                                                     $available = $t >= $now;
                                                 @endphp
-                                                <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: {{ $available ? '#dbeafe' : 'var(--trvl-bg)' }}; border: 1px solid {{ $available ? '#93c5fd' : 'var(--trvl-border)' }}; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: {{ $available ? '#1d4ed8' : 'var(--trvl-gray-500)' }};">
+                                                <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: {{ $available ? 'var(--trvl-blue-light)' : 'var(--trvl-bg)' }}; border: 1px solid {{ $available ? 'var(--trvl-blue)' : 'var(--trvl-border)' }}; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: {{ $available ? 'var(--trvl-blue)' : 'var(--trvl-gray-500)' }};">
                                                     {{ $t }}
                                                     @if($available)
-                                                        <span style="width:5px;height:5px;border-radius:50%;background:#00a651;display:inline-block;"></span>
+                                                        <span style="width:5px;height:5px;border-radius:50%;background:var(--trvl-green);display:inline-block;"></span>
                                                     @endif
                                                 </span>
                                             @endforeach
@@ -182,20 +182,20 @@
                                             }
                                         @endphp
                                         @if($hasAvailable)
-                                            <span style="color:#00a651;">Tersedia hari ini</span>
+                                            <span style="color:#00a651;">{{ __('travel.available_today') }}</span>
                                         @else
-                                            <span style="color:#dc2626;">Keberangkatan hari ini habis</span>
+                                            <span style="color:#dc2626;">{{ __('travel.sold_out_today') }}</span>
                                         @endif
                                     </span>
                                     <span style="margin-left: auto; font-size: 0.72rem; color: var(--trvl-gray-600); white-space: nowrap;">{{ $route->distance_km ?? '250' }} km</span>
                                 </div>
                     @empty
                         <div style="background: var(--trvl-card); border-radius: 14px; border: 1px solid var(--trvl-border); padding: 3rem 2rem; text-align: center;">
-                            <div style="font-size: 1rem; font-weight: 700; color: var(--trvl-blue); margin-bottom: 1rem;">Tidak Ada Rute</div>
+                            <div style="font-size: 1rem; font-weight: 700; color: var(--trvl-blue); margin-bottom: 1rem;">{{ __('travel.no_routes') }}</div>
                             <p style="font-size: 1rem; font-weight: 700; color: var(--trvl-text);">{{ __('travel.empty') }}</p>
                             <p style="font-size: 0.85rem; color: var(--trvl-gray-600); margin-top: 0.5rem; line-height: 1.5;">{{ __('travel.empty_desc') }}</p>
                             <a href="{{ route('public.travel') }}" 
-                               style="display: inline-block; margin-top: 1rem; background: var(--trvl-blue); color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">Reset Filter</a>
+                               style="display: inline-block; margin-top: 1rem; background: var(--trvl-blue); color: white; padding: 0.65rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none;">{{ __('travel.reset_filter') }}</a>
                         </div>
                     @endforelse
                 </div>

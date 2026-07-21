@@ -39,11 +39,6 @@
             <p class="text-white/80 text-lg max-w-2xl">{{ $destination['short_desc'] }}</p>
         </div>
     </div>
-    <!-- Gallery trigger -->
-    <button onclick="openLightbox()" class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white transition flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        {{ __('destinasi_detail.view_gallery') }} ({{ count($destination['gallery'] ?? []) }})
-    </button>
 </div>
 
 <!-- CONTENT -->
@@ -107,22 +102,6 @@
                     @endforeach
                 </div>
             </div>
-
-            <!-- Gallery Grid -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                <h3 class="text-xl font-bold text-gray-900 mb-4">{{ __('destinasi_detail.gallery') }}</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    @foreach($destination['gallery'] ?? [] as $idx => $img)
-                    <div onclick="openLightboxAt({{ $idx }})" class="aspect-square rounded-xl overflow-hidden cursor-pointer hover:opacity-90 transition group relative">
-                        <img src="{{ $img }}" alt="{{ $destination['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
-                        @if($idx == 2 && count($destination['gallery'] ?? []) > 3)
-                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-lg">+{{ count($destination['gallery'] ?? []) - 3 }} foto</div>
-                        @endif
-                    </div>
-                    @if($idx >= 2) @break @endif
-                    @endforeach
-                </div>
-            </div>
         </div>
 
         <!-- Sidebar -->
@@ -139,7 +118,7 @@
                 </a>
                     <a href="tel:+6283156408078" class="block w-full py-3.5 bg-blue-600 text-white text-center rounded-xl font-bold hover:bg-blue-700 transition flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Hubungi Call Center
+                        {{ __('nav.call_center') }}
                     </a>
             </div>
 
@@ -167,52 +146,4 @@
     </div>
 </div>
 
-<!-- LIGHTBOX MODAL -->
-<div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center" onclick="closeLightbox(event)">
-    <button onclick="closeLightbox(event, true)" class="absolute top-4 right-4 text-white/80 hover:text-white z-50">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <button onclick="prevImage(event)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-white/10 rounded-full p-2">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-    </button>
-    <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-white/10 rounded-full p-2">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-    </button>
-    <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg">
-    <div id="lightbox-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm"></div>
-</div>
-
-<script>
-const gallery = {{ json_encode($destination['gallery'] ?? []) }};
-let currentImg = 0;
-
-function openLightbox() { openLightboxAt(0); }
-function openLightboxAt(idx) {
-    currentImg = idx;
-    document.getElementById('lightbox-img').src = gallery[currentImg];
-    document.getElementById('lightbox-counter').textContent = (currentImg + 1) + ' / ' + gallery.length;
-    document.getElementById('lightbox').classList.remove('hidden');
-    document.getElementById('lightbox').classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-function closeLightbox(e, force) {
-    if (force || e.target.id === 'lightbox') {
-        document.getElementById('lightbox').classList.add('hidden');
-        document.getElementById('lightbox').classList.remove('flex');
-        document.body.style.overflow = '';
-    }
-}
-function prevImage(e) { e.stopPropagation(); currentImg = (currentImg - 1 + gallery.length) % gallery.length; updateLightbox(); }
-function nextImage(e) { e.stopPropagation(); currentImg = (currentImg + 1) % gallery.length; updateLightbox(); }
-function updateLightbox() {
-    document.getElementById('lightbox-img').src = gallery[currentImg];
-    document.getElementById('lightbox-counter').textContent = (currentImg + 1) + ' / ' + gallery.length;
-}
-document.addEventListener('keydown', e => {
-    if (document.getElementById('lightbox').classList.contains('hidden')) return;
-    if (e.key === 'Escape') closeLightbox(e, true);
-    if (e.key === 'ArrowLeft') prevImage(e);
-    if (e.key === 'ArrowRight') nextImage(e);
-});
-</script>
 @endsection
