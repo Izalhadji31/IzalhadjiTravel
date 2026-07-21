@@ -1,9 +1,13 @@
 
 @extends('layouts.public')
 
-@section('title', 'Airport Transfer - ASR GO')
+@section('title', __('airport.title') . ' - ASR GO')
 
 @section('content')
+<style>
+.airport-row-even { background: var(--trvl-card); }
+.airport-row-odd { background: var(--trvl-gray-100); }
+</style>
 <!-- HEADER -->
 <div style="background: linear-gradient(135deg, #0d2147 0%, #1a3a6c 30%, #0064d2 70%, #1e88e5 100%); padding: 2.5rem 0 2rem;">
     <div class="trvl-container">
@@ -24,20 +28,20 @@
                     <div>
                         <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.service_type') }}</label>
                         <select id="tipe" required style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem; background:white;">
-                            <option value="Jemput dari Bandara">Jemput dari Bandara</option>
-                            <option value="Antar ke Bandara">Antar ke Bandara</option>
+                            <option value="pickup">{{ __('airport.service_pickup') }}</option>
+                            <option value="dropoff">{{ __('airport.service_dropoff') }}</option>
                         </select>
                     </div>
                     <div>
                         <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.pick_vehicle') }}</label>
                         <select id="mobil" required style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem; background:white;">
-                            <option value="Agya/Rp30000">Agya / Calya — Rp30.000</option>
-                            <option value="Brio/Rp35000">Brio — Rp35.000</option>
-                            <option value="Avanza/Rp50000" selected>Avanza / Mobilio / Sigra — Rp50.000</option>
-                            <option value="Xpander/Rp70000">Xpander / Terios / Ertiga — Rp70.000</option>
-                            <option value="Innova/Rp100000">Innova / Rush — Rp100.000</option>
-                            <option value="Fortuner/Rp150000">Fortuner / Pajero — Rp150.000</option>
-                            <option value="Hiace/Rp200000">Hiace / Elf — Rp200.000</option>
+                            <option value="agya" data-name="Agya / Calya" data-price="30000">Agya / Calya - Rp30.000</option>
+                            <option value="brio" data-name="Brio" data-price="35000">Brio - Rp35.000</option>
+                            <option value="avanza" data-name="Avanza / Mobilio / Sigra" data-price="50000" selected>Avanza / Mobilio / Sigra - Rp50.000</option>
+                            <option value="xpander" data-name="Xpander / Terios / Ertiga" data-price="70000">Xpander / Terios / Ertiga - Rp70.000</option>
+                            <option value="innova" data-name="Innova / Rush" data-price="100000">Innova / Rush - Rp100.000</option>
+                            <option value="fortuner" data-name="Fortuner / Pajero" data-price="150000">Fortuner / Pajero - Rp150.000</option>
+                            <option value="hiace" data-name="Hiace / Elf" data-price="200000">Hiace / Elf - Rp200.000</option>
                         </select>
                     </div>
                     <div>
@@ -50,15 +54,15 @@
                     </div>
                     <div style="grid-column: 1 / -1;">
                         <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.full_name') }}</label>
-                        <input type="text" id="nama" required placeholder="Masukkan nama" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
+                        <input type="text" id="nama" required placeholder="{{ __('airport.full_name_placeholder') }}" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                     <div style="grid-column: 1 / -1;">
                         <label style="display:block; font-size:0.75rem; font-weight:600; color:#495057; margin-bottom:0.3rem;">{{ __('airport.whatsapp_number') }}</label>
-                        <input type="tel" id="nowa" required placeholder="08xxxx" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
+                        <input type="tel" id="nowa" required placeholder="{{ __('airport.whatsapp_placeholder') }}" style="width:100%; padding:0.65rem 0.8rem; border:1.5px solid #e9ecef; border-radius:8px; font-size:0.85rem;">
                     </div>
                 </div>
                 <button type="submit" style="width:100%; margin-top:1rem; background:linear-gradient(135deg,#0064d2,#004ba0); color:white; padding:0.85rem; border:none; border-radius:10px; font-weight:700; font-size:0.95rem; cursor:pointer; box-shadow:0 4px 14px rgba(0,100,210,0.3);">
-                    Pesan via WhatsApp
+                    {{ __('airport.book_via_whatsapp') }}
                 </button>
             </form>
         </div>
@@ -88,14 +92,14 @@
             <table style="width:100%; border-collapse:collapse;">
                 <thead>
                     <tr style="background:#0064d2; color:white;">
-                        <th style="padding:12px 16px; text-align:left; font-size:0.8rem;">Mobil</th>
-                        <th style="padding:12px 16px; text-align:center; font-size:0.8rem;">Kursi</th>
-                        <th style="padding:12px 16px; text-align:right; font-size:0.8rem;">Harga</th>
+                        <th style="padding:12px 16px; text-align:left; font-size:0.8rem;">{{ __('airport.table_vehicle') }}</th>
+                        <th style="padding:12px 16px; text-align:center; font-size:0.8rem;">{{ __('airport.table_seats') }}</th>
+                        <th style="padding:12px 16px; text-align:right; font-size:0.8rem;">{{ __('airport.table_price') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($hargaAirport as $i => $h)
-                    <tr style="background: {{ $i % 2 == 0 ? 'var(--trvl-card)' : 'var(--trvl-gray-100)' }};">
+                    <tr class="{{ $i % 2 == 0 ? 'airport-row-even' : 'airport-row-odd' }}">
                         <td style="padding:10px 16px; font-size:0.85rem; font-weight:600; color:var(--trvl-text);">{{ $h[0] }}</td>
                         <td style="padding:10px 16px; text-align:center; font-size:0.8rem; color:var(--trvl-gray-600);">{{ $h[1] }}</td>
                         <td style="padding:10px 16px; text-align:right; font-size:0.85rem; font-weight:700; color:var(--trvl-blue);">{{ $h[2] }}</td>
@@ -110,26 +114,25 @@
 <script>
 function kirimWA() {
     var tipe = document.getElementById('tipe').value;
-    var mobil = document.getElementById('mobil').value;
+    var tipeText = tipe === "pickup" ? "{{ __('airport.service_pickup') }}" : "{{ __('airport.service_dropoff') }}";
+    var mobilOption = document.getElementById('mobil').selectedOptions[0];
+    var namaMobil = mobilOption.dataset.name;
+    var harga = mobilOption.dataset.price;
     var tanggal = document.getElementById('tanggal').value;
     var jam = document.getElementById('jam').value;
     var nama = document.getElementById('nama').value;
     var nowa = document.getElementById('nowa').value;
 
-    var mobilParts = mobil.split('/');
-    var namaMobil = mobilParts[0];
-    var harga = mobilParts[1];
+    var pesan = "{{ __('airport.wa_message_intro') }}\n\n";
+    pesan += "{{ __('airport.wa_message_service') }}: " + tipeText + "\n";
+    pesan += "{{ __('airport.wa_message_vehicle') }}: " + namaMobil + "\n";
+    pesan += "{{ __('airport.wa_message_price') }}: Rp" + Number(harga).toLocaleString('id-ID') + "\n";
+    pesan += "{{ __('airport.wa_message_date') }}: " + tanggal + "\n";
+    pesan += "{{ __('airport.wa_message_time') }}: " + jam + "\n";
+    pesan += "{{ __('airport.wa_message_name') }}: " + nama + "\n";
+    pesan += "{{ __('airport.wa_message_whatsapp') }}: " + nowa;
 
-    var pesan = 'Halo ASR GO, saya mau booking airport transfer:%0A%0A';
-    pesan += 'Layanan: ' + tipe + '%0A';
-    pesan += 'Mobil: ' + namaMobil + '%0A';
-    pesan += 'Harga: Rp' + harga + '%0A';
-    pesan += 'Tanggal: ' + tanggal + '%0A';
-    pesan += 'Jam: ' + jam + '%0A';
-    pesan += 'Nama: ' + nama + '%0A';
-    pesan += 'WA: ' + nowa;
-
-    window.location.href = 'tel:+6283156408078';
+    window.location.href = "https://wa.me/6283156408078?text=" + encodeURIComponent(pesan);
     return false;
 }
 </script>

@@ -899,7 +899,15 @@
                     <svg id="sunIcon" class="hidden" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                     <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </button>
-                <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.dashboard') }}</a>
+                    <form method="POST" action="{{ route('logout') }}" style="display:inline; margin:0;">
+                        @csrf
+                        <button type="submit" class="trvl-nav-btn trvl-nav-btn-outline" style="border:none; background:transparent;">{{ __('nav.logout') }}</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
+                @endauth
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -918,7 +926,15 @@
             <a href="{{ route('public.about.index') }}" onclick="toggleMobileMenu()">{{ __('nav.about') }}</a>
             <a href="{{ route('public.blog') }}" onclick="toggleMobileMenu()">{{ __('nav.blog') }}</a>
             <a href="{{ route('public.call-center') }}" onclick="toggleMobileMenu()">{{ __('nav.call_center') }}</a>
-            <a href="{{ route('login') }}" onclick="toggleMobileMenu()">{{ __('nav.login') }}</a>
+            @auth
+                <a href="{{ route('dashboard') }}" onclick="toggleMobileMenu()">{{ __('nav.dashboard') }}</a>
+                <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                    @csrf
+                    <button type="submit" style="width:100%; text-align:left; padding:0.75rem 1rem; background:none; border:none; color:inherit; font:inherit; cursor:pointer;">{{ __('nav.logout') }}</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" onclick="toggleMobileMenu()">{{ __('nav.login') }}</a>
+            @endauth
             <a href="{{ route('lang.switch', ['locale' => app()->getLocale() === 'id' ? 'en' : 'id']) }}" onclick="toggleMobileMenu()">{{ app()->getLocale() === 'id' ? 'English' : 'Indonesia' }}</a>
         </div>
 

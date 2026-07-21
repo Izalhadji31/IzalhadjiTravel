@@ -494,10 +494,18 @@
             <span>ASR</span> GO
         </div>
         <nav class="sidebar-nav">
-            @php $role = auth()->user()->role ?? 'guest'; @endphp
+            @php
+                $role = auth()->user()->role ?? 'guest';
+                $dashboardRoute = match($role) {
+                    'admin' => 'admin.dashboard',
+                    'partner' => 'partner.dashboard',
+                    'driver' => 'driver.dashboard',
+                    default => 'dashboard',
+                };
+            @endphp
 
             <div class="sidebar-section">
-                <a href="{{ route('dashboard') }}" class="sidebar-link @if(request()->routeIs('dashboard')) active @endif">
+                <a href="{{ route($dashboardRoute) }}" class="sidebar-link @if(request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('driver.dashboard') || request()->routeIs('partner.dashboard') || request()->routeIs('fleet.dashboard') || request()->routeIs('tracking.dashboard')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h4v6h3a1 1 0 001-1v-10"/></svg>
                     {{ __('sidebar.dashboard') }}
                 </a>
@@ -661,14 +669,12 @@
             @endif
 
             {{-- COMMON FOR ALL AUTHENTICATED USERS --}}
-            @if(!in_array($role, ['customer']))
             <div class="sidebar-section">
                 <a href="{{ route('profile.show') }}" class="sidebar-link @if(request()->routeIs('profile.*')) active @endif">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     {{ __('sidebar.profile') }}
                 </a>
             </div>
-            @endif
         </nav>
     </div>
     
@@ -737,7 +743,7 @@
         
         <!-- Content -->
         <div class="content">
-            @if(!request()->routeIs('dashboard'))
+            @if(!request()->routeIs('dashboard') && !request()->routeIs('admin.dashboard') && !request()->routeIs('driver.dashboard') && !request()->routeIs('partner.dashboard') && !request()->routeIs('fleet.dashboard') && !request()->routeIs('tracking.dashboard'))
             <div class="back-button-container" style="margin-bottom:1rem;">
                 <button onclick="history.back()" class="btn btn-secondary" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;font-size:0.85rem;">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>

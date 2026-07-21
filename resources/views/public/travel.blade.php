@@ -4,6 +4,32 @@
 @section('title', __('travel.title') . ' - ASR GO')
 
 @section('content')
+<style>
+.travel-time-available {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--trvl-blue-light);
+    border: 1px solid var(--trvl-blue);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--trvl-blue);
+}
+.travel-time-unavailable {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--trvl-bg);
+    border: 1px solid var(--trvl-border);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--trvl-gray-500);
+}
+</style>
 <!-- TRAVEL SEARCH BAR -->
 <div class="travel-hero-section" style="padding: 2.5rem 0 2rem;" id="layanan">
     <div class="trvl-container">
@@ -111,7 +137,7 @@
                                             </div>
                                             <div style="display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--trvl-gray-700); font-weight: 500;">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                                {{ ucfirst($route->route_type ?? 'Executive') }}
+                                                {{ __('travel.route_type_' . ($route->route_type ?? 'travel')) }}
                                             </div>
                                             <div style="display: inline-flex; align-items: center; gap: 0.3rem;">
                                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--trvl-green);"></span>
@@ -164,7 +190,7 @@
                                                     $t = is_string($time) ? $time : ($time->format('H:i') ?? '08:00');
                                                     $available = $t >= $now;
                                                 @endphp
-                                                <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: {{ $available ? 'var(--trvl-blue-light)' : 'var(--trvl-bg)' }}; border: 1px solid {{ $available ? 'var(--trvl-blue)' : 'var(--trvl-border)' }}; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: {{ $available ? 'var(--trvl-blue)' : 'var(--trvl-gray-500)' }};">
+                                                <span class="{{ $available ? 'travel-time-available' : 'travel-time-unavailable' }}">
                                                     {{ $t }}
                                                     @if($available)
                                                         <span style="width:5px;height:5px;border-radius:50%;background:var(--trvl-green);display:inline-block;"></span>

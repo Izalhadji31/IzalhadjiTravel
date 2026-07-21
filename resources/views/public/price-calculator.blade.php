@@ -64,11 +64,11 @@
                     <div>
                         <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.passengers') }}</label>
                         <select id="travel-passengers" onchange="calculateTravelPrice()" class="trvl-form-field">
-                            <option value="1">1 orang</option>
-                            <option value="2">2 orang</option>
-                            <option value="3">3 orang</option>
-                            <option value="4">4 orang</option>
-                            <option value="5">5 orang</option>
+                            <option value="1">1 {{ __('travel.passenger_count') }}</option>
+                            <option value="2">2 {{ __('travel.passenger_count') }}</option>
+                            <option value="3">3 {{ __('travel.passenger_count') }}</option>
+                            <option value="4">4 {{ __('travel.passenger_count') }}</option>
+                            <option value="5">5 {{ __('travel.passenger_count') }}</option>
                         </select>
                     </div>
                     <div>
@@ -103,15 +103,15 @@
                         </select>
                     </div>
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tipe Kendaraan</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.vehicle_type') }}</label>
                         <select id="rental-vehicle-type" class="trvl-form-field" onchange="calculateRentalPrice()">
-                            <option value="standard" data-base="300000">Standard (Rp 300rb per hari)</option>
-                            <option value="premium" data-base="500000">Premium (Rp 500rb per hari)</option>
-                            <option value="luxury" data-base="1000000">Luxury (Rp 1jt per hari)</option>
+                            <option value="standard" data-base="300000">{{ __('price_calc.vehicle_standard') }} (Rp 300rb {{ __('price_calc.per_day') }})</option>
+                            <option value="premium" data-base="500000">{{ __('price_calc.vehicle_premium') }} (Rp 500rb {{ __('price_calc.per_day') }})</option>
+                            <option value="luxury" data-base="1000000">{{ __('price_calc.vehicle_luxury') }} (Rp 1jt {{ __('price_calc.per_day') }})</option>
                         </select>
                     </div>
                     <div>
-                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Opsi Sopir</label>
+                        <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.driver_option') }}</label>
                         <div style="display: flex; gap: 0.75rem; padding: 0.6rem 0;">
                             <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
                                 <input type="radio" name="driver_option" value="without" onchange="calculateRentalPrice()" checked style="accent-color: #0064d2; width: 16px; height: 16px;">
@@ -125,11 +125,11 @@
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                         <div>
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">Tanggal Mulai</label>
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.start_date') }}</label>
                             <input type="date" id="rental-start-date" value="{{ date('Y-m-d') }}" class="trvl-form-field">
                         </div>
                         <div>
-                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.duration') }} (hari)</label>
+                            <label style="display: block; font-size: 0.72rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem;">{{ __('price_calc.duration') }} ({{ __('price_calc.days') }})</label>
                             <input type="number" id="rental-days" value="1" min="1" max="30" onchange="calculateRentalPrice()" class="trvl-form-field">
                         </div>
                     </div>
@@ -230,7 +230,8 @@
             currentPrice = pricePerSeat * passengers;
             const origin = selectedOption.dataset.origin || '';
             const destination = selectedOption.dataset.destination || '';
-            document.getElementById('result-detail').textContent = `${origin} → ${destination} — ${passengers} penumpang`;
+            const passengerLabel = "{{ __('travel.passenger_count') }}";
+            document.getElementById('result-detail').textContent = `${origin} → ${destination} — ${passengers} ${passengerLabel}`;
             showResult();
         } else {
             document.getElementById('result-section').style.display = 'none';
@@ -255,8 +256,8 @@
         let driverCost = driverOption === 'with' ? 150000 * days : 0;
         currentPrice = (basePricePerDay * days) + driverCost;
         
-        const driverLabel = driverOption === 'with' ? '{{ __('price_calc.with_driver') }}' : '{{ __('price_calc.without_driver') }}';
-        document.getElementById('result-detail').textContent = `${destination} — ${selectedVehicle.text.split('(')[0].trim()} ${driverLabel} (${days} hari)`;
+        const driverLabel = driverOption === 'with' ? "{{ __('price_calc.with_driver') }}" : "{{ __('price_calc.without_driver') }}";
+        document.getElementById('result-detail').textContent = `${destination} — ${selectedVehicle.text.split('(')[0].trim()} ${driverLabel} (${days} {{ __('price_calc.days') }})`;
         
         showResult();
     }

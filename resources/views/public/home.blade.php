@@ -38,16 +38,16 @@
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
                         <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">Travel Antar Kota</h3>
-                    <p class="text-sm" style="color:#6c757d;">Layanan travel ke Ende, Maumere, Bajawa, Ruteng, Labuan Bajo, dan destinasi wisata Flores.</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.travel_card_title') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">{{ __('home.travel_card_desc') }}</p>
                 </a>
                 <!-- Airport Card -->
                 <a href="{{ route('public.airport') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
                         <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">Transfer Bandara</h3>
-                    <p class="text-sm" style="color:#6c757d;">Layanan antar jemput bandara dengan berbagai pilihan kendaraan nyaman.</p>
+                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.airport_card_title') }}</h3>
+                    <p class="text-sm" style="color:#6c757d;">{{ __('home.airport_card_desc') }}</p>
                 </a>
             </div>
         </div>
@@ -254,11 +254,11 @@
                     <div class="p-4 space-y-3">
                         <div>
                             <p class="font-semibold text-gray-900 text-sm">Danau Kelimutu</p>
-                            <p class="text-xs text-gray-500">Danau 3 warna, ikon Flores</p>
+                            <p class="text-xs text-gray-500">Danau tiga warna ikonik Flores</p>
                         </div>
                         <div>
                             <p class="font-semibold text-gray-900 text-sm">Rumah Bung Karno</p>
-                            <p class="text-xs text-gray-500">Museum pengasingan Bung Karno 1934-1938</p>
+                            <p class="text-xs text-gray-500">Museum pengasingan Bung Karno 1934 hingga 1938</p>
                         </div>
                     </div>
                 </div>
@@ -276,7 +276,7 @@
                     <div class="p-4 space-y-3">
                         <div>
                             <p class="font-semibold text-gray-900 text-sm">Pulau Komodo</p>
-                            <p class="text-xs text-gray-500">Habitat asli komodo, Warisan UNESCO</p>
+                            <p class="text-xs text-gray-500">Habitat asli komodo di cagar UNESCO</p>
                         </div>
                         <div>
                             <p class="font-semibold text-gray-900 text-sm">Pink Beach</p>
@@ -316,7 +316,7 @@
                     <div class="p-4 space-y-3">
                         <div>
                             <p class="font-semibold text-gray-900 text-sm">Desa Wae Rebo</p>
-                            <p class="text-xs text-gray-500">Desa di atas awan, 1.200 mdpl</p>
+                            <p class="text-xs text-gray-500">Desa di atas awan pada ketinggian 1.200 mdpl</p>
                         </div>
                     </div>
                 </div>
