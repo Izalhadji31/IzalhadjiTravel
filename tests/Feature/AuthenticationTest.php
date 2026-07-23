@@ -66,6 +66,37 @@ class AuthenticationTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
             'name' => 'Test User',
+            'role' => 'customer',
+        ]);
+    }
+
+    public function test_partner_can_register()
+    {
+        $this->mock(\App\Services\WhatsAppService::class, function ($mock) {
+            $mock->shouldReceive('send')->andReturn(true);
+        });
+
+        $response = $this->post('/register', [
+            'name' => 'Test Partner',
+            'email' => 'partner@example.com',
+            'phone' => '08123456780',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'role' => 'partner',
+        ]);
+
+        $response->assertRedirect();
+        $pending = session('register.pending');
+        $this->assertNotNull($pending);
+
+        $response2 = $this->post('/register/verify-otp', [
+            'otp' => $pending['otp'],
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'partner@example.com',
+            'name' => 'Test Partner',
+            'role' => 'partner',
         ]);
     }
 

@@ -24,7 +24,17 @@ class PublicController extends Controller
             ? RentalPrice::active()->with('route')->take(6)->get()
             : collect();
 
-        return view('public.home', compact('travelRoutes', 'rentalServices'));
+        $origins = Schema::hasTable('routes')
+            ? Route::active()->travel()->distinct()->pluck('origin_city')->filter()->values()
+            : collect();
+        $destinations = Schema::hasTable('routes')
+            ? Route::active()->travel()->distinct()->pluck('destination_city')->filter()->values()
+            : collect();
+        $vehicleTypes = Schema::hasTable('armadas')
+            ? \App\Models\Armada::available()->distinct()->pluck('vehicle_type')->filter()->values()
+            : collect();
+
+        return view('public.home', compact('travelRoutes', 'rentalServices', 'origins', 'destinations', 'vehicleTypes'));
     }
 
     /**

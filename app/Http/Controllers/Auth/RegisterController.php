@@ -49,6 +49,7 @@ class RegisterController extends Controller
                 'max:25',
                 'regex:/^(\+\d{1,4}[\s\-]?\d{4,14}|08\d{8,13})$/',
             ],
+            'role'     => ['required', 'string', 'in:customer,partner,driver'],
         ], [
             'phone.regex' => $locale === 'id'
                 ? 'Nomor telepon harus menggunakan format internasional (+62 xxx, +1 xxx, dll.) atau format lokal (08xxx).'
@@ -62,7 +63,7 @@ class RegisterController extends Controller
                 'email' => $locale === 'id'
                     ? 'Email sudah terdaftar.'
                     : 'This email is already registered.',
-            ])->onlyInput('name', 'phone');
+            ])->onlyInput('name', 'phone', 'role');
         }
 
         if (User::where('phone', $phone)->exists()) {
@@ -70,7 +71,7 @@ class RegisterController extends Controller
                 'phone' => $locale === 'id'
                     ? 'Nomor telepon sudah digunakan.'
                     : 'This phone number is already in use.',
-            ])->onlyInput('name', 'email');
+            ])->onlyInput('name', 'email', 'role');
         }
 
         $otp = random_int(100000, 999999);
@@ -81,7 +82,7 @@ class RegisterController extends Controller
             'email'          => $request->email,
             'phone'          => $phone,
             'password'       => Hash::make($request->password),
-            'role'           => 'customer',
+            'role'           => $request->role,
             'status'         => 'pending',
             'otp'            => (string) $otp,
             'otp_expires_at' => $otpExpiresAt->toDateTimeString(),
@@ -94,20 +95,35 @@ class RegisterController extends Controller
             : "Your registration OTP code is: {$otp}. Do not share this code with anyone.";
 
         $sent = $this->whatsappService->send($phone, $message);
+        $simulated = false;
 
         if (! $sent) {
-            Log::warning('WhatsApp OTP registration failed', ['phone' => $phone]);
-            session()->forget('register.pending');
+            if (app()->environment('local', 'testing') || !config('services.whatsapp.api_key')) {
+                Log::info('WhatsApp OTP registration (SIMULATED): ' . $message);
+                $sent = true;
+                $simulated = true;
+            } else {
+                Log::warning('WhatsApp OTP registration failed', ['phone' => $phone]);
+                session()->forget('register.pending');
 
-            return back()->with('error', $locale === 'id'
-                ? 'Gagal mengirim kode OTP. Silakan periksa kembali nomor WhatsApp Anda atau coba lagi nanti.'
-                : 'Failed to send OTP. Please check your WhatsApp number or try again later.');
+                return back()->with('error', $locale === 'id'
+                    ? 'Gagal mengirim kode OTP. Silakan periksa kembali nomor WhatsApp Anda atau coba lagi nanti.'
+                    : 'Failed to send OTP. Please check your WhatsApp number or try again later.');
+            }
+        }
+
+        $successMsg = $locale === 'id'
+            ? 'Kode OTP telah dikirimkan ke WhatsApp Anda. Masukkan kode untuk melanjutkan.'
+            : 'OTP has been sent to your WhatsApp. Enter the code to continue.';
+
+        if ($simulated) {
+            $successMsg .= $locale === 'id'
+                ? ' (SIMULASI: Kode OTP Anda adalah ' . $otp . ')'
+                : ' (SIMULATION: Your OTP code is ' . $otp . ')';
         }
 
         return redirect()->route('register')
-            ->with('success', $locale === 'id'
-                ? 'Kode OTP telah dikirimkan ke WhatsApp Anda. Masukkan kode untuk melanjutkan.'
-                : 'OTP has been sent to your WhatsApp. Enter the code to continue.');
+            ->with('success', $successMsg);
     }
 
     /**
@@ -188,17 +204,32 @@ class RegisterController extends Controller
             : "Your new OTP code is: {$otp}. Do not share this code with anyone.";
 
         $sent = $this->whatsappService->send($pending['phone'], $message);
+        $simulated = false;
 
         if (! $sent) {
-            Log::warning('WhatsApp OTP resend failed', ['phone' => $pending['phone']]);
-            return back()->with('error', $locale === 'id'
-                ? 'Gagal mengirim ulang kode OTP. Silakan coba lagi nanti.'
-                : 'Failed to resend OTP. Please try again later.');
+            if (app()->environment('local', 'testing') || !config('services.whatsapp.api_key')) {
+                Log::info('WhatsApp OTP resend (SIMULATED): ' . $message);
+                $sent = true;
+                $simulated = true;
+            } else {
+                Log::warning('WhatsApp OTP resend failed', ['phone' => $pending['phone']]);
+                return back()->with('error', $locale === 'id'
+                    ? 'Gagal mengirim ulang kode OTP. Silakan coba lagi nanti.'
+                    : 'Failed to resend OTP. Please try again later.');
+            }
         }
 
-        return redirect()->route('register')->with('success', $locale === 'id'
+        $successMsg = $locale === 'id'
             ? 'Kode OTP baru telah dikirim ke WhatsApp Anda.'
-            : 'A new OTP has been sent to your WhatsApp.');
+            : 'A new OTP has been sent to your WhatsApp.';
+
+        if ($simulated) {
+            $successMsg .= $locale === 'id'
+                ? ' (SIMULASI: Kode OTP Anda adalah ' . $otp . ')'
+                : ' (SIMULATION: Your OTP code is ' . $otp . ')';
+        }
+
+        return redirect()->route('register')->with('success', $successMsg);
     }
 
     /**

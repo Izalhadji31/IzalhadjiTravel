@@ -45,7 +45,7 @@ class BookingTravelController extends Controller
      */
     public function create()
     {
-        $routes = Route::where('is_active', true)
+        $routes = Route::with('travelPrices')->where('is_active', true)
                        ->where(fn($query) => $query
                            ->where('route_type', 'travel')
                            ->orWhere('route_type', 'both'))

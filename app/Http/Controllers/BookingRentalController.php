@@ -38,7 +38,7 @@ class BookingRentalController extends Controller
      */
     public function create()
     {
-        $routes = Route::where('is_active', true)
+        $routes = Route::with('rentalPrices')->where('is_active', true)
                        ->where(fn($query) => $query
                            ->where('route_type', 'rental')
                            ->orWhere('route_type', 'both'))

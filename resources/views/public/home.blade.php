@@ -22,32 +22,151 @@
             </p>
         </div>
 
+        <!-- TRACtoGO-style Tabbed Booking Widget -->
+        <div class="max-w-5xl mx-auto mt-8 relative z-20">
+            <!-- Tabs Header -->
+            <div class="flex space-x-2 bg-black/20 p-1.5 rounded-t-2xl max-w-fit mx-auto md:mx-0">
+                <button type="button" onclick="switchHomeTab('travel', this)" class="home-tab-btn flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all duration-300 bg-blue-600">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                    {{ __('home.travel_card_title') }}
+                </button>
+                <button type="button" onclick="switchHomeTab('rental', this)" class="home-tab-btn flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white/80 transition-all duration-300 hover:bg-white/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    {{ __('home.rental_card_title') }}
+                </button>
+                <button type="button" onclick="switchHomeTab('airport', this)" class="home-tab-btn flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white/80 transition-all duration-300 hover:bg-white/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                    {{ __('home.airport_card_title') }}
+                </button>
+            </div>
+
+            <!-- Tabs Body -->
+            <div class="bg-white dark:bg-slate-900 rounded-b-2xl rounded-tr-2xl p-6 shadow-2xl border border-gray-100 dark:border-slate-800 text-left">
+                <!-- Travel Tab Panel -->
+                <div id="home-panel-travel" class="home-panel">
+                    <form method="GET" action="{{ route('public.travel') }}">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{{ __('travel.from') }}</label>
+                                <select name="origin" class="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-xl bg-gray-50 dark:bg-slate-800 dark:text-white text-sm outline-none focus:border-blue-500">
+                                    <option value="">{{ __('travel.origin_placeholder') }}</option>
+                                    @foreach($origins as $origin)
+                                        <option value="{{ $origin }}">{{ $origin }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{{ __('travel.to') }}</label>
+                                <select name="destination" class="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-xl bg-gray-50 dark:bg-slate-800 dark:text-white text-sm outline-none focus:border-blue-500">
+                                    <option value="">{{ __('travel.destination_placeholder') }}</option>
+                                    @foreach($destinations as $destination)
+                                        <option value="{{ $destination }}">{{ $destination }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{{ __('travel.date') }}</label>
+                                <input type="date" name="date" class="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-xl bg-gray-50 dark:bg-slate-800 dark:text-white text-sm outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 border-none cursor-pointer">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                    {{ __('travel.search') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Rental Tab Panel -->
+                <div id="home-panel-rental" class="home-panel hidden">
+                    <form method="GET" action="{{ route('public.rental') }}">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{{ __('rental.vehicle_type') }}</label>
+                                <select name="vehicle_type" class="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-xl bg-gray-50 dark:bg-slate-800 dark:text-white text-sm outline-none focus:border-blue-500">
+                                    <option value="">{{ __('rental.vehicle_type_all') }}</option>
+                                    @foreach($vehicleTypes as $type)
+                                        <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{{ __('rental.min_seats') }}</label>
+                                <input type="number" name="min_capacity" placeholder="Contoh: 6" class="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-xl bg-gray-50 dark:bg-slate-800 dark:text-white text-sm outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 border-none cursor-pointer">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                    {{ __('travel.search') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Airport Tab Panel -->
+                <div id="home-panel-airport" class="home-panel hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1">{{ __('home.airport_card_title') }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('home.airport_card_desc') }}</p>
+                        </div>
+                        <a href="{{ route('public.airport') }}" class="px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all duration-300 flex items-center gap-2 shadow-lg shadow-amber-500/20 text-decoration-none">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                            {{ __('home.routes_book') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function switchHomeTab(tab, btn) {
+                document.querySelectorAll('.home-tab-btn').forEach(t => {
+                    t.classList.remove('bg-blue-600');
+                    t.classList.add('hover:bg-white/10');
+                    t.classList.remove('text-white');
+                    t.classList.add('text-white/80');
+                });
+                btn.classList.add('bg-blue-600');
+                btn.classList.remove('hover:bg-white/10');
+                btn.classList.remove('text-white/80');
+                btn.classList.add('text-white');
+
+                document.querySelectorAll('.home-panel').forEach(p => {
+                    p.classList.add('hidden');
+                });
+                document.getElementById('home-panel-' + tab).classList.remove('hidden');
+            }
+        </script>
+
         <!-- Service Cards -->
-                <div class="max-w-5xl mx-auto mt-6">
+                <div class="max-w-5xl mx-auto mt-10">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- Rental Card -->
-                        <a href="{{ auth()->check() ? route('public.rental') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                        <a href="{{ route('public.rental') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-decoration-none" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#e8f4fd;">
                                 <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                             </div>
-                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.rental_card_title') }}</h3>
-                            <p class="text-sm" style="color:#6c757d;">{{ __('home.rental_card_desc') }}</p>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e; text-align:left;">{{ __('home.rental_card_title') }}</h3>
+                            <p class="text-sm text-left" style="color:#6c757d;">{{ __('home.rental_card_desc') }}</p>
                         </a>
                         <!-- Travel Card -->
-                        <a href="{{ auth()->check() ? route('public.travel') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                        <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-decoration-none" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
                                 <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </div>
-                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.travel_card_title') }}</h3>
-                            <p class="text-sm" style="color:#6c757d;">{{ __('home.travel_card_desc') }}</p>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e; text-align:left;">{{ __('home.travel_card_title') }}</h3>
+                            <p class="text-sm text-left" style="color:#6c757d;">{{ __('home.travel_card_desc') }}</p>
                         </a>
                         <!-- Airport Card -->
-                        <a href="{{ auth()->check() ? route('public.airport') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                        <a href="{{ route('public.airport') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-decoration-none" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
                                 <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
                             </div>
-                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.airport_card_title') }}</h3>
-                            <p class="text-sm" style="color:#6c757d;">{{ __('home.airport_card_desc') }}</p>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e; text-align:left;">{{ __('home.airport_card_title') }}</h3>
+                            <p class="text-sm text-left" style="color:#6c757d;">{{ __('home.airport_card_desc') }}</p>
                         </a>
                     </div>
                 </div>
