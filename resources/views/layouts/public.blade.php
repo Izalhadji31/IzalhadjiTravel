@@ -896,18 +896,40 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                 </a>
                 <button id="darkModeToggle" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; justify-content:center; padding:0.5rem; border-radius:var(--trvl-radius-sm); background:transparent; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5);" type="button" title="Toggle Dark Mode">
-                    <svg id="sunIcon" class="hidden" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-                    <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                </button>
-                @auth
-                    <a href="{{ route('dashboard') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.dashboard') }}</a>
-                    <form method="POST" action="{{ route('logout') }}" style="display:inline; margin:0;">
-                        @csrf
-                        <button type="submit" class="trvl-nav-btn trvl-nav-btn-outline" style="border:none; background:transparent;">{{ __('nav.logout') }}</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
-                @endauth
+                                    <svg id="sunIcon" class="hidden" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                                    <svg id="moonIcon" width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                </button>
+                                <!-- Call Center Button -->
+                                <a href="https://wa.me/6283156408078" target="_blank" class="trvl-nav-btn trvl-nav-btn-outline" style="display:flex; align-items:center; gap:0.5rem; padding:0.5rem 0.75rem; font-size:0.85rem; font-weight:600; border-radius:var(--trvl-radius-sm); text-decoration:none; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5); color:white;">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                    {{ __('nav.call_center') }}
+                                </a>
+                                @auth
+                                    <div class="user-menu" id="userMenu" style="position: relative;">
+                                        <div class="user-avatar" id="userMenuToggle" style="width:2.5rem;height:2.5rem;background:var(--trvl-blue);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.9rem;cursor:pointer;overflow:hidden;border-radius:9999px;">
+                                            @if(auth()->user()->photo)
+                                                <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" style="width:100%;height:100%;object-fit:cover;">
+                                            @else
+                                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                            @endif
+                                        </div>
+                                        <div class="dropdown-menu" id="userDropdown" style="display:none;position:absolute;right:0;top:100%;width:200px;background:var(--trvl-card);border:1px solid var(--trvl-border);border-radius:0.5rem;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:9999;margin-top:0.5rem;overflow:hidden;">
+                                            <a href="{{ route('profile.show') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.5rem;width:100%;padding:0.75rem 1rem;background:none;border:none;text-align:left;color:#374151;cursor:pointer;transition:all 0.15s;font-size:0.875rem;text-decoration:none;font-family:inherit;">
+                                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                                {{ __('sidebar.profile') }}
+                                            </a>
+                                            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item" style="display:flex;align-items:center;gap:0.5rem;width:100%;padding:0.75rem 1rem;background:none;border:none;text-align:left;color:#374151;cursor:pointer;transition:all 0.15s;font-size:0.875rem;text-decoration:none;font-family:inherit;">
+                                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                                    {{ __('nav.logout') }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @else
+                                    <a href="{{ route('login') }}" class="trvl-nav-btn trvl-nav-btn-outline">{{ __('nav.login') }}</a>
+                                @endauth
                 <button class="trvl-hamburger" style="display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:8px;" onclick="toggleMobileMenu()">
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
                     <span style="width:24px; height:2px; background:white; border-radius:2px;"></span>
@@ -1053,10 +1075,28 @@
         applyDarkMode(stored === '1');
 
         document.getElementById('darkModeToggle').addEventListener('click', function () {
-            applyDarkMode(!body.classList.contains('dark'));
-        });
-    })();
-    </script>
+                    applyDarkMode(!body.classList.contains('dark'));
+                });
+            })();
+
+            // User dropdown toggle on click
+            (function () {
+                var userToggle = document.getElementById('userMenuToggle');
+                var userDropdown = document.getElementById('userDropdown');
+                if (userToggle && userDropdown) {
+                    userToggle.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var isOpen = userDropdown.style.display === 'block';
+                        userDropdown.style.display = isOpen ? 'none' : 'block';
+                    });
+                    document.addEventListener('click', function (e) {
+                        if (!userToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+                            userDropdown.style.display = 'none';
+                        }
+                    });
+                }
+            })();
+            </script>
 
 <!-- TOAST NOTIFICATION -->
 <div id="toast-container" class="fixed top-20 right-4 z-50 space-y-2"></div>

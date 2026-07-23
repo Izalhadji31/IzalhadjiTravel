@@ -23,34 +23,34 @@
         </div>
 
         <!-- Service Cards -->
-        <div class="max-w-5xl mx-auto mt-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Rental Card -->
-                <a href="{{ route('public.rental') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#e8f4fd;">
-                        <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                <div class="max-w-5xl mx-auto mt-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Rental Card -->
+                        <a href="{{ auth()->check() ? route('public.rental') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#e8f4fd;">
+                                <svg class="w-5 h-5" fill="none" stroke="#0064d2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            </div>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.rental_card_title') }}</h3>
+                            <p class="text-sm" style="color:#6c757d;">{{ __('home.rental_card_desc') }}</p>
+                        </a>
+                        <!-- Travel Card -->
+                        <a href="{{ auth()->check() ? route('public.travel') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
+                                <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            </div>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.travel_card_title') }}</h3>
+                            <p class="text-sm" style="color:#6c757d;">{{ __('home.travel_card_desc') }}</p>
+                        </a>
+                        <!-- Airport Card -->
+                        <a href="{{ auth()->check() ? route('public.airport') : route('login') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
+                                <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
+                            </div>
+                            <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.airport_card_title') }}</h3>
+                            <p class="text-sm" style="color:#6c757d;">{{ __('home.airport_card_desc') }}</p>
+                        </a>
                     </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.rental_card_title') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">{{ __('home.rental_card_desc') }}</p>
-                </a>
-                <!-- Travel Card -->
-                <a href="{{ route('public.travel') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#cffafe;">
-                        <svg class="w-5 h-5" fill="none" stroke="#0e7490" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.travel_card_title') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">{{ __('home.travel_card_desc') }}</p>
-                </a>
-                <!-- Airport Card -->
-                <a href="{{ route('public.airport') }}" class="block p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1" style="background:white; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style="background:#fed7aa;">
-                        <svg class="w-5 h-5" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 0L7 10m5-5l5 5"/></svg>
-                    </div>
-                    <h3 class="font-bold text-base mb-1" style="color:#1a1a2e;">{{ __('home.airport_card_title') }}</h3>
-                    <p class="text-sm" style="color:#6c757d;">{{ __('home.airport_card_desc') }}</p>
-                </a>
-            </div>
-        </div>
+                </div>
     </div>
 </section>
 
