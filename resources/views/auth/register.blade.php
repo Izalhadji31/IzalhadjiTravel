@@ -137,24 +137,8 @@
             <form method="POST" action="{{ route('register.store') }}" id="registerForm" class="space-y-4">
                 @csrf
                 
-                {{-- Role Selector --}}
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
-                        {{ $locale === 'id' ? 'Mendaftar Sebagai' : 'Register As' }}
-                    </label>
-                    <input type="hidden" id="role" name="role" value="{{ old('role', 'customer') }}">
-                    <div class="grid grid-cols-3 gap-2 bg-slate-800/80 p-1.5 rounded-2xl border border-white/5">
-                        <button type="button" onclick="selectRole('customer')" id="role-customer" class="role-btn py-2 text-xs font-bold rounded-xl transition-all duration-300 bg-blue-600 text-white">
-                            {{ $locale === 'id' ? 'Pelanggan' : 'Customer' }}
-                        </button>
-                        <button type="button" onclick="selectRole('partner')" id="role-partner" class="role-btn py-2 text-xs font-bold rounded-xl transition-all duration-300 text-gray-400 hover:text-white">
-                            {{ $locale === 'id' ? 'Mitra' : 'Partner' }}
-                        </button>
-                        <button type="button" onclick="selectRole('driver')" id="role-driver" class="role-btn py-2 text-xs font-bold rounded-xl transition-all duration-300 text-gray-400 hover:text-white">
-                            {{ $locale === 'id' ? 'Sopir' : 'Driver' }}
-                        </button>
-                    </div>
-                </div>
+                {{-- Role is always customer for public registration. Mitra & Sopir are added by admin. --}}
+                <input type="hidden" id="role" name="role" value="customer">
 
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5" for="name">
@@ -306,19 +290,6 @@
             }
         }
 
-        function selectRole(role) {
-            document.getElementById('role').value = role;
-            document.querySelectorAll('.role-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('text-gray-400', 'hover:text-white');
-            });
-            const activeBtn = document.getElementById('role-' + role);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-gray-400', 'hover:text-white');
-                activeBtn.classList.add('bg-blue-600', 'text-white');
-            }
-        }
-        window.selectRole = selectRole;
 
         var registerForm = document.getElementById('registerForm');
         if (registerForm) {
@@ -354,11 +325,6 @@
                 } else {
                     document.getElementById('phone_display').value = normalized;
                 }
-            }
-
-            var oldRole = @json(old('role'));
-            if (oldRole) {
-                selectRole(oldRole);
             }
         }
     })();

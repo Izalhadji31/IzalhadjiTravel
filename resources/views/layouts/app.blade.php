@@ -743,14 +743,6 @@
         
         <!-- Content -->
         <div class="content">
-            @if(!request()->routeIs('dashboard') && !request()->routeIs('admin.dashboard') && !request()->routeIs('driver.dashboard') && !request()->routeIs('partner.dashboard') && !request()->routeIs('fleet.dashboard') && !request()->routeIs('tracking.dashboard'))
-            <div class="back-button-container" style="margin-bottom:1rem;">
-                <button onclick="history.back()" class="btn btn-secondary" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;font-size:0.85rem;">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    {{ __('general.kembali') }}
-                </button>
-            </div>
-            @endif
             @yield('content')
         </div>
     </div>

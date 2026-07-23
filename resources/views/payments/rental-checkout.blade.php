@@ -211,6 +211,11 @@
     <!-- Header -->
     <div class="checkout-header">
         <a href="{{ route('bookings.rental') }}" class="back-link">
+
+<div class="checkout-container">
+    <!-- Header -->
+    <div class="checkout-header">
+        <a href="{{ route('bookings.rental') }}" class="back-link">
             ← Kembali ke Pemesanan
         </a>
         <h1 class="checkout-title">Pembayaran Rental</h1>
@@ -225,8 +230,14 @@
                 <!-- Vehicle Information -->
                 <div class="detail-section">
                     <h3 class="section-subtitle">Kendaraan</h3>
-                    <p class="vehicle-name">{{ $booking->armada->vehicle_name }}</p>
-                    <p class="vehicle-plate">{{ $booking->armada->license_plate }}</p>
+                    @php
+                        $requestedVehicle = '';
+                        if (preg_match('/Kendaraan Diminta:\s*([^|]+)/', $booking->notes ?? '', $matches)) {
+                            $requestedVehicle = trim($matches[1]);
+                        }
+                    @endphp
+                    <p class="vehicle-name">{{ $booking->armada?->vehicle_type ?? $requestedVehicle ?? 'Akan Ditugaskan Admin' }}</p>
+                    <p class="vehicle-plate">{{ $booking->armada?->plate_number ?? 'Menunggu penetapan armada' }}</p>
                     <p class="rental-type">
                         @if($booking->rental_type === 'with_driver')
                             Dengan Sopir
@@ -244,7 +255,7 @@
                     </div>
                     <div>
                         <p class="detail-label">Durasi</p>
-                        <p class="detail-value">{{ $booking->number_of_days }} hari</p>
+                        <p class="detail-value">{{ $booking->days }} hari</p>
                     </div>
                     <div>
                         <p class="detail-label">Tanggal Mulai</p>
@@ -260,12 +271,16 @@
                 <div>
                     <p class="detail-label">Status Pembayaran</p>
                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
-                        @if($payment->status === 'success')
-                            <span class="status-badge status-success">Success</span>
-                        @elseif($payment->status === 'pending')
-                            <span class="status-badge status-pending">Pending</span>
+                        @if(isset($needs_admin_price) && $needs_admin_price)
+                            <span class="status-badge status-pending">Menunggu Konfirmasi Admin</span>
                         @else
-                            <span class="status-badge status-failed">Failed</span>
+                            @if(isset($payment) && $payment && $payment->status === 'success')
+                                <span class="status-badge status-success">Success</span>
+                            @elseif(isset($payment) && $payment && $payment->status === 'pending')
+                                <span class="status-badge status-pending">Pending</span>
+                            @else
+                                <span class="status-badge status-failed">Failed</span>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -277,41 +292,65 @@
             <div class="card summary-card">
                 <h3 class="summary-title">Ringkasan Pembayaran</h3>
 
-                <div class="summary-row">
-                    <span style="color: #4b5563;">Tarif Harian × {{ $booking->number_of_days }}</span>
-                    <span style="font-weight: 600;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span>
-                </div>
+                @if(isset($needs_admin_price) && $needs_admin_price)
+                    <div class="summary-row">
+                        <span style="color: #4b5563;">Durasi Sewa</span>
+                        <span style="font-weight: 600;">{{ $booking->days }} hari</span>
+                    </div>
 
-                <div class="summary-total">
-                    <span class="total-label">Total</span>
-                    <span class="total-amount">
-                        Rp {{ number_format($booking->total_price, 0, ',', '.') }}
-                    </span>
-                </div>
+                    <div class="summary-total">
+                        <span class="total-label">Total</span>
+                        <span class="total-amount font-bold text-amber-600" style="font-size: 1.25rem;">
+                            Menunggu Konfirmasi
+                        </span>
+                    </div>
 
-                @if($payment->status === 'success')
-                    <div class="success-box">
-                        <p class="success-text">✓ Pembayaran Berhasil</p>
-                        <a href="{{ route('bookings.rental.show', $booking) }}" class="success-link">
-                            Lihat Detail Pemesanan →
+                    <div class="success-box" style="background-color: #fef3c7; border-color: #fde68a;">
+                        <p class="success-text" style="color: #b45309;">⌛ Menunggu Peninjauan Admin</p>
+                        <p class="text-xs text-amber-700 mt-2 leading-relaxed">
+                            Admin ASR GO sedang memverifikasi pesanan Anda. Kami akan segera mengonfirmasi ketersediaan armada, sopir, dan harga sewa.
+                        </p>
+                        <a href="{{ route('bookings.rental') }}" class="success-link" style="color: #b45309; text-decoration: underline;">
+                            Kembali ke Daftar Pemesanan &rarr;
                         </a>
                     </div>
                 @else
-                    @if($payment->status === 'pending')
-                        <div class="countdown-timer" id="countdown-timer">
-                            <p class="countdown-label">Batas Pembayaran</p>
-                            <p class="countdown-value" id="countdown-display">23:59:59</p>
+                    <div class="summary-row">
+                        <span style="color: #4b5563;">Tarif Harian &times; {{ $booking->days }}</span>
+                        <span style="font-weight: 600;">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span class="total-label">Total</span>
+                        <span class="total-amount">
+                            Rp {{ number_format($booking->total_price, 0, ',', '.') }}
+                        </span>
+                    </div>
+
+                    @if(isset($payment) && $payment && $payment->status === 'success')
+                        <div class="success-box">
+                            <p class="success-text">✓ Pembayaran Berhasil</p>
+                            <a href="{{ route('bookings.rental.show', $booking) }}" class="success-link">
+                                Lihat Detail Pemesanan &rarr;
+                            </a>
                         </div>
-                    @endif
+                    @else
+                        @if(isset($payment) && $payment && $payment->status === 'pending')
+                            <div class="countdown-timer" id="countdown-timer">
+                                <p class="countdown-label">Batas Pembayaran</p>
+                                <p class="countdown-value" id="countdown-display">23:59:59</p>
+                            </div>
+                        @endif
 
-                    <button onclick="triggerMidtransPayment()" class="btn-pay">
-                        Bayar Sekarang
-                    </button>
-
-                    @if($payment->status === 'failed')
-                        <button onclick="retryPayment()" class="btn-retry">
-                            Coba Lagi
+                        <button onclick="triggerMidtransPayment()" class="btn-pay">
+                            Bayar Sekarang
                         </button>
+
+                        @if(isset($payment) && $payment && $payment->status === 'failed')
+                            <button onclick="retryPayment()" class="btn-retry">
+                                Coba Lagi
+                            </button>
+                        @endif
                     @endif
                 @endif
 
@@ -327,7 +366,7 @@
     let snapToken = "{{ $snapToken ?? null }}";
 
     // Countdown Timer (24 hours from payment creation)
-    @if($payment->status === 'pending')
+    @if(isset($payment) && $payment && $payment->status === 'pending')
     (function() {
         // Calculate deadline: 24 hours from payment created_at
         const createdAt = new Date("{{ $payment->created_at->toIso8601String() }}");
@@ -394,6 +433,7 @@
     }
 
     function retryPayment() {
+        @if(isset($payment) && $payment)
         fetch("{{ route('payments.retry', $payment) }}", {
             method: 'POST',
             headers: {
@@ -414,6 +454,7 @@
             console.error('Error:', error);
             alert('Terjadi kesalahan');
         });
+        @endif
     }
 </script>
 @endsection

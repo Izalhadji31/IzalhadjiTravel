@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\RentalBooking;
-use App\Models\Route;
-use App\Models\RentalPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,13 +36,7 @@ class BookingRentalController extends Controller
      */
     public function create()
     {
-        $routes = Route::with('rentalPrices')->where('is_active', true)
-                       ->where(fn($query) => $query
-                           ->where('route_type', 'rental')
-                           ->orWhere('route_type', 'both'))
-                       ->get();
-
-        return view('bookings.rental-create', compact('routes'));
+        return view('bookings.rental-create');
     }
 
     /**
@@ -62,61 +54,80 @@ class BookingRentalController extends Controller
                 ->with('status', 'Link verifikasi telah dikirim ke email Anda. Silakan klik link untuk melanjutkan pemesanan.');
         }
 
-        // Check identity verification — skip jika kolom belum ada
-        if (\Illuminate\Support\Facades\Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
-            return redirect()->route('profile.edit')
-                           ->with('error', 'Silakan verifikasi identitas Anda sebelum melakukan pemesanan');
-        }
-
         $validated = $request->validate([
-            'route_id' => 'required|exists:routes,id',
-            'start_date' => 'required|date|after:today',
-            'end_date' => 'nullable|date|after:start_date',
-            'rental_type' => 'required|in:with_driver,without_driver',
-            'regency_count' => 'required_if:rental_type,with_driver|integer|min:1',
+            'area_type'      => 'required|in:dalam_kota,luar_kota',
+            'destination'    => 'nullable|string|max:255',
+            'start_date'     => 'required|date|after:today',
+            'end_date'       => 'nullable|date|after_or_equal:start_date',
+            'rental_type'    => 'required|in:with_driver,without_driver',
+            'regency_count'  => 'nullable|integer|min:1|max:15',
+            'pickup_location'=> 'nullable|string|max:255',
+            'notes'          => 'nullable|string|max:1000',
+            'vehicle_name'   => 'nullable|string|max:255',
         ]);
 
-        // If end_date not provided, default to start_date + 1 day
+        // Default end_date to start_date + 1 day if not provided
         if (empty($validated['end_date'])) {
             $validated['end_date'] = date('Y-m-d', strtotime($validated['start_date'] . ' +1 day'));
         }
 
-        $rentalPrice = RentalPrice::where('route_id', $validated['route_id'])->first();
-        
-        if (!$rentalPrice) {
-            return back()->with('error', 'Harga rental untuk rute ini belum tersedia.')->withInput();
+        $isLuarKota   = $validated['area_type'] === 'luar_kota';
+        $regencyCount = $isLuarKota ? ($validated['regency_count'] ?? 1) : 0;
+        $withDriver   = $validated['rental_type'] === 'with_driver';
+
+        // Generate booking code
+        $bookingCode = 'RNT-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(6));
+
+        // Build notes with area/destination info for admin
+        $adminNote = '[' . ($isLuarKota ? 'Luar Kota Ende' : 'Dalam Kota Ende') . ']';
+        if ($isLuarKota && !empty($validated['destination'])) {
+            $adminNote .= ' Tujuan: ' . $validated['destination'];
+            $adminNote .= ' | Kabupaten: ' . $regencyCount;
         }
-        
-        $base_price = $rentalPrice->price_without_driver ?? 0;
-
-        // Calculate driver fee if needed
-        $driver_fee = 0;
-        if ($validated['rental_type'] === 'with_driver') {
-            $num_regencies = $validated['regency_count'] ?? 2;
-            $driver_fee = $num_regencies * ($rentalPrice->driver_fee_per_regency ?? 0);
+        if (!empty($validated['vehicle_name'])) {
+            $adminNote .= ' | Kendaraan Diminta: ' . $validated['vehicle_name'];
+        }
+        if (!empty($validated['notes'])) {
+            $adminNote .= ' | Catatan: ' . $validated['notes'];
         }
 
-        $total_price = $base_price + $driver_fee;
+        // Use DB insert to handle legacy non-nullable columns safely
+        $bookingId = (string) \Illuminate\Support\Str::uuid();
+        $now = now();
 
-        $withDriver = $validated['rental_type'] === 'with_driver';
+        // Get a placeholder vehicle_id (first available) or null if column allows
+        $vehicleId = \Illuminate\Support\Facades\DB::table('vehicles')->value('id');
+        if (!$vehicleId) {
+            // No vehicles yet — create a temporary placeholder
+            return back()->withInput()->with('error', 'Sistem belum memiliki kendaraan terdaftar. Hubungi Admin untuk pemesanan.');
+        }
 
-        $booking = RentalBooking::create([
-            'user_id' => $user->id,
-            'route_id' => $validated['route_id'],
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'],
-            'rental_type' => $validated['rental_type'],
-            'with_driver' => $withDriver,
-            'total_price' => $total_price,
-            'status' => 'pending',
+        \Illuminate\Support\Facades\DB::table('rental_bookings')->insert([
+            'id'              => $bookingId,
+            'user_id'         => $user->id,
+            'vehicle_id'      => $vehicleId,   // placeholder; admin will assign real armada
+            'booking_code'    => $bookingCode,
+            'rental_type'     => $validated['rental_type'],
+            'with_driver'     => $withDriver ? 1 : 0,
+            'regency_count'   => $regencyCount,
+            'base_price'      => 0,
+            'driver_fee'      => 0,
+            'start_date'      => $validated['start_date'],
+            'end_date'        => $validated['end_date'],
+            'days'            => max(1, (int) ceil((strtotime($validated['end_date']) - strtotime($validated['start_date'])) / 86400)),
+            'daily_rate'      => 0,
+            'total_price'     => 0,
+            'discount'        => 0,
+            'final_price'     => 0,
+            'pickup_location' => $validated['pickup_location'] ?? null,
+            'notes'           => $adminNote,
+            'status'          => 'pending',
+            'payment_status'  => 'unpaid',
+            'created_at'      => $now,
+            'updated_at'      => $now,
         ]);
 
-        // Generate booking code if not auto-generated
-        if (empty($booking->booking_code)) {
-            $booking->update([
-                'booking_code' => 'RNT-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(6))
-            ]);
-        }
+        $booking = RentalBooking::find($bookingId);
 
         // Send WhatsApp notification
         try {
@@ -127,7 +138,7 @@ class BookingRentalController extends Controller
         }
 
         return redirect()->route('payments.rental', $booking->id)
-                       ->with('success', 'Pemesanan rental berhasil. Silakan selesaikan pembayaran.');
+                       ->with('success', 'Pemesanan rental berhasil dibuat! Kode: ' . $bookingCode . '. Admin akan menghubungi Anda untuk konfirmasi dan detail harga.');
     }
 
     /**

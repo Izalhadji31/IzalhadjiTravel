@@ -49,7 +49,7 @@ class RegisterController extends Controller
                 'max:25',
                 'regex:/^(\+\d{1,4}[\s\-]?\d{4,14}|08\d{8,13})$/',
             ],
-            'role'     => ['required', 'string', 'in:customer,partner,driver'],
+            'role'     => ['required', 'string', 'in:customer'],
         ], [
             'phone.regex' => $locale === 'id'
                 ? 'Nomor telepon harus menggunakan format internasional (+62 xxx, +1 xxx, dll.) atau format lokal (08xxx).'
@@ -63,7 +63,7 @@ class RegisterController extends Controller
                 'email' => $locale === 'id'
                     ? 'Email sudah terdaftar.'
                     : 'This email is already registered.',
-            ])->onlyInput('name', 'phone', 'role');
+            ])->onlyInput('name', 'phone');
         }
 
         if (User::where('phone', $phone)->exists()) {
@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'phone' => $locale === 'id'
                     ? 'Nomor telepon sudah digunakan.'
                     : 'This phone number is already in use.',
-            ])->onlyInput('name', 'email', 'role');
+            ])->onlyInput('name', 'email');
         }
 
         $otp = random_int(100000, 999999);
@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'email'          => $request->email,
             'phone'          => $phone,
             'password'       => Hash::make($request->password),
-            'role'           => $request->role,
+            'role'           => 'customer',
             'status'         => 'pending',
             'otp'            => (string) $otp,
             'otp_expires_at' => $otpExpiresAt->toDateTimeString(),

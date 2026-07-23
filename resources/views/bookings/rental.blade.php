@@ -99,7 +99,23 @@
                         <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
                             <td class="px-6 py-3 font-semibold text-gray-900">{{ $booking->booking_code ?? '#RB-' . $booking->id }}</td>
                             <td class="px-6 py-3 text-gray-700">{{ $booking->user?->name ?? 'N/A' }}</td>
-                            <td class="px-6 py-3 text-gray-700">{{ $booking->route?->origin_city ?? '' }} → {{ $booking->route?->destination_city ?? '' }}</td>
+                            <td class="px-6 py-3 text-gray-700">
+                                @if($booking->route)
+                                    {{ $booking->route->origin_city }} &rarr; {{ $booking->route->destination_city }}
+                                @else
+                                    @php
+                                        $dest = 'Dalam Kota';
+                                        if (str_contains($booking->notes ?? '', 'Luar Kota Ende')) {
+                                            if (preg_match('/Tujuan:\s*([^|]+)/', $booking->notes ?? '', $matches)) {
+                                                $dest = trim($matches[1]);
+                                            } else {
+                                                $dest = 'Luar Kota';
+                                            }
+                                        }
+                                    @endphp
+                                    Ende &rarr; {{ $dest }}
+                                @endif
+                            </td>
                             <td class="px-6 py-3 text-gray-700">
                                 @if($booking->rental_type === 'with_driver')
                                     <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">With Driver</span>

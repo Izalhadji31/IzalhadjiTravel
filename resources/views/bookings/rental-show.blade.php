@@ -94,7 +94,7 @@
                     <div class="space-y-1">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">WILAYAH ASAL</span>
                         <h3 class="text-2xl font-black text-gray-900 leading-tight">
-                            {{ $booking->route?->origin_city ?? 'N/A' }}
+                            {{ $booking->route?->origin_city ?? 'Ende' }}
                         </h3>
                         <p class="text-xs text-gray-500 font-medium">Tempat Penyerahan Kendaraan</p>
                     </div>
@@ -126,7 +126,21 @@
                     <div class="space-y-1 text-left md:text-right">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">WILAYAH TUJUAN</span>
                         <h3 class="text-2xl font-black text-gray-900 leading-tight">
-                            {{ $booking->route?->destination_city ?? 'N/A' }}
+                            @if($booking->route)
+                                {{ $booking->route->destination_city }}
+                            @else
+                                @php
+                                    $dest = 'Dalam Kota';
+                                    if (str_contains($booking->notes ?? '', 'Luar Kota Ende')) {
+                                        if (preg_match('/Tujuan:\s*([^|]+)/', $booking->notes ?? '', $matches)) {
+                                            $dest = trim($matches[1]);
+                                        } else {
+                                            $dest = 'Luar Kota';
+                                        }
+                                    }
+                                @endphp
+                                {{ $dest }}
+                            @endif
                         </h3>
                         <p class="text-xs text-gray-500 font-medium">Wilayah Pengoperasian Utama</p>
                     </div>
@@ -263,7 +277,7 @@
                 <h3 class="text-lg font-bold text-gray-900 pb-3 border-b border-gray-100">Rincian Biaya Sewa</h3>
                 
                 @php
-                    $baseRentalPrice = $booking->route->rentalPrices->first()?->price_without_driver ?? $booking->total_price;
+                    $baseRentalPrice = $booking->route?->rentalPrices?->first()?->price_without_driver ?? $booking->total_price;
                     $driverFee = $booking->with_driver ? ($booking->total_price - $baseRentalPrice) : 0;
                 @endphp
 

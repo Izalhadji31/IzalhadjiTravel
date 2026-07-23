@@ -41,6 +41,8 @@ class PaymentController extends Controller
         }
 
         // Generate snap token
+
+        // Generate snap token
         $orderId = $this->paymentService->generateOrderId($travelBooking->id, 'travel');
         $snapToken = $this->paymentService->createSnapToken($travelBooking, 'travel', $orderId);
         
@@ -62,6 +64,16 @@ class PaymentController extends Controller
     {
         $this->authorize('view', $rentalBooking);
 
+        if ($rentalBooking->total_price <= 0) {
+            return view('payments.rental-checkout', [
+                'booking' => $rentalBooking,
+                'payment' => null,
+                'snapToken' => null,
+                'clientKey' => config('midtrans.client_key'),
+                'needs_admin_price' => true,
+            ]);
+        }
+
         // Check if payment already exists and is pending
         $existingPayment = $rentalBooking->payments()->where('status', '!=', 'failed')->first();
         
@@ -77,7 +89,7 @@ class PaymentController extends Controller
         // Generate snap token
         $orderId = $this->paymentService->generateOrderId($rentalBooking->id, 'rental');
         $snapToken = $this->paymentService->createSnapToken($rentalBooking, 'rental', $orderId);
-        
+
         // Record payment
         $payment = $this->paymentService->recordPayment($rentalBooking, 'rental', $orderId, $snapToken);
 
@@ -89,9 +101,6 @@ class PaymentController extends Controller
         ]);
     }
 
-    /**
-     * Show payment page for airport transfer booking
-     */
     public function showAirportPayment(AirportTransferBooking $airportTransferBooking): View
     {
         $this->authorize('view', $airportTransferBooking);

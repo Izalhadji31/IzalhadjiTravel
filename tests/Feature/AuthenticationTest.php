@@ -70,12 +70,8 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    public function test_partner_can_register()
+    public function test_partner_cannot_register_publicly()
     {
-        $this->mock(\App\Services\WhatsAppService::class, function ($mock) {
-            $mock->shouldReceive('send')->andReturn(true);
-        });
-
         $response = $this->post('/register', [
             'name' => 'Test Partner',
             'email' => 'partner@example.com',
@@ -85,19 +81,7 @@ class AuthenticationTest extends TestCase
             'role' => 'partner',
         ]);
 
-        $response->assertRedirect();
-        $pending = session('register.pending');
-        $this->assertNotNull($pending);
-
-        $response2 = $this->post('/register/verify-otp', [
-            'otp' => $pending['otp'],
-        ]);
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'partner@example.com',
-            'name' => 'Test Partner',
-            'role' => 'partner',
-        ]);
+        $response->assertSessionHasErrors(['role']);
     }
 
     public function test_registration_validates_email()
