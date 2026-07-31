@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::table('booking_passengers', function (Blueprint $table) {
             $table->uuid('travel_booking_id')->nullable()->after('id');
+            $table->string('nik')->nullable()->after('id_number');
             $table->string('seat_number')->nullable()->after('nik');
-            $table->string('nik')->nullable()->change();
             $table->string('id_number')->nullable()->change();
 
             $table->foreign('travel_booking_id')->references('id')->on('travel_bookings')->onDelete('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
     {
         Schema::table('booking_passengers', function (Blueprint $table) {
             $table->dropForeign(['travel_booking_id']);
-            $table->dropColumn(['travel_booking_id', 'seat_number']);
+            $table->dropColumn(['travel_booking_id', 'nik', 'seat_number']);
         });
     }
 };

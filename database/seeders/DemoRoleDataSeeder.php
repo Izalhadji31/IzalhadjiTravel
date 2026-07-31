@@ -17,12 +17,37 @@ class DemoRoleDataSeeder extends Seeder
         // REUSABLE IDENTIFIERS
         // ============================================================
         $mitra1Id = 1; // PT. Jaya Transport
-        $driverUserId = '019f0eff-5bf4-7358-a2c7-1c8737244ac9'; // driver1@asrgo.com
-        $customerIds = [
-            '715c649f-30f1-4c50-8c84-bca71f95f59d', // Customer 1
-            '5cda975d-fd19-4101-ae40-1f345a8fa789', // Customer 2
-            '8dbfe85a-0786-4624-b627-b697cce3c4bd', // Customer 3
-        ];
+        $driverUserId = DB::table('users')->where('email', 'driver1@asrgo.com')->value('id'); // driver1@asrgo.com
+        $customerIds = collect(['user1@asrgo.com', 'user2@asrgo.com', 'fajar@example.com'])
+            ->map(fn ($email) => DB::table('users')->where('email', $email)->value('id'))
+            ->filter()
+            ->values()
+            ->all();
+
+        // rental_bookings.vehicle_id is a FK to vehicles — seed one vehicle if the table is empty
+        $vehicleId = DB::table('vehicles')->value('id');
+        if (!$vehicleId) {
+            $vehicleId = (string) Str::uuid();
+            DB::table('vehicles')->insert([
+                'id' => $vehicleId,
+                'partner_id' => DB::table('users')->where('email', 'mitra1@asrgo.com')->value('id'),
+                'plate_number' => 'NTT 9001',
+                'brand' => 'Toyota',
+                'model' => 'Hiace Premio',
+                'year' => 2023,
+                'service_type' => 'rental',
+                'total_seats' => 12,
+                'daily_rate' => 350000,
+                'color' => 'Putih',
+                'vin' => 'DEMO-VIN-' . strtoupper(Str::random(8)),
+                'registration_number' => 'DEMO-REG-' . strtoupper(Str::random(8)),
+                'status' => 'active',
+                'is_verified' => true,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+            echo "  ✅ Created demo vehicle NTT 9001 (vehicles table was empty)\n";
+        }
 
         echo "Seeding role-specific demo data...\n";
 
@@ -43,7 +68,7 @@ class DemoRoleDataSeeder extends Seeder
                 DB::table('rental_bookings')->insert([
                     'id' => $newRentalId,
                     'user_id' => $customerIds[0],
-                    'vehicle_id' => '2d46a97a-2684-4143-9bc8-204c99cad1d7',
+                    'vehicle_id' => $vehicleId,
                     'booking_code' => 'RNT-DEMO-' . strtoupper(Str::random(6)),
                     'start_date' => $now->copy()->subDays(5),
                     'end_date' => $now->copy()->subDays(3),
@@ -240,7 +265,24 @@ class DemoRoleDataSeeder extends Seeder
         if ($existingRevenueDriver == 0) {
             // Find a payment to reference
             $payment = DB::table('payments')->first();
-            $paymentId = $payment ? $payment->id : (string) Str::uuid();
+            if ($payment) {
+                $paymentId = $payment->id;
+            } else {
+                // revenue_sharings.payment_id is a FK to payments — create one if the table is empty
+                $paymentId = (string) Str::uuid();
+                DB::table('payments')->insert([
+                    'id' => $paymentId,
+                    'user_id' => $customerIds[0],
+                    'transaction_id' => 'TRX-DEMO-' . strtoupper(Str::random(8)),
+                    'amount' => 300000,
+                    'payment_method' => 'cash',
+                    'status' => 'success',
+                    'paid_at' => $now->copy()->subDays(2),
+                    'created_at' => $now->copy()->subDays(2),
+                    'updated_at' => $now->copy()->subDays(2),
+                ]);
+                echo "  ✅ Created demo payment for revenue_sharings (payments table was empty)\n";
+            }
 
             // We need integer booking_id values that work with the table schema
             // (booking_id is integer, not varchar, so we can't use UUID)

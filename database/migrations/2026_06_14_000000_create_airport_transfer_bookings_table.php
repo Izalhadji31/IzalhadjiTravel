@@ -40,7 +40,7 @@ return new class extends Migration
             $table->decimal('base_price', 12, 2);
             $table->decimal('total_price', 12, 2);
             $table->decimal('discount', 12, 2)->default(0);
-            $table->uuid('voucher_id')->nullable();
+            $table->unsignedBigInteger('voucher_id')->nullable();
             
             // Status & Notes
             $table->enum('status', ['pending', 'confirmed', 'in_progress', 'completed', 'cancelled'])->default('pending');
@@ -48,7 +48,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             
             // Tracking
-            $table->uuid('trip_tracking_id')->nullable();
+            $table->unsignedBigInteger('trip_tracking_id')->nullable();
             $table->time('actual_pickup_time')->nullable();
             $table->time('actual_dropoff_time')->nullable();
             
