@@ -162,28 +162,25 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('routes', RouteController::class);
     });
 
-    // Travel Bookings (Admin manages, customers create)
+    // Travel Bookings (Admin manages, customers create & view own)
     // NOTE: These MUST be BEFORE the generic /bookings/{booking} route below
     Route::prefix('bookings/travel')->group(function () {
         // CREATE must be BEFORE {travelBooking} to avoid matching "create" as ID
+        Route::get('/occupied-seats', [BookingTravelController::class, 'getOccupiedSeats'])->name('bookings.travel.occupied-seats');
         Route::get('/create', [BookingTravelController::class, 'create'])->name('bookings.travel.create');
         Route::post('/', [BookingTravelController::class, 'store'])->name('bookings.travel.store');
         Route::get('/', [BookingTravelController::class, 'index'])->name('bookings.travel');
-        Route::middleware('role:admin')->group(function () {
-            Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
-            Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
-        });
+        Route::get('/{travelBooking}', [BookingTravelController::class, 'show'])->name('bookings.travel.show');
+        Route::delete('/{travelBooking}', [BookingTravelController::class, 'destroy'])->name('bookings.travel.destroy');
     });
 
-    // Rental Bookings (Admin manages, customers create)
+    // Rental Bookings (Admin manages, customers create & view own)
     Route::prefix('bookings/rental')->group(function () {
         Route::get('/create', [BookingRentalController::class, 'create'])->name('bookings.rental.create');
         Route::post('/', [BookingRentalController::class, 'store'])->name('bookings.rental.store');
         Route::get('/', [BookingRentalController::class, 'index'])->name('bookings.rental');
-        Route::middleware('role:admin')->group(function () {
-            Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
-            Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
-        });
+        Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
+        Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
     });
 
     // Airport Transfer Bookings (Admin manages, customers create)
@@ -298,6 +295,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Payment Routes
+    // Midtrans notification callback (public, no auth required)
+    Route::post('/api/midtrans/notification', [PaymentController::class, 'handleNotification'])->name('api.midtrans.notification');
+
     // Authenticated Payment Routes
     Route::middleware(['auth'])->prefix('payments')->group(function () {
         Route::get('/success', [PaymentController::class, 'paymentSuccess'])->name('payments.success');
@@ -353,6 +353,14 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/bookings/{booking}/review', [ReviewController::class, 'create'])->name('bookings.review.create');
         Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('bookings.review.store');
+    });
+
+    // Admin Review Management Routes
+    Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+        Route::post('/reviews/{review}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
+        Route::post('/reviews/{review}/reject', [ReviewController::class, 'reject'])->name('reviews.reject');
+        Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     });
 
     // Refund Routes

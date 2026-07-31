@@ -12,7 +12,27 @@ class TravelBookingPolicy
      */
     public function view(User $user, TravelBooking $booking): bool
     {
-        return $user->id === $booking->user_id || $user->role === 'admin';
+        // Check if user owns the booking (normalize UUIDs to strings for comparison)
+        if ((string) $user->id === (string) $booking->user_id) {
+            return true;
+        }
+
+        // Check if user is admin (via column or Spatie role)
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        // Check if user has admin role via Spatie Permissions
+        if (method_exists($user, 'hasRole') && $user->hasRole('admin')) {
+            return true;
+        }
+
+        // Check if user is super admin
+        if (method_exists($user, 'hasRole') && $user->hasRole('super_admin')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -20,8 +40,26 @@ class TravelBookingPolicy
      */
     public function delete(User $user, TravelBooking $booking): bool
     {
-        return ($user->id === $booking->user_id || $user->role === 'admin') 
-               && $booking->status === 'pending';
+        // Only pending bookings can be deleted
+        if ($booking->status !== 'pending') {
+            return false;
+        }
+
+        // User owns the booking
+        if ((string) $user->id === (string) $booking->user_id) {
+            return true;
+        }
+
+        // Admin can delete
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        if (method_exists($user, 'hasRole') && $user->hasRole('admin')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -29,6 +67,19 @@ class TravelBookingPolicy
      */
     public function update(User $user, TravelBooking $booking): bool
     {
-        return $user->role === 'admin';
+        // Check if user is admin (via column or Spatie role)
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        if (method_exists($user, 'hasRole') && $user->hasRole('admin')) {
+            return true;
+        }
+
+        if (method_exists($user, 'hasRole') && $user->hasRole('super_admin')) {
+            return true;
+        }
+
+        return false;
     }
 }

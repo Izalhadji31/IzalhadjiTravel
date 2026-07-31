@@ -278,7 +278,7 @@
                         <span class="trvl-route-meta-item">{{ __('general.distance') }}: {{ $distance }}</span>
                     </div>
                     <div class="trvl-route-price">Rp {{ number_format($price, 0, ',', '.') }} <span>{{ __('home.routes_per_person') }}</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
+                    <a href="{{ auth()->check() && data_get($route, 'id') ? route('bookings.travel.create', ['route_id' => data_get($route, 'id')]) : route('public.travel', array_filter(['origin' => data_get($route, 'origin_city'), 'destination' => data_get($route, 'destination_city')])) }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             @empty
@@ -290,7 +290,7 @@
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Labuan Bajo</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 8 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 350 km</span></div>
                     <div class="trvl-route-price">Rp 350.000 <span>{{ __('home.routes_per_person') }}</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
+                    <a href="{{ route('public.travel', ['origin' => 'Ende', 'destination' => 'Labuan Bajo']) }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-1">
@@ -301,7 +301,7 @@
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Maumere</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 5 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 200 km</span></div>
                     <div class="trvl-route-price">Rp 250.000 <span>{{ __('home.routes_per_person') }}</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
+                    <a href="{{ route('public.travel', ['origin' => 'Ende', 'destination' => 'Maumere']) }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             <div class="trvl-route-card trvl-reveal trvl-reveal-delay-2">
@@ -312,7 +312,7 @@
                     <div class="trvl-route-origin-dest"><span class="trvl-route-city">Ende</span><span class="trvl-route-arrow">→</span><span class="trvl-route-city">Kelimutu</span></div>
                     <div class="trvl-route-meta"><span class="trvl-route-meta-item">{{ __('general.duration') }}: 3 jam</span><span class="trvl-route-meta-item">{{ __('general.distance') }}: 100 km</span></div>
                     <div class="trvl-route-price">Rp 200.000 <span>{{ __('home.routes_per_person') }}</span></div>
-                    <a href="{{ route('public.travel') }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
+                    <a href="{{ route('public.travel', ['origin' => 'Ende', 'destination' => 'Kelimutu']) }}" class="trvl-btn-pesan text-decoration-none">{{ __('home.routes_book') }}</a>
                 </div>
             </div>
             @endforelse

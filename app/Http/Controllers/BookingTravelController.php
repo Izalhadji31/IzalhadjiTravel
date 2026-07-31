@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTravelBookingRequest;
 use App\Models\TravelBooking;
 use App\Models\Route;
 use App\Models\TravelPrice;
 use App\Services\BookingNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class BookingTravelController extends Controller
@@ -43,7 +43,7 @@ class BookingTravelController extends Controller
     /**
      * Show create form
      */
-    public function create()
+    public function create(Request $request)
     {
         $routes = Route::with('travelPrices')->where('is_active', true)
                        ->where(fn($query) => $query
@@ -51,40 +51,21 @@ class BookingTravelController extends Controller
                            ->orWhere('route_type', 'both'))
                        ->get();
 
-        return view('bookings.travel-create', compact('routes'));
+        $selectedRouteId = $request->query('route_id');
+        $selectedDate = $request->query('date');
+        $selectedPassengers = $request->query('passengers');
+
+        return view('bookings.travel-create', compact('routes', 'selectedRouteId', 'selectedDate', 'selectedPassengers'));
     }
 
     /**
      * Store booking
      */
-    public function store(Request $request)
+    public function store(StoreTravelBookingRequest $request)
     {
         $user = Auth::user();
 
-        if (! $user->hasVerifiedEmail()) {
-            $user->sendEmailVerificationNotification();
-            session()->put('verification.intended', route('bookings.travel.create'));
-
-            return redirect()->route('verification.notice')
-                ->with('status', 'Link verifikasi telah dikirim ke email Anda. Silakan klik link untuk melanjutkan pemesanan.');
-        }
-
-        // Check identity verification — skip jika kolom belum ada
-        if (Schema::hasColumn('users', 'is_identity_verified') && !$user->is_identity_verified) {
-            return redirect()->route('profile.edit')
-                           ->with('error', 'Silakan verifikasi identitas Anda sebelum melakukan pemesanan');
-        }
-
-        $validated = $request->validate([
-            'route_id' => 'required|exists:routes,id',
-            'travel_date' => 'required_without:scheduled_date|date|after:today',
-            'scheduled_date' => 'required_without:travel_date|date|after:today',
-            'number_of_seats' => 'required|integer|min:1|max:16',
-            'passengers' => 'nullable|array',
-            'passengers.*.name' => 'required_with:passengers|string|max:255',
-            'passengers.*.nik' => 'required_with:passengers|string|max:50',
-            'passengers.*.seat_number' => 'required_with:passengers|string|max:10',
-        ]);
+        $validated = $request->validated();
 
         $travelPrice = TravelPrice::where('route_id', $validated['route_id'])->first();
         $seatPrice = $travelPrice?->price_per_seat ?? 0;
@@ -109,10 +90,22 @@ class BookingTravelController extends Controller
             foreach ($validated['passengers'] as $passengerData) {
                 \App\Models\BookingPassenger::create([
                     'travel_booking_id' => $booking->id,
-                    'name' => $passengerData['name'],
-                    'nik' => $passengerData['nik'],
-                    'seat_number' => $passengerData['seat_number'],
+                    'name'              => $passengerData['name'],
+                    'id_type'           => $passengerData['id_type'],
+                    'id_number'         => $passengerData['id_number'],
+                    // nik kolom lama untuk backward compat
+                    'nik'               => $passengerData['id_number'],
+                    'seat_number'       => $passengerData['seat_number'],
                 ]);
+
+                if (\Illuminate\Support\Facades\Schema::hasTable('travel_seats')) {
+                    \App\Models\TravelSeat::create([
+                        'travel_booking_id' => $booking->id,
+                        'seat_number'       => $passengerData['seat_number'],
+                        'status'            => 'booked',
+                        'passenger_name'    => $passengerData['name'],
+                    ]);
+                }
             }
         }
 
@@ -126,6 +119,42 @@ class BookingTravelController extends Controller
 
         return redirect()->route('payments.travel', $booking->id)
                        ->with('success', 'Pemesanan travel berhasil. Silakan selesaikan pembayaran.');
+    }
+
+    /**
+     * Get occupied seats for a given route and date (AJAX endpoint)
+     */
+    public function getOccupiedSeats(Request $request)
+    {
+        $request->validate([
+            'route_id' => 'required',
+            'date' => 'required|date',
+        ]);
+
+        $routeId = $request->input('route_id');
+        $date = $request->input('date');
+
+        $occupiedFromPassengers = \App\Models\BookingPassenger::whereHas('travelBooking', function ($q) use ($routeId, $date) {
+            $q->where('route_id', $routeId)
+              ->whereDate('scheduled_date', $date)
+              ->where('status', '!=', 'cancelled');
+        })->pluck('seat_number')->filter()->values()->toArray();
+
+        $occupiedFromSeats = [];
+        if (\Illuminate\Support\Facades\Schema::hasTable('travel_seats')) {
+            $occupiedFromSeats = \App\Models\TravelSeat::whereHas('travelBooking', function ($q) use ($routeId, $date) {
+                $q->where('route_id', $routeId)
+                  ->whereDate('scheduled_date', $date)
+                  ->where('status', '!=', 'cancelled');
+            })->pluck('seat_number')->filter()->values()->toArray();
+        }
+
+        $occupiedSeats = array_values(array_unique(array_merge($occupiedFromPassengers, $occupiedFromSeats)));
+
+        return response()->json([
+            'success' => true,
+            'occupied_seats' => $occupiedSeats,
+        ]);
     }
 
     /**

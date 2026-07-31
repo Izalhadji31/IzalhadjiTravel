@@ -339,7 +339,15 @@
                     </a>
                 @endif
 
-                <!-- Cancel Booking -->
+                @php
+                    // Hitung sisa waktu ke keberangkatan untuk kebijakan pembatalan
+                    $departureCarbon = \Carbon\Carbon::parse($booking->scheduled_date);
+                    $hoursLeft = \Carbon\Carbon::now()->diffInHours($departureCarbon, false);
+                    $isLateCancel = $hoursLeft < 24;
+                    $hasExistingRefund = \App\Models\Refund::where('refundable_id', $booking->id)->where('user_id', auth()->id())->exists();
+                @endphp
+
+                <!-- Cancel Booking (pending = hapus langsung, confirmed = ajukan refund) -->
                 @if($booking->status === 'pending')
                     <form action="{{ route('bookings.travel.destroy', $booking) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan tiket travel ini?')" class="mt-2">
                         @csrf
@@ -350,19 +358,85 @@
                     </form>
                 @endif
 
+                <!-- Pembatalan & Refund untuk booking confirmed -->
+                @if($booking->status === 'confirmed' && !$hasExistingRefund)
+                    <div class="mt-3 rounded-xl border p-3 {{ $isLateCancel ? 'bg-orange-50 border-orange-200' : 'bg-blue-50 border-blue-200' }}">
+                        <p class="text-xs font-semibold {{ $isLateCancel ? 'text-orange-700' : 'text-blue-700' }} mb-1">
+                            @if($isLateCancel)
+                                ⚠️ Pembatalan < 24 jam: dikenakan PPN 11%
+                            @else
+                                ✅ Pembatalan > 24 jam: refund penuh tanpa potongan
+                            @endif
+                        </p>
+                        <p class="text-xxs text-gray-500">
+                            @if($hoursLeft >= 0)
+                                Keberangkatan dalam <strong>{{ round($hoursLeft) }} jam</strong>
+                            @else
+                                Keberangkatan sudah <strong>lewat {{ abs(round($hoursLeft)) }} jam</strong>
+                            @endif
+                        </p>
+                    </div>
+                    <a href="{{ route('bookings.refund.create', $booking) }}" 
+                       class="mt-2 block w-full py-2.5 {{ $isLateCancel ? 'bg-orange-500 hover:bg-orange-600' : 'bg-red-600 hover:bg-red-700' }} text-white rounded-xl text-center font-bold text-xs transition-all">
+                        Ajukan Pembatalan & Refund
+                    </a>
+                @elseif($booking->status === 'confirmed' && $hasExistingRefund)
+                    <div class="mt-3 rounded-xl border bg-gray-50 border-gray-200 p-3 text-center">
+                        <p class="text-xs text-gray-500 font-medium">✅ Permohonan pembatalan sudah diajukan</p>
+                    </div>
+                @endif
+
                 <!-- Post-completion Review/Refund Actions -->
                 @if($booking->status === 'completed')
                     @php
                         $hasReviewed = \App\Models\Review::where('booking_id', $booking->id)->where('user_id', auth()->id())->exists();
+                        $userReview = \App\Models\Review::where('booking_id', $booking->id)->where('user_id', auth()->id())->first();
                     @endphp
                     @if(!$hasReviewed)
                         <a href="{{ route('bookings.review.create', $booking) }}" class="block w-full py-3 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl text-center font-bold text-sm shadow-md transition-all mb-2">
-                            Tulis Ulasan Perjalanan
+                            ⭐ Tulis Ulasan Perjalanan
                         </a>
+                    @else
+                        <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-200 mb-2">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="flex">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $userReview->rating)
+                                            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        @else
+                                            <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <span class="text-sm font-bold text-emerald-800">Anda sudah memberi ulasan</span>
+                            </div>
+                            @if($userReview->comment)
+                                <p class="text-xs text-gray-600 italic">"{{ $userReview->comment }}"</p>
+                            @endif
+                            <div class="mt-2">
+                                @php $reviewStatus = $userReview->status ?? 'pending'; @endphp
+                                <span class="text-xs font-semibold px-2 py-1 rounded-full 
+                                    {{ $reviewStatus === 'approved' ? 'bg-emerald-100 text-emerald-700' : 
+                                       $reviewStatus === 'rejected' ? 'bg-red-100 text-red-700' : 
+                                       'bg-yellow-100 text-yellow-700' }}">
+                                    {{ ucfirst($reviewStatus) }}
+                                </span>
+                            </div>
+                        </div>
                     @endif
-                    <a href="{{ route('bookings.refund.create', $booking) }}" class="block w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-center font-bold text-sm shadow-md transition-all">
-                        Ajukan Refund Tiket
-                    </a>
+                    @if(!$hasExistingRefund)
+                        <a href="{{ route('bookings.refund.create', $booking) }}" class="block w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-center font-bold text-sm shadow-md transition-all">
+                            Ajukan Refund Tiket
+                        </a>
+                    @else
+                        <div class="rounded-xl border bg-gray-50 border-gray-200 p-3 text-center">
+                            <p class="text-xs text-gray-500 font-medium">✅ Permohonan refund sudah diajukan</p>
+                        </div>
+                    @endif
                 @endif
 
             </div>

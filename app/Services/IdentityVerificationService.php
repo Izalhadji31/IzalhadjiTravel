@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\IdentityVerification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class IdentityVerificationService
 {

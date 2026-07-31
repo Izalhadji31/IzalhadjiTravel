@@ -23,6 +23,19 @@ class Company extends Model
 
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $primaryKey = 'id';
+
+    // Override the boot method to generate UUID automatically
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
 
     protected function casts(): array
     {

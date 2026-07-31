@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use App\Models\TravelBooking;
 use App\Models\RentalBooking;
+use App\Models\AirportTransferBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,14 @@ class ReviewController extends Controller
                 ->where('user_id', $user->id)
                 ->first();
             $bookingType = 'rental';
+        }
+
+        if (!$booking) {
+            $booking = AirportTransferBooking::with(['user', 'armada'])
+                ->where('id', $booking)
+                ->where('user_id', $user->id)
+                ->first();
+            $bookingType = 'airport_transfer';
         }
 
         if (!$booking) {
@@ -70,6 +79,7 @@ class ReviewController extends Controller
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:1000',
+            'review_type' => 'nullable|in:cleanliness,comfort,driver,price,overall',
         ]);
 
         // Cari pemesanan.
@@ -84,6 +94,13 @@ class ReviewController extends Controller
                 ->where('user_id', $user->id)
                 ->first();
             $bookingType = 'rental';
+        }
+
+        if (!$bookingModel) {
+            $bookingModel = AirportTransferBooking::where('id', $booking)
+                ->where('user_id', $user->id)
+                ->first();
+            $bookingType = 'airport_transfer';
         }
 
         if (!$bookingModel) {
@@ -117,11 +134,66 @@ class ReviewController extends Controller
             'rated_user_id' => $driverId,
             'rating' => $validated['rating'],
             'comment' => $validated['comment'] ?? null,
-            'review_type' => 'overall',
+            'review_type' => $validated['review_type'] ?? 'overall',
             'is_verified' => true,
+            'status' => 'pending', // Default to pending for admin approval
         ]);
 
-        return redirect()->route('bookings.detail', $bookingModel->id)
-            ->with('success', 'Terima kasih atas ulasan Anda!');
+        return redirect()->route('bookings.index')
+            ->with('success', 'Terima kasih atas ulasan Anda! Ulasan Anda akan ditinjau oleh admin sebelum ditampilkan.');
+    }
+
+    /**
+     * Admin: Display all reviews for moderation
+     */
+    public function index(Request $request)
+    {
+        $status = $request->get('status', '');
+        
+        $query = Review::with(['user', 'ratedUser', 'booking'])
+            ->orderBy('created_at', 'desc');
+        
+        if ($status) {
+            $query->where('status', $status);
+        }
+        
+        $reviews = $query->paginate(20);
+        
+        // Get statistics
+        $totalReviews = Review::count();
+        $pendingReviews = Review::where('status', 'pending')->count();
+        $avgRating = Review::where('status', 'approved')->avg('rating');
+
+        return view('admin.reviews', compact('reviews', 'status', 'totalReviews', 'pendingReviews', 'avgRating'));
+    }
+
+    /**
+     * Admin: Approve a review
+     */
+    public function approve(Review $review)
+    {
+        $review->approve();
+        
+        return back()->with('success', 'Ulasan berhasil disetujui.');
+    }
+
+    /**
+     * Admin: Reject a review
+     */
+    public function reject(Review $review)
+    {
+        $review->reject();
+        
+        return back()->with('success', 'Ulasan berhasil ditolak.');
+    }
+
+    /**
+     * Admin: Delete a review
+     */
+    public function destroy(Review $review)
+    {
+        $review->delete();
+        
+        return back()->with('success', 'Ulasan berhasil dihapus.');
     }
 }

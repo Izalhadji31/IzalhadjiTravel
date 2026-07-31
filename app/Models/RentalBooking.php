@@ -8,11 +8,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-#[Fillable(['user_id', 'route_id', 'rental_type', 'with_driver', 'regency_count', 'base_price', 'driver_fee', 'total_price', 'booking_code', 'status', 'payment_status', 'start_date', 'end_date', 'start_time', 'assigned_armada_id'])]
+#[Fillable(['user_id', 'vehicle_id', 'route_id', 'rental_type', 'with_driver', 'regency_count', 'base_price', 'driver_fee', 'total_price', 'booking_code', 'status', 'payment_status', 'start_date', 'end_date', 'start_time', 'assigned_armada_id', 'days', 'daily_rate', 'discount', 'final_price', 'pickup_location', 'return_location', 'notes'])]
 class RentalBooking extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
+
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+
+    // Override the boot method to generate UUID automatically
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
 
     protected function casts(): array
     {

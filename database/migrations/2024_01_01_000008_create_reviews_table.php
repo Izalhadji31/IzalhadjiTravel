@@ -12,20 +12,22 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->uuid('booking_id');
-            $table->uuid('rated_user_id');
+            $table->uuid('rated_user_id')->nullable();
             $table->integer('rating'); // 1-5
             $table->text('comment')->nullable();
             $table->enum('review_type', ['cleanliness', 'comfort', 'driver', 'price', 'overall'])->default('overall');
             $table->boolean('is_verified')->default(false);
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->softDeletes();
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('booking_id')->references('id')->on('travel_bookings');
-            $table->foreign('rated_user_id')->references('id')->on('users');
+            $table->foreign('rated_user_id')->references('id')->on('users')->onDelete('set null');
             $table->index('user_id');
             $table->index('rated_user_id');
             $table->index('rating');
+            $table->index('status');
         });
     }
 

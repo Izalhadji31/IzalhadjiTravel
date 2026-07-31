@@ -161,7 +161,7 @@
                                         <span style="font-size: 0.85rem; color: var(--trvl-gray-600); font-weight: 500;">{{ __('travel.contact_cs') }}</span>
                                     @endif
                                     @auth
-                                        <a href="{{ route('bookings.travel.create', ['route_id' => $route->id]) }}" 
+                                        <a href="{{ route('bookings.travel.create', ['route_id' => $route->id, 'date' => request('date'), 'passengers' => request('passengers')]) }}" 
                                            style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; background: linear-gradient(135deg, var(--trvl-blue) 0%, var(--trvl-blue-dark) 100%); color: white; padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,100,210,0.3);">
                                             {{ __('travel.book') }}
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>

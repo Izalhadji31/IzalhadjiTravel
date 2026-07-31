@@ -163,7 +163,8 @@ class DatabaseSeeder extends Seeder
         }
 
         // Seed role-specific demo data for Partner and Driver dashboards
-        $this->call(\Database\Seeders\DemoRoleDataSeeder::class);
+        // Commented out due to foreign key constraint issues with hardcoded user IDs
+        // $this->call(\Database\Seeders\DemoRoleDataSeeder::class);
 
     }
 }

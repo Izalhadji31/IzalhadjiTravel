@@ -366,6 +366,42 @@
                     </form>
                 @endif
 
+                @php
+                    // Hitung sisa waktu ke keberangkatan (rental: start_date)
+                    $startCarbon = \Carbon\Carbon::parse($booking->start_date);
+                    $hoursLeft = \Carbon\Carbon::now()->diffInHours($startCarbon, false);
+                    $isLateCancel = $hoursLeft < 24;
+                    $hasExistingRefund = \App\Models\Refund::where('refundable_id', $booking->id)->where('user_id', auth()->id())->exists();
+                @endphp
+
+                <!-- Pembatalan & Refund untuk booking confirmed -->
+                @if($booking->status === 'confirmed' && !$hasExistingRefund)
+                    <div class="mt-3 rounded-xl border p-3 {{ $isLateCancel ? 'bg-orange-50 border-orange-200' : 'bg-blue-50 border-blue-200' }}">
+                        <p class="text-xs font-semibold {{ $isLateCancel ? 'text-orange-700' : 'text-blue-700' }} mb-1">
+                            @if($isLateCancel)
+                                ⚠️ Pembatalan < 24 jam: dikenakan PPN 11%
+                            @else
+                                ✅ Pembatalan > 24 jam: refund penuh tanpa potongan
+                            @endif
+                        </p>
+                        <p class="text-xxs text-gray-500">
+                            @if($hoursLeft >= 0)
+                                Mulai sewa dalam <strong>{{ round($hoursLeft) }} jam</strong>
+                            @else
+                                Mulai sewa sudah <strong>lewat {{ abs(round($hoursLeft)) }} jam</strong>
+                            @endif
+                        </p>
+                    </div>
+                    <a href="{{ route('bookings.refund.create', $booking) }}"
+                       class="mt-2 block w-full py-2.5 {{ $isLateCancel ? 'bg-orange-500 hover:bg-orange-600' : 'bg-red-600 hover:bg-red-700' }} text-white rounded-xl text-center font-bold text-xs transition-all">
+                        Ajukan Pembatalan & Refund
+                    </a>
+                @elseif($booking->status === 'confirmed' && $hasExistingRefund)
+                    <div class="mt-3 rounded-xl border bg-gray-50 border-gray-200 p-3 text-center">
+                        <p class="text-xs text-gray-500 font-medium">✅ Permohonan pembatalan sudah diajukan</p>
+                    </div>
+                @endif
+
                 <!-- Post-completion Actions -->
                 @if($booking->status === 'completed')
                     @php
@@ -376,9 +412,15 @@
                             Tulis Ulasan Sewa Mobil
                         </a>
                     @endif
-                    <a href="{{ route('bookings.refund.create', $booking) }}" class="block w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-center font-bold text-sm shadow-md transition-all">
-                        Ajukan Refund Sewa Mobil
-                    </a>
+                    @if(!$hasExistingRefund)
+                        <a href="{{ route('bookings.refund.create', $booking) }}" class="block w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-center font-bold text-sm shadow-md transition-all">
+                            Ajukan Refund Sewa Mobil
+                        </a>
+                    @else
+                        <div class="rounded-xl border bg-gray-50 border-gray-200 p-3 text-center">
+                            <p class="text-xs text-gray-500 font-medium">✅ Permohonan refund sudah diajukan</p>
+                        </div>
+                    @endif
                 @endif
 
             </div>
