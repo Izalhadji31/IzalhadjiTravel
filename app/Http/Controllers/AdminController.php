@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        $totalUsers = User::where('role', 'user')->count();
+        $totalUsers = User::where('role', 'customer')->count();
         $totalPartners = User::where('role', 'partner')->count();
         $totalDrivers = User::where('role', 'driver')->count();
         $totalBookings = TravelBooking::count() + RentalBooking::count();
@@ -59,7 +59,7 @@ class AdminController extends Controller
      */
     public function users()
     {
-        $users = User::where('role', 'user')
+        $users = User::where('role', 'customer')
                      ->latest()
                      ->paginate(10);
 
@@ -238,10 +238,10 @@ class AdminController extends Controller
     {
         $partners = User::where('role', 'partner')
             ->withCount(['revenueSharings as total_earnings' => function ($query) {
-                $query->select(DB::raw('COALESCE(SUM(partner_amount), 0)'));
+                $query->select(DB::raw('COALESCE(SUM(mitra_amount), 0)'));
             }])
             ->withCount(['revenueSharings as pending_payouts' => function ($query) {
-                $query->where('status', 'pending')->select(DB::raw('COALESCE(SUM(partner_amount), 0)'));
+                $query->where('status', 'pending')->select(DB::raw('COALESCE(SUM(mitra_amount), 0)'));
             }])
             ->latest()
             ->paginate(15);
@@ -254,7 +254,7 @@ class AdminController extends Controller
      */
     public function payoutMitra(Request $request, $mitraId)
     {
-        $revenueSharings = RevenueSharing::where('partner_id', $mitraId)
+        $revenueSharings = RevenueSharing::where('mitra_id', $mitraId)
             ->where('status', 'pending')
             ->get();
 
@@ -262,9 +262,9 @@ class AdminController extends Controller
             return back()->with('error', 'No pending payouts found for this partner');
         }
 
-        $totalPayout = $revenueSharings->sum('partner_amount');
+        $totalPayout = $revenueSharings->sum('mitra_amount');
 
-        RevenueSharing::where('partner_id', $mitraId)
+        RevenueSharing::where('mitra_id', $mitraId)
             ->where('status', 'pending')
             ->update([
                 'status' => 'completed',
@@ -281,11 +281,9 @@ class AdminController extends Controller
     public function manageDrivers()
     {
         $drivers = User::where('role', 'driver')
-            ->withCount(['bookings as total_trips' => function ($query) {
+            ->with(['driverProfile'])
+            ->withCount(['travelBookings as total_trips' => function ($query) {
                 $query->select(DB::raw('COUNT(*)'));
-            }])
-            ->withCount(['payments as total_earnings' => function ($query) {
-                $query->where('status', 'success')->select(DB::raw('COALESCE(SUM(driver_amount), 0)'));
             }])
             ->latest()
             ->paginate(15);

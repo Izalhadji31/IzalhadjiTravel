@@ -36,30 +36,114 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
+                            <p class="text-gray-600 text-sm">Pickup City</p>
+                            <p class="text-lg font-semibold">{{ $booking->pickup_city }}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 text-sm">Drop-off City</p>
+                            <p class="text-lg font-semibold">{{ $booking->dropoff_city }}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
                             <p class="text-gray-600 text-sm">Start Date</p>
                             <p class="text-lg font-semibold">{{ \Carbon\Carbon::parse($booking->start_date)->format('d M Y') }}</p>
+                            <p class="text-sm text-gray-500">{{ $booking->start_time }}</p>
                         </div>
                         <div>
                             <p class="text-gray-600 text-sm">End Date</p>
                             <p class="text-lg font-semibold">{{ \Carbon\Carbon::parse($booking->end_date)->format('d M Y') }}</p>
+                            <p class="text-sm text-gray-500">{{ $booking->end_time }}</p>
                         </div>
                     </div>
+                    @if($booking->pickup_location)
                     <div>
-                        <p class="text-gray-600 text-sm">Route</p>
-                        <p class="text-lg font-semibold">{{ $booking->route->name }}</p>
+                        <p class="text-gray-600 text-sm">Pickup Location</p>
+                        <p class="text-lg font-semibold">{{ $booking->pickup_location }}</p>
+                        @if($booking->pickup_address)
+                        <p class="text-sm text-gray-500">{{ $booking->pickup_address }}</p>
+                        @endif
                     </div>
+                    @endif
+                    @if($booking->dropoff_location)
                     <div>
-                        <p class="text-gray-600 text-sm">Driver Option</p>
+                        <p class="text-gray-600 text-sm">Drop-off Location</p>
+                        <p class="text-lg font-semibold">{{ $booking->dropoff_location }}</p>
+                        @if($booking->dropoff_address)
+                        <p class="text-sm text-gray-500">{{ $booking->dropoff_address }}</p>
+                        @endif
+                    </div>
+                    @endif
+                    <div>
+                        <p class="text-gray-600 text-sm">Rental Type</p>
                         <p class="text-lg font-semibold">
-                            @if($booking->with_driver)
+                            @if($booking->rental_type === 'with_driver')
                                 ✓ With Driver
                             @else
                                 ✗ Without Driver (Self Drive)
                             @endif
                         </p>
                     </div>
+                    @if($booking->vehicleType)
+                    <div>
+                        <p class="text-gray-600 text-sm">Vehicle Type</p>
+                        <p class="text-lg font-semibold">{{ $booking->vehicleType->name }} ({{ $booking->vehicleType->capacity }} seats)</p>
+                    </div>
+                    @endif
                 </div>
             </div>
+
+            <!-- E-Voucher -->
+            @if($booking->voucher)
+            <div class="card bg-gradient-to-r from-blue-50 to-purple-50">
+                <h3 class="card-header">E-Voucher</h3>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg p-4 border-2 border-dashed border-blue-300">
+                        <div class="text-center mb-4">
+                            <div class="text-4xl mb-2">🎫</div>
+                            <p class="text-sm text-gray-600">Voucher Code</p>
+                            <p class="text-2xl font-bold text-blue-600 font-mono">{{ $booking->voucher->code }}</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600 mb-2">QR Code</p>
+                            <div class="bg-gray-100 rounded-lg p-4 inline-block">
+                                <div class="w-32 h-32 bg-white rounded flex items-center justify-center mx-auto">
+                                    <div class="text-center">
+                                        <div class="text-3xl mb-1">📱</div>
+                                        <p class="text-xs text-gray-500 font-mono">{{ $booking->voucher->qr_code }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p class="text-gray-600">Valid From</p>
+                                    <p class="font-medium">{{ $booking->voucher->valid_from->format('d M Y') }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Valid Until</p>
+                                    <p class="font-medium">{{ $booking->voucher->valid_until->format('d M Y') }}</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm">
+                                <p class="text-gray-600">Status</p>
+                                <p class="font-medium @if($booking->voucher->is_used) text-green-600 @else text-blue-600 @endif">
+                                    @if($booking->voucher->is_used)
+                                        Used ({{ $booking->voucher->used_at->format('d M Y H:i') }})
+                                    @else
+                                        Valid & Unused
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-600 text-center">
+                        Show this voucher to the driver to start your rental
+                    </p>
+                </div>
+            </div>
+            @endif
 
             <!-- Vehicle Info -->
             @if($booking->armada)

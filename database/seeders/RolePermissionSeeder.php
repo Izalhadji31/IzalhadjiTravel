@@ -13,6 +13,12 @@ class RolePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // Remove old 'user' role if it exists (replaced by 'customer')
+        $oldUserRole = Role::where('name', 'user')->where('guard_name', 'web')->first();
+        if ($oldUserRole) {
+            $oldUserRole->delete();
+        }
+
         // Define Permissions
         $permissions = [
             // User Management
@@ -22,6 +28,7 @@ class RolePermissionSeeder extends Seeder
             'delete_user',
             'verify_identity',
             'suspend_user',
+            'edit_own_profile',
 
             // Travel Management
             'view_travels',
@@ -47,6 +54,8 @@ class RolePermissionSeeder extends Seeder
             'edit_vehicle',
             'delete_vehicle',
             'manage_maintenance',
+            'view_vehicle_utilization',
+            'view_vehicle_location',
 
             // Driver Management
             'view_drivers',
@@ -61,6 +70,7 @@ class RolePermissionSeeder extends Seeder
             'edit_partner',
             'delete_partner',
             'view_partner_revenue',
+            'view_partner_financial_reports',
 
             // Payment Management
             'view_payments',
@@ -87,6 +97,12 @@ class RolePermissionSeeder extends Seeder
             'view_all_bookings',
             'manage_bookings',
             'cancel_booking',
+
+            // Driver Trip Management
+            'accept_trip',
+            'start_trip',
+            'complete_trip',
+            'view_available_trips',
         ];
 
         // Create Permissions
@@ -101,7 +117,7 @@ class RolePermissionSeeder extends Seeder
         $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $partner = Role::firstOrCreate(['name' => 'partner', 'guard_name' => 'web']);
         $driver = Role::firstOrCreate(['name' => 'driver', 'guard_name' => 'web']);
-        $user = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
+        $customer = Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
 
         // Super Admin - All Permissions
         $superAdmin->syncPermissions(Permission::all());
@@ -110,40 +126,43 @@ class RolePermissionSeeder extends Seeder
         $admin->syncPermissions(Permission::all());
 
         // Partner (Mitra) - revenue & reports + limited operational visibility
-        // NOTE: Requirement menyebut utilisasi/lokasi mobil dipakai dan laporan keuangan.
-        // Di seeder saat ini belum ada permission spesifik utilisasi, jadi menggunakan permission yang paling mendekati:
-        // - view_partner_revenue
-        // - view_reports/export_reports/view_analytics
-        // - view_vehicles/view_drivers
+        // Updated per requirements: utilisasi/lokasi mobil dipakai dan laporan keuangan
         $partner->syncPermissions([
             'view_partner_revenue',
+            'view_partner_financial_reports',
             'view_reports',
             'export_reports',
             'view_analytics',
             'view_vehicles',
+            'view_vehicle_utilization',
+            'view_vehicle_location',
             'view_drivers',
             'view_payments',
             'view_reviews',
+            'edit_own_profile',
         ]);
 
         // Driver (Sopir) - accept/start/complete trip
-        // Endpoint driver di web routes memakai role:driver.
-        // Untuk permission detail (kalau diperlukan di layer authorize/gate), tetap beri:
+        // Updated per requirements: accept/start/complete trip permissions
         $driver->syncPermissions([
             'view_analytics',
             'manage_driver_tracking',
+            'accept_trip',
+            'start_trip',
+            'complete_trip',
+            'view_available_trips',
+            'edit_own_profile',
         ]);
 
-        // User (Customer/Guest) - booking & view availability
-        // Requirement: user hanya memesan + melihat ketersediaan.
-        // Di sistem permission yang ada, paling dekat adalah:
-        // - view_travels/view_rentals (ketersediaan & info)
-        // - manage_bookings (buat booking)
-        $user->syncPermissions([
+        // Customer (Customer/Guest) - booking & view availability
+        // Updated role name from 'user' to 'customer' to match demo users
+        // Requirement: customer hanya memesan + melihat ketersediaan.
+        $customer->syncPermissions([
             'view_travels',
             'view_rentals',
             'manage_bookings',
             'cancel_booking',
+            'edit_own_profile',
         ]);
     }
 }

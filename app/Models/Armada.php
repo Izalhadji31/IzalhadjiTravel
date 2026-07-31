@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 #[Fillable(['mitra_id', 'driver_name', 'driver_phone', 'plate_number', 'vehicle_type', 'seat_capacity', 'status', 'purchase_date', 'last_maintenance_date'])]
@@ -38,6 +39,11 @@ class Armada extends Model
     public function rentalAssignments(): HasMany
     {
         return $this->hasMany(RentalBooking::class, 'assigned_armada_id');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewable_id')->where('reviewable_type', Armada::class);
     }
 
     /**
@@ -76,5 +82,29 @@ class Armada extends Model
     public function setToMaintenance(): void
     {
         $this->update(['status' => 'maintenance']);
+    }
+
+    /**
+     * Calculate average rating
+     */
+    public function getAverageRating(): float
+    {
+        return $this->reviews()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get total review count
+     */
+    public function getReviewCount(): int
+    {
+        return $this->reviews()->count();
+    }
+
+    /**
+     * Check if has reviews
+     */
+    public function hasReviews(): bool
+    {
+        return $this->getReviewCount() > 0;
     }
 }

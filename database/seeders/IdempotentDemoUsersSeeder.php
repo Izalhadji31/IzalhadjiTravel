@@ -11,45 +11,64 @@ class IdempotentDemoUsersSeeder extends Seeder
 {
     public function run(): void
     {
-        // Demo admin (password fixed)
-        User::updateOrCreate(
-            ['email' => 'admin@asrgo.com'],
+        // Skip users that are already created by CompanySeeder
+        $existingEmails = ['superadmin@asrgo.com', 'admin@izalhadji.com', 'admin@floresjaya.com', 'admin@nttexpress.com'];
+
+        // Demo admin (asrgo.test domain)
+        $adminUser = User::updateOrCreate(
+            ['email' => 'admin@asrgo.test'],
             [
                 'id' => Str::uuid(),
-                'name' => 'Admin ASR GO',
-                'phone' => '083156408078',
+                'name' => 'Admin Demo',
+                'phone' => '081333333333',
                 'role' => 'admin',
                 'is_verified' => true,
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('password'),
             ]
         );
+        $adminUser->assignRole('admin');
 
-        // Demo regular users (password fixed)
-        User::updateOrCreate(
-            ['email' => 'user1@asrgo.com'],
+        // Demo customer (asrgo.test domain)
+        $customerUser = User::updateOrCreate(
+            ['email' => 'customer@asrgo.test'],
             [
                 'id' => Str::uuid(),
-                'name' => 'User One',
-                'phone' => '081234567891',
+                'name' => 'Customer Demo',
+                'phone' => '081444444444',
                 'role' => 'customer',
                 'is_verified' => true,
-                'password' => Hash::make('user123'),
+                'password' => Hash::make('password'),
             ]
         );
+        $customerUser->assignRole('customer');
 
-
-        User::updateOrCreate(
-            ['email' => 'user2@asrgo.com'],
+        // Demo driver (asrgo.test domain)
+        $driverUser = User::updateOrCreate(
+            ['email' => 'driver@asrgo.test'],
             [
                 'id' => Str::uuid(),
-                'name' => 'User Two',
-                'phone' => '081234567892',
-                'role' => 'customer',
+                'name' => 'Driver Demo',
+                'phone' => '081555555555',
+                'role' => 'driver',
                 'is_verified' => true,
-
-                'password' => Hash::make('user123'),
+                'password' => Hash::make('password'),
             ]
         );
+        $driverUser->assignRole('driver');
+
+        // Demo partner (asrgo.test domain)
+        $partnerUser = User::updateOrCreate(
+            ['email' => 'partner@asrgo.test'],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Partner Demo',
+                'phone' => '081666666666',
+                'role' => 'partner',
+                'is_verified' => true,
+                'password' => Hash::make('password'),
+            ]
+        );
+        $partnerUser->assignRole('partner');
     }
 }
 

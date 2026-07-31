@@ -111,6 +111,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{rentalBooking}', [BookingRentalController::class, 'show'])->name('bookings.rental.show');
             Route::delete('/{rentalBooking}', [BookingRentalController::class, 'destroy'])->name('bookings.rental.destroy');
         });
+        Route::get('/search', [BookingRentalController::class, 'search'])->name('bookings.rental.search');
+        Route::post('/search', [BookingRentalController::class, 'searchResults'])->name('bookings.rental.search-results');
         Route::get('/create', [BookingRentalController::class, 'create'])->name('bookings.rental.create');
         Route::post('/', [BookingRentalController::class, 'store'])->name('bookings.rental.store');
     });
@@ -296,19 +298,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Super Admin Routes - Global SaaS Management
-    // Uncomment when views are created
-    // Route::middleware('role:admin')->prefix('super-admin')->group(function () {
-    //     Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
-    //     Route::get('/companies', [SuperAdminController::class, 'companies'])->name('super-admin.companies');
-    //     Route::get('/companies/create', [SuperAdminController::class, 'createCompany'])->name('super-admin.companies.create');
-    //     Route::post('/companies', [SuperAdminController::class, 'storeCompany'])->name('super-admin.companies.store');
-    //     Route::get('/companies/{company}', [SuperAdminController::class, 'showCompany'])->name('super-admin.companies.show');
-    //     Route::put('/companies/{company}', [SuperAdminController::class, 'updateCompany'])->name('super-admin.companies.update');
-    //     Route::post('/companies/{company}/suspend', [SuperAdminController::class, 'suspendCompany'])->name('super-admin.companies.suspend');
-    //     Route::post('/companies/{company}/activate', [SuperAdminController::class, 'activateCompany'])->name('super-admin.companies.activate');
-    //     Route::get('/users', [SuperAdminController::class, 'users'])->name('super-admin.users');
-    //     Route::get('/analytics', [SuperAdminController::class, 'analytics'])->name('super-admin.analytics');
-    //     Route::get('/settings', [SuperAdminController::class, 'settings'])->name('super-admin.settings');
-    //     Route::put('/settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
-    // });
+    Route::middleware('role:super_admin')->prefix('super-admin')->group(function () {
+        Route::get('/', [SuperAdminController::class, 'dashboard'])->name('super-admin.dashboard');
+        Route::get('/companies', [SuperAdminController::class, 'companies'])->name('super-admin.companies');
+        Route::get('/companies/create', [SuperAdminController::class, 'createCompany'])->name('super-admin.companies.create');
+        Route::post('/companies', [SuperAdminController::class, 'storeCompany'])->name('super-admin.companies.store');
+        Route::get('/companies/{company}', [SuperAdminController::class, 'showCompany'])->name('super-admin.companies.show');
+        Route::put('/companies/{company}', [SuperAdminController::class, 'updateCompany'])->name('super-admin.companies.update');
+        Route::post('/companies/{company}/suspend', [SuperAdminController::class, 'suspendCompany'])->name('super-admin.companies.suspend');
+        Route::post('/companies/{company}/activate', [SuperAdminController::class, 'activateCompany'])->name('super-admin.companies.activate');
+        Route::get('/users', [SuperAdminController::class, 'users'])->name('super-admin.users');
+        Route::get('/analytics', [SuperAdminController::class, 'analytics'])->name('super-admin.analytics');
+        Route::get('/settings', [SuperAdminController::class, 'settings'])->name('super-admin.settings');
+        Route::put('/settings', [SuperAdminController::class, 'updateSettings'])->name('super-admin.settings.update');
+    });
 });

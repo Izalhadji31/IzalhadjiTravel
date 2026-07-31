@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('phone')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['customer', 'driver', 'partner', 'admin'])->default('customer');
+            $table->enum('role', ['customer', 'driver', 'partner', 'admin', 'super_admin'])->default('customer');
             $table->string('profile_photo_path')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();

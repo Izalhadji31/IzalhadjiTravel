@@ -128,6 +128,11 @@ class User extends Authenticatable
         return $this->role === 'driver';
     }
 
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
     public function canBook(): bool
     {
         return $this->is_identity_verified && in_array($this->role, ['customer', 'partner']);

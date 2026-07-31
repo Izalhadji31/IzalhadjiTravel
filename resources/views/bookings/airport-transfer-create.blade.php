@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Pesan Airport Transfer')
+@section('title', 'Pesan Airport Transfer - Ende')
 
 @section('content')
     <!-- Page Header -->
     <div class="page-header mb-8">
-        <h1 class="page-title">Pesan Airport Transfer</h1>
-        <p class="page-subtitle">Isi form di bawah untuk melakukan pemesanan airport transfer.</p>
+        <h1 class="page-title">Pesan Airport Transfer - Ende</h1>
+        <p class="page-subtitle">Layanan antar-jemput bandara H. Hasan Aroeboesman di Kota Ende</p>
+    </div>
+
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <p class="text-sm text-blue-800">
+            <strong>Info:</strong> Layanan airport transfer ini hanya tersedia untuk area Kota Ende dan sekitarnya.
+        </p>
     </div>
 
     @if ($errors->any())
@@ -50,23 +56,64 @@
 
                 <!-- Location Information -->
                 <div class="mb-6 pb-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Lokasi & Waktu</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Lokasi & Waktu - Ende</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Penjemputan <span class="text-red-500">*</span></label>
-                            <input type="text" name="pickup_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('pickup_location') border-red-500 @enderror" placeholder="Nama tempat atau alamat" value="{{ old('pickup_location') }}" required>
-                            @error('pickup_location')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengantaran <span class="text-red-500">*</span></label>
-                            <input type="text" name="dropoff_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('dropoff_location') border-red-500 @enderror" placeholder="Nama tempat atau alamat" value="{{ old('dropoff_location') }}" required>
-                            @error('dropoff_location')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    <!-- Pickup Type -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Lokasi Penjemputan <span class="text-red-500">*</span></label>
+                        <select name="pickup_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('pickup_type') border-red-500 @enderror" required onchange="handlePickupTypeChange()">
+                            <option value="">-- Pilih tipe lokasi --</option>
+                            @foreach ($pickupLocations as $key => $label)
+                                <option value="{{ $key }}" @selected(old('pickup_type') == $key)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('pickup_type')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Pickup Location -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Penjemputan <span class="text-red-500">*</span></label>
+                        <input type="text" name="pickup_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('pickup_location') border-red-500 @enderror" placeholder="Nama tempat atau alamat di Ende" value="{{ old('pickup_location') }}" required>
+                        @error('pickup_location')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Pickup Address -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap Penjemputan</label>
+                        <textarea name="pickup_address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" rows="2" placeholder="Alamat lengkap di Ende (opsional)" value="{{ old('pickup_address') }}"></textarea>
+                    </div>
+
+                    <!-- Dropoff Type -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Lokasi Pengantaran <span class="text-red-500">*</span></label>
+                        <select name="dropoff_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('dropoff_type') border-red-500 @enderror" required onchange="handleDropoffTypeChange()">
+                            <option value="">-- Pilih tipe lokasi --</option>
+                            @foreach ($dropoffLocations as $key => $label)
+                                <option value="{{ $key }}" @selected(old('dropoff_type') == $key)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('dropoff_type')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Dropoff Location -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengantaran <span class="text-red-500">*</span></label>
+                        <input type="text" name="dropoff_location" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('dropoff_location') border-red-500 @enderror" placeholder="Nama tempat atau alamat di Ende" value="{{ old('dropoff_location') }}" required>
+                        @error('dropoff_location')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Dropoff Address -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap Pengantaran</label>
+                        <textarea name="dropoff_address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" rows="2" placeholder="Alamat lengkap di Ende (opsional)" value="{{ old('dropoff_address') }}"></textarea>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -109,12 +156,51 @@
                     </div>
 
                     <div id="return-date-section" class="mt-4 hidden">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengembalian <span class="text-red-500">*</span></label>
-                        <input type="date" name="return_date" id="return_date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('return_date') border-red-500 @enderror" value="{{ old('return_date') }}">
-                        @error('return_date')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengembalian <span class="text-red-500">*</span></label>
+                                <input type="date" name="return_date" id="return_date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('return_date') border-red-500 @enderror" value="{{ old('return_date') }}">
+                                @error('return_date')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Waktu Pengembalian <span class="text-red-500">*</span></label>
+                                <input type="time" name="return_time" id="return_time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('return_time') border-red-500 @enderror" value="{{ old('return_time') }}">
+                                @error('return_time')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Vehicle Type -->
+                <div class="mb-6 pb-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tipe Kendaraan</h3>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <label class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-600 transition-colors @error('vehicle_type_id') border-red-500 @enderror">
+                            <input type="radio" name="vehicle_type_id" value="" @checked(old('vehicle_type_id') == '')
+                                   class="hidden peer" onchange="updatePrice()">
+                            <div class="text-center peer-checked:bg-blue-50 peer-checked:border-blue-600">
+                                <div class="text-2xl mb-2">🚗</div>
+                                <div class="font-medium">Semua Tipe</div>
+                            </div>
+                        </label>
+                        @foreach ($vehicleTypes as $type)
+                        <label class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-600 transition-colors @error('vehicle_type_id') border-red-500 @enderror">
+                            <input type="radio" name="vehicle_type_id" value="{{ $type->id }}" @checked(old('vehicle_type_id') == $type->id)
+                                   class="hidden peer" onchange="updatePrice()">
+                            <div class="text-center peer-checked:bg-blue-50 peer-checked:border-blue-600">
+                                <div class="text-2xl mb-2">{{ $type->icon }}</div>
+                                <div class="font-medium">{{ $type->name }}</div>
+                                <div class="text-sm text-gray-600">{{ $type->capacity }} seats</div>
+                            </div>
+                        </label>
+                        @endforeach
+                    </div>
+                    @error('vehicle_type_id') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <!-- Passenger & Vehicle Info -->
@@ -249,21 +335,76 @@
             const transferType = document.querySelector('input[name="transfer_type"]:checked').value;
             const returnDateSection = document.getElementById('return-date-section');
             const returnDateInput = document.getElementById('return_date');
+            const returnTimeInput = document.getElementById('return_time');
             
             if (transferType === 'round_trip') {
                 returnDateSection.classList.remove('hidden');
                 returnDateInput.required = true;
+                returnTimeInput.required = true;
             } else {
                 returnDateSection.classList.add('hidden');
                 returnDateInput.required = false;
+                returnTimeInput.required = false;
                 returnDateInput.value = '';
+                returnTimeInput.value = '';
+            }
+            updatePrice();
+        }
+
+        function handlePickupTypeChange() {
+            const pickupType = document.querySelector('select[name="pickup_type"]').value;
+            const pickupLocation = document.querySelector('input[name="pickup_location"]');
+            
+            // Auto-fill location based on type
+            if (pickupType === 'airport') {
+                pickupLocation.value = 'H. Hasan Aroeboesman Airport (Ende)';
+            } else if (pickupType === 'hotel') {
+                pickupLocation.value = 'Hotel in Ende';
+            } else if (pickupType === 'terminal') {
+                pickupLocation.value = 'Terminal / Bus Station Ende';
+            } else {
+                pickupLocation.value = '';
+            }
+        }
+
+        function handleDropoffTypeChange() {
+            const dropoffType = document.querySelector('select[name="dropoff_type"]').value;
+            const dropoffLocation = document.querySelector('input[name="dropoff_location"]');
+            
+            // Auto-fill location based on type
+            if (dropoffType === 'airport') {
+                dropoffLocation.value = 'H. Hasan Aroeboesman Airport (Ende)';
+            } else if (dropoffType === 'hotel') {
+                dropoffLocation.value = 'Hotel in Ende';
+            } else if (dropoffType === 'terminal') {
+                dropoffLocation.value = 'Terminal / Bus Station Ende';
+            } else {
+                dropoffLocation.value = '';
             }
         }
 
         function updatePrice() {
             const basePrice = parseFloat(document.getElementById('base_price').value) || 0;
             const passengers = parseInt(document.querySelector('select[name="number_of_passengers"]').value) || 1;
-            const totalPrice = basePrice * passengers;
+            const transferType = document.querySelector('input[name="transfer_type"]:checked').value;
+            const vehicleTypeId = document.querySelector('input[name="vehicle_type_id"]:checked')?.value;
+            
+            let totalPrice = basePrice;
+            
+            // Apply vehicle type multiplier
+            if (vehicleTypeId) {
+                // This will be calculated server-side, but we can provide visual feedback
+                // For now, just use base price
+            }
+            
+            // Apply passenger multiplier
+            totalPrice = totalPrice * passengers;
+            
+            // Apply round trip multiplier
+            if (transferType === 'round_trip') {
+                totalPrice = totalPrice * 2;
+            }
+            
             document.getElementById('total_price').value = totalPrice;
         }
 

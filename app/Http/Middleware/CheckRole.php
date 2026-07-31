@@ -24,12 +24,24 @@ class CheckRole
             ], 401);
         }
 
-        if (!in_array(Auth::user()->role, $roles)) {
+        $userRole = Auth::user()->role;
+
+        // Super admin has access to all roles
+        if ($userRole === 'super_admin') {
+            return $next($request);
+        }
+
+        // Admin can access admin routes (and super admin routes for backwards compatibility)
+        if ($userRole === 'admin' && (in_array('admin', $roles) || in_array('super_admin', $roles))) {
+            return $next($request);
+        }
+
+        if (!in_array($userRole, $roles)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Forbidden. Your role does not have access to this resource.',
                 'code' => 'FORBIDDEN',
-                'user_role' => Auth::user()->role,
+                'user_role' => $userRole,
                 'required_roles' => $roles
             ], 403);
         }

@@ -14,168 +14,195 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Super Admin user first (without company)
-        $superAdmin = User::create([
-            'id' => Str::uuid(),
-            'name' => 'Super Admin',
-            'email' => 'superadmin@asrgo.com',
-            'password' => bcrypt('password123'),
-            'phone' => '+62812345670',
-            'role' => 'admin',
-            'is_verified' => true,
-            'is_active' => true,
-        ]);
+        // Create Super Admin user first (without company) - use updateOrCreate to avoid conflicts
+        $superAdmin = User::updateOrCreate(
+            ['email' => 'superadmin@asrgo.com'],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Super Admin',
+                'password' => bcrypt('password123'),
+                'phone' => '+62812345670',
+                'role' => 'super_admin',
+                'is_verified' => true,
+                'is_active' => true,
+            ]
+        );
+        $superAdmin->assignRole('super_admin');
 
         // Company 1: CV. Izalhadji Travel
-        $company1 = Company::create([
-            'id' => Str::uuid(),
-            'name' => 'CV. Izalhadji Travel',
-            'slug' => 'izalhadji-travel',
-            'email' => 'admin@izalhadji.com',
-            'phone' => '+62812345671',
-            'address' => 'Jl. Imam Bonjol No. 15',
-            'city' => 'Ende',
-            'province' => 'Nusa Tenggara Timur',
-            'postal_code' => '86311',
-            'country' => 'Indonesia',
-            'description' => 'Travel antar kota dan rental mobil di Pulau Flores',
-            'subscription_plan' => 'professional',
-            'max_users' => 50,
-            'max_vehicles' => 20,
-            'features_tracking' => true,
-            'features_payment' => true,
-            'features_analytics' => true,
-            'monthly_fee' => 500000,
-            'subscription_start_date' => now(),
-            'subscription_end_date' => now()->addYear(),
-            'status' => 'active',
-            'is_verified' => true,
-            'verified_at' => now(),
-        ]);
+        $company1 = Company::updateOrCreate(
+            ['email' => 'admin@izalhadji.com'],
+            [
+                'id' => Str::uuid(),
+                'name' => 'CV. Izalhadji Travel',
+                'slug' => 'izalhadji-travel',
+                'email' => 'admin@izalhadji.com',
+                'phone' => '+62812345671',
+                'address' => 'Jl. Imam Bonjol No. 15',
+                'city' => 'Ende',
+                'province' => 'Nusa Tenggara Timur',
+                'postal_code' => '86311',
+                'country' => 'Indonesia',
+                'description' => 'Travel antar kota dan rental mobil di Pulau Flores',
+                'subscription_plan' => 'professional',
+                'max_users' => 50,
+                'max_vehicles' => 20,
+                'features_tracking' => true,
+                'features_payment' => true,
+                'features_analytics' => true,
+                'monthly_fee' => 500000,
+                'subscription_start_date' => now(),
+                'subscription_end_date' => now()->addYear(),
+                'status' => 'active',
+                'is_verified' => true,
+                'verified_at' => now(),
+            ]
+        );
 
         // Create admin user for Company 1
-        $admin1 = User::create([
-            'id' => Str::uuid(),
-            'company_id' => $company1->id,
-            'name' => 'Admin Izalhadji',
-            'email' => 'admin@izalhadji.com',
-            'password' => bcrypt('password123'),
-            'phone' => '+62812345671',
-            'role' => 'admin',
-            'is_verified' => true,
-            'is_active' => true,
-        ]);
+        $admin1 = User::updateOrCreate(
+            ['email' => 'admin@izalhadji.com'],
+            [
+                'id' => Str::uuid(),
+                'company_id' => $company1->id,
+                'name' => 'Admin Izalhadji',
+                'password' => bcrypt('password123'),
+                'phone' => '+62812345671',
+                'role' => 'admin',
+                'is_verified' => true,
+                'is_active' => true,
+            ]
+        );
+        $admin1->assignRole('admin');
 
         $company1->update(['admin_user_id' => $admin1->id]);
 
         // Create sample users for Company 1
         for ($i = 1; $i <= 3; $i++) {
-            User::create([
-                'id' => Str::uuid(),
-                'company_id' => $company1->id,
-                'name' => 'Customer ' . $i,
-                'email' => "customer{$i}@izalhadji.com",
-                'password' => bcrypt('password123'),
-                'phone' => '+6281234567' . (71 + $i),
-                'role' => 'customer',
-                'is_verified' => true,
-                'is_active' => true,
-            ]);
+            $customer = User::updateOrCreate(
+                ['email' => "customer{$i}@izalhadji.com"],
+                [
+                    'id' => Str::uuid(),
+                    'company_id' => $company1->id,
+                    'name' => 'Customer ' . $i,
+                    'password' => bcrypt('password123'),
+                    'phone' => '+6281234567' . (71 + $i),
+                    'role' => 'customer',
+                    'is_verified' => true,
+                    'is_active' => true,
+                ]
+            );
+            $customer->assignRole('customer');
         }
 
         // Create sample drivers for Company 1
         for ($i = 1; $i <= 3; $i++) {
-            User::create([
-                'id' => Str::uuid(),
-                'company_id' => $company1->id,
-                'name' => 'Driver ' . $i,
-                'email' => "driver{$i}@izalhadji.com",
-                'password' => bcrypt('password123'),
-                'phone' => '+6281234567' . (81 + $i),
-                'role' => 'driver',
-                'is_verified' => true,
-                'is_active' => true,
-            ]);
+            $driver = User::updateOrCreate(
+                ['email' => "driver{$i}@izalhadji.com"],
+                [
+                    'id' => Str::uuid(),
+                    'company_id' => $company1->id,
+                    'name' => 'Driver ' . $i,
+                    'password' => bcrypt('password123'),
+                    'phone' => '+6281234567' . (81 + $i),
+                    'role' => 'driver',
+                    'is_verified' => true,
+                    'is_active' => true,
+                ]
+            );
+            $driver->assignRole('driver');
         }
 
         // Company 2: Flores Jaya Travel
-        $company2 = Company::create([
-            'id' => Str::uuid(),
-            'name' => 'Flores Jaya Travel',
-            'slug' => 'flores-jaya-travel',
-            'email' => 'admin@floresjaya.com',
-            'phone' => '+62812345680',
-            'address' => 'Jl. Ahmad Yani No. 20',
-            'city' => 'Maumere',
-            'province' => 'Nusa Tenggara Timur',
-            'postal_code' => '86113',
-            'country' => 'Indonesia',
-            'description' => 'Travel premium dengan layanan VIP',
-            'subscription_plan' => 'professional',
-            'max_users' => 30,
-            'max_vehicles' => 15,
-            'features_tracking' => true,
-            'features_payment' => true,
-            'features_analytics' => true,
-            'monthly_fee' => 400000,
-            'subscription_start_date' => now(),
-            'subscription_end_date' => now()->addYear(),
-            'status' => 'active',
-            'is_verified' => true,
-            'verified_at' => now(),
-        ]);
+        $company2 = Company::updateOrCreate(
+            ['email' => 'admin@floresjaya.com'],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Flores Jaya Travel',
+                'slug' => 'flores-jaya-travel',
+                'email' => 'admin@floresjaya.com',
+                'phone' => '+62812345680',
+                'address' => 'Jl. Ahmad Yani No. 20',
+                'city' => 'Maumere',
+                'province' => 'Nusa Tenggara Timur',
+                'postal_code' => '86113',
+                'country' => 'Indonesia',
+                'description' => 'Travel premium dengan layanan VIP',
+                'subscription_plan' => 'professional',
+                'max_users' => 30,
+                'max_vehicles' => 15,
+                'features_tracking' => true,
+                'features_payment' => true,
+                'features_analytics' => true,
+                'monthly_fee' => 400000,
+                'subscription_start_date' => now(),
+                'subscription_end_date' => now()->addYear(),
+                'status' => 'active',
+                'is_verified' => true,
+                'verified_at' => now(),
+            ]
+        );
 
-        $admin2 = User::create([
-            'id' => Str::uuid(),
-            'company_id' => $company2->id,
-            'name' => 'Admin Flores Jaya',
-            'email' => 'admin@floresjaya.com',
-            'password' => bcrypt('password123'),
-            'phone' => '+62812345680',
-            'role' => 'admin',
-            'is_verified' => true,
-            'is_active' => true,
-        ]);
+        $admin2 = User::updateOrCreate(
+            ['email' => 'admin@floresjaya.com'],
+            [
+                'id' => Str::uuid(),
+                'company_id' => $company2->id,
+                'name' => 'Admin Flores Jaya',
+                'password' => bcrypt('password123'),
+                'phone' => '+62812345680',
+                'role' => 'admin',
+                'is_verified' => true,
+                'is_active' => true,
+            ]
+        );
+        $admin2->assignRole('admin');
 
         $company2->update(['admin_user_id' => $admin2->id]);
 
         // Company 3: NTT Express (Trial)
-        $company3 = Company::create([
-            'id' => Str::uuid(),
-            'name' => 'NTT Express',
-            'slug' => 'ntt-express',
-            'email' => 'admin@nttexpress.com',
-            'phone' => '+62812345690',
-            'address' => 'Jl. Sudirman No. 45',
-            'city' => 'Bajawa',
-            'province' => 'Nusa Tenggara Timur',
-            'postal_code' => '86410',
-            'country' => 'Indonesia',
-            'description' => 'Perusahaan transportasi baru dengan teknologi terkini',
-            'subscription_plan' => 'starter',
-            'max_users' => 10,
-            'max_vehicles' => 5,
-            'features_tracking' => false,
-            'features_payment' => true,
-            'features_analytics' => false,
-            'monthly_fee' => 200000,
-            'subscription_start_date' => now(),
-            'subscription_end_date' => now()->addMonth(),
-            'status' => 'trial',
-            'is_verified' => false,
-        ]);
+        $company3 = Company::updateOrCreate(
+            ['email' => 'admin@nttexpress.com'],
+            [
+                'id' => Str::uuid(),
+                'name' => 'NTT Express',
+                'slug' => 'ntt-express',
+                'email' => 'admin@nttexpress.com',
+                'phone' => '+62812345690',
+                'address' => 'Jl. Sudirman No. 45',
+                'city' => 'Bajawa',
+                'province' => 'Nusa Tenggara Timur',
+                'postal_code' => '86410',
+                'country' => 'Indonesia',
+                'description' => 'Perusahaan transportasi baru dengan teknologi terkini',
+                'subscription_plan' => 'starter',
+                'max_users' => 10,
+                'max_vehicles' => 5,
+                'features_tracking' => false,
+                'features_payment' => true,
+                'features_analytics' => false,
+                'monthly_fee' => 200000,
+                'subscription_start_date' => now(),
+                'subscription_end_date' => now()->addMonth(),
+                'status' => 'trial',
+                'is_verified' => false,
+            ]
+        );
 
-        $admin3 = User::create([
-            'id' => Str::uuid(),
-            'company_id' => $company3->id,
-            'name' => 'Admin NTT Express',
-            'email' => 'admin@nttexpress.com',
-            'password' => bcrypt('password123'),
-            'phone' => '+62812345690',
-            'role' => 'admin',
-            'is_verified' => true,
-            'is_active' => true,
-        ]);
+        $admin3 = User::updateOrCreate(
+            ['email' => 'admin@nttexpress.com'],
+            [
+                'id' => Str::uuid(),
+                'company_id' => $company3->id,
+                'name' => 'Admin NTT Express',
+                'password' => bcrypt('password123'),
+                'phone' => '+62812345690',
+                'role' => 'admin',
+                'is_verified' => true,
+                'is_active' => true,
+            ]
+        );
+        $admin3->assignRole('admin');
 
         $company3->update(['admin_user_id' => $admin3->id]);
 

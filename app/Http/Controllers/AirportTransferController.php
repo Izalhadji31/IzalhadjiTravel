@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\AirportTransferBooking;
 use App\Models\Armada;
 use App\Models\Driver;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class AirportTransferController extends Controller
 {
+    private const DEFAULT_CITY = 'Ende';
+
     /**
      * Display airport transfer bookings
      */
@@ -31,7 +34,7 @@ class AirportTransferController extends Controller
             $bookings->where('transfer_type', $request->transfer_type);
         }
 
-        $bookings = $bookings->with(['user', 'assignedArmada', 'assignedDriver'])
+        $bookings = $bookings->with(['user', 'assignedArmada', 'assignedDriver', 'vehicleType'])
                              ->latest()
                              ->paginate(10);
 
@@ -43,11 +46,34 @@ class AirportTransferController extends Controller
      */
     public function create()
     {
+        $vehicleTypes = VehicleType::active()->sorted()->get();
         $armadas = Armada::where('is_available', true)
                          ->where('is_active', true)
                          ->get();
 
-        return view('bookings.airport-transfer-create', compact('armadas'));
+        // Ende-specific pickup/dropoff locations
+        $pickupLocations = [
+            'airport' => 'H. Hasan Aroeboesman Airport (Ende)',
+            'hotel' => 'Hotel in Ende',
+            'address' => 'Specific Address in Ende',
+            'terminal' => 'Terminal / Bus Station',
+            'other' => 'Other Location',
+        ];
+
+        $dropoffLocations = [
+            'airport' => 'H. Hasan Aroeboesman Airport (Ende)',
+            'hotel' => 'Hotel in Ende',
+            'address' => 'Specific Address in Ende',
+            'terminal' => 'Terminal / Bus Station',
+            'other' => 'Other Location',
+        ];
+
+        return view('bookings.airport-transfer-create', compact(
+            'vehicleTypes',
+            'armadas',
+            'pickupLocations',
+            'dropoffLocations'
+        ));
     }
 
     /**
@@ -66,13 +92,19 @@ class AirportTransferController extends Controller
         $validated = $request->validate([
             'passenger_name' => 'required|string|max:255',
             'passenger_phone' => 'required|string|max:20',
+            'pickup_type' => 'required|in:airport,hotel,address,terminal,other',
             'pickup_location' => 'required|string|max:255',
+            'pickup_address' => 'nullable|string|max:500',
+            'dropoff_type' => 'required|in:airport,hotel,address,terminal,other',
             'dropoff_location' => 'required|string|max:255',
+            'dropoff_address' => 'nullable|string|max:500',
             'scheduled_date' => 'required|date|after:today',
             'departure_time' => 'required|date_format:H:i',
             'number_of_passengers' => 'required|integer|min:1|max:8',
             'transfer_type' => 'required|in:one_way,round_trip',
             'return_date' => 'nullable|date|after:scheduled_date|required_if:transfer_type,round_trip',
+            'return_time' => 'nullable|date_format:H:i|required_if:transfer_type,round_trip',
+            'vehicle_type_id' => 'nullable|exists:vehicle_types,id',
             'flight_number' => 'nullable|string|max:20',
             'airline' => 'nullable|string|max:100',
             'flight_arrival_time' => 'nullable|date_format:Y-m-d H:i',
@@ -81,27 +113,54 @@ class AirportTransferController extends Controller
             'total_price' => 'required|numeric|min:0',
         ]);
 
-        // Create booking
+        // Calculate price based on vehicle type
+        $basePrice = $validated['base_price'];
+        if (isset($validated['vehicle_type_id'])) {
+            $vehicleType = VehicleType::find($validated['vehicle_type_id']);
+            if ($vehicleType) {
+                $basePrice = $vehicleType->calculatePrice($basePrice);
+            }
+        }
+
+        // Calculate total price
+        $totalPrice = $basePrice;
+        if ($validated['transfer_type'] === 'round_trip') {
+            $totalPrice = $basePrice * 2; // Round trip is double the price
+        }
+
+        // Handle return time for round trip
+        $returnDateTime = null;
+        if ($validated['transfer_type'] === 'round_trip' && isset($validated['return_date']) && isset($validated['return_time'])) {
+            $returnDateTime = $validated['return_date'] . ' ' . $validated['return_time'];
+        }
+
+        // Create booking with city set to Ende
         $booking = AirportTransferBooking::create([
             'user_id' => $user->id,
+            'company_id' => $user->company_id,
+            'city' => self::DEFAULT_CITY,
             'booking_code' => 'ATB-' . now()->format('Ymd') . '-' . Str::upper(Str::random(6)),
             'passenger_name' => $validated['passenger_name'],
             'passenger_phone' => $validated['passenger_phone'],
+            'pickup_type' => $validated['pickup_type'],
             'pickup_location' => $validated['pickup_location'],
+            'pickup_address' => $validated['pickup_address'],
+            'dropoff_type' => $validated['dropoff_type'],
             'dropoff_location' => $validated['dropoff_location'],
+            'dropoff_address' => $validated['dropoff_address'],
             'scheduled_date' => $validated['scheduled_date'] . ' ' . $validated['departure_time'],
             'departure_time' => $validated['departure_time'],
             'number_of_passengers' => $validated['number_of_passengers'],
             'transfer_type' => $validated['transfer_type'],
-            'return_date' => $validated['return_date'] ?? null,
+            'return_date' => $returnDateTime,
+            'vehicle_type_id' => $validated['vehicle_type_id'] ?? null,
             'flight_number' => $validated['flight_number'] ?? null,
             'airline' => $validated['airline'] ?? null,
             'flight_arrival_time' => $validated['flight_arrival_time'] ?? null,
             'special_requests' => $validated['special_requests'] ?? null,
-            'base_price' => $validated['base_price'],
-            'total_price' => $validated['total_price'],
+            'base_price' => $basePrice,
+            'total_price' => $totalPrice,
             'status' => 'pending',
-            'company_id' => $user->company_id,
         ]);
 
         return redirect()->route('bookings.airport-transfer.show', $booking)
@@ -120,6 +179,7 @@ class AirportTransferController extends Controller
                 'user',
                 'assignedArmada',
                 'assignedDriver',
+                'vehicleType',
                 'payments',
                 'reviews'
             ])
@@ -133,11 +193,34 @@ class AirportTransferController extends Controller
     {
         $this->authorize('update', $airportTransferBooking);
 
+        $vehicleTypes = VehicleType::active()->sorted()->get();
         $armadas = Armada::where('is_available', true)
                          ->where('is_active', true)
                          ->get();
 
-        return view('bookings.airport-transfer-edit', compact('airportTransferBooking', 'armadas'));
+        $pickupLocations = [
+            'airport' => 'H. Hasan Aroeboesman Airport (Ende)',
+            'hotel' => 'Hotel in Ende',
+            'address' => 'Specific Address in Ende',
+            'terminal' => 'Terminal / Bus Station',
+            'other' => 'Other Location',
+        ];
+
+        $dropoffLocations = [
+            'airport' => 'H. Hasan Aroeboesman Airport (Ende)',
+            'hotel' => 'Hotel in Ende',
+            'address' => 'Specific Address in Ende',
+            'terminal' => 'Terminal / Bus Station',
+            'other' => 'Other Location',
+        ];
+
+        return view('bookings.airport-transfer-edit', compact(
+            'airportTransferBooking',
+            'vehicleTypes',
+            'armadas',
+            'pickupLocations',
+            'dropoffLocations'
+        ));
     }
 
     /**
@@ -155,8 +238,12 @@ class AirportTransferController extends Controller
         $validated = $request->validate([
             'passenger_name' => 'required|string|max:255',
             'passenger_phone' => 'required|string|max:20',
+            'pickup_type' => 'required|in:airport,hotel,address,terminal,other',
             'pickup_location' => 'required|string|max:255',
+            'pickup_address' => 'nullable|string|max:500',
+            'dropoff_type' => 'required|in:airport,hotel,address,terminal,other',
             'dropoff_location' => 'required|string|max:255',
+            'dropoff_address' => 'nullable|string|max:500',
             'scheduled_date' => 'required|date|after:today',
             'departure_time' => 'required|date_format:H:i',
             'number_of_passengers' => 'required|integer|min:1|max:8',
@@ -166,8 +253,12 @@ class AirportTransferController extends Controller
         $airportTransferBooking->update([
             'passenger_name' => $validated['passenger_name'],
             'passenger_phone' => $validated['passenger_phone'],
+            'pickup_type' => $validated['pickup_type'],
             'pickup_location' => $validated['pickup_location'],
+            'pickup_address' => $validated['pickup_address'],
+            'dropoff_type' => $validated['dropoff_type'],
             'dropoff_location' => $validated['dropoff_location'],
+            'dropoff_address' => $validated['dropoff_address'],
             'scheduled_date' => $validated['scheduled_date'] . ' ' . $validated['departure_time'],
             'departure_time' => $validated['departure_time'],
             'number_of_passengers' => $validated['number_of_passengers'],

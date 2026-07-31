@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProfileController extends Controller
 {
@@ -32,6 +33,11 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
+
+        // Check if user has permission to edit profile
+        if (!$user->hasPermissionTo('edit_own_profile') && !$user->isAdmin() && !$user->isSuperAdmin()) {
+            return back()->with('error', 'You do not have permission to edit profile');
+        }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',

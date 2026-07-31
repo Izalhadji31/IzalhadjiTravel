@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 #[Fillable([
-    'user_id', 'company_id', 'booking_code', 'pickup_location', 'dropoff_location',
+    'user_id', 'company_id', 'booking_code', 'city', 'pickup_location', 'dropoff_location',
+    'pickup_address', 'dropoff_address', 'pickup_type', 'dropoff_type',
     'pickup_latitude', 'pickup_longitude', 'dropoff_latitude', 'dropoff_longitude',
     'scheduled_date', 'departure_time', 'number_of_passengers', 'transfer_type',
     'return_date', 'assigned_armada_id', 'assigned_driver_id', 'base_price',
@@ -30,11 +31,11 @@ class AirportTransferBooking extends Model
     {
         return [
             'scheduled_date' => 'datetime',
-            'departure_time' => 'datetime',
+            'departure_time' => 'datetime:H:i',
             'return_date' => 'datetime',
             'flight_arrival_time' => 'datetime',
-            'actual_pickup_time' => 'datetime',
-            'actual_dropoff_time' => 'datetime',
+            'actual_pickup_time' => 'datetime:H:i',
+            'actual_dropoff_time' => 'datetime:H:i',
             'base_price' => 'decimal:2',
             'total_price' => 'decimal:2',
             'discount' => 'decimal:2',
@@ -67,6 +68,11 @@ class AirportTransferBooking extends Model
     public function assignedDriver(): BelongsTo
     {
         return $this->belongsTo(Driver::class, 'assigned_driver_id');
+    }
+
+    public function vehicleType(): BelongsTo
+    {
+        return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
     }
 
     public function voucher(): BelongsTo
@@ -155,5 +161,21 @@ class AirportTransferBooking extends Model
     public function calculateFinalPrice(): float
     {
         return $this->total_price - $this->discount;
+    }
+
+    /**
+     * Check if booking is in Ende city
+     */
+    public function isInEnde(): bool
+    {
+        return $this->city === 'Ende';
+    }
+
+    /**
+     * Get city name with fallback
+     */
+    public function getCityName(): string
+    {
+        return $this->city ?? 'Ende';
     }
 };
