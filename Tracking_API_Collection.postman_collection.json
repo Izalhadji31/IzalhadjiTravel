@@ -1,0 +1,631 @@
+{
+  "info": {
+    "name": "Rental Car Tracking System API",
+    "description": "Complete API collection for vehicle tracking system",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"driver@example.com\", \"password\": \"password\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "GPS Tracking",
+      "item": [
+        {
+          "name": "Record Location",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"armada_id\": 1, \"latitude\": -6.2088, \"longitude\": 106.8456, \"address\": \"Jakarta Pusat\", \"speed\": 45.5, \"heading\": 180, \"accuracy\": 10}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/location",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "location"]
+            }
+          }
+        },
+        {
+          "name": "Get Latest Location",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/location/1/latest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "location", "1", "latest"]
+            }
+          }
+        },
+        {
+          "name": "Get Location History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/location/1/history?hours=24",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "location", "1", "history"],
+              "query": [
+                {
+                  "key": "hours",
+                  "value": "24"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Active Locations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/locations/active",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "locations", "active"]
+            }
+          }
+        },
+        {
+          "name": "Get Real-time Positions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/locations/realtime",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "locations", "realtime"]
+            }
+          }
+        },
+        {
+          "name": "Get Offline Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/locations/offline",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "locations", "offline"]
+            }
+          }
+        },
+        {
+          "name": "Find Nearby Vehicles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"latitude\": -6.2088, \"longitude\": 106.8456, \"radius_km\": 5}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/locations/nearby",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "locations", "nearby"]
+            }
+          }
+        },
+        {
+          "name": "Check Geofence Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"armada_id\": 1, \"geofence_latitude\": -6.2088, \"geofence_longitude\": 106.8456, \"radius_km\": 5}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/geofence/check",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "geofence", "check"]
+            }
+          }
+        },
+        {
+          "name": "Get Heatmap Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/heatmap/1?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "heatmap", "1"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "7"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trip Tracking",
+      "item": [
+        {
+          "name": "Start Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"rental_booking_id\": 1, \"armada_id\": 1, \"user_id\": 1, \"start_latitude\": -6.2088, \"start_longitude\": 106.8456, \"start_address\": \"Jakarta Pusat\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trip/start",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trip", "start"]
+            }
+          }
+        },
+        {
+          "name": "End Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"end_latitude\": -6.2200, \"end_longitude\": 106.8500, \"end_address\": \"Jakarta Selatan\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trip/1/end",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trip", "1", "end"]
+            }
+          }
+        },
+        {
+          "name": "Get Trip Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trip/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trip", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Trip Route",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trip/1/route",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trip", "1", "route"]
+            }
+          }
+        },
+        {
+          "name": "Get Active Trips",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trips/active",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trips", "active"]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle Trip History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trips/vehicle/1?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trips", "vehicle", "1"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Booking Trip History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/trips/booking/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "trips", "booking", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/statistics/vehicle/1?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "statistics", "vehicle", "1"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Daily Revenue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/revenue/daily/1?date=2026-05-26",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "revenue", "daily", "1"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-05-26"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fleet Management",
+      "item": [
+        {
+          "name": "Get Fleet Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/overview",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "overview"]
+            }
+          }
+        },
+        {
+          "name": "Get Fleet Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/dashboard?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "dashboard"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/metrics/1?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "metrics", "1"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Maintenance Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/maintenance/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "maintenance", "1"]
+            }
+          }
+        },
+        {
+          "name": "Log Maintenance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"armada_id\": 1, \"maintenance_type\": \"Oil change\", \"cost\": 500000, \"description\": \"Regular maintenance\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/maintenance/log",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "maintenance", "log"]
+            }
+          }
+        },
+        {
+          "name": "Schedule Maintenance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"armada_id\": 1, \"maintenance_type\": \"Tire rotation\", \"scheduled_date\": \"2026-06-01\", \"description\": \"Tire rotation scheduled\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/maintenance/schedule",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "maintenance", "schedule"]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles Needing Attention",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/needs-attention",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "needs-attention"]
+            }
+          }
+        },
+        {
+          "name": "Get Fleet Utilization",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/utilization?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "utilization"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate Fleet Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tracking/fleet/report?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tracking", "fleet", "report"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "YOUR_AUTH_TOKEN_HERE",
+      "type": "string"
+    }
+  ]
+}
