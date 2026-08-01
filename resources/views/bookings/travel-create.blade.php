@@ -445,7 +445,7 @@
 @endphp
 
 @push('scripts')
-<script type="application/json" id="routes-data">@json($routes->map(function ($r) {
+<script type="text/plain" id="routes-data">{{ json_encode($routes->map(function ($r) {
     return [
         'id' => (string) $r->id,
         'origin_city' => $r->origin_city,
@@ -454,13 +454,13 @@
         'estimated_hours' => $r->estimated_hours,
         'price_per_seat' => optional($r->travelPrices->first())->price_per_seat ?? 0,
     ];
-}))</script>
-<script type="application/json" id="booking-prefill-data">@json($bookingPrefill)</script>
+})->all()) }}</script>
+<script type="text/plain" id="booking-prefill-data">{{ json_encode($bookingPrefill) }}</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // ── DATA ──
-    const routes = JSON.parse(document.getElementById('routes-data').textContent);
-    const bookingPrefill = JSON.parse(document.getElementById('booking-prefill-data').textContent);
+    const routes = JSON.parse(document.getElementById('routes-data').textContent || '[]');
+    const bookingPrefill = JSON.parse(document.getElementById('booking-prefill-data').textContent || '{}');
 
     // ── ELEMENTS ──
     const routeSelect    = document.getElementById('route_id');
