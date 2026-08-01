@@ -18,193 +18,29 @@
             }
         }
     </script>
-    <style>
-        :root {
-            --trvl-blue: #0064d2;
-            --trvl-blue-dark: #004ba0;
-            --trvl-blue-light: #e8f4fd;
-            --trvl-navy: #0d2147;
-            --trvl-shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-            --trvl-shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
-            --trvl-shadow-lg: 0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
-            --trvl-shadow-blue: 0 4px 14px rgba(0,100,210,0.25);
-            --trvl-radius-sm: 6px;
-            --trvl-radius-md: 10px;
-            --trvl-radius-lg: 16px;
-            --trvl-radius-xl: 24px;
-            --trvl-radius-full: 9999px;
-        }
-
-        * { font-family: 'Inter', sans-serif; }
-
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            background: linear-gradient(135deg, #f0f6ff 0%, #ffffff 50%, #e8f4fd 100%);
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 440px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--trvl-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--trvl-shadow-lg);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #111;
-            margin: 0 0 0.5rem 0;
-        }
-
-        .login-logo span { color: var(--trvl-blue); }
-
-        .login-subtitle {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 0;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 500;
-            color: #111;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--trvl-radius-sm);
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            box-sizing: border-box;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--trvl-blue);
-            box-shadow: 0 0 0 3px rgba(0, 100, 210, 0.08);
-        }
-
-        .form-error {
-            color: #ef4444;
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-
-        .alert {
-            padding: 0.75rem 1rem;
-            border-radius: var(--trvl-radius-sm);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #16a34a;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: var(--trvl-blue);
-            color: white;
-            border: none;
-            border-radius: var(--trvl-radius-sm);
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .login-button:hover {
-            background: var(--trvl-blue-dark);
-            box-shadow: var(--trvl-shadow-blue);
-        }
-
-        .login-button:active {
-            transform: scale(0.98);
-        }
-
-        .login-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .login-footer a {
-            color: var(--trvl-blue);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .icon-circle {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--trvl-blue-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
-    </style>
 </head>
-<body>
-    <div class="login-container">
-        <div class="login-box">
-            <!-- Header -->
-            <div class="login-header">
-                <div class="icon-circle">
-                    <svg width="28" height="28" fill="none" stroke="#0064d2" viewBox="0 0 24 24">
+<body class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-sky-100 font-[Inter]">
+    <div class="flex min-h-screen items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/80">
+            <div class="mb-8 text-center">
+                <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-200">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                     </svg>
                 </div>
-                <h1 class="login-logo"><span>ASR</span> GO</h1>
-                <p class="login-subtitle">Lupa kata sandi? Masukkan email untuk mengatur ulang kata sandi</p>
+                <h1 class="text-2xl font-bold text-slate-900"><span class="text-blue-600">ASR</span> GO</h1>
+                <p class="mt-2 text-sm text-slate-600">Lupa kata sandi? Masukkan email untuk mengatur ulang kata sandi</p>
             </div>
 
-            <!-- Status Message -->
             @if (session('status'))
-                <div class="alert alert-success">
+                <div class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <!-- Error Messages -->
             @if ($errors->any())
-                <div class="alert alert-error">
-                    <ul style="margin: 0; padding-left: 1rem;">
+                <div class="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <ul class="ml-4 list-disc space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -212,36 +48,34 @@
                 </div>
             @endif
 
-            <!-- Forgot Password Form -->
-            <form method="POST" action="{{ route('password.email') }}">
+            <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
                 @csrf
 
-                <div class="form-group">
-                    <label class="form-label" for="email">Alamat Email</label>
+                <div>
+                    <label class="mb-2 block text-sm font-semibold text-slate-700" for="email">Alamat Email</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         value="{{ old('email') }}"
-                        class="form-input"
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
                         placeholder="contoh@asrgo.com"
                         required
                         autofocus
                     >
                     @error('email')
-                        <div class="form-error">{{ $message }}</div>
+                        <div class="mt-2 text-sm text-red-600">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <button type="submit" class="login-button">
+                <button type="submit" class="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700">
                     Kirim Tautan Atur Ulang Kata Sandi
                 </button>
             </form>
 
-            <!-- Footer -->
-            <div class="login-footer">
-                <p style="margin: 0 0 0.5rem 0;">Ingat kata sandi Anda? <a href="{{ route('login') }}">Masuk di sini</a></p>
-                <p style="margin: 0;">Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
+            <div class="mt-6 text-center text-sm text-slate-600">
+                <p class="mb-2">Ingat kata sandi Anda? <a href="{{ route('login') }}" class="font-semibold text-blue-600 hover:underline">Masuk di sini</a></p>
+                <p>Belum punya akun? <a href="{{ route('register') }}" class="font-semibold text-blue-600 hover:underline">Daftar di sini</a></p>
             </div>
         </div>
     </div>

@@ -91,21 +91,13 @@ class BookingTravelController extends Controller
                 \App\Models\BookingPassenger::create([
                     'travel_booking_id' => $booking->id,
                     'name'              => $passengerData['name'],
-                    'id_type'           => $passengerData['id_type'],
-                    'id_number'         => $passengerData['id_number'],
+                    'phone'             => $passengerData['phone'] ?? null,
+                    'id_type'           => 'nik',
+                    'id_number'         => $passengerData['nik'] ?? null,
                     // nik kolom lama untuk backward compat
-                    'nik'               => $passengerData['id_number'],
-                    'seat_number'       => $passengerData['seat_number'],
+                    'nik'               => $passengerData['nik'] ?? null,
+                    'seat_number'       => null,
                 ]);
-
-                if (\Illuminate\Support\Facades\Schema::hasTable('travel_seats')) {
-                    \App\Models\TravelSeat::create([
-                        'travel_booking_id' => $booking->id,
-                        'seat_number'       => $passengerData['seat_number'],
-                        'status'            => 'booked',
-                        'passenger_name'    => $passengerData['name'],
-                    ]);
-                }
             }
         }
 
@@ -134,26 +126,9 @@ class BookingTravelController extends Controller
         $routeId = $request->input('route_id');
         $date = $request->input('date');
 
-        $occupiedFromPassengers = \App\Models\BookingPassenger::whereHas('travelBooking', function ($q) use ($routeId, $date) {
-            $q->where('route_id', $routeId)
-              ->whereDate('scheduled_date', $date)
-              ->where('status', '!=', 'cancelled');
-        })->pluck('seat_number')->filter()->values()->toArray();
-
-        $occupiedFromSeats = [];
-        if (\Illuminate\Support\Facades\Schema::hasTable('travel_seats')) {
-            $occupiedFromSeats = \App\Models\TravelSeat::whereHas('travelBooking', function ($q) use ($routeId, $date) {
-                $q->where('route_id', $routeId)
-                  ->whereDate('scheduled_date', $date)
-                  ->where('status', '!=', 'cancelled');
-            })->pluck('seat_number')->filter()->values()->toArray();
-        }
-
-        $occupiedSeats = array_values(array_unique(array_merge($occupiedFromPassengers, $occupiedFromSeats)));
-
         return response()->json([
             'success' => true,
-            'occupied_seats' => $occupiedSeats,
+            'occupied_seats' => [],
         ]);
     }
 

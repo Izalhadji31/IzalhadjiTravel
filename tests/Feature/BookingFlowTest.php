@@ -15,8 +15,8 @@ class BookingFlowTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-    protected $route;
+    protected User $user;
+    protected Route $route;
 
     protected function setUp(): void
     {
@@ -56,6 +56,29 @@ class BookingFlowTest extends TestCase
         ]);
 
         $response->assertRedirect();
+    }
+
+    public function test_booking_stores_passenger_data_without_seat_selection()
+    {
+        $this->actingAs($this->user);
+
+        $response = $this->post('/bookings', [
+            'route_id' => $this->route->id,
+            'number_of_seats' => 1,
+            'scheduled_date' => now()->addDay(),
+            'passengers' => [[
+                'name' => 'Budi Santoso',
+                'nik' => '3201234567890123',
+                'phone' => '081234567890',
+            ]],
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('booking_passengers', [
+            'name' => 'Budi Santoso',
+            'nik' => '3201234567890123',
+            'phone' => '081234567890',
+        ]);
     }
 
     public function test_unverified_customer_can_access_booking_form()

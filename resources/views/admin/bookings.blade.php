@@ -1,51 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="padding: 24px; background-color: #f1f5f9; min-height: 100vh;">
+<div class="min-h-screen bg-slate-100 p-6">
     <!-- Page Header -->
-    <div style="margin-bottom: 24px;">
-        <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">Manajemen Booking</h1>
-        <p style="font-size: 14px; color: #64748b; margin: 4px 0 0 0;">Kelola semua booking travel dan rental</p>
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-slate-900">Manajemen Booking</h1>
+        <p class="mt-1 text-sm text-slate-500">Kelola semua booking travel dan rental</p>
     </div>
 
     <!-- Stats Cards -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
-        <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #f59e0b;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Pending</div>
-            <div style="font-size: 28px; font-weight: 700; color: #f59e0b; margin-top: 4px;">{{ $travelBookings->where('status', 'pending')->count() + $rentalBookings->where('status', 'pending')->count() }}</div>
+    <div class="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div class="rounded-lg border-l-4 border-amber-500 bg-white p-4 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Pending</div>
+            <div class="mt-2 text-2xl font-bold text-amber-500">{{ $travelBookings->where('status', 'pending')->count() + $rentalBookings->where('status', 'pending')->count() }}</div>
         </div>
-        <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Dikonfirmasi</div>
-            <div style="font-size: 28px; font-weight: 700; color: #3b82f6; margin-top: 4px;">{{ $travelBookings->where('status', 'confirmed')->count() + $rentalBookings->where('status', 'confirmed')->count() }}</div>
+        <div class="rounded-lg border-l-4 border-blue-500 bg-white p-4 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Dikonfirmasi</div>
+            <div class="mt-2 text-2xl font-bold text-blue-500">{{ $travelBookings->where('status', 'confirmed')->count() + $rentalBookings->where('status', 'confirmed')->count() }}</div>
         </div>
-        <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #f97316;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Berangkat</div>
-            <div style="font-size: 28px; font-weight: 700; color: #f97316; margin-top: 4px;">{{ $travelBookings->where('status', 'departed')->count() + $rentalBookings->where('status', 'departed')->count() }}</div>
+        <div class="rounded-lg border-l-4 border-orange-500 bg-white p-4 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Berangkat</div>
+            <div class="mt-2 text-2xl font-bold text-orange-500">{{ $travelBookings->where('status', 'departed')->count() + $rentalBookings->where('status', 'departed')->count() }}</div>
         </div>
-        <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #22c55e;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Selesai</div>
-            <div style="font-size: 28px; font-weight: 700; color: #22c55e; margin-top: 4px;">{{ $travelBookings->where('status', 'completed')->count() + $rentalBookings->where('status', 'completed')->count() }}</div>
+        <div class="rounded-lg border-l-4 border-green-500 bg-white p-4 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Selesai</div>
+            <div class="mt-2 text-2xl font-bold text-green-500">{{ $travelBookings->where('status', 'completed')->count() + $rentalBookings->where('status', 'completed')->count() }}</div>
         </div>
-        <div style="background: #ffffff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #ef4444;">
-            <div style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Dibatalkan</div>
-            <div style="font-size: 28px; font-weight: 700; color: #ef4444; margin-top: 4px;">{{ $travelBookings->where('status', 'cancelled')->count() + $rentalBookings->where('status', 'cancelled')->count() }}</div>
+        <div class="rounded-lg border-l-4 border-red-500 bg-white p-4 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Dibatalkan</div>
+            <div class="mt-2 text-2xl font-bold text-red-500">{{ $travelBookings->where('status', 'cancelled')->count() + $rentalBookings->where('status', 'cancelled')->count() }}</div>
         </div>
     </div>
 
     <!-- Main Card -->
-    <div style="background: #ffffff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden;">
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <!-- Filter Bar -->
-        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
-                <a href="{{ route('admin.bookings') }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === null || request('status') === '' ? 'background-color: #2563eb; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569; hover:background-color: #e2e8f0;' }}">Semua</a>
-                <a href="{{ route('admin.bookings', ['status' => 'pending']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === 'pending' ? 'background-color: #f59e0b; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Pending</a>
-                <a href="{{ route('admin.bookings', ['status' => 'confirmed']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === 'confirmed' ? 'background-color: #3b82f6; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Dikonfirmasi</a>
-                <a href="{{ route('admin.bookings', ['status' => 'departed']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === 'departed' ? 'background-color: #f97316; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Berangkat</a>
-                <a href="{{ route('admin.bookings', ['status' => 'completed']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === 'completed' ? 'background-color: #22c55e; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Selesai</a>
-                <a href="{{ route('admin.bookings', ['status' => 'cancelled']) }}" style="display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; {{ request('status') === 'cancelled' ? 'background-color: #ef4444; color: #ffffff;' : 'background-color: #f1f5f9; color: #475569;' }}">Dibatalkan</a>
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="{{ route('admin.bookings') }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === null || request('status') === '' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Semua</a>
+                <a href="{{ route('admin.bookings', ['status' => 'pending']) }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === 'pending' ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Pending</a>
+                <a href="{{ route('admin.bookings', ['status' => 'confirmed']) }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === 'confirmed' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Dikonfirmasi</a>
+                <a href="{{ route('admin.bookings', ['status' => 'departed']) }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === 'departed' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Berangkat</a>
+                <a href="{{ route('admin.bookings', ['status' => 'completed']) }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === 'completed' ? 'bg-green-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Selesai</a>
+                <a href="{{ route('admin.bookings', ['status' => 'cancelled']) }}" class="inline-block rounded-md px-3.5 py-2 text-sm font-medium transition {{ request('status') === 'cancelled' ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">Dibatalkan</a>
             </div>
-            <div style="font-size: 13px; color: #64748b;">
-                Total: <strong style="color: #1e293b;">{{ $travelBookings->count() + $rentalBookings->count() }}</strong> booking
+            <div class="text-sm text-slate-500">
+                Total: <strong class="text-slate-700">{{ $travelBookings->count() + $rentalBookings->count() }}</strong> booking
             </div>
         </div>
 
@@ -83,12 +83,17 @@
                         <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: #1e293b; text-align: right;">Rp {{ number_format($booking->price ?? $booking->harga ?? 0, 0, ',', '.') }}</td>
                         <td style="padding: 12px 16px; text-align: center;">
                             @php $s = $booking->status; @endphp
-                            <span style="display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: capitalize;
-                                {{ $s === 'pending' ? 'background-color:#fef3c7;color:#92400e;' : '' }}
-                                {{ $s === 'confirmed' ? 'background-color:#dbeafe;color:#1e40af;' : '' }}
-                                {{ $s === 'departed' ? 'background-color:#ffedd5;color:#9a3412;' : '' }}
-                                {{ $s === 'completed' ? 'background-color:#dcfce7;color:#166534;' : '' }}
-                                {{ $s === 'cancelled' ? 'background-color:#fee2e2;color:#991b1b;' : '' }}">
+                            @php
+                                $statusClass = match($s) {
+                                    'pending' => 'bg-amber-100 text-amber-700',
+                                    'confirmed' => 'bg-blue-100 text-blue-700',
+                                    'departed' => 'bg-orange-100 text-orange-700',
+                                    'completed' => 'bg-green-100 text-green-700',
+                                    'cancelled' => 'bg-red-100 text-red-700',
+                                    default => 'bg-slate-100 text-slate-700',
+                                };
+                            @endphp
+                            <span class="inline-block rounded-full px-3 py-1 text-[11px] font-semibold capitalize {{ $statusClass }}">
                                 {{ ucfirst($s) }}
                             </span>
                         </td>
@@ -102,7 +107,12 @@
                                     View
                                 </a>
                                 @if($s === 'pending')
-                                <button type="button" onclick="openArmadaModal('{{ route('admin.bookings.approve', ['type' => $bookingType, 'id' => $booking->id]) }}')" style="padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #3b82f6; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s;" onmouseover="this.style.backgroundColor='#2563eb';" onmouseout="this.style.backgroundColor='#3b82f6';">Setujui</button>
+                                <button type="button"
+                                        data-url="{{ route('admin.bookings.approve', ['type' => $bookingType, 'id' => $booking->id]) }}"
+                                        onclick="openArmadaModal(this.dataset.url)"
+                                        style="padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #3b82f6; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s;"
+                                        onmouseover="this.style.backgroundColor='#2563eb';"
+                                        onmouseout="this.style.backgroundColor='#3b82f6';">Setujui</button>
                                 @endif
                                 @if($s === 'confirmed' || $s === 'departed')
                                 <form action="{{ route('admin.bookings.complete', ['type' => $bookingType, 'id' => $booking->id]) }}" method="POST" style="display:inline;">
@@ -142,12 +152,17 @@
                         <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: #1e293b; text-align: right;">Rp {{ number_format($booking->price ?? $booking->harga ?? 0, 0, ',', '.') }}</td>
                         <td style="padding: 12px 16px; text-align: center;">
                             @php $s = $booking->status; @endphp
-                            <span style="display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: capitalize;
-                                {{ $s === 'pending' ? 'background-color:#fef3c7;color:#92400e;' : '' }}
-                                {{ $s === 'confirmed' ? 'background-color:#dbeafe;color:#1e40af;' : '' }}
-                                {{ $s === 'departed' ? 'background-color:#ffedd5;color:#9a3412;' : '' }}
-                                {{ $s === 'completed' ? 'background-color:#dcfce7;color:#166534;' : '' }}
-                                {{ $s === 'cancelled' ? 'background-color:#fee2e2;color:#991b1b;' : '' }}">
+                            @php
+                                $statusClass = match($s) {
+                                    'pending' => 'bg-amber-100 text-amber-700',
+                                    'confirmed' => 'bg-blue-100 text-blue-700',
+                                    'departed' => 'bg-orange-100 text-orange-700',
+                                    'completed' => 'bg-green-100 text-green-700',
+                                    'cancelled' => 'bg-red-100 text-red-700',
+                                    default => 'bg-slate-100 text-slate-700',
+                                };
+                            @endphp
+                            <span class="inline-block rounded-full px-3 py-1 text-[11px] font-semibold capitalize {{ $statusClass }}">
                                 {{ ucfirst($s) }}
                             </span>
                         </td>
@@ -161,7 +176,12 @@
                                     Lihat
                                 </a>
                                 @if($s === 'pending')
-                                <button type="button" onclick="openArmadaModal('{{ route('admin.bookings.approve', ['type' => $bookingType, 'id' => $booking->id]) }}')" style="padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #3b82f6; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s;" onmouseover="this.style.backgroundColor='#2563eb';" onmouseout="this.style.backgroundColor='#3b82f6';">Setujui</button>
+                                <button type="button"
+                                        data-url="{{ route('admin.bookings.approve', ['type' => $bookingType, 'id' => $booking->id]) }}"
+                                        onclick="openArmadaModal(this.dataset.url)"
+                                        style="padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; background-color: #3b82f6; color: #ffffff; border: none; cursor: pointer; transition: background-color 0.15s;"
+                                        onmouseover="this.style.backgroundColor='#2563eb';"
+                                        onmouseout="this.style.backgroundColor='#3b82f6';">Setujui</button>
                                 @endif
                                 @if($s === 'confirmed' || $s === 'departed')
                                 <form action="{{ route('admin.bookings.complete', ['type' => $bookingType, 'id' => $booking->id]) }}" method="POST" style="display:inline;">
@@ -193,7 +213,7 @@
         </div>
 
         <!-- Footer -->
-        <div style="padding: 12px 20px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #64748b;">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-5 py-3 text-sm text-slate-500">
             <span>Menampilkan {{ $filteredTravel->count() + $filteredRental->count() }} dari {{ $travelBookings->count() + $rentalBookings->count() }} booking</span>
             <span>Terakhir diperbarui: {{ now()->format('d M Y H:i') }}</span>
         </div>
@@ -201,13 +221,13 @@
 </div>
 
 <!-- Armada Selection Modal -->
-<div id="armadaModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; border-radius: 8px; padding: 24px; max-width: 440px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-        <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 8px 0;">Atur Armada</h3>
-        <p style="font-size: 13px; color: #64748b; margin: 0 0 16px 0;">Pilih armada yang tersedia untuk ditugaskan sebelum mengonfirmasi booking ini:</p>
+<div id="armadaModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50">
+    <div class="w-[90%] max-w-[440px] rounded-lg bg-white p-6 shadow-2xl">
+        <h3 class="mb-2 text-lg font-semibold text-slate-900">Atur Armada</h3>
+        <p class="mb-4 text-sm text-slate-500">Pilih armada yang tersedia untuk ditugaskan sebelum mengonfirmasi booking ini:</p>
         <form id="armadaApproveForm" method="POST">
             @csrf
-            <select name="armada_id" id="armadaSelect" style="width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; color: #1e293b; background-color: #ffffff; margin-bottom: 16px;">
+            <select name="armada_id" id="armadaSelect" class="mb-4 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700">
                 <option value="">-- Pilih Armada Tersedia --</option>
                 @php
                     $availableArmadas = \App\Models\Armada::where('status', 'tersedia')->orderBy('plate_number')->get();
@@ -218,9 +238,9 @@
                 <option value="" disabled>Tidak ada armada yang tersedia</option>
                 @endforelse
             </select>
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button type="button" onclick="closeArmadaModal()" style="padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; background-color: #f1f5f9; color: #475569; border: none; cursor: pointer;">Batal</button>
-                <button type="submit" style="padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; background-color: #3b82f6; color: #ffffff; border: none; cursor: pointer;">Konfirmasi & Setujui</button>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeArmadaModal()" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600">Batal</button>
+                <button type="submit" class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Konfirmasi & Setujui</button>
             </div>
         </form>
     </div>

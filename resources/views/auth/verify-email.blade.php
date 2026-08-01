@@ -18,189 +18,35 @@
             }
         }
     </script>
-    <style>
-        :root {
-            --trvl-blue: #0064d2;
-            --trvl-blue-dark: #004ba0;
-            --trvl-blue-light: #e8f4fd;
-            --trvl-navy: #0d2147;
-            --trvl-shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-            --trvl-shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
-            --trvl-shadow-lg: 0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
-            --trvl-shadow-blue: 0 4px 14px rgba(0,100,210,0.25);
-            --trvl-radius-sm: 6px;
-            --trvl-radius-md: 10px;
-            --trvl-radius-lg: 16px;
-            --trvl-radius-xl: 24px;
-            --trvl-radius-full: 9999px;
-        }
-
-        * { font-family: 'Inter', sans-serif; }
-
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            background: linear-gradient(135deg, #f0f6ff 0%, #ffffff 50%, #e8f4fd 100%);
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 480px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--trvl-radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--trvl-shadow-lg);
-            text-align: center;
-        }
-
-        .login-logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #111;
-            margin: 0 0 1.5rem 0;
-        }
-
-        .login-logo span { color: var(--trvl-blue); }
-
-        .icon-circle {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: var(--trvl-blue-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.25rem;
-        }
-
-        .verify-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--trvl-navy);
-            margin: 0 0 0.75rem 0;
-        }
-
-        .verify-text {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 0 0 1.5rem 0;
-            line-height: 1.6;
-        }
-
-        .verify-email {
-            font-weight: 600;
-            color: var(--trvl-blue);
-        }
-
-        .alert {
-            padding: 0.75rem 1rem;
-            border-radius: var(--trvl-radius-sm);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #16a34a;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: var(--trvl-blue);
-            color: white;
-            border: none;
-            border-radius: var(--trvl-radius-sm);
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--trvl-blue-dark);
-            box-shadow: var(--trvl-shadow-blue);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: white;
-            color: var(--trvl-blue);
-            border: 1px solid var(--trvl-blue);
-            border-radius: var(--trvl-radius-sm);
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            margin-top: 0.75rem;
-        }
-
-        .btn-secondary:hover {
-            background: var(--trvl-blue-light);
-        }
-
-        .logout-link {
-            display: block;
-            margin-top: 1.5rem;
-            color: #999;
-            font-size: 0.85rem;
-            text-decoration: none;
-        }
-
-        .logout-link:hover {
-            color: #666;
-            text-decoration: underline;
-        }
-    </style>
 </head>
-<body>
-    <div class="login-container">
-        <div class="login-box">
-            <!-- Logo -->
-            <h1 class="login-logo"><span>ASR</span> GO</h1>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-sky-100 font-[Inter]">
+    <div class="flex min-h-screen items-center justify-center p-4">
+        <div class="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-2xl shadow-slate-200/80">
+            <h1 class="text-2xl font-bold text-slate-900"><span class="text-blue-600">ASR</span> GO</h1>
 
-            <!-- Icon -->
-            <div class="icon-circle">
-                <svg width="36" height="36" fill="none" stroke="#0064d2" viewBox="0 0 24 24">
+            <div class="mx-auto mb-5 mt-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
 
-            <!-- Title -->
-            <h2 class="verify-title">Verifikasi Email Anda</h2>
+            <h2 class="text-xl font-semibold text-slate-900">Verifikasi Email Anda</h2>
 
-            <!-- Description -->
-            <p class="verify-text">
+            <p class="mt-4 text-sm leading-7 text-slate-600">
                 Sebelum melanjutkan, silakan verifikasi alamat email Anda dengan mengklik link yang telah kami kirim ke
-                <span class="verify-email">{{ auth()->user()->email }}</span>.
+                <span class="font-semibold text-blue-600">{{ auth()->user()->email }}</span>.
                 Jika Anda tidak menerima email, periksa folder spam Anda.
             </p>
 
-            <!-- Status Message -->
             @if (session('status'))
-                <div class="alert alert-success">
+                <div class="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <!-- Resend Button -->
-            <form method="POST" action="{{ route('verification.send') }}">
+            <form method="POST" action="{{ route('verification.send') }}" class="mt-6">
                 @csrf
-                <button type="submit" class="btn-primary">
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700">
                     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
@@ -208,10 +54,9 @@
                 </button>
             </form>
 
-            <!-- Logout -->
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" class="mt-4">
                 @csrf
-                <button type="submit" class="logout-link" style="background: none; border: none; cursor: pointer; font-size: 0.85rem;">
+                <button type="submit" class="text-sm text-slate-500 transition hover:text-slate-700">
                     Logout
                 </button>
             </form>

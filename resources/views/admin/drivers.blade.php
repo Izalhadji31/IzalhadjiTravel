@@ -1,54 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="padding: 24px; background-color: #f0f4f8; min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div class="min-h-screen bg-slate-100 p-6 font-sans">
     
     <!-- Page Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-            <h1 style="font-size: 26px; font-weight: 700; color: #1e3a5f; margin: 0;">Manajemen Driver / Sopir</h1>
-            <p style="font-size: 14px; color: #6b7c93; margin: 4px 0 0 0;">Kelola dan pantau semua driver yang terdaftar di sistem</p>
+            <h1 class="text-2xl font-bold text-slate-900">Manajemen Driver / Sopir</h1>
+            <p class="mt-1 text-sm text-slate-500">Kelola dan pantau semua driver yang terdaftar di sistem</p>
         </div>
-        <div style="display: flex; gap: 10px;">
-            <span style="background-color: #2563eb; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;">
+        <div class="flex flex-wrap gap-2">
+            <span class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">
                 Total Drivers: {{ $drivers->count() }}
             </span>
-            <span style="background-color: #16a34a; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;">
+            <span class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">
                 Active: {{ $drivers->whereIn('status', ['available', 'busy'])->count() }}
             </span>
         </div>
     </div>
 
     <!-- Stats Cards -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
-        <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #22c55e;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Tersedia</div>
-            <div style="font-size: 28px; font-weight: 700; color: #16a34a;">{{ $drivers->where('status', 'available')->count() }}</div>
+    <div class="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-xl border-l-4 border-emerald-500 bg-white p-5 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Tersedia</div>
+            <div class="mt-2 text-2xl font-bold text-emerald-600">{{ $drivers->where('status', 'available')->count() }}</div>
         </div>
-        <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #f97316;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Sedang Bertugas</div>
-            <div style="font-size: 28px; font-weight: 700; color: #ea580c;">{{ $drivers->where('status', 'busy')->count() }}</div>
+        <div class="rounded-xl border-l-4 border-orange-500 bg-white p-5 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Sedang Bertugas</div>
+            <div class="mt-2 text-2xl font-bold text-orange-600">{{ $drivers->where('status', 'busy')->count() }}</div>
         </div>
-        <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #9ca3af;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Offline</div>
-            <div style="font-size: 28px; font-weight: 700; color: #4b5563;">{{ $drivers->where('status', 'offline')->count() }}</div>
+        <div class="rounded-xl border-l-4 border-slate-400 bg-white p-5 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Offline</div>
+            <div class="mt-2 text-2xl font-bold text-slate-600">{{ $drivers->where('status', 'offline')->count() }}</div>
         </div>
-        <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid #ef4444;">
-            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">On Leave</div>
-            <div style="font-size: 28px; font-weight: 700; color: #dc2626;">{{ $drivers->where('status', 'on_leave')->count() }}</div>
+        <div class="rounded-xl border-l-4 border-red-500 bg-white p-5 shadow-sm">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">On Leave</div>
+            <div class="mt-2 text-2xl font-bold text-red-600">{{ $drivers->where('status', 'on_leave')->count() }}</div>
         </div>
     </div>
 
     <!-- Filter Section -->
-    <div style="background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <div style="font-size: 14px; font-weight: 600; color: #374151;">Filter:</div>
+    <div class="mb-5 rounded-xl bg-white p-5 shadow-sm">
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="text-sm font-semibold text-slate-700">Filter:</div>
             
             <input type="text" id="searchFilter" placeholder="Cari nama atau telepon..." 
-                   style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; width: 220px; outline: none;"
+                   class="w-56 rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                    onkeydown="if(event.key==='Enter') applyFilters()">
             
-            <select id="statusFilter" style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; outline: none; cursor: pointer;">
+            <select id="statusFilter" class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm outline-none cursor-pointer">
                 <option value="">Semua Status</option>
                 <option value="available">Tersedia</option>
                 <option value="busy">Sibuk</option>
@@ -56,24 +56,24 @@
                 <option value="on_leave">Cuti</option>
             </select>
             
-            <select id="armadaFilter" style="padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; outline: none; cursor: pointer;">
+            <select id="armadaFilter" class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm outline-none cursor-pointer">
                 <option value="">Semua Armada</option>
                 @foreach($drivers->pluck('armada.name')->unique()->filter() as $armadaName)
                     <option value="{{ strtolower($armadaName) }}">{{ $armadaName }}</option>
                 @endforeach
             </select>
             
-            <button onclick="applyFilters()" style="padding: 8px 18px; background-color: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+            <button onclick="applyFilters()" class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white">
                 Terapkan
             </button>
-            <button onclick="resetFilters()" style="padding: 8px 18px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+            <button onclick="resetFilters()" class="rounded-md border border-slate-300 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
                 Reset
             </button>
         </div>
     </div>
 
     <!-- Drivers Table -->
-    <div style="background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden;">
+    <div class="overflow-hidden rounded-xl bg-white shadow-sm">
         <table style="width: 100%; border-collapse: collapse;" id="driversTable">
             <thead>
                 <tr style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);">
@@ -123,17 +123,17 @@
                     
                     <td style="padding: 14px 16px; text-align: center;">
                         @php
-                            $statusStyles = [
-                                'available' => ['bg' => '#dcfce7', 'text' => '#16a34a', 'dot' => '#22c55e'],
-                                'busy' => ['bg' => '#ffedd5', 'text' => '#ea580c', 'dot' => '#f97316'],
-                                'offline' => ['bg' => '#f3f4f6', 'text' => '#4b5563', 'dot' => '#9ca3af'],
-                                'on_leave' => ['bg' => '#fee2e2', 'text' => '#dc2626', 'dot' => '#ef4444'],
-                            ];
-                            $style = $statusStyles[$driver->status] ?? ['bg' => '#f3f4f6', 'text' => '#4b5563', 'dot' => '#9ca3af'];
+                            $statusClass = match($driver->status) {
+                                'available' => 'bg-emerald-100 text-emerald-700',
+                                'busy' => 'bg-orange-100 text-orange-700',
+                                'offline' => 'bg-slate-100 text-slate-700',
+                                'on_leave' => 'bg-red-100 text-red-700',
+                                default => 'bg-slate-100 text-slate-700',
+                            };
                             $statusLabel = str_replace('_', ' ', ucwords($driver->status));
                         @endphp
-                        <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background-color: {{ $style['bg'] }}; color: {{ $style['text'] }};">
-                            <span style="width: 7px; height: 7px; border-radius: 50%; background-color: {{ $style['dot'] }}; display: inline-block;"></span>
+                        <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[12px] font-semibold {{ $statusClass }}">
+                            <span class="inline-block h-2 w-2 rounded-full bg-current"></span>
                             {{ $statusLabel }}
                         </span>
                     </td>
@@ -162,7 +162,8 @@
                     <td style="padding: 14px 16px; text-align: center;">
                         <div style="display: flex; gap: 6px; justify-content: center;">
                             @if($driver->status == 'offline' || $driver->status == 'on_leave')
-                                <button onclick="approveDriver({{ $driver->id }})" 
+                                <button data-driver-id="{{ $driver->id }}"
+                                        onclick="approveDriver(parseInt(this.dataset.driverId, 10))"
                                         style="padding: 6px 12px; background-color: #16a34a; color: #fff; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;"
                                         onmouseover="this.style.backgroundColor='#15803d';"
                                         onmouseout="this.style.backgroundColor='#16a34a';"
@@ -170,7 +171,8 @@
                                     ✓ Setujui
                                 </button>
                             @else
-                                <button 
+                                <button data-driver-id="{{ $driver->id }}"
+                                        onclick="viewDetails(parseInt(this.dataset.driverId, 10))"
                                         style="padding: 6px 12px; background-color: #2563eb; color: #fff; border: none; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;"
                                         onmouseover="this.style.backgroundColor='#1d4ed8';"
                                         onmouseout="this.style.backgroundColor='#2563eb';"
@@ -178,7 +180,8 @@
                                     ☰ Detail
                                 </button>
                             @endif
-                            <button onclick="viewDetails({{ $driver->id }})" 
+                            <button data-driver-id="{{ $driver->id }}"
+                                    onclick="viewDetails(parseInt(this.dataset.driverId, 10))"
                                     style="padding: 6px 12px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;"
                                     onmouseover="this.style.backgroundColor='#e5e7eb';"
                                     onmouseout="this.style.backgroundColor='#f3f4f6';"
@@ -202,11 +205,11 @@
         
         <!-- Pagination -->
         @if($drivers->hasPages())
-        <div style="padding: 16px 20px; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 13px; color: #6b7280;">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-5 py-4 text-sm text-slate-500">
+            <div>
                 Menampilkan {{ $drivers->firstItem() }} hingga {{ $drivers->lastItem() }} dari {{ $drivers->total() }} driver
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div class="flex gap-2">
                 {{ $drivers->links() }}
             </div>
         </div>
@@ -214,7 +217,7 @@
     </div>
 
     <!-- Footer Info -->
-    <div style="margin-top: 16px; text-align: center; font-size: 12px; color: #9ca3af;">
+    <div class="mt-4 text-center text-xs text-slate-400">
         Last updated: {{ now()->format('d M Y H:i') }} • Sistem Manajemen Driver • ASR GO
     </div>
 </div>
